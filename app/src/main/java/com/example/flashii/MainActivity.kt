@@ -13,8 +13,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var cameraManager : CameraManager
     private lateinit var flashLightId : String
-    private var isFlashlightOn = false
-
+    private lateinit var rearCameraId :String
+    private var isFlashLightOn = false
+    private var isRearCameraAndFlashLightOn = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,18 +28,70 @@ class MainActivity : AppCompatActivity() {
         val flashlightButton: Button = findViewById<Button>(R.id.flashLightBtnId)
         flashLightId = getFlashLightId()
         flashlightButton.setOnClickListener {
-            if (isFlashlightOn) {
+            if (isFlashLightOn) {
                 turnOffFlashlight()
             } else {
                 turnOnFlashlight()
             }
+        }
+
+        // rearCameraFlashLightBtn handler
+        val rearCameraFlashLightBtn: Button = findViewById<Button>(R.id.rearCameraFlashLightBtnId)
+        rearCameraId = getRearCameraId()
+        rearCameraFlashLightBtn.setOnClickListener {
+            if (isRearCameraAndFlashLightOn) {
+                turnOffRearCameraAndFlashLight()
+            } else {
+                turnOnRearCameraAndFlashLight()
+            }
+        }
+    }
+
+    private fun getRearCameraId(): String {
+        var rearCameraId = ""
+        // Iterate over the available camera devices
+        for (id in cameraManager.cameraIdList) {
+            val characteristics = cameraManager.getCameraCharacteristics(id)
+            val lensFacing = characteristics.get(CameraCharacteristics.LENS_FACING)
+
+            // Check if the camera is the rear camera
+            if (lensFacing == CameraCharacteristics.LENS_FACING_BACK) {
+                // Rear camera found. Now check if the rear camera has a flashlight
+                if (characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true) {
+                    rearCameraId = id
+                    break
+                }
+            }
+        }
+        return rearCameraId
+    }
+
+    private fun turnOnRearCameraAndFlashLight() {
+        try {
+            turnOnFlashlight()
+            isRearCameraAndFlashLightOn = true
+            Log.i("MainActivity","RearCameraAndFlashLight are ON")
+        } catch (e: CameraAccessException) {
+            e.printStackTrace()
+            Log.d("MainActivity", "RearCameraAndFlashLight ON ERROR: $e")
+        }
+    }
+
+    private fun turnOffRearCameraAndFlashLight() {
+        try {
+            turnOffFlashlight()
+            isRearCameraAndFlashLightOn = false
+            Log.i("MainActivity","RearCameraAndFlashLight are OFF")
+        } catch (e: CameraAccessException) {
+            e.printStackTrace()
+            Log.d("MainActivity", "RearCameraAndFlashLight OFF ERROR: $e")
         }
     }
 
     private fun turnOnFlashlight() {
         try {
             cameraManager.setTorchMode(flashLightId, true)
-            isFlashlightOn = true
+            isFlashLightOn = true
             Log.i("MainActivity","FlashLight is ON")
         } catch (e: CameraAccessException) {
             e.printStackTrace()
@@ -49,7 +102,7 @@ class MainActivity : AppCompatActivity() {
     private fun turnOffFlashlight() {
         try {
             cameraManager.setTorchMode(flashLightId, false)
-            isFlashlightOn = false
+            isFlashLightOn = false
             Log.i("MainActivity","FlashLight is OFF")
         } catch (e: CameraAccessException) {
             e.printStackTrace()
