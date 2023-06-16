@@ -6,6 +6,8 @@ import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +26,9 @@ class MainActivity : AppCompatActivity() {
     private var isFlashLightOn = false
     private var isRearCameraAndFlashLightOn = false
     private lateinit var imageCapture : ImageCapture
+    private var flickerFlashLightHertz : Long = 1
+    private var isFlickering : Boolean = false
+    private var loopHandler : Handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +37,9 @@ class MainActivity : AppCompatActivity() {
         // setup cameraManager
         cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
 
+
         // flashLightBtn handler
-        val flashlightButton: Button = findViewById<Button>(R.id.flashLightBtnId)
+        val flashlightButton: Button = findViewById(R.id.flashLightBtnId)
         flashLightId = getFlashLightId()
         flashlightButton.setOnClickListener {
             if (isFlashLightOn) {
@@ -44,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // rearCameraFlashLightBtn handler
-        val rearCameraFlashLightBtn: Button = findViewById<Button>(R.id.rearCameraFlashLightBtnId)
+        val rearCameraFlashLightBtn: Button = findViewById(R.id.rearCameraFlashLightBtnId)
         rearCameraFlashLightBtn.setOnClickListener {
             if (isRearCameraAndFlashLightOn) {
                 turnOffRearCameraAndFlashLight()
@@ -54,13 +60,37 @@ class MainActivity : AppCompatActivity() {
         }
 
         // takePhotoBtn handler
-        val takePhotoBtn: Button = findViewById<Button>(R.id.takePhotoBtnId)
+        val takePhotoBtn: Button = findViewById(R.id.takePhotoBtnId)
         takePhotoBtn.setOnClickListener {
             takePhoto()
         }
 
+        // flickerFlashLightBtn handler
+        val flickerFlashLightBtn : Button = findViewById(R.id.flickerFlashLightId)
+        flickerFlashLightBtn.setOnClickListener {
+            if (!isFlickering) {
+                startFlickering()
+                isFlickering = true
+            }
+            else {
+                stopFlickering()
+                isFlickering = false
+            }
+        }
 
+    }
 
+    private fun stopFlickering() {
+        loopHandler.removeCallbacksAndMessages(null)
+        turnOffFlashlight()
+    }
+
+    private fun startFlickering() {
+        // flicker as flickerFlashLightHertz
+        val delayedMilliseconds : Long =  flickerFlashLightHertz * 1000 / 2
+        turnOnFlashlight()
+        loopHandler.postDelayed({ turnOffFlashlight() }, delayedMilliseconds)
+        loopHandler.postDelayed({ startFlickering() }, delayedMilliseconds * 2)
     }
 
     private fun takePhoto() {
@@ -105,7 +135,7 @@ class MainActivity : AppCompatActivity() {
             imageCapture = ImageCapture.Builder().setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY).build()
             try {
                 cameraProvider.unbindAll()
-                val camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, DEFAULT_BACK_CAMERA, imageCapture)
+                cameraProvider.bindToLifecycle(this as LifecycleOwner, DEFAULT_BACK_CAMERA, imageCapture)
                 Log.d("MainActivity", "RearCameraPhoto are ON")
             } catch (e: Exception) {
                 Log.d("MainActivity", "RearCameraPhoto ON - ERROR: $e")
