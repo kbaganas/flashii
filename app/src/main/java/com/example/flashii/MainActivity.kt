@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var flashLightId : String
     private var isFlashLightOn = false
     private var isRearCameraAndFlashLightOn = false
+    private lateinit var imageCapture : ImageCapture
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +52,37 @@ class MainActivity : AppCompatActivity() {
                 turnOnRearCameraAndFlashLight()
             }
         }
+
+        // takePhotoBtn handler
+        val takePhotoBtn: Button = findViewById<Button>(R.id.takePhotoBtnId)
+        takePhotoBtn.setOnClickListener {
+            takePhoto()
+        }
+
+
+
+    }
+
+    private fun takePhoto() {
+        // Ensure the cameraProvider is available
+        if (::cameraProvider.isInitialized) {
+            val outputFile = File(externalMediaDirs.first(), "flashii_photo.jpg")
+            val outputOptions = ImageCapture.OutputFileOptions.Builder(outputFile).build()
+
+            cameraProvider.bindToLifecycle(this as LifecycleOwner, DEFAULT_BACK_CAMERA, imageCapture)
+
+            imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(this),
+                object : ImageCapture.OnImageSavedCallback {
+                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                        val savedUri = outputFileResults.savedUri ?: Uri.fromFile(outputFile)
+                        Log.i("MainActivity","takePicture was successful : $savedUri")
+                    }
+
+                    override fun onError(exception: ImageCaptureException) {
+                        Log.d("MainActivity", "takePhoto - ERROR: $exception")
+                    }
+                })
+        }
     }
 
     private fun turnOnRearCameraAndFlashLight() {
@@ -70,7 +102,7 @@ class MainActivity : AppCompatActivity() {
 
         rearCameraProvider.addListener({
             cameraProvider = rearCameraProvider.get()
-            val imageCapture = ImageCapture.Builder().setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY).build()
+            imageCapture = ImageCapture.Builder().setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY).build()
             try {
                 cameraProvider.unbindAll()
                 val camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, DEFAULT_BACK_CAMERA, imageCapture)
