@@ -4,4 +4,7 @@
     <string name="rearCameraFlashLightBtn">Rear Camera and Flashlight</string>
     <string name="takePhotoBtn">Take Photo</string>
     <string name="flickerFlashLightBtn">Flicker Flashlight</string>
+    <string name="incomingCallOff">Flicker on Incoming Calls OFF</string>
+    <string name="incomingCallOn">Flicker on Incoming Calls ON</string>
+    <string name="sosBtn">SOS</string>
 </resources>

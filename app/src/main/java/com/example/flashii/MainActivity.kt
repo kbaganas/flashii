@@ -1,15 +1,23 @@
 package com.example.flashii
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.telephony.TelephonyManager
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.SeekBar
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA
@@ -18,18 +26,33 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import java.io.File
 
+
 class MainActivity : AppCompatActivity() {
 
+    // constants
+    private val MIN_FLICKER_HZ : Int = 1
+    private val MAX_FLICKER_HZ : Int = 10
+    private val DIT_DURATION : Long = 250
+    private val SPACE_DURATION : Long = DIT_DURATION
+    private val DAH_DURATION : Long = 3 * DIT_DURATION
+    private val SPACE_CHARS_DURATION : Long = 3 * SPACE_DURATION
+    private val SPACE_WORDS_DURATION : Long = 4 * SPACE_DURATION // results to 7*DIT_DURATION, considering that we add SPACE_CHARS_DURATION after each letter
+
+    // variables
     private lateinit var cameraManager : CameraManager
     private lateinit var cameraProvider: ProcessCameraProvider
     private lateinit var flashLightId : String
     private var isFlashLightOn = false
     private var isRearCameraAndFlashLightOn = false
     private lateinit var imageCapture : ImageCapture
-    private var flickerFlashLightHertz : Long = 1
+    private var flickerFlashLightHz : Long = 1
     private var isFlickering : Boolean = false
     private var loopHandler : Handler = Handler(Looper.getMainLooper())
+    private var receiverIsRegistered : Boolean = false
+    private var incomingCallReceiver : IncomingCallReceiver? = null
+    private var sendSOS : Boolean = false
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -65,29 +88,152 @@ class MainActivity : AppCompatActivity() {
             takePhoto()
         }
 
+        // flickeringBar handler
+        val flickeringBar = findViewById<SeekBar>(R.id.flickeringBarId)
+        flickeringBar.min = MIN_FLICKER_HZ
+        flickeringBar.max = MAX_FLICKER_HZ
+        flickeringBar.visibility = View.INVISIBLE
+        flickeringBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                setFlickeringHz(progress.toLong())
+                Log.d("MainActivity", "onProgressChanged $flickerFlashLightHz")
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                stopFlickering()
+                //Log.d("MainActivity", "onStartTrackingTouch")
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                //Log.d("MainActivity", "onStopTrackingTouch")
+                startFlickering()
+            }
+        })
+
         // flickerFlashLightBtn handler
         val flickerFlashLightBtn : Button = findViewById(R.id.flickerFlashLightId)
         flickerFlashLightBtn.setOnClickListener {
             if (!isFlickering) {
                 startFlickering()
                 isFlickering = true
+                flickeringBar.visibility = View.VISIBLE
             }
             else {
                 stopFlickering()
                 isFlickering = false
+                flickeringBar.visibility = View.INVISIBLE
             }
         }
 
+        val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
+        incomingCallReceiver = IncomingCallReceiver()
+        Log.i("MainActivity","incomingCallReceiver = $incomingCallReceiver, intentFilter = $intentFilter")
+        registerReceiver(incomingCallReceiver, intentFilter)
+
+
+//        var incomingCallFlickerSwitch = findViewById<Switch>(R.id.switchFlickerIncomingCallsId)
+//        incomingCallFlickerSwitch.setOnCheckedChangeListener { _, switchedOn ->
+//            if (switchedOn) {
+//                Log.i("MainActivity","incomingCallFlickerSwitch is ON")
+//                if (receiverIsRegistered) {
+//                    Log.i("MainActivity","receiverIsRegistered is already true")
+//                }
+//                else {
+//                    Log.i("MainActivity","intent and registration is ON")
+//                    val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
+//                    registerReceiver(incomingCallReceiver, intentFilter)
+//                    receiverIsRegistered = true
+//                }
+//            } else {
+//                Log.i("MainActivity", "incomingCallFlickerSwitch is OFF")
+//                unregisterReceiver(incomingCallReceiver)
+//                receiverIsRegistered = false
+//            }
+//        }
+
+
+        // sosBtn handler
+        val sosBtn : Button = findViewById(R.id.sosBtn)
+        sosBtn.setOnClickListener {
+            sendSOS = !sendSOS
+            if (sendSOS) {
+                repeatSOS()
+            }
+            else {
+                Log.i("MainActivity", "STOP SOS")
+                loopHandler.removeCallbacksAndMessages(null)
+                turnOffFlashlight()
+            }
+        }
     }
 
-    private fun stopFlickering() {
+    private fun repeatSOS() {
+        if (sendSOS) {
+            Log.i("MainActivity", "SEND SOS")
+            val durationOfWord = S(O(S()))
+            loopHandler.postDelayed({repeatSOS()}, durationOfWord + SPACE_WORDS_DURATION)
+        }
+    }
+
+    override fun onPause() {
+        Log.i("MainActivity", "onPause is running")
+        super.onPause()
+        if (isFlickering) {
+            stopFlickering()
+            isFlickering = false
+        }
+        if (isFlashLightOn) {
+            turnOffFlashlight()
+        }
+    }
+
+    override fun onRestart() {
+        Log.i("MainActivity", "onRestart is running")
+        super.onRestart()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(incomingCallReceiver)
+        Log.i("MainActivity", "onDestroy is running")
+    }
+
+    override fun onStop() {
+        Log.i("MainActivity", "onStop is running")
+        super.onStop()
+        if (isFlickering) {
+            stopFlickering()
+            isFlickering = false
+        }
+        if (isFlashLightOn) {
+            turnOffFlashlight()
+        }
+        if (isRearCameraAndFlashLightOn) {
+            cameraProvider.unbindAll()
+        }
+        if (receiverIsRegistered) {
+            unregisterReceiver(incomingCallReceiver)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
+        //registerReceiver(incomingCallReceiver, intentFilter)
+    }
+
+    fun setFlickeringHz(hz : Long) {
+        flickerFlashLightHz = hz
+    }
+
+    fun stopFlickering() {
         loopHandler.removeCallbacksAndMessages(null)
         turnOffFlashlight()
     }
 
-    private fun startFlickering() {
-        // flicker as flickerFlashLightHertz
-        val delayedMilliseconds : Long =  flickerFlashLightHertz * 1000 / 2
+    fun startFlickering() {
+        // flicker as flickerFlashLightHz
+        val delayedMilliseconds : Long =  1000 / (2 * flickerFlashLightHz)
         turnOnFlashlight()
         loopHandler.postDelayed({ turnOffFlashlight() }, delayedMilliseconds)
         loopHandler.postDelayed({ startFlickering() }, delayedMilliseconds * 2)
@@ -169,7 +315,7 @@ class MainActivity : AppCompatActivity() {
         try {
             cameraManager.setTorchMode(flashLightId, true)
             isFlashLightOn = true
-            Log.i("MainActivity","FlashLight is ON")
+            //Log.i("MainActivity","FlashLight is ON")
         } catch (e: CameraAccessException) {
             e.printStackTrace()
             Log.d("MainActivity", "FlashLight ON - ERROR: $e")
@@ -180,7 +326,7 @@ class MainActivity : AppCompatActivity() {
         try {
             cameraManager.setTorchMode(flashLightId, false)
             isFlashLightOn = false
-            Log.i("MainActivity","FlashLight is OFF")
+            //Log.i("MainActivity","FlashLight is OFF")
         } catch (e: CameraAccessException) {
             e.printStackTrace()
             Log.d("MainActivity", "FlashLight OFF - ERROR: $e")
@@ -207,4 +353,52 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
+    // dit flashing per Morse code
+    private fun dit () {
+        turnOnFlashlight()
+        loopHandler.postDelayed({ turnOffFlashlight() }, DIT_DURATION)
+    }
+
+    // dah flashing per Morse code
+    private fun dah () {
+        turnOnFlashlight()
+        loopHandler.postDelayed({ turnOffFlashlight() }, DAH_DURATION)
+    }
+
+    // S = ...
+    // Function return the duration of S in milliseconds
+    private fun S (initialPauseByMilliseconds : Long = 0) : Long {
+        loopHandler.postDelayed({ dit() }, initialPauseByMilliseconds)
+        loopHandler.postDelayed({ dit() }, initialPauseByMilliseconds + DIT_DURATION + SPACE_DURATION)
+        loopHandler.postDelayed({ dit() }, initialPauseByMilliseconds + 2 * DIT_DURATION + 2 * SPACE_DURATION)
+        return initialPauseByMilliseconds + 3 * DIT_DURATION + 2 * SPACE_DURATION + SPACE_CHARS_DURATION
+    }
+
+    // O = - - -
+    private fun O (initialPauseByMilliseconds : Long = 0) : Long {
+        loopHandler.postDelayed({ dah() }, initialPauseByMilliseconds)
+        loopHandler.postDelayed({ dah() }, initialPauseByMilliseconds + DAH_DURATION + SPACE_DURATION)
+        loopHandler.postDelayed({ dah() }, initialPauseByMilliseconds + 2 * DAH_DURATION + 2 * SPACE_DURATION)
+        return initialPauseByMilliseconds + 3 * DAH_DURATION + 2 * SPACE_DURATION + SPACE_CHARS_DURATION
+    }
+
 }
+
+
+
+class IncomingCallReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        Log.i("MainActivity", "Phone is ringing loc1")
+        if (intent.action == TelephonyManager.ACTION_PHONE_STATE_CHANGED) {
+            val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
+            if (state == TelephonyManager.EXTRA_STATE_RINGING) {
+                Log.i("MainActivity", "Phone is ringing")
+                // Perform your desired actions when a call is received
+                // For example, you can toggle the flashlight here
+                // or trigger any other functionality
+            }
+        }
+    }
+}
+
