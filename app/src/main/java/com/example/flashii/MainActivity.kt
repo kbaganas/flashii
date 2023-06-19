@@ -17,6 +17,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.SeekBar
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     private var receiverIsRegistered : Boolean = false
     private var incomingCallReceiver : IncomingCallReceiver? = null
     private var sendSOS : Boolean = false
+    private var touchStartTime : Long = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,27 +65,38 @@ class MainActivity : AppCompatActivity() {
 
 
         // flashLightBtn handler
-        val flashlightButton: Button = findViewById(R.id.flashLightBtnId)
+        val flashlightButton: ImageButton = findViewById(R.id.flashLightBtnId)
         flashLightId = getFlashLightId()
-        flashlightButton.setOnClickListener {
-            if (isFlashLightOn) {
-                turnOffFlashlight()
-            } else {
-                turnOnFlashlight()
-            }
-        }
+//        flashlightButton.setOnClickListener {
+//            if (isFlashLightOn) {
+//                turnOffFlashlight()
+//                flashlightButton.setImageResource(R.drawable.off)
+//            } else {
+//                turnOnFlashlight()
+//                flashlightButton.setImageResource(R.drawable.on)
+//            }
+//        }
 
-        // flashLightBtn handler
-        val holdFlashLightBtn: Button = findViewById(R.id.holdFlashLightBtnId)
-        flashLightId = getFlashLightId()
-        holdFlashLightBtn.setOnTouchListener { _, event ->
+        flashlightButton.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    turnOnFlashlight()
+                    if (isFlashLightOn) {
+                        turnOffFlashlight()
+                        flashlightButton.setImageResource(R.drawable.off)
+                    } else {
+                        touchStartTime = System.currentTimeMillis()
+                        turnOnFlashlight()
+                        flashlightButton.setImageResource(R.drawable.on)
+                    }
                     true
                 }
                 MotionEvent.ACTION_UP -> {
-                    turnOffFlashlight()
+                    // If touch duration > 750ms, then its a press-and-hold action and we need to turn-off flashlight.
+                    // If otherwise, user just clicked to enable or disable the flashlight.
+                    if (System.currentTimeMillis() - touchStartTime > 350) {
+                        turnOffFlashlight()
+                        flashlightButton.setImageResource(R.drawable.off)
+                    }
                     false
                 }
                 else -> {false}
