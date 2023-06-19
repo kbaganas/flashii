@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Flashii</string>
     <string name="flashLightBtn">Flashlight</string>
+    <string name="holdFlashLightBtn">Flashlight (Hold)</string>
     <string name="rearCameraFlashLightBtn">Rear Camera and Flashlight</string>
     <string name="takePhotoBtn">Take Photo</string>
     <string name="flickerFlashLightBtn">Flicker Flashlight</string>

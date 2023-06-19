@@ -14,6 +14,7 @@ import android.os.Handler
 import android.os.Looper
 import android.telephony.TelephonyManager
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.SeekBar
@@ -69,6 +70,23 @@ class MainActivity : AppCompatActivity() {
                 turnOffFlashlight()
             } else {
                 turnOnFlashlight()
+            }
+        }
+
+        // flashLightBtn handler
+        val holdFlashLightBtn: Button = findViewById(R.id.holdFlashLightBtnId)
+        flashLightId = getFlashLightId()
+        holdFlashLightBtn.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    turnOnFlashlight()
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    turnOffFlashlight()
+                    false
+                }
+                else -> {false}
             }
         }
 
@@ -185,6 +203,11 @@ class MainActivity : AppCompatActivity() {
         if (isFlashLightOn) {
             turnOffFlashlight()
         }
+        if (sendSOS) {
+            sendSOS = !sendSOS
+            loopHandler.removeCallbacksAndMessages(null)
+            turnOffFlashlight()
+        }
     }
 
     override fun onRestart() {
@@ -213,6 +236,11 @@ class MainActivity : AppCompatActivity() {
         }
         if (receiverIsRegistered) {
             unregisterReceiver(incomingCallReceiver)
+        }
+        if (sendSOS) {
+            sendSOS = !sendSOS
+            loopHandler.removeCallbacksAndMessages(null)
+            turnOffFlashlight()
         }
     }
 
