@@ -142,17 +142,19 @@ class MainActivity : AppCompatActivity() {
         })
 
         // flickerFlashLightBtn handler
-        val flickerFlashLightBtn : Button = findViewById(R.id.flickerFlashLightId)
+        val flickerFlashLightBtn : ImageButton = findViewById(R.id.flickerFlashLightId)
         flickerFlashLightBtn.setOnClickListener {
             if (!isFlickering) {
                 startFlickering()
                 isFlickering = true
                 flickeringBar.visibility = View.VISIBLE
+                flickerFlashLightBtn.setImageResource(R.drawable.on_flicker)
             }
             else {
                 stopFlickering()
                 isFlickering = false
                 flickeringBar.visibility = View.INVISIBLE
+                flickerFlashLightBtn.setImageResource(R.drawable.off_flicker)
             }
         }
 
@@ -184,16 +186,18 @@ class MainActivity : AppCompatActivity() {
 
 
         // sosBtn handler
-        val sosBtn : Button = findViewById(R.id.sosBtn)
+        val sosBtn : ImageButton = findViewById(R.id.sosBtn)
         sosBtn.setOnClickListener {
             sendSOS = !sendSOS
             if (sendSOS) {
                 repeatSOS()
+                sosBtn.setImageResource(R.drawable.soson)
             }
             else {
                 Log.i("MainActivity", "STOP SOS")
                 loopHandler.removeCallbacksAndMessages(null)
                 turnOffFlashlight()
+                sosBtn.setImageResource(R.drawable.sos)
             }
         }
     }

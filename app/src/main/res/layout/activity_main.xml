@@ -10,43 +10,28 @@
 
     <Button
         android:id="@+id/rearCameraFlashLightBtnId"
-        android:layout_width="167dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="140dp"
+        android:layout_width="125dp"
+        android:layout_height="73dp"
         android:text="@string/rearCameraFlashLightBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId" />
+        tools:layout_editor_absoluteX="-12dp"
+        tools:layout_editor_absoluteY="13dp" />
 
     <Button
         android:id="@+id/takePhotoBtnId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="67dp"
         android:text="@string/takePhotoBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rearCameraFlashLightBtnId"
-        app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId" />
-
-    <Button
-        android:id="@+id/flickerFlashLightId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:text="@string/flickerFlashLightBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rearCameraFlashLightBtnId" />
+        tools:layout_editor_absoluteX="63dp"
+        tools:layout_editor_absoluteY="38dp" />
 
     <SeekBar
         android:id="@+id/flickeringBarId"
-        android:layout_width="277dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="16dp"
-        android:tag="fsfsa"
+        android:layout_width="201dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="2dp"
+        android:progressTint="#47C4EE"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,43 +39,57 @@
 
     <Switch
         android:id="@+id/switchFlickerIncomingCallsId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
+        android:layout_width="197dp"
+        android:layout_height="45dp"
         android:checked="false"
         android:text="@string/incomingCallOff"
+        android:textColor="#FDFDFD"
         android:textOff="@string/incomingCallOff"
         android:textOn="@string/incomingCallOn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flickeringBarId" />
-
-    <Button
-        android:id="@+id/sosBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:text="@string/sosBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchFlickerIncomingCallsId" />
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="50dp" />
 
     <ImageButton
         android:id="@+id/flashLightBtnId"
-        android:layout_width="110dp"
-        android:layout_height="77dp"
-        android:layout_marginStart="155dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="155dp"
+        android:layout_width="177dp"
+        android:layout_height="153dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="184dp"
+        android:layout_marginEnd="124dp"
         android:background="#00A83939"
         android:contentDescription="@string/flashLightBtn"
-        android:scaleType="fitCenter"
+        android:scaleType="fitEnd"
         android:src="@drawable/off"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/flickerFlashLightId"
+        android:layout_width="46dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="7dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId"
+        app:srcCompat="@drawable/off_flicker" />
+
+    <ImageButton
+        android:id="@+id/sosBtn"
+        android:layout_width="44dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="62dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/flashLightBtnId"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.342"
+        app:srcCompat="@drawable/sos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
