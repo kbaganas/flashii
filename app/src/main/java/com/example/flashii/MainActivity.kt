@@ -130,8 +130,8 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 setFlickeringHz(progress.toLong())
                 flickerText.text = "$flickerFlashLightHz" + "Hz"
-                val delta = flickeringBar.thumb.bounds.right - thumbInitialPosition
-                flickerText.y = hzInitialPosition.toFloat() - delta * 1.5.toFloat()
+                //val delta = flickeringBar.thumb.bounds.left - thumbInitialPosition
+                //flickerText.x = hzInitialPosition.toFloat() + delta * 1.25.toFloat()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -190,27 +190,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-//    private fun registerTelephonyCallback() {
-//        var telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-//        val executorist = Executor { r -> r.run() }
-//
-//        var callStateListener = object : TelephonyCallback(),  TelephonyCallback.CallStateListener {
-//            override fun onCallStateChanged(state: Int) {
-//                when (state) {
-//                    TelephonyManager.CALL_STATE_RINGING -> {
-//                        Log.i("MainActivity", "Phone Is Ringing")
-//                    }
-//                    TelephonyManager.CALL_STATE_OFFHOOK -> {
-//                        Log.i("MainActivity", "Phone call is answered")
-//                    }
-//                    TelephonyManager.CALL_STATE_IDLE -> {
-//                        Log.i("MainActivity", "Phone Is idle")
-//                    }
-//                }
-//            }
-//        }
-//        telephonyManager.registerTelephonyCallback(executorist, callStateListener)
-//    }
 
     private fun enableIncomingCallFlickering (showSnack: Boolean = false) {
         incomingCallFlashiLightFlickers = true
@@ -268,14 +247,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startFlickering() {
-        if (!isFlickering) {
-            // flicker as flickerFlashLightHz
-            isFlickering = true
-            val delayedMilliseconds : Long =  1000 / (2 * flickerFlashLightHz)
-            atomicFlashLightOn()
-            loopHandler.postDelayed({ atomicFlashLightOff() }, delayedMilliseconds)
-            loopHandler.postDelayed({ startFlickering() }, delayedMilliseconds * 2)
-        }
+        // flicker as flickerFlashLightHz
+        isFlickering = true
+        val periodOfFlashLightInMilliseconds : Long =  1000 / flickerFlashLightHz
+        atomicFlashLightOn()
+        loopHandler.postDelayed({ atomicFlashLightOff() }, (periodOfFlashLightInMilliseconds / 2))
+        loopHandler.postDelayed({ startFlickering() }, periodOfFlashLightInMilliseconds)
     }
 
 
@@ -335,7 +312,7 @@ class MainActivity : AppCompatActivity() {
         flickerText.text = "$flickerFlashLightHz" + "Hz"
         flickerFlashLightBtn.setImageResource(R.drawable.on_flicker)
         thumbInitialPosition = flickeringBar.thumb.bounds.right
-        hzInitialPosition = flickerText.y.toInt()
+        hzInitialPosition = flickerText.x.toInt()
     }
 
     private fun resetFlickeringFlashlightBtn () {
@@ -392,12 +369,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun repeatSOS() {
-        if (!sendSOS) {
-            sendSOS = true
-            Log.i("MainActivity", "SEND SOS")
-            val durationOfWord = S(O(S()))
-            loopHandler.postDelayed({repeatSOS()}, durationOfWord + SPACE_WORDS_DURATION)
-        }
+        sendSOS = true
+        val durationOfWord = S(O(S()))
+        loopHandler.postDelayed({repeatSOS()}, durationOfWord + SPACE_WORDS_DURATION)
     }
 
     private fun stopSOS (showSnack : Boolean = false) {
