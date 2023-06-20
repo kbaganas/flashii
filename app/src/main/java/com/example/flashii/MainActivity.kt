@@ -8,7 +8,6 @@ import android.content.IntentFilter
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,11 +18,15 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import com.google.android.material.snackbar.Snackbar
 import com.example.flashii.databinding.ActivityMainBinding
+import android.Manifest
+import androidx.core.content.ContextCompat
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -45,12 +48,11 @@ class MainActivity : AppCompatActivity() {
     private var flickerFlashLightHz : Long = 1
     private var isFlickering : Boolean = false
     private var loopHandler : Handler = Handler(Looper.getMainLooper())
-    private var receiverIsRegistered : Boolean = false
-    private var incomingCallReceiver : IncomingCallReceiver? = null
+    private lateinit var incomingCallReceiver : BroadcastReceiver
     private var sendSOS : Boolean = false
     private var touchStartTime : Long = 0
     private lateinit var viewBinding: ActivityMainBinding
-    private var incomingCallFlickerToBeEnabled : Boolean = true
+    private var incomingCallFlashiLightFlickers : Boolean = false
     private lateinit var  sosBtn : ImageButton
     private lateinit var flickeringBar : SeekBar
     private lateinit var flickerText : TextView
@@ -58,9 +60,9 @@ class MainActivity : AppCompatActivity() {
     var thumbInitialPosition = 0
     var hzInitialPosition = 0
     private lateinit var flashlightButton : ImageButton
+    private lateinit var incomingCallFlickerBtn : ImageButton
 
     @SuppressLint("SetTextI18n")
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -154,39 +156,33 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 stopFlickering()
+                resetFlickeringFlashlightBtn()
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
-        incomingCallReceiver = IncomingCallReceiver()
-        Log.i("MainActivity","incomingCallReceiver = $incomingCallReceiver, intentFilter = $intentFilter")
-        registerReceiver(incomingCallReceiver, intentFilter)
+        incomingCallFlickerBtn = findViewById(R.id.switchFlickerIncomingCallsId)
+        incomingCallFlickerBtn.visibility = ImageButton.INVISIBLE
 
+        val permission = Manifest.permission.READ_PHONE_STATE
+        val requestCode = 123 // Any unique request code
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            // Permission has not been granted yet, so request it
+            ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+        } else {
+            // Permission has already been granted, so register the TelephonyCallback
+            incomingCallFlickerBtn.visibility = ImageButton.VISIBLE
+        }
 
-        val incomingCallFlickerSwitch = findViewById<ImageButton>(R.id.switchFlickerIncomingCallsId)
-        incomingCallFlickerSwitch.setOnClickListener {
-            if (incomingCallFlickerToBeEnabled) {
+        incomingCallFlickerBtn.setOnClickListener {
+            if (!incomingCallFlashiLightFlickers) {
                 Log.i("MainActivity","incomingCallFlickerToBeEnabled is ON")
-                if (receiverIsRegistered) {
-                    Log.i("MainActivity","receiverIsRegistered is already true")
-                }
-                else {
-                    Log.i("MainActivity","intent and registration is ON")
-                    val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
-                    registerReceiver(incomingCallReceiver, intentFilter)
-                    receiverIsRegistered = true
-                    incomingCallFlickerToBeEnabled = !incomingCallFlickerToBeEnabled
-                    incomingCallFlickerSwitch.setImageResource(R.drawable.phoneringingon)
-                    Snackbar.make(rootView, "Flashlight ON for incoming calls", Snackbar.LENGTH_SHORT).show()
-                }
+                enableIncomingCallFlickering(true)
+                setIncomingCallFlickeringBtn()
             } else {
                 Log.i("MainActivity", "incomingCallFlickerSwitch is OFF")
-                unregisterReceiver(incomingCallReceiver)
-                receiverIsRegistered = false
-                incomingCallFlickerToBeEnabled = !incomingCallFlickerToBeEnabled
-                incomingCallFlickerSwitch.setImageResource(R.drawable.phoneriningoff)
-                Snackbar.make(rootView, "Feature disabled", Snackbar.LENGTH_SHORT).show()
+                disableIncomingCallFlickering(true)
+                resetIncomingCallFlickeringBtn()
             }
         }
 
@@ -194,6 +190,69 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+//    private fun registerTelephonyCallback() {
+//        var telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+//        val executorist = Executor { r -> r.run() }
+//
+//        var callStateListener = object : TelephonyCallback(),  TelephonyCallback.CallStateListener {
+//            override fun onCallStateChanged(state: Int) {
+//                when (state) {
+//                    TelephonyManager.CALL_STATE_RINGING -> {
+//                        Log.i("MainActivity", "Phone Is Ringing")
+//                    }
+//                    TelephonyManager.CALL_STATE_OFFHOOK -> {
+//                        Log.i("MainActivity", "Phone call is answered")
+//                    }
+//                    TelephonyManager.CALL_STATE_IDLE -> {
+//                        Log.i("MainActivity", "Phone Is idle")
+//                    }
+//                }
+//            }
+//        }
+//        telephonyManager.registerTelephonyCallback(executorist, callStateListener)
+//    }
+
+    private fun enableIncomingCallFlickering (showSnack: Boolean = false) {
+        incomingCallFlashiLightFlickers = true
+        incomingCallReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                Log.i("MainActivity", "Phone is ringing loc5")
+                if (intent.action == TelephonyManager.ACTION_PHONE_STATE_CHANGED) {
+                    val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
+                    if (state == TelephonyManager.EXTRA_STATE_RINGING) {
+                        Log.i("MainActivity", "Phone starts flickering")
+                        startFlickering()
+                    }
+                    else if (state == TelephonyManager.EXTRA_STATE_IDLE || state == TelephonyManager.EXTRA_STATE_OFFHOOK) {
+                        Log.i("MainActivity", "Phone stopped flickering")
+                        stopFlickering()
+                    }
+                }
+            }
+        }
+        val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
+        registerReceiver(incomingCallReceiver, intentFilter)
+        if (showSnack) {
+            Snackbar.make(rootView, "Incoming calls flickering ON", Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun disableIncomingCallFlickering (showSnack: Boolean = false) {
+        incomingCallFlashiLightFlickers = false
+        stopFlickering()
+        unregisterReceiver(incomingCallReceiver)
+        if (showSnack) {
+            Snackbar.make(rootView, "Incoming calls flickering OFF", Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setIncomingCallFlickeringBtn () {
+        incomingCallFlickerBtn.setImageResource(R.drawable.phoneringingon)
+    }
+
+    private fun resetIncomingCallFlickeringBtn () {
+        incomingCallFlickerBtn.setImageResource(R.drawable.phoneriningoff)
+    }
 
     fun setFlickeringHz(hz : Long) {
         flickerFlashLightHz = hz
@@ -205,7 +264,6 @@ class MainActivity : AppCompatActivity() {
             isFlickering = false
             loopHandler.removeCallbacksAndMessages(null)
             atomicFlashLightOff()
-            resetFlickeringFlashlightBtn()
         }
     }
 
@@ -355,6 +413,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Handle the permission request result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // Permission has been granted, so register the TelephonyCallback
+            incomingCallFlickerBtn.visibility = ImageButton.VISIBLE
+        }
+    }
+
     override fun onPause() {
         Log.i("MainActivity", "onPause is running")
         super.onPause()
@@ -377,6 +444,9 @@ class MainActivity : AppCompatActivity() {
         else if (isFlickering) {
             stopFlickering()
         }
+        else if (incomingCallFlashiLightFlickers) {
+            unregisterReceiver(incomingCallReceiver)
+        }
     }
 
     private fun resetAllActivities () {
@@ -392,6 +462,12 @@ class MainActivity : AppCompatActivity() {
         }
         else if (isFlickering) {
             stopFlickering()
+            resetFlickeringFlashlightBtn()
+        }
+        else if (incomingCallFlashiLightFlickers) {
+            stopFlickering()
+            resetIncomingCallFlickeringBtn()
+            unregisterReceiver(incomingCallReceiver)
         }
     }
 
@@ -408,19 +484,4 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-
-class IncomingCallReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        Log.i("MainActivity", "Phone is ringing loc1")
-        if (intent.action == TelephonyManager.ACTION_PHONE_STATE_CHANGED) {
-            val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
-            if (state == TelephonyManager.EXTRA_STATE_RINGING) {
-                Log.i("MainActivity", "Phone is ringing")
-                // Perform your desired actions when a call is received
-                // For example, you can toggle the flashlight here
-                // or trigger any other functionality
-            }
-        }
-    }
-}
 
