@@ -1,5 +1,6 @@
 package com.example.flashii
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -7,7 +8,6 @@ import android.content.IntentFilter
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -16,20 +16,14 @@ import android.telephony.TelephonyManager
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
-import androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
-import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.snackbar.Snackbar
-import java.io.File
+import com.example.flashii.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,11 +40,8 @@ class MainActivity : AppCompatActivity() {
 
     // variables
     private lateinit var cameraManager : CameraManager
-    private lateinit var cameraProvider: ProcessCameraProvider
-    private lateinit var flashLightId : String
+    private var flashLightId : String = "0"
     private var isFlashLightOn = false
-    private var isRearCameraAndFlashLightOn = false
-    private lateinit var imageCapture : ImageCapture
     private var flickerFlashLightHz : Long = 1
     private var isFlickering : Boolean = false
     private var loopHandler : Handler = Handler(Looper.getMainLooper())
@@ -58,7 +49,17 @@ class MainActivity : AppCompatActivity() {
     private var incomingCallReceiver : IncomingCallReceiver? = null
     private var sendSOS : Boolean = false
     private var touchStartTime : Long = 0
+    private lateinit var viewBinding: ActivityMainBinding
+    private var incomingCallFlickerToBeEnabled : Boolean = true
+    private lateinit var  sosBtn : ImageButton
+    private lateinit var flickeringBar : SeekBar
+    private lateinit var flickerText : TextView
+    private lateinit var flickerFlashLightBtn : ImageButton
+    var thumbInitialPosition = 0
+    var hzInitialPosition = 0
+    private lateinit var flashlightButton : ImageButton
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,21 +68,22 @@ class MainActivity : AppCompatActivity() {
 
         // setup cameraManager
         cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
 
-
+        ///////////////////////////////////////////////////////////////////////////////////////
         // flashLightBtn handler
-        val flashlightButton: ImageButton = findViewById(R.id.flashLightBtnId)
-        flashLightId = getFlashLightId()
+        setFlashLightId()
+        flashlightButton = findViewById(R.id.flashLightBtnId)
         flashlightButton.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     if (isFlashLightOn) {
                         turnOffFlashlight()
-                        flashlightButton.setImageResource(R.drawable.off)
                     } else {
+                        resetAllActivities()
                         touchStartTime = System.currentTimeMillis()
                         turnOnFlashlight()
-                        flashlightButton.setImageResource(R.drawable.on)
                     }
                     true
                 }
@@ -90,7 +92,6 @@ class MainActivity : AppCompatActivity() {
                     // If otherwise, user just clicked to enable or disable the flashlight.
                     if (System.currentTimeMillis() - touchStartTime > 350) {
                         turnOffFlashlight()
-                        flashlightButton.setImageResource(R.drawable.off)
                     }
                     false
                 }
@@ -98,62 +99,42 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////
         // sosBtn handler
-        val sosBtn : ImageButton = findViewById(R.id.sosBtn)
+        sosBtn = findViewById(R.id.sosBtn)
         sosBtn.setOnClickListener {
-            sendSOS = !sendSOS
-            if (sendSOS) {
+            if (!sendSOS) {
+                resetAllActivities()
                 repeatSOS()
-                sosBtn.setImageResource(R.drawable.soson)
+                setSOSBtn()
                 Snackbar.make(rootView, "SOS message started (in Morse code)", Snackbar.LENGTH_SHORT).show()
             }
             else {
-                Log.i("MainActivity", "STOP SOS")
-                loopHandler.removeCallbacksAndMessages(null)
-                turnOffFlashlight()
-                sosBtn.setImageResource(R.drawable.sos)
-                Snackbar.make(rootView, "SOS message stopped", Snackbar.LENGTH_SHORT).show()
+                stopSOS()
+                resetSOSBtn()
             }
         }
 
-
-        // rearCameraFlashLightBtn handler
-        val rearCameraFlashLightBtn: Button = findViewById(R.id.rearCameraFlashLightBtnId)
-        rearCameraFlashLightBtn.setOnClickListener {
-            if (isRearCameraAndFlashLightOn) {
-                turnOffRearCameraAndFlashLight()
-            } else {
-                turnOnRearCameraAndFlashLight()
-            }
-        }
-
-        // takePhotoBtn handler
-        val takePhotoBtn: Button = findViewById(R.id.takePhotoBtnId)
-        takePhotoBtn.setOnClickListener {
-            takePhoto()
-        }
-
+        ///////////////////////////////////////////////////////////////////////////////////////
         // flicker seekbar and textview handler
-        val flickeringBar = findViewById<SeekBar>(R.id.flickeringBarId)
-        var flickerText = findViewById<TextView>(R.id.flickerTextViewId)
+        flickeringBar = findViewById<SeekBar>(R.id.flickeringBarId)
+        flickerText = findViewById<TextView>(R.id.flickerTextViewId)
         flickeringBar.min = MIN_FLICKER_HZ
         flickeringBar.max = MAX_FLICKER_HZ
         flickeringBar.visibility = View.INVISIBLE
         flickerText.visibility = View.INVISIBLE
-        var thumbInitialPosition = 0
-        var hzInitialPosition = 0
 
         flickeringBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 setFlickeringHz(progress.toLong())
                 flickerText.text = "$flickerFlashLightHz" + "Hz"
-                var delta = flickeringBar.thumb.bounds.right - thumbInitialPosition
+                val delta = flickeringBar.thumb.bounds.right - thumbInitialPosition
                 flickerText.y = hzInitialPosition.toFloat() - delta * 1.5.toFloat()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                stopFlickering()
-                Log.d("MainActivity", "Flickering OFF")
+                loopHandler.removeCallbacksAndMessages(null)
+                atomicFlashLightOff()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -163,54 +144,51 @@ class MainActivity : AppCompatActivity() {
         })
 
         // flicker flashlight button handler
-        val flickerFlashLightBtn : ImageButton = findViewById(R.id.flickerFlashLightId)
+        flickerFlashLightBtn = findViewById(R.id.flickerFlashLightId)
         flickerFlashLightBtn.setOnClickListener {
             if (!isFlickering) {
+                Log.d("MainActivity", "Flickering ON with ${flickerFlashLightHz}Hz")
+                resetAllActivities()
                 startFlickering()
-                isFlickering = true
-                flickeringBar.visibility = View.VISIBLE
-                flickerText.visibility = View.VISIBLE
-                flickerText.text = "$flickerFlashLightHz" + "Hz"
-                flickerFlashLightBtn.setImageResource(R.drawable.on_flicker)
-                thumbInitialPosition = flickeringBar.thumb.bounds.right
-                hzInitialPosition = flickerText.y.toInt()
-//                Snackbar.make(rootView, "Flashlight flickering started", Snackbar.LENGTH_SHORT).show()
+                setFlickeringFlashlightBtn()
             }
             else {
                 stopFlickering()
-                isFlickering = false
-                flickeringBar.visibility = View.INVISIBLE
-                flickerText.visibility = View.INVISIBLE
-                flickerFlashLightBtn.setImageResource(R.drawable.off_flicker)
-//                Snackbar.make(rootView, "Flashlight flickering ended", Snackbar.LENGTH_SHORT).show()
             }
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////
         val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
         incomingCallReceiver = IncomingCallReceiver()
         Log.i("MainActivity","incomingCallReceiver = $incomingCallReceiver, intentFilter = $intentFilter")
         registerReceiver(incomingCallReceiver, intentFilter)
 
 
-//        var incomingCallFlickerSwitch = findViewById<Switch>(R.id.switchFlickerIncomingCallsId)
-//        incomingCallFlickerSwitch.setOnCheckedChangeListener { _, switchedOn ->
-//            if (switchedOn) {
-//                Log.i("MainActivity","incomingCallFlickerSwitch is ON")
-//                if (receiverIsRegistered) {
-//                    Log.i("MainActivity","receiverIsRegistered is already true")
-//                }
-//                else {
-//                    Log.i("MainActivity","intent and registration is ON")
-//                    val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
-//                    registerReceiver(incomingCallReceiver, intentFilter)
-//                    receiverIsRegistered = true
-//                }
-//            } else {
-//                Log.i("MainActivity", "incomingCallFlickerSwitch is OFF")
-//                unregisterReceiver(incomingCallReceiver)
-//                receiverIsRegistered = false
-//            }
-//        }
+        val incomingCallFlickerSwitch = findViewById<ImageButton>(R.id.switchFlickerIncomingCallsId)
+        incomingCallFlickerSwitch.setOnClickListener {
+            if (incomingCallFlickerToBeEnabled) {
+                Log.i("MainActivity","incomingCallFlickerToBeEnabled is ON")
+                if (receiverIsRegistered) {
+                    Log.i("MainActivity","receiverIsRegistered is already true")
+                }
+                else {
+                    Log.i("MainActivity","intent and registration is ON")
+                    val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
+                    registerReceiver(incomingCallReceiver, intentFilter)
+                    receiverIsRegistered = true
+                    incomingCallFlickerToBeEnabled = !incomingCallFlickerToBeEnabled
+                    incomingCallFlickerSwitch.setImageResource(R.drawable.phoneringingon)
+                    Snackbar.make(rootView, "Flashlight ON for incoming calls", Snackbar.LENGTH_SHORT).show()
+                }
+            } else {
+                Log.i("MainActivity", "incomingCallFlickerSwitch is OFF")
+                unregisterReceiver(incomingCallReceiver)
+                receiverIsRegistered = false
+                incomingCallFlickerToBeEnabled = !incomingCallFlickerToBeEnabled
+                incomingCallFlickerSwitch.setImageResource(R.drawable.phoneriningoff)
+                Snackbar.make(rootView, "Feature disabled", Snackbar.LENGTH_SHORT).show()
+            }
+        }
 
 
 
@@ -222,119 +200,97 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun stopFlickering() {
-        loopHandler.removeCallbacksAndMessages(null)
-        turnOffFlashlight()
+        if (isFlickering) {
+            Log.d("MainActivity", "Flickering OFF")
+            isFlickering = false
+            loopHandler.removeCallbacksAndMessages(null)
+            atomicFlashLightOff()
+            resetFlickeringFlashlightBtn()
+        }
     }
 
     fun startFlickering() {
-        // flicker as flickerFlashLightHz
-        val delayedMilliseconds : Long =  1000 / (2 * flickerFlashLightHz)
-        turnOnFlashlight()
-        loopHandler.postDelayed({ turnOffFlashlight() }, delayedMilliseconds)
-        loopHandler.postDelayed({ startFlickering() }, delayedMilliseconds * 2)
-    }
-
-    private fun takePhoto() {
-        // Ensure the cameraProvider is available
-        if (::cameraProvider.isInitialized) {
-            val outputFile = File(externalMediaDirs.first(), "flashii_photo.jpg")
-            val outputOptions = ImageCapture.OutputFileOptions.Builder(outputFile).build()
-
-            cameraProvider.bindToLifecycle(this as LifecycleOwner, DEFAULT_BACK_CAMERA, imageCapture)
-
-            imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(this),
-                object : ImageCapture.OnImageSavedCallback {
-                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        val savedUri = outputFileResults.savedUri ?: Uri.fromFile(outputFile)
-                        Log.i("MainActivity","takePicture was successful : $savedUri")
-                    }
-
-                    override fun onError(exception: ImageCaptureException) {
-                        Log.d("MainActivity", "takePhoto - ERROR: $exception")
-                    }
-                })
+        if (!isFlickering) {
+            // flicker as flickerFlashLightHz
+            isFlickering = true
+            val delayedMilliseconds : Long =  1000 / (2 * flickerFlashLightHz)
+            atomicFlashLightOn()
+            loopHandler.postDelayed({ atomicFlashLightOff() }, delayedMilliseconds)
+            loopHandler.postDelayed({ startFlickering() }, delayedMilliseconds * 2)
         }
     }
 
-    private fun turnOnRearCameraAndFlashLight() {
-        try {
-            turnOnRearCameraForPhoto()
-            turnOnFlashlight()
-            isRearCameraAndFlashLightOn = true
-            Log.i("MainActivity","RearCameraAndFlashLight are ON")
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
-            Log.d("MainActivity", "RearCameraAndFlashLight ON - ERROR: $e")
-        }
+
+    private fun atomicFlashLightOn () {
+        cameraManager.setTorchMode(flashLightId, true)
     }
 
-    private fun turnOnRearCameraForPhoto() {
-        val rearCameraProvider = ProcessCameraProvider.getInstance(this)
-
-        rearCameraProvider.addListener({
-            cameraProvider = rearCameraProvider.get()
-            imageCapture = ImageCapture.Builder().setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY).build()
-            try {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(this as LifecycleOwner, DEFAULT_BACK_CAMERA, imageCapture)
-                Log.d("MainActivity", "RearCameraPhoto are ON")
-            } catch (e: Exception) {
-                Log.d("MainActivity", "RearCameraPhoto ON - ERROR: $e")
-            }
-        }, ContextCompat.getMainExecutor(this))
-    }
-
-    private fun turnOffRearCameraAndFlashLight() {
-        try {
-            turnOffRearCameraForPhoto()
-            turnOffFlashlight()
-            isRearCameraAndFlashLightOn = false
-            Log.i("MainActivity","RearCameraAndFlashLight are OFF")
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
-            Log.d("MainActivity", "RearCameraAndFlashLight OFF - ERROR: $e")
-        }
-    }
-
-    private fun turnOffRearCameraForPhoto() {
-        try {
-            cameraProvider.unbindAll()
-            Log.d("MainActivity", "RearCameraPhoto OFF")
-        }
-        catch (e : CameraAccessException) {
-            Log.d("MainActivity", "RearCameraPhoto OFF - ERROR: $e")
-        }
+    private fun atomicFlashLightOff () {
+        cameraManager.setTorchMode(flashLightId, false)
     }
 
     private fun turnOnFlashlight() {
-        try {
-            cameraManager.setTorchMode(flashLightId, true)
-            isFlashLightOn = true
-            //Log.i("MainActivity","FlashLight is ON")
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
-            Log.d("MainActivity", "FlashLight ON - ERROR: $e")
+        if (!isFlashLightOn) {
+            try {
+                isFlashLightOn = true
+                atomicFlashLightOn()
+                setFlashLightBtn()
+                Log.d("MainActivity", "FlashLight ON")
+            } catch (e: CameraAccessException) {
+                Log.d("MainActivity", "FlashLight ON - ERROR: $e")
+            }
         }
     }
 
     private fun turnOffFlashlight() {
-        try {
-            cameraManager.setTorchMode(flashLightId, false)
-            isFlashLightOn = false
-            //Log.i("MainActivity","FlashLight is OFF")
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
-            Log.d("MainActivity", "FlashLight OFF - ERROR: $e")
+        if (isFlashLightOn) {
+            try {
+                isFlashLightOn = false
+                atomicFlashLightOff()
+                resetFlashLightBtn()
+                Log.d("MainActivity", "FlashLight OFF")
+            } catch (e: CameraAccessException) {
+                Log.d("MainActivity", "FlashLight OFF - ERROR: $e")
+            }
         }
     }
 
-    private fun getFlashLightId () : String {
-        var flashLightId = ""
+    private fun setFlashLightBtn () {
+        flashlightButton.setImageResource(R.drawable.on)
+    }
+
+    private fun resetFlashLightBtn () {
+        flashlightButton.setImageResource(R.drawable.off)
+    }
+
+    private fun setSOSBtn () {
+        sosBtn.setImageResource(R.drawable.soson)
+    }
+
+    private fun resetSOSBtn () {
+        sosBtn.setImageResource(R.drawable.sos)
+    }
+
+    private fun setFlickeringFlashlightBtn () {
+        flickeringBar.visibility = View.VISIBLE
+        flickerText.visibility = View.VISIBLE
+        flickerText.text = "$flickerFlashLightHz" + "Hz"
+        flickerFlashLightBtn.setImageResource(R.drawable.on_flicker)
+        thumbInitialPosition = flickeringBar.thumb.bounds.right
+        hzInitialPosition = flickerText.y.toInt()
+    }
+
+    private fun resetFlickeringFlashlightBtn () {
+        flickeringBar.visibility = View.INVISIBLE
+        flickerText.visibility = View.INVISIBLE
+        flickerFlashLightBtn.setImageResource(R.drawable.off_flicker)
+    }
+
+    private fun setFlashLightId () {
         // Iterate over the available camera devices
         for (id in cameraManager.cameraIdList) {
             val characteristics = cameraManager.getCameraCharacteristics(id)
             val lensFacing = characteristics.get(CameraCharacteristics.LENS_FACING)
-
             // Check if the camera is the rear camera
             if (lensFacing == CameraCharacteristics.LENS_FACING_BACK) {
                 // Rear camera found. Now check if the rear camera has a flashlight
@@ -344,19 +300,20 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        return flashLightId
+        Log.d("MainActivity", "setFlashLightAndCameraIds - flashLightId = $flashLightId")
     }
+
 
     // dit flashing per Morse code
     private fun dit () {
-        turnOnFlashlight()
-        loopHandler.postDelayed({ turnOffFlashlight() }, DIT_DURATION)
+        atomicFlashLightOn()
+        loopHandler.postDelayed({ atomicFlashLightOff() }, DIT_DURATION)
     }
 
     // dah flashing per Morse code
     private fun dah () {
-        turnOnFlashlight()
-        loopHandler.postDelayed({ turnOffFlashlight() }, DAH_DURATION)
+        atomicFlashLightOn()
+        loopHandler.postDelayed({ atomicFlashLightOff() }, DAH_DURATION)
     }
 
     // S = ...
@@ -377,10 +334,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun repeatSOS() {
-        if (sendSOS) {
+        if (!sendSOS) {
+            sendSOS = true
             Log.i("MainActivity", "SEND SOS")
             val durationOfWord = S(O(S()))
             loopHandler.postDelayed({repeatSOS()}, durationOfWord + SPACE_WORDS_DURATION)
+        }
+    }
+
+    private fun stopSOS (showSnack : Boolean = false) {
+        if (sendSOS) {
+            sendSOS = false
+            Log.i("MainActivity", "STOP SOS")
+            loopHandler.removeCallbacksAndMessages(null)
+            atomicFlashLightOff()
+            resetSOSBtn()
+            if (showSnack) {
+                Snackbar.make(rootView, "SOS message stopped", Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -397,25 +368,33 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         Log.i("MainActivity", "onDestroy is running")
         super.onDestroy()
-        if (isFlickering) {
-            stopFlickering()
-            isFlickering = false
-        }
         if (isFlashLightOn) {
             turnOffFlashlight()
         }
-        if (isRearCameraAndFlashLightOn) {
-            cameraProvider.unbindAll()
+        else if (sendSOS) {
+            stopSOS()
         }
-        if (receiverIsRegistered) {
-            unregisterReceiver(incomingCallReceiver)
-        }
-        if (sendSOS) {
-            sendSOS = !sendSOS
-            loopHandler.removeCallbacksAndMessages(null)
-            turnOffFlashlight()
+        else if (isFlickering) {
+            stopFlickering()
         }
     }
+
+    private fun resetAllActivities () {
+//        if (receiverIsRegistered) {
+//            unregisterReceiver(incomingCallReceiver)
+//        }
+        Log.i("MainActivity", "Reset all activities")
+        if (isFlashLightOn) {
+            turnOffFlashlight()
+        }
+        else if (sendSOS) {
+            stopSOS()
+        }
+        else if (isFlickering) {
+            stopFlickering()
+        }
+    }
+
 
     override fun onStop() {
         Log.i("MainActivity", "onStop is running")
@@ -427,9 +406,7 @@ class MainActivity : AppCompatActivity() {
         Log.i("MainActivity", "onResume is running")
     }
 
-
 }
-
 
 
 class IncomingCallReceiver : BroadcastReceiver() {

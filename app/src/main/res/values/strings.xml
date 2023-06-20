@@ -8,4 +8,5 @@
     <string name="incomingCallOff">Flicker on Incoming Calls OFF</string>
     <string name="incomingCallOn">Flicker on Incoming Calls ON</string>
     <string name="sosBtn">SOS</string>
+    <string name="oneHz">1Hz</string>
 </resources>
