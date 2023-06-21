@@ -31,6 +31,7 @@ import android.content.DialogInterface
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
+import android.provider.Telephony
 
 
 class MainActivity : AppCompatActivity() {
@@ -52,6 +53,11 @@ class MainActivity : AppCompatActivity() {
         SPEAK,
         OUT_OF_SERVICE,
         IN_SERVICE
+    }
+
+    enum class REQUEST_KEY(val value: Int) {
+        CALL(1),
+        SMS(2)
     }
 
     // Handlers, Managers, Receivers
@@ -214,6 +220,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
+        // incoming SMS handler
+        incomingSMSBtn = findViewById(R.id.smsBtnId)
+        incomingSMSBtn.visibility = ImageButton.INVISIBLE
+
+        incomingSMSBtn.setOnClickListener {
+            if (!incomingSMS) {
+                Log.i("MainActivity","SMS incoming handler is ON")
+                registerIncomingEvents(TypeOfEvent.SMS, true)
+                setIncomingSMSBtn()
+            } else {
+                Log.i("MainActivity", "SMS incoming handler is OFF")
+                disableIncomingSMSHandler()
+                resetIncomingSMSBtn()
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////
         // phone out/in network handler
         outInNetworkBtn = findViewById(R.id.networkConnectionBtn)
         outInNetworkBtn.visibility = ImageButton.INVISIBLE
@@ -225,7 +248,6 @@ class MainActivity : AppCompatActivity() {
                 isPhoneInNetwork = false
                 isPhoneOutOfNetwork = false
                 stopFlickering()
-//                unregisterReceiver(incomingNetworkReceiver)
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                 resetNetworkBtn()
             }
@@ -241,14 +263,14 @@ class MainActivity : AppCompatActivity() {
                     dialog.dismiss()
                     isPhoneOutOfNetwork = true
                     Log.i("MainActivity","Out of Network is ON")
-                    registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE, true)
+                    registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE)
                     setNetworkBtn()
                 }
                 alertDialogBuilder.setNegativeButton("Phone has found a WiFi/Data connection") { dialog: DialogInterface, _: Int ->
                     dialog.dismiss()
                     isPhoneInNetwork = true
                     Log.i("MainActivity","In Network is ON")
-                    registerIncomingEvents(TypeOfEvent.IN_SERVICE, true)
+                    registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                     setNetworkBtn()
                 }
                 alertDialogBuilder.setCancelable(false)
@@ -258,16 +280,19 @@ class MainActivity : AppCompatActivity() {
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Permissions handling
-        val permission = Manifest.permission.READ_PHONE_STATE
-        val requestCode = 123 // Any unique request code
-        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-            // Permission has not been granted yet, so request it
-            ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), REQUEST_KEY.CALL.value)
         } else {
             incomingCallBtn.visibility = ImageButton.VISIBLE
             outInNetworkBtn.visibility = ImageButton.VISIBLE
         }
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), REQUEST_KEY.SMS.value)
+        }
+        else {
+            incomingSMSBtn.visibility = ImageButton.VISIBLE
+        }
     }
 
     private fun registerIncomingEvents (eventType : TypeOfEvent, showSnack: Boolean = false) {
@@ -330,9 +355,32 @@ class MainActivity : AppCompatActivity() {
 
             }
             TypeOfEvent.SMS -> {
-
+                Log.i("MainActivity", "SMS_RECEIVED_ACTION registered")
+                incomingSMS = true
+                incomingSMSReceiver = object : BroadcastReceiver() {
+                    override fun onReceive(context: Context, intent: Intent) {
+                        Log.i("MainActivity", "EVENT INCOMING")
+                        if (intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
+                            Log.i("MainActivity", "SMS_RECEIVED_ACTION EVENT")
+                            startFlickering()
+                        }
+                    }
+                }
+                val intentFilter = IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
+                registerReceiver(incomingSMSReceiver, intentFilter)
+                if (showSnack) {
+                    Snackbar.make(rootView, "Incoming SMS flickering ON", Snackbar.LENGTH_SHORT).show()
+                }
             }
         }
+    }
+
+    private fun resetIncomingSMSBtn () {
+        incomingSMSBtn.setImageResource(R.drawable.sms_icon)
+    }
+
+    private fun setIncomingSMSBtn () {
+        incomingSMSBtn.setImageResource(R.drawable.sms_enabled)
     }
 
     private fun resetNetworkBtn () {
@@ -348,6 +396,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun disableIncomingSMSHandler (showSnack: Boolean = false) {
+        incomingSMS = false
+        stopFlickering()
+        unregisterReceiver(incomingSMSReceiver)
+        if (showSnack) {
+            Snackbar.make(rootView, "Incoming SMS flickering OFF", Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
     private fun disableIncomingCallFlickering (showSnack: Boolean = false) {
         incomingCall = false
         stopFlickering()
@@ -358,11 +415,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setIncomingCallFlickeringBtn () {
-        incomingCallBtn.setImageResource(R.drawable.phoneringingon)
+        incomingCallBtn.setImageResource(R.drawable.incoming_call_icon_enabled)
     }
 
     private fun resetIncomingCallFlickeringBtn () {
-        incomingCallBtn.setImageResource(R.drawable.phoneriningoff)
+        incomingCallBtn.setImageResource(R.drawable.incoming_call_icon)
     }
 
     fun setFlickeringHz(hz : Long) {
@@ -423,26 +480,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setFlashLightBtn () {
-        flashlightBtn.setImageResource(R.drawable.on)
+        flashlightBtn.setImageResource(R.drawable.on_btn2)
     }
 
     private fun resetFlashLightBtn () {
-        flashlightBtn.setImageResource(R.drawable.off)
+        flashlightBtn.setImageResource(R.drawable.off_btn2)
     }
 
     private fun setSOSBtn () {
-        sosBtn.setImageResource(R.drawable.soson)
+        sosBtn.setImageResource(R.drawable.sosbtn_enabled)
     }
 
     private fun resetSOSBtn () {
-        sosBtn.setImageResource(R.drawable.sos)
+        sosBtn.setImageResource(R.drawable.sosbtn)
     }
 
     private fun setFlickeringFlashlightBtn () {
         flickeringBar.visibility = View.VISIBLE
         flickerText.visibility = View.VISIBLE
         flickerText.text = "$flickerFlashlightHz" + "Hz"
-        flickerFlashlightBtn.setImageResource(R.drawable.on_flicker)
+        flickerFlashlightBtn.setImageResource(R.drawable.flicker_on3)
         thumbInitialPosition = flickeringBar.thumb.bounds.right
         hzInitialPosition = flickerText.x.toInt()
     }
@@ -450,7 +507,7 @@ class MainActivity : AppCompatActivity() {
     private fun resetFlickeringFlashlightBtn () {
         flickeringBar.visibility = View.INVISIBLE
         flickerText.visibility = View.INVISIBLE
-        flickerFlashlightBtn.setImageResource(R.drawable.off_flicker)
+        flickerFlashlightBtn.setImageResource(R.drawable.flicker_off3)
     }
 
     private fun setflashlightId () {
@@ -524,7 +581,14 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             // Permission has been granted, so register the TelephonyCallback
-            incomingCallBtn.visibility = ImageButton.VISIBLE
+            when (requestCode) {
+                REQUEST_KEY.CALL.value -> {
+                    incomingCallBtn.visibility = ImageButton.VISIBLE
+                }
+                REQUEST_KEY.SMS.value -> {
+                    incomingSMSBtn.visibility = ImageButton.VISIBLE
+                }
+            }
         }
     }
 
