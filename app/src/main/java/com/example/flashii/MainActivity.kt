@@ -28,6 +28,10 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import android.content.DialogInterface
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
@@ -64,6 +68,8 @@ class MainActivity : AppCompatActivity() {
     private var loopHandler : Handler = Handler(Looper.getMainLooper())
     private lateinit var cameraManager : CameraManager
     private lateinit var connectivityManager: ConnectivityManager
+    private lateinit var sensorManager : SensorManager
+    private lateinit var sensorEventListener : SensorEventListener
     private lateinit var connectivityCallback : ConnectivityManager.NetworkCallback
     private lateinit var incomingCallReceiver : BroadcastReceiver
     private lateinit var incomingSMSReceiver : BroadcastReceiver
@@ -92,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var outInNetworkBtn : ImageButton
     private lateinit var incomingSMSBtn : ImageButton
     private lateinit var incomingShakeBtn : ImageButton
-    private lateinit var incomingSpeakBtn : ImageButton
+    private lateinit var incomingSoundBtn : ImageButton
 
     // variables
     private var flickerFlashlightHz : Long = 1
@@ -216,6 +222,64 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "incomingCallFlickerSwitch is OFF")
                 disableIncomingCallFlickering()
                 resetIncomingCallFlickeringBtn()
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        // incoming sound handler
+        incomingSoundBtn = findViewById(R.id.incomingSoundBtnId)
+//        incomingSoundBtn.visibility = ImageButton.INVISIBLE
+
+        incomingSoundBtn.setOnClickListener {
+            if (!isSoundIncoming) {
+                Log.i("MainActivity","isSoundIncoming is ON")
+                isSoundIncoming = true
+                setIncomingSoundBtn()
+            } else {
+                Log.i("MainActivity", "isSoundIncoming is OFF")
+                isSoundIncoming = false
+                resetIncomingSoundBtn()
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        // shake phone handler
+        incomingShakeBtn = findViewById(R.id.incomingShakeBtnId)
+        incomingShakeBtn.setOnClickListener {
+            if (!isPhoneShaked) {
+                Log.i("MainActivity","isPhoneShaked is ON")
+                sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                var accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+                if (accelerometerSensor != null) {
+                    sensorEventListener = object : SensorEventListener {
+                        override fun onSensorChanged(event: SensorEvent) {
+                            // Handle accelerometer sensor changes here
+                            val x = event.values[0]
+                            val y = event.values[1]
+                            val z = event.values[2]
+                            // Process the sensor data as needed
+                            Log.i("MainActivity","onSensorChanged EVENT received")
+                        }
+
+                        override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+                            // Handle accuracy changes if needed
+                            Log.i("MainActivity","onAccuracyChanged EVENT received")
+                        }
+                    }
+                    sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
+                    setShakeBtn()
+                    isPhoneShaked = true
+                }
+                else {
+                    // we have to disable the btn now since accelerometer sensor is not available on the device
+                    Log.i("MainActivity","Accelerometer not available")
+                    incomingShakeBtn.visibility = ImageButton.INVISIBLE
+                }
+            } else {
+                Log.i("MainActivity", "isPhoneShaked is OFF")
+                sensorManager.unregisterListener(sensorEventListener)
+                resetShakeBtn()
+                isPhoneShaked = false
             }
         }
 
@@ -373,6 +437,22 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun setIncomingSoundBtn () {
+        incomingSoundBtn.setImageResource(R.drawable.sound_on)
+    }
+
+    private fun resetIncomingSoundBtn () {
+        incomingSoundBtn.setImageResource(R.drawable.sound_off)
+    }
+
+    private fun setShakeBtn () {
+        incomingShakeBtn.setImageResource(R.drawable.shake_enabled)
+    }
+
+    private fun resetShakeBtn () {
+        incomingShakeBtn.setImageResource(R.drawable.shake_icon)
     }
 
     private fun resetIncomingSMSBtn () {
