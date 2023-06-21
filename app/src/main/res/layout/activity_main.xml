@@ -93,4 +93,18 @@
         app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId"
         app:srcCompat="@drawable/phoneriningoff" />
 
+    <ImageButton
+        android:id="@+id/networkConnectionBtn"
+        android:layout_width="56dp"
+        android:layout_height="61dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/switchFlickerIncomingCallsId"
+        app:layout_constraintEnd_toStartOf="@+id/flashLightBtnId"
+        app:layout_constraintHorizontal_bias="0.78"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.797"
+        app:srcCompat="@drawable/wifi_icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
