@@ -9,4 +9,12 @@
     <string name="incomingCallOn">Flicker on Incoming Calls ON</string>
     <string name="sosBtn">SOS</string>
     <string name="oneHz">1Hz</string>
+    <string name="IncomingCallContentDescription">Flashlight flickers on incoming calls</string>
+    <string name="IncomingSMSContentDescription">Flashlight flickers on incoming SMSes</string>
+    <string name="ShakenBtnContentDescription">Flashlight on/off on phone shaking</string>
+    <string name="SOSBtnContentDescription">Flashlight sends SOS in Morse code</string>
+    <string name="FlashlightBtnContentDescription">Flashlight on/off</string>
+    <string name="IncomingSoundContentDescription">Flashlight on/off on user sounds</string>
+    <string name="FlashlightFlickeringContentDescription">Flashlight flickers</string>
+    <string name="FlashlightFlickeringOnOffNetworkContentDescription">Flashlight flickers going on/off the network</string>
 </resources>
