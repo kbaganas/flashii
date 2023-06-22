@@ -19,7 +19,6 @@ import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.*
 import com.google.android.material.snackbar.Snackbar
 import com.example.flashii.databinding.ActivityMainBinding
 import android.Manifest
@@ -30,6 +29,9 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.media.AudioFormat
+import android.media.AudioRecord
+import android.media.MediaRecorder
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
@@ -65,12 +67,14 @@ class MainActivity : AppCompatActivity() {
 
     enum class REQUEST_KEY (val value: Int) {
         CALL(1),
-        SMS(2)
+        SMS(2),
+        AUDIO(3)
     }
 
     val PERMISSIONS = mutableMapOf (
         "CALL" to false,
         "SMS" to false,
+        "AUDIO" to false
     )
 
 
@@ -116,9 +120,10 @@ class MainActivity : AppCompatActivity() {
     private var thumbInitialPosition = 0
     private var hzInitialPosition = 0
     private lateinit var snackbar: Snackbar
+    private lateinit var audioRecord : AudioRecord
+    var recordingThread: Thread? = null
 
-
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -243,15 +248,65 @@ class MainActivity : AppCompatActivity() {
         // incoming sound handler
         incomingSoundBtn = findViewById(R.id.incomingSoundBtnId)
         incomingSoundBtn.setOnClickListener {
-            if (!isSoundIncoming) {
-                Log.i("MainActivity","isSoundIncoming is ON")
-                isSoundIncoming = true
-                setIncomingSoundBtn()
-            } else {
-                Log.i("MainActivity", "isSoundIncoming is OFF")
-                dismissSnackbar()
-                isSoundIncoming = false
-                resetIncomingSoundBtn()
+            Log.i("MainActivity","isSoundIncoming CLICKED")
+            if (PERMISSIONS["AUDIO"] == true) {
+                val SAMPLE_RATE = 44100
+                val BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
+                val THRESHOLD = 1000
+
+                if (isSoundIncoming) {
+                    Log.i("MainActivity", "isSoundIncoming is OFF")
+                    isSoundIncoming = false
+                    audioRecord.stop()
+                    audioRecord.release()
+                    dismissSnackbar()
+                    isSoundIncoming = false
+                    resetIncomingSoundBtn()
+                    try {
+                        recordingThread?.interrupt()
+                    }
+                    catch (e : SecurityException) {
+                        Log.e("MainActivity", "THREAD SecurityException $e")
+                    }
+
+                    recordingThread?.join()
+                    recordingThread = null
+                }
+                else {
+                    Log.i("MainActivity","isSoundIncoming is ON")
+                    isSoundIncoming = true
+                    setIncomingSoundBtn()
+                    audioRecord = AudioRecord(
+                        MediaRecorder.AudioSource.MIC,
+                        SAMPLE_RATE,
+                        AudioFormat.CHANNEL_IN_MONO,
+                        AudioFormat.ENCODING_PCM_16BIT,
+                        BUFFER_SIZE
+                    )
+
+                    val buffer = ShortArray(BUFFER_SIZE)
+
+                    recordingThread = Thread {
+                        while (isSoundIncoming) {
+                            val maxAmplitude = buffer.max()
+                            if (maxAmplitude > THRESHOLD) {
+                                Log.i("MainActivity","LOOP ABOVE THRESHOLD")
+                                if (isFlashLightOn) {
+                                    turnOffFlashlight()
+                                }
+                                else {
+                                    turnOnFlashlight()
+                                }
+                            }
+                        }
+                    }
+                    recordingThread?.start()
+                    audioRecord.startRecording()
+                }
+            }
+            else {
+                // user should be asked for permissions again
+                showSnackbar("To use the feature, provide manually AUDIO permissions to Flashii in your phone's Settings", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -313,7 +368,6 @@ class MainActivity : AppCompatActivity() {
         ///////////////////////////////////////////////////////////////////////////////////////
         // incoming SMS handler
         incomingSMSBtn = findViewById(R.id.smsBtnId)
-
         incomingSMSBtn.setOnClickListener {
             // Check first if permissions are granted
             if (PERMISSIONS["SMS"] == true) {
@@ -386,12 +440,10 @@ class MainActivity : AppCompatActivity() {
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
     private fun checkPermissions (activity: ACTION) {
         when (activity) {
             ACTION.CREATE -> {
+                // CALL
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), REQUEST_KEY.CALL.value)
                 }
@@ -399,16 +451,27 @@ class MainActivity : AppCompatActivity() {
                     PERMISSIONS["CALL"] = true
                 }
 
+                // SMS
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), REQUEST_KEY.SMS.value)
                 }
                 else {
                     PERMISSIONS["SMS"] = true
                 }
+
+                // AUDIO
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_KEY.AUDIO.value)
+                }
+                else {
+                    PERMISSIONS["AUDIO"] = true
+                }
             }
             ACTION.RESUME -> {
                 // User may have changed the permissions in Settings/App/Flashii/Licenses, so we have to align with that
-                Log.i("MainActivity", "Ask for CALL permissions again RESUME")
+                Log.i("MainActivity", "Ask for permissions again RESUME")
+
+                // CALL
                 if (PERMISSIONS["CALL"] == false) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), REQUEST_KEY.CALL.value)
@@ -421,6 +484,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
+                // SMS
                 if (PERMISSIONS["SMS"] == false) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
                         Log.i("MainActivity", "Ask for SMS permissions again RESUME ")
@@ -431,6 +495,20 @@ class MainActivity : AppCompatActivity() {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
                         setBtnUnavailable(incomingSMSBtn, R.drawable.sms_icon_no_permission)
                         PERMISSIONS["SMS"] = false
+                    }
+                }
+
+                // AUDIO
+                if (PERMISSIONS["AUDIO"] == false) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                        Log.i("MainActivity", "Ask for AUDIO permissions again RESUME ")
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_KEY.AUDIO.value)
+                    }
+                }
+                else {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                        setBtnUnavailable(incomingSoundBtn, R.drawable.sound_no_permission)
+                        PERMISSIONS["AUDIO"] = false
                     }
                 }
             }
@@ -448,8 +526,7 @@ class MainActivity : AppCompatActivity() {
         snackbar.dismiss()
     }
 
-    private fun
-            registerIncomingEvents (eventType : TypeOfEvent, showSnack: Boolean = false) {
+    private fun registerIncomingEvents (eventType : TypeOfEvent, showSnack: Boolean = false) {
         when (eventType) {
             TypeOfEvent.INCOMING_CALL -> {
                 incomingCall = true
@@ -537,6 +614,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun setIncomingSoundBtn () {
         incomingSoundBtn.setImageResource(R.drawable.sound_on)
@@ -775,6 +853,10 @@ class MainActivity : AppCompatActivity() {
                     PERMISSIONS["SMS"] = true
                     resetSOSBtn()
                 }
+                REQUEST_KEY.AUDIO.value -> {
+                    PERMISSIONS["AUDIO"] = true
+                    resetIncomingSoundBtn()
+                }
             }
         }
         else {
@@ -786,6 +868,10 @@ class MainActivity : AppCompatActivity() {
                 REQUEST_KEY.SMS.value -> {
                     Log.i("MainActivity", "Request NOT granted for SMS")
                     setBtnUnavailable(incomingSMSBtn, R.drawable.sms_icon_no_permission)
+                }
+                REQUEST_KEY.AUDIO.value -> {
+                    Log.i("MainActivity", "Request NOT granted for AUDIO")
+                    setBtnUnavailable(incomingSoundBtn, R.drawable.sound_no_permission)
                 }
             }
         }
