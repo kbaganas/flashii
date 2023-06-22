@@ -34,6 +34,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.provider.Telephony
+import kotlin.math.sqrt
 
 
 class MainActivity : AppCompatActivity() {
@@ -261,21 +262,34 @@ class MainActivity : AppCompatActivity() {
             if (!isPhoneShaken) {
                 Log.i("MainActivity","isPhoneShaken is ON")
                 sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-                var accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+                val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
                 if (accelerometerSensor != null) {
+                    var acceleration = 10f
+                    var currentAcceleration = SensorManager.GRAVITY_EARTH
+                    var lastAcceleration: Float
+                    var delta : Float
                     sensorEventListener = object : SensorEventListener {
                         override fun onSensorChanged(event: SensorEvent) {
-                            // Handle accelerometer sensor changes here
-                            //val x = event.values[0]
-                            //val y = event.values[1]
-                            //val z = event.values[2]
-                            // Process the sensor data as needed
-                            Log.i("MainActivity","onSensorChanged EVENT received")
+                            val x = event.values[0]
+                            val y = event.values[1]
+                            val z = event.values[2]
+                            lastAcceleration = currentAcceleration
+                            currentAcceleration = sqrt((x * x + y * y + z * z).toDouble()).toFloat()
+                            delta = currentAcceleration - lastAcceleration
+                            acceleration = acceleration * 0.9f + delta
+                            if (acceleration > 12) {
+                                Log.i("MainActivity", "Shake event detected")
+                                if (isFlashLightOn) {
+                                    turnOffFlashlight()
+                                }
+                                else {
+                                    turnOnFlashlight()
+                                }
+                            }
                         }
 
                         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
                             // Handle accuracy changes if needed
-                            Log.i("MainActivity","onAccuracyChanged EVENT received")
                         }
                     }
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
