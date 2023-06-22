@@ -25,9 +25,7 @@ import com.example.flashii.databinding.ActivityMainBinding
 import android.Manifest
 import androidx.core.content.ContextCompat
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import android.content.DialogInterface
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -50,6 +48,11 @@ class MainActivity : AppCompatActivity() {
     private val SPACE_WORDS_DURATION : Long = 4 * SPACE_DURATION // results to 7*DIT_DURATION, considering that we add SPACE_CHARS_DURATION after each letter
     private lateinit var  rootView : View
 
+    enum class ACTION {
+        CREATE,
+        RESUME,
+    }
+
     enum class TypeOfEvent {
         INCOMING_CALL,
         SMS,
@@ -59,10 +62,16 @@ class MainActivity : AppCompatActivity() {
         IN_SERVICE
     }
 
-    enum class REQUEST_KEY(val value: Int) {
+    enum class REQUEST_KEY (val value: Int) {
         CALL(1),
         SMS(2)
     }
+
+    val PERMISSIONS = mutableMapOf (
+        "CALL" to false,
+        "SMS" to false,
+    )
+
 
     // Handlers, Managers, Receivers
     private var loopHandler : Handler = Handler(Looper.getMainLooper())
@@ -70,12 +79,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var connectivityManager: ConnectivityManager
     private lateinit var sensorManager : SensorManager
     private lateinit var sensorEventListener : SensorEventListener
-    private lateinit var connectivityCallback : ConnectivityManager.NetworkCallback
+    private lateinit var connectivityCallback: ConnectivityManager.NetworkCallback
     private lateinit var incomingCallReceiver : BroadcastReceiver
     private lateinit var incomingSMSReceiver : BroadcastReceiver
-    private lateinit var incomingNetworkReceiver : BroadcastReceiver
-    private lateinit var incomingShakeReceiver : BroadcastReceiver
-    private lateinit var incomingSpeakReceiver : BroadcastReceiver
 
     // Booleans
     private var isFlashLightOn = false
@@ -85,9 +91,9 @@ class MainActivity : AppCompatActivity() {
     private var incomingSMS : Boolean = false
     private var isPhoneOutOfNetwork : Boolean = false
     private var isPhoneInNetwork : Boolean = false
-    private var isPhoneShaked : Boolean = false
+    private var isPhoneShaken : Boolean = false
     private var isSoundIncoming : Boolean = false
-
+    private var networkConnectivityCbIsSet : Boolean = false
 
     // Buttons & Ids
     private var flashlightId : String = "0"
@@ -106,8 +112,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var flickeringBar : SeekBar
     private lateinit var flickerText : TextView
-    var thumbInitialPosition = 0
-    var hzInitialPosition = 0
+    private var thumbInitialPosition = 0
+    private var hzInitialPosition = 0
+    private lateinit var snackbar: Snackbar
 
 
     @SuppressLint("SetTextI18n")
@@ -115,6 +122,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         rootView = findViewById(android.R.id.content)
+        snackbar = Snackbar.make(rootView, "", Snackbar.LENGTH_SHORT)
 
         // setup cameraManager
         cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
@@ -157,9 +165,10 @@ class MainActivity : AppCompatActivity() {
                 resetAllActivities()
                 repeatSOS()
                 setSOSBtn()
-                Snackbar.make(rootView, "SOS message started (in Morse code)", Snackbar.LENGTH_SHORT).show()
+                showSnackbar("SOS message is transmitted")
             }
             else {
+                dismissSnackbar()
                 stopSOS()
                 resetSOSBtn()
             }
@@ -167,8 +176,8 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // flicker seekbar and textview handler
-        flickeringBar = findViewById<SeekBar>(R.id.flickeringBarId)
-        flickerText = findViewById<TextView>(R.id.flickerTextViewId)
+        flickeringBar = findViewById(R.id.flickeringBarId)
+        flickerText = findViewById(R.id.flickerTextViewId)
         flickeringBar.min = MIN_FLICKER_HZ
         flickeringBar.max = MAX_FLICKER_HZ
         flickeringBar.visibility = View.INVISIBLE
@@ -178,8 +187,6 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 setFlickeringHz(progress.toLong())
                 flickerText.text = "$flickerFlashlightHz" + "Hz"
-                //val delta = flickeringBar.thumb.bounds.left - thumbInitialPosition
-                //flickerText.x = hzInitialPosition.toFloat() + delta * 1.25.toFloat()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -211,25 +218,29 @@ class MainActivity : AppCompatActivity() {
         ///////////////////////////////////////////////////////////////////////////////////////
         // incoming call handler
         incomingCallBtn = findViewById(R.id.switchFlickerIncomingCallsId)
-        incomingCallBtn.visibility = ImageButton.INVISIBLE
-
         incomingCallBtn.setOnClickListener {
-            if (!incomingCall) {
-                Log.i("MainActivity","incomingCallFlickerToBeEnabled is ON")
-                registerIncomingEvents(TypeOfEvent.INCOMING_CALL, true)
-                setIncomingCallFlickeringBtn()
-            } else {
-                Log.i("MainActivity", "incomingCallFlickerSwitch is OFF")
-                disableIncomingCallFlickering()
-                resetIncomingCallFlickeringBtn()
+            // Check first if permissions are granted
+            if (PERMISSIONS["CALL"] == true) {
+                if (!incomingCall) {
+                    Log.i("MainActivity","incomingCallFlickerToBeEnabled is ON")
+                    registerIncomingEvents(TypeOfEvent.INCOMING_CALL, true)
+                    setIncomingCallFlickeringBtn()
+                } else {
+                    Log.i("MainActivity", "incomingCallFlickerSwitch is OFF")
+                    dismissSnackbar()
+                    disableIncomingCallFlickering()
+                    resetIncomingCallFlickeringBtn()
+                }
+            }
+            else {
+                // user should be asked for permissions again
+                showSnackbar("To use the feature, provide manually CALL permissions to Flashii in your phone's Settings", Snackbar.LENGTH_LONG)
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // incoming sound handler
         incomingSoundBtn = findViewById(R.id.incomingSoundBtnId)
-//        incomingSoundBtn.visibility = ImageButton.INVISIBLE
-
         incomingSoundBtn.setOnClickListener {
             if (!isSoundIncoming) {
                 Log.i("MainActivity","isSoundIncoming is ON")
@@ -237,6 +248,7 @@ class MainActivity : AppCompatActivity() {
                 setIncomingSoundBtn()
             } else {
                 Log.i("MainActivity", "isSoundIncoming is OFF")
+                dismissSnackbar()
                 isSoundIncoming = false
                 resetIncomingSoundBtn()
             }
@@ -246,17 +258,17 @@ class MainActivity : AppCompatActivity() {
         // shake phone handler
         incomingShakeBtn = findViewById(R.id.incomingShakeBtnId)
         incomingShakeBtn.setOnClickListener {
-            if (!isPhoneShaked) {
-                Log.i("MainActivity","isPhoneShaked is ON")
+            if (!isPhoneShaken) {
+                Log.i("MainActivity","isPhoneShaken is ON")
                 sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
                 var accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
                 if (accelerometerSensor != null) {
                     sensorEventListener = object : SensorEventListener {
                         override fun onSensorChanged(event: SensorEvent) {
                             // Handle accelerometer sensor changes here
-                            val x = event.values[0]
-                            val y = event.values[1]
-                            val z = event.values[2]
+                            //val x = event.values[0]
+                            //val y = event.values[1]
+                            //val z = event.values[2]
                             // Process the sensor data as needed
                             Log.i("MainActivity","onSensorChanged EVENT received")
                         }
@@ -268,98 +280,162 @@ class MainActivity : AppCompatActivity() {
                     }
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
                     setShakeBtn()
-                    isPhoneShaked = true
+                    isPhoneShaken = true
                 }
                 else {
                     // we have to disable the btn now since accelerometer sensor is not available on the device
                     Log.i("MainActivity","Accelerometer not available")
-                    incomingShakeBtn.visibility = ImageButton.INVISIBLE
+                    incomingShakeBtn.setImageResource(R.drawable.shake_icon_not_available)
                 }
             } else {
-                Log.i("MainActivity", "isPhoneShaked is OFF")
+                Log.i("MainActivity", "isPhoneShaken is OFF")
+                dismissSnackbar()
                 sensorManager.unregisterListener(sensorEventListener)
                 resetShakeBtn()
-                isPhoneShaked = false
+                isPhoneShaken = false
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // incoming SMS handler
         incomingSMSBtn = findViewById(R.id.smsBtnId)
-        incomingSMSBtn.visibility = ImageButton.INVISIBLE
 
         incomingSMSBtn.setOnClickListener {
-            if (!incomingSMS) {
-                Log.i("MainActivity","SMS incoming handler is ON")
-                registerIncomingEvents(TypeOfEvent.SMS, true)
-                setIncomingSMSBtn()
-            } else {
-                Log.i("MainActivity", "SMS incoming handler is OFF")
-                disableIncomingSMSHandler()
-                resetIncomingSMSBtn()
+            // Check first if permissions are granted
+            if (PERMISSIONS["SMS"] == true) {
+                if (!incomingSMS) {
+                    Log.i("MainActivity","SMS incoming handler is ON")
+                    registerIncomingEvents(TypeOfEvent.SMS, true)
+                    setIncomingSMSBtn()
+                } else {
+                    Log.i("MainActivity", "SMS incoming handler is OFF")
+                    dismissSnackbar()
+                    disableIncomingSMSHandler()
+                    resetIncomingSMSBtn()
+                }
+            }
+            else {
+                // user should be asked for permissions again
+                Log.i("MainActivity", "request permission for SMS")
+                showSnackbar("To use the feature, provide manually SMS permissions to Flashii in your phone's Settings", Snackbar.LENGTH_LONG)
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // phone out/in network handler
         outInNetworkBtn = findViewById(R.id.networkConnectionBtn)
-        outInNetworkBtn.visibility = ImageButton.INVISIBLE
-
         outInNetworkBtn.setOnClickListener {
-            if (isPhoneOutOfNetwork || isPhoneInNetwork) {
+            if (networkConnectivityCbIsSet) {
                 // User wants to disable the feature
-                Log.i("MainActivity","Disable In/Out of Network feature")
-                isPhoneInNetwork = false
-                isPhoneOutOfNetwork = false
+                Log.i("MainActivity", "Disable In/Out of Network feature")
+                networkConnectivityCbIsSet = false
+                dismissSnackbar()
                 stopFlickering()
+                Log.i("MainActivity", "Unregister running CB")
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                 resetNetworkBtn()
             }
             else {
-                // initialize telephonyManager
+                val networkRequest = NetworkRequest.Builder().build()
                 connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-                // User about to enable the feature. He has to provide the option he wants
-                val alertDialogBuilder = AlertDialog.Builder(this)
-                alertDialogBuilder.setTitle("WiFi/Data Connection Flickering")
-                alertDialogBuilder.setMessage("Flashlight will start flickering when:")
-                alertDialogBuilder.setPositiveButton("Phone has lost WiFi/Data connection") { dialog: DialogInterface, _: Int ->
-                    dialog.dismiss()
-                    isPhoneOutOfNetwork = true
-                    Log.i("MainActivity","Out of Network is ON")
-                    registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE)
-                    setNetworkBtn()
+                connectivityCallback = object : ConnectivityManager.NetworkCallback() {
+                    override fun onLost(network: Network) {
+                        super.onLost(network)
+                        Log.i("MainActivity", "NETWORK is currently LOST")
+                        isPhoneOutOfNetwork = true
+                        setNetworkBtn()
+                        Log.i("MainActivity", "Unregister status CB")
+                        connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                        registerIncomingEvents(TypeOfEvent.IN_SERVICE, true)
+                    }
+                    override fun onAvailable(network: Network) {
+                        super.onLost(network)
+                        Log.i("MainActivity", "NETWORK is currently AVAILABLE")
+                        isPhoneInNetwork = true
+                        setNetworkBtn()
+                        Log.i("MainActivity", "Unregister status CB")
+                        connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                        registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE, true)
+                    }
                 }
-                alertDialogBuilder.setNegativeButton("Phone has found a WiFi/Data connection") { dialog: DialogInterface, _: Int ->
-                    dialog.dismiss()
-                    isPhoneInNetwork = true
-                    Log.i("MainActivity","In Network is ON")
-                    registerIncomingEvents(TypeOfEvent.IN_SERVICE)
-                    setNetworkBtn()
-                }
-                alertDialogBuilder.setCancelable(false)
-                alertDialogBuilder.show()
+                networkConnectivityCbIsSet = true
+                connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Permissions handling
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), REQUEST_KEY.CALL.value)
-        } else {
-            incomingCallBtn.visibility = ImageButton.VISIBLE
-            outInNetworkBtn.visibility = ImageButton.VISIBLE
-        }
+        checkPermissions(ACTION.CREATE)
+    }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), REQUEST_KEY.SMS.value)
-        }
-        else {
-            incomingSMSBtn.visibility = ImageButton.VISIBLE
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    private fun checkPermissions (activity: ACTION) {
+        when (activity) {
+            ACTION.CREATE -> {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), REQUEST_KEY.CALL.value)
+                }
+                else {
+                    PERMISSIONS["CALL"] = true
+                }
+
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), REQUEST_KEY.SMS.value)
+                }
+                else {
+                    PERMISSIONS["SMS"] = true
+                }
+            }
+            ACTION.RESUME -> {
+                // User may have changed the permissions in Settings/App/Flashii/Licenses, so we have to align with that
+                Log.i("MainActivity", "Ask for CALL permissions again RESUME")
+                if (PERMISSIONS["CALL"] == false) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), REQUEST_KEY.CALL.value)
+                    }
+                }
+                else {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                        setBtnUnavailable(incomingCallBtn, R.drawable.incoming_call_no_permission)
+                        PERMISSIONS["CALL"] = false
+                    }
+                }
+
+                if (PERMISSIONS["SMS"] == false) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
+                        Log.i("MainActivity", "Ask for SMS permissions again RESUME ")
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), REQUEST_KEY.SMS.value)
+                    }
+                }
+                else {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+                        setBtnUnavailable(incomingSMSBtn, R.drawable.sms_icon_no_permission)
+                        PERMISSIONS["SMS"] = false
+                    }
+                }
+            }
+            else -> {}
         }
     }
 
-    private fun registerIncomingEvents (eventType : TypeOfEvent, showSnack: Boolean = false) {
+    private fun showSnackbar (text : String, length : Int = Snackbar.LENGTH_SHORT) {
+        snackbar.dismiss()
+        snackbar = Snackbar.make(rootView, text, length)
+        snackbar.show()
+    }
+
+    private fun dismissSnackbar () {
+        snackbar.dismiss()
+    }
+
+    private fun
+            registerIncomingEvents (eventType : TypeOfEvent, showSnack: Boolean = false) {
         when (eventType) {
             TypeOfEvent.INCOMING_CALL -> {
                 incomingCall = true
@@ -383,7 +459,7 @@ class MainActivity : AppCompatActivity() {
                 val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
                 registerReceiver(incomingCallReceiver, intentFilter)
                 if (showSnack) {
-                    Snackbar.make(rootView, "Incoming calls flickering ON", Snackbar.LENGTH_SHORT).show()
+                    showSnackbar("Flashlight will flicker on incoming calls")
                 }
             }
             TypeOfEvent.OUT_OF_SERVICE -> {
@@ -393,10 +469,14 @@ class MainActivity : AppCompatActivity() {
                         super.onLost(network)
                         Log.i("MainActivity", "NETWORK is LOST")
                         startFlickering()
+                        isPhoneOutOfNetwork = true
+                        isPhoneInNetwork = false
                     }}
-                connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
+                Log.i("MainActivity", "Register CB for OUT_OF_SERVICE")
+                connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback
+                )
                 if (showSnack) {
-                    Snackbar.make(rootView, "Phone OUT of service/network flickering ON", Snackbar.LENGTH_SHORT).show()
+                    showSnackbar("Flashlight will flicker if WiFi/Data signal gets lost")
                 }
             }
             TypeOfEvent.IN_SERVICE -> {
@@ -406,10 +486,14 @@ class MainActivity : AppCompatActivity() {
                         super.onAvailable(network)
                         Log.i("MainActivity", "NETWORK is AVAILABLE")
                         startFlickering()
+                        isPhoneOutOfNetwork = false
+                        isPhoneInNetwork = true
                     }}
-                connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
+                Log.i("MainActivity", "Register CB for IN_SERVICE")
+                connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback
+                )
                 if (showSnack) {
-                    Snackbar.make(rootView, "Phone OUT of service/network flickering ON", Snackbar.LENGTH_SHORT).show()
+                    showSnackbar("Flashlight will flicker if WiFi/Data signal is found")
                 }
             }
             TypeOfEvent.PHONE_SHAKE -> {
@@ -426,6 +510,7 @@ class MainActivity : AppCompatActivity() {
                         Log.i("MainActivity", "EVENT INCOMING")
                         if (intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
                             Log.i("MainActivity", "SMS_RECEIVED_ACTION EVENT")
+                            Log.i("MainActivity", "Phone starts flickering")
                             startFlickering()
                         }
                     }
@@ -433,7 +518,7 @@ class MainActivity : AppCompatActivity() {
                 val intentFilter = IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
                 registerReceiver(incomingSMSReceiver, intentFilter)
                 if (showSnack) {
-                    Snackbar.make(rootView, "Incoming SMS flickering ON", Snackbar.LENGTH_SHORT).show()
+                    showSnackbar("Flashlight will flicker on incoming SMSes")
                 }
             }
         }
@@ -469,10 +554,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setNetworkBtn () {
         if (isPhoneInNetwork) {
-            outInNetworkBtn.setImageResource(R.drawable.wifi_on_enabled)
+            outInNetworkBtn.setImageResource(R.drawable.wifi_off_enabled)
         }
         else if (isPhoneOutOfNetwork) {
-            outInNetworkBtn.setImageResource(R.drawable.wifi_off_enabled)
+            outInNetworkBtn.setImageResource(R.drawable.wifi_on_enabled)
         }
     }
 
@@ -481,7 +566,7 @@ class MainActivity : AppCompatActivity() {
         stopFlickering()
         unregisterReceiver(incomingSMSReceiver)
         if (showSnack) {
-            Snackbar.make(rootView, "Incoming SMS flickering OFF", Snackbar.LENGTH_SHORT).show()
+            showSnackbar("Feature dismissed")
         }
     }
 
@@ -490,7 +575,7 @@ class MainActivity : AppCompatActivity() {
         stopFlickering()
         unregisterReceiver(incomingCallReceiver)
         if (showSnack) {
-            Snackbar.make(rootView, "Incoming calls flickering OFF", Snackbar.LENGTH_SHORT).show()
+            showSnackbar("Feature dismissed")
         }
     }
 
@@ -575,6 +660,11 @@ class MainActivity : AppCompatActivity() {
         sosBtn.setImageResource(R.drawable.sosbtn)
     }
 
+    private fun setBtnUnavailable (btn : ImageButton, icon : Int) {
+        btn.setImageResource(icon)
+    }
+
+
     private fun setFlickeringFlashlightBtn () {
         flickeringBar.visibility = View.VISIBLE
         flickerText.visibility = View.VISIBLE
@@ -651,7 +741,7 @@ class MainActivity : AppCompatActivity() {
             atomicFlashLightOff()
             resetSOSBtn()
             if (showSnack) {
-                Snackbar.make(rootView, "SOS message stopped", Snackbar.LENGTH_SHORT).show()
+                showSnackbar("Feature dismissed")
             }
         }
     }
@@ -661,12 +751,27 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             // Permission has been granted, so register the TelephonyCallback
+            Log.i("MainActivity", "Request granted")
             when (requestCode) {
                 REQUEST_KEY.CALL.value -> {
-                    incomingCallBtn.visibility = ImageButton.VISIBLE
+                    PERMISSIONS["CALL"] = true
+                    resetIncomingCallFlickeringBtn()
                 }
                 REQUEST_KEY.SMS.value -> {
-                    incomingSMSBtn.visibility = ImageButton.VISIBLE
+                    PERMISSIONS["SMS"] = true
+                    resetSOSBtn()
+                }
+            }
+        }
+        else {
+            when (requestCode) {
+                REQUEST_KEY.CALL.value -> {
+                    Log.i("MainActivity", "Request NOT granted for CALL")
+                    setBtnUnavailable(incomingCallBtn, R.drawable.incoming_call_no_permission)
+                }
+                REQUEST_KEY.SMS.value -> {
+                    Log.i("MainActivity", "Request NOT granted for SMS")
+                    setBtnUnavailable(incomingSMSBtn, R.drawable.sms_icon_no_permission)
                 }
             }
         }
@@ -719,8 +824,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.i("MainActivity", "onResume is running")
+        checkPermissions(ACTION.RESUME)
     }
 
 }
-
 
