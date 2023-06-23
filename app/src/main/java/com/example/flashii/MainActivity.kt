@@ -37,6 +37,7 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.provider.Telephony
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
@@ -52,12 +53,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var  rootView : View
     private val maxFlickerDurationIncomingSMS : Long = 15000 // 15 seconds
     private val maxFlickerDurationNetwork : Long = 30000 // 30 seconds
+    private val maxFlickerDurationAltitude : Long = 15000 // 30 seconds
     private val applicationName : String = "Flashii"
     private val initRotationAngle : Float = -1000f
 
     enum class ACTION {
         CREATE,
-        RESUME,
+        RESUME
     }
 
     enum class TypeOfEvent {
@@ -79,13 +81,17 @@ class MainActivity : AppCompatActivity() {
     enum class RequestKey (val value: Int) {
         CALL(1),
         SMS(2),
-        AUDIO(3)
+        AUDIO(3),
+        ALTITUDE(4),
+        LOW_ALTITUDE (-5),
+        HIGH_ALTITUDE (1800)
     }
 
     private val permissionsKeys = mutableMapOf (
         "CALL" to false,
         "SMS" to false,
-        "AUDIO" to false
+        "AUDIO" to false,
+        "ALTITUDE" to false
     )
 
 
@@ -110,6 +116,7 @@ class MainActivity : AppCompatActivity() {
     private var isPhoneShaken : Boolean = false
     private var isSoundIncoming : Boolean = false
     private var networkConnectivityCbIsSet : Boolean = false
+    private var isAltitudeOn : Boolean = false
 
     // Buttons & Ids
     private var flashlightId : String = "0"
@@ -121,6 +128,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var incomingSMSBtn : ImageButton
     private lateinit var incomingShakeBtn : ImageButton
     private lateinit var incomingSoundBtn : ImageButton
+    private lateinit var altitudeBtn : ImageButton
 
     // variables
     private var flickerFlashlightHz : Long = 1
@@ -263,7 +271,7 @@ class MainActivity : AppCompatActivity() {
             if (permissionsKeys["AUDIO"] == true) {
                 val sampleRate = 44100
                 val bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
-                val threshold = 3500
+                val threshold = 20000
 
                 if (isSoundIncoming) {
                     Log.i("MainActivity", "isSoundIncoming is OFF")
@@ -364,7 +372,7 @@ class MainActivity : AppCompatActivity() {
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
                     setShakeBtn()
                     isPhoneShaken = true
-                    showSnackbar("Flashlight will turn ON/OFF on Phone short rotations")
+                    showSnackbar("Flashlight will turn ON/OFF on 90 degrees angle phone tilts")
                 }
                 else {
                     // we have to disable the btn now since rotation sensor is not available on the device
@@ -472,6 +480,83 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        // compass handler
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        // altitude handler
+        altitudeBtn = findViewById(R.id.altitudeBtnId)
+        altitudeBtn.setOnClickListener {
+            if (permissionsKeys["ALTITUDE"] == true) {
+                if (!isAltitudeOn) {
+                    sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                    val altitudeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
+                    if (altitudeSensor != null) {
+                        resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                        sensorEventListener = object : SensorEventListener {
+                            override fun onSensorChanged(event: SensorEvent) {
+                                if (event.sensor?.type == Sensor.TYPE_PRESSURE) {
+                                    val pressureValue = event.values[0] // Get the pressure value in hPa
+                                    val altitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressureValue) // altitude in meters
+                                    if (altitude > RequestKey.LOW_ALTITUDE.value && altitude < RequestKey.HIGH_ALTITUDE.value) {
+                                        // these are the acceptable altitude limits
+                                        if (isFlickering) {
+                                            stopFlickering()
+                                        }
+                                    }
+                                    else {
+                                        if (!isFlickering) {
+                                            startFlickering()
+                                            showSnackbar("WARNING: altitude reached is $altitude meters high")
+                                            stopFlickeringAfterTimeout(maxFlickerDurationAltitude)
+                                            sensorManager.unregisterListener(sensorEventListener)
+                                        }
+                                    }
+                                }
+                            }
+                            override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+                                // Handle accuracy changes if needed
+                            }
+                        }
+                        Log.i("MainActivity","isAltitudeOn is ON $sensorEventListener")
+                        sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
+                        setAltitudeBtn()
+                        isAltitudeOn = true
+                        showSnackbar("Flashlight will turn ON/OFF based on the altitude")
+                    }
+                    else {
+                        // we have to disable the btn now since sensor is not available on the device
+                        Log.i("MainActivity","Barometer not available")
+                        showSnackbar("Device's barometer sensor is not available; feature is not feasible")
+                        altitudeBtn.setImageResource(R.drawable.altitude_btn_no_permission)
+                    }
+                } else {
+                    Log.i("MainActivity", "isAltitudeOn is OFF $sensorEventListener")
+                    turnOffFlashlight()
+                    dismissSnackbar()
+                    try {
+                        sensorManager.unregisterListener(sensorEventListener)
+                    }
+                    catch (e : Exception) {
+                        // do nothing
+                    }
+                    resetAltitudeBtn()
+                    isAltitudeOn = false
+                }
+            }
+            else {
+                // user should be asked for permissions again
+                Log.i("MainActivity", "request permission for ALTITUDE")
+                showSnackbar("To use the feature, manually provide LOCATION permissions to $applicationName in your phone's Settings", Snackbar.LENGTH_LONG)
+            }
+        }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        // gesture handler
+
         ////////////////////////////////////////////////////////////////////////////////////////
         // Permissions handling
         checkPermissions(ACTION.CREATE)
@@ -507,6 +592,14 @@ class MainActivity : AppCompatActivity() {
                 else {
                     permissionsKeys["AUDIO"] = true
                 }
+
+                // ALTITUDE
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), RequestKey.ALTITUDE.value)
+                }
+                else {
+                    permissionsKeys["ALTITUDE"] = true
+                }
             }
             ACTION.RESUME -> {
                 // User may have changed the permissions in Settings/App/Flashii/Licenses, so we have to align with that
@@ -520,7 +613,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnUnavailable(incomingCallBtn, R.drawable.incoming_call_no_permission)
+                        setBtnImage(incomingCallBtn, R.drawable.incoming_call_no_permission)
                         permissionsKeys["CALL"] = false
                     }
                 }
@@ -534,7 +627,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnUnavailable(incomingSMSBtn, R.drawable.sms_icon_no_permission)
+                        setBtnImage(incomingSMSBtn, R.drawable.sms_icon_no_permission)
                         permissionsKeys["SMS"] = false
                     }
                 }
@@ -548,8 +641,22 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnUnavailable(incomingSoundBtn, R.drawable.sound_no_permission)
+                        setBtnImage(incomingSoundBtn, R.drawable.sound_no_permission)
                         permissionsKeys["AUDIO"] = false
+                    }
+                }
+
+                // ALTITUDE
+                if (permissionsKeys["ALTITUDE"] == false) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        Log.i("MainActivity", "Ask for ALTITUDE permissions again RESUME ")
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), RequestKey.ALTITUDE.value)
+                    }
+                }
+                else {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        setBtnImage(altitudeBtn, R.drawable.altitude_btn_no_permission)
+                        permissionsKeys["ALTITUDE"] = false
                     }
                 }
             }
@@ -681,6 +788,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun setAltitudeBtn () {
+        altitudeBtn.setImageResource(R.drawable.altitude_btn_on)
+    }
+
+    private fun resetAltitudeBtn () {
+        altitudeBtn.setImageResource(R.drawable.altitude_btn_off)
+    }
 
     private fun setIncomingSoundBtn () {
         incomingSoundBtn.setImageResource(R.drawable.sound_on)
@@ -846,7 +961,7 @@ class MainActivity : AppCompatActivity() {
         sosBtn.setImageResource(R.drawable.sosbtn)
     }
 
-    private fun setBtnUnavailable (btn : ImageButton, icon : Int) {
+    private fun setBtnImage (btn : ImageButton, icon : Int) {
         btn.setImageResource(icon)
     }
 
@@ -951,21 +1066,29 @@ class MainActivity : AppCompatActivity() {
                     permissionsKeys["AUDIO"] = true
                     resetIncomingSoundBtn()
                 }
+                RequestKey.ALTITUDE.value -> {
+                    permissionsKeys["ALTITUDE"] = true
+                    setBtnImage(altitudeBtn, R.drawable.altitude_btn_off)
+                }
             }
         }
         else {
             when (requestCode) {
                 RequestKey.CALL.value -> {
                     Log.i("MainActivity", "Request NOT granted for CALL")
-                    setBtnUnavailable(incomingCallBtn, R.drawable.incoming_call_no_permission)
+                    setBtnImage(incomingCallBtn, R.drawable.incoming_call_no_permission)
                 }
                 RequestKey.SMS.value -> {
                     Log.i("MainActivity", "Request NOT granted for SMS")
-                    setBtnUnavailable(incomingSMSBtn, R.drawable.sms_icon_no_permission)
+                    setBtnImage(incomingSMSBtn, R.drawable.sms_icon_no_permission)
                 }
                 RequestKey.AUDIO.value -> {
                     Log.i("MainActivity", "Request NOT granted for AUDIO")
-                    setBtnUnavailable(incomingSoundBtn, R.drawable.sound_no_permission)
+                    setBtnImage(incomingSoundBtn, R.drawable.sound_no_permission)
+                }
+                RequestKey.ALTITUDE.value -> {
+                    Log.i("MainActivity", "Request NOT granted for LOCATION")
+                    setBtnImage(altitudeBtn, R.drawable.altitude_btn_no_permission)
                 }
             }
         }
