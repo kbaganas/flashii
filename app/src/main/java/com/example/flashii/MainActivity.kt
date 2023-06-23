@@ -34,6 +34,7 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.net.ConnectivityManager
 import android.net.Network
+import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.provider.Telephony
 import kotlin.math.sqrt
@@ -50,6 +51,9 @@ class MainActivity : AppCompatActivity() {
     private val SPACE_CHARS_DURATION : Long = 3 * SPACE_DURATION
     private val SPACE_WORDS_DURATION : Long = 4 * SPACE_DURATION // results to 7*DIT_DURATION, considering that we add SPACE_CHARS_DURATION after each letter
     private lateinit var  rootView : View
+    private val MAX_FLICKER_DURATION_INCOMING_SMS : Long = 15000 // 15 seconds
+    private val MAX_FLICKER_DURATION_NETWORK : Long = 30000 // 30 seconds
+    private val APP_NAME : String = "Flashii"
 
     enum class ACTION {
         CREATE,
@@ -147,7 +151,7 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         resetAllActivities()
                         touchStartTime = System.currentTimeMillis()
-                        turnOnFlashlight()
+                        turnOnFlashlight(true)
                     }
                     true
                 }
@@ -171,7 +175,7 @@ class MainActivity : AppCompatActivity() {
                 resetAllActivities()
                 repeatSOS()
                 setSOSBtn()
-                showSnackbar("SOS message is transmitted")
+                showSnackbar("SOS message transmission")
             }
             else {
                 dismissSnackbar()
@@ -240,7 +244,7 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 // user should be asked for permissions again
-                showSnackbar("To use the feature, provide manually CALL permissions to Flashii in your phone's Settings", Snackbar.LENGTH_LONG)
+                showSnackbar("To use the feature, manually provide CALL permissions to $APP_NAME in your phone's Settings", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -252,7 +256,7 @@ class MainActivity : AppCompatActivity() {
             if (PERMISSIONS["AUDIO"] == true) {
                 val SAMPLE_RATE = 44100
                 val BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
-                val THRESHOLD = 1000
+                val THRESHOLD = 3500
 
                 if (isSoundIncoming) {
                     Log.i("MainActivity", "isSoundIncoming is OFF")
@@ -285,11 +289,12 @@ class MainActivity : AppCompatActivity() {
                     )
 
                     val buffer = ShortArray(BUFFER_SIZE)
+                    audioRecord.startRecording()
 
                     recordingThread = Thread {
                         while (isSoundIncoming) {
-                            val maxAmplitude = buffer.max()
-                            if (maxAmplitude > THRESHOLD) {
+                            val bytesRead = audioRecord.read(buffer, 0, BUFFER_SIZE)
+                            if (isAboveThreshold(buffer, bytesRead, THRESHOLD)) {
                                 Log.i("MainActivity","LOOP ABOVE THRESHOLD")
                                 if (isFlashLightOn) {
                                     turnOffFlashlight()
@@ -301,12 +306,12 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     recordingThread?.start()
-                    audioRecord.startRecording()
+                    showSnackbar("Flashlight will turn ON/OFF on short sounds")
                 }
             }
             else {
                 // user should be asked for permissions again
-                showSnackbar("To use the feature, provide manually AUDIO permissions to Flashii in your phone's Settings", Snackbar.LENGTH_LONG)
+                showSnackbar("To use the feature, manually provide AUDIO permissions to $APP_NAME in your phone's Settings", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -385,7 +390,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for SMS")
-                showSnackbar("To use the feature, provide manually SMS permissions to Flashii in your phone's Settings", Snackbar.LENGTH_LONG)
+                showSnackbar("To use the feature, manually provide SMS permissions to $APP_NAME in your phone's Settings", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -393,41 +398,65 @@ class MainActivity : AppCompatActivity() {
         // phone out/in network handler
         outInNetworkBtn = findViewById(R.id.networkConnectionBtn)
         outInNetworkBtn.setOnClickListener {
+
             if (networkConnectivityCbIsSet) {
                 // User wants to disable the feature
                 Log.i("MainActivity", "Disable In/Out of Network feature")
                 networkConnectivityCbIsSet = false
                 dismissSnackbar()
                 stopFlickering()
-                Log.i("MainActivity", "Unregister running CB")
+                Log.i("MainActivity", "Unregister running CB $connectivityCallback")
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                 resetNetworkBtn()
             }
             else {
                 val networkRequest = NetworkRequest.Builder().build()
                 connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                connectivityCallback = object : ConnectivityManager.NetworkCallback() {
-                    override fun onLost(network: Network) {
-                        super.onLost(network)
-                        Log.i("MainActivity", "NETWORK is currently LOST")
-                        isPhoneOutOfNetwork = true
-                        setNetworkBtn()
-                        Log.i("MainActivity", "Unregister status CB")
-                        connectivityManager.unregisterNetworkCallback(connectivityCallback)
-                        registerIncomingEvents(TypeOfEvent.IN_SERVICE, true)
-                    }
-                    override fun onAvailable(network: Network) {
-                        super.onLost(network)
-                        Log.i("MainActivity", "NETWORK is currently AVAILABLE")
-                        isPhoneInNetwork = true
-                        setNetworkBtn()
-                        Log.i("MainActivity", "Unregister status CB")
-                        connectivityManager.unregisterNetworkCallback(connectivityCallback)
-                        registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE, true)
-                    }
-                }
+
+                // Check if network is currently available first
+                val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                val isConnected = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
                 networkConnectivityCbIsSet = true
-                connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
+                if (!isConnected) {
+                    Log.i("MainActivity", "NETWORK is right now UNAVAILABLE")
+                    isPhoneOutOfNetwork = true
+                    setNetworkBtn()
+                    registerIncomingEvents(TypeOfEvent.IN_SERVICE, true)
+                }
+                else {
+                    Log.i("MainActivity", "NETWORK is right now AVAILABLE")
+                    connectivityCallback = object : ConnectivityManager.NetworkCallback() {
+                        override fun onUnavailable () {
+                            super.onUnavailable()
+                            Log.i("MainActivity", "NETWORK is currently UNAVAILABLE")
+                            isPhoneOutOfNetwork = true
+                            setNetworkBtn()
+                            Log.i("MainActivity", "Unregister status CB $connectivityCallback")
+                            connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                            registerIncomingEvents(TypeOfEvent.IN_SERVICE, true)
+                        }
+                        override fun onLost(network: Network) {
+                            super.onLost(network)
+                            Log.i("MainActivity", "NETWORK is currently LOST")
+                            isPhoneOutOfNetwork = true
+                            setNetworkBtn()
+                            Log.i("MainActivity", "Unregister status CB $connectivityCallback")
+                            connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                            registerIncomingEvents(TypeOfEvent.IN_SERVICE, true)
+                        }
+                        override fun onAvailable(network: Network) {
+                            super.onAvailable(network)
+                            Log.i("MainActivity", "NETWORK is currently AVAILABLE")
+                            isPhoneInNetwork = true
+                            setNetworkBtn()
+                            Log.i("MainActivity", "Unregister status CB $connectivityCallback")
+                            connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                            registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE, true)
+                        }
+                    }
+                    Log.i("MainActivity", "Register CB $connectivityCallback")
+                    connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
+                }
             }
         }
 
@@ -516,6 +545,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun isAboveThreshold(buffer: ShortArray, bytesRead: Int, THRESHOLD : Int): Boolean {
+        for (i in 0 until bytesRead) {
+            if (buffer[i] > THRESHOLD || buffer[i] < -THRESHOLD) {
+                return true
+            }
+        }
+        return false
+    }
+
     private fun showSnackbar (text : String, length : Int = Snackbar.LENGTH_SHORT) {
         snackbar.dismiss()
         snackbar = Snackbar.make(rootView, text, length)
@@ -560,14 +598,22 @@ class MainActivity : AppCompatActivity() {
                         super.onLost(network)
                         Log.i("MainActivity", "NETWORK is LOST")
                         startFlickering()
+                        stopFlickeringAfterTimeout(MAX_FLICKER_DURATION_NETWORK)
+                        isPhoneOutOfNetwork = true
+                        isPhoneInNetwork = false
+                    }
+                    override fun onUnavailable() {
+                        super.onUnavailable()
+                        Log.i("MainActivity", "NETWORK is UNAVAILABLE")
+                        startFlickering()
+                        stopFlickeringAfterTimeout(MAX_FLICKER_DURATION_NETWORK)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
                     }}
-                Log.i("MainActivity", "Register CB for OUT_OF_SERVICE")
-                connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback
-                )
+                Log.i("MainActivity", "Register CB for OUT_OF_SERVICE $connectivityCallback")
+                connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
                 if (showSnack) {
-                    showSnackbar("Flashlight will flicker if WiFi/Data signal gets lost")
+                    showSnackbar("Flashlight will flicker if WiFi or Network signal gets lost")
                 }
             }
             TypeOfEvent.IN_SERVICE -> {
@@ -577,14 +623,14 @@ class MainActivity : AppCompatActivity() {
                         super.onAvailable(network)
                         Log.i("MainActivity", "NETWORK is AVAILABLE")
                         startFlickering()
+                        stopFlickeringAfterTimeout(MAX_FLICKER_DURATION_NETWORK)
                         isPhoneOutOfNetwork = false
                         isPhoneInNetwork = true
                     }}
-                Log.i("MainActivity", "Register CB for IN_SERVICE")
-                connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback
-                )
+                Log.i("MainActivity", "Register CB for IN_SERVICE $connectivityCallback")
+                connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
                 if (showSnack) {
-                    showSnackbar("Flashlight will flicker if WiFi/Data signal is found")
+                    showSnackbar("Flashlight will flicker if WiFi or Network signal is found")
                 }
             }
             TypeOfEvent.PHONE_SHAKE -> {
@@ -603,6 +649,7 @@ class MainActivity : AppCompatActivity() {
                             Log.i("MainActivity", "SMS_RECEIVED_ACTION EVENT")
                             Log.i("MainActivity", "Phone starts flickering")
                             startFlickering()
+                            stopFlickeringAfterTimeout(MAX_FLICKER_DURATION_INCOMING_SMS)
                         }
                     }
                 }
@@ -701,6 +748,10 @@ class MainActivity : AppCompatActivity() {
         loopHandler.postDelayed({ startFlickering() }, periodOfFlashLightInMilliseconds)
     }
 
+    fun stopFlickeringAfterTimeout (timeout : Long) {
+        Log.d("MainActivity", "Flickering TIMEOUT set after ${timeout / 1000} seconds")
+        loopHandler.postDelayed({ stopFlickering() }, timeout)
+    }
 
     private fun atomicFlashLightOn () {
         cameraManager.setTorchMode(flashlightId, true)
@@ -710,12 +761,14 @@ class MainActivity : AppCompatActivity() {
         cameraManager.setTorchMode(flashlightId, false)
     }
 
-    private fun turnOnFlashlight() {
+    private fun turnOnFlashlight(setFlashlightBtn : Boolean = false) {
         if (!isFlashLightOn) {
             try {
                 isFlashLightOn = true
                 atomicFlashLightOn()
-                setFlashLightBtn()
+                if (setFlashlightBtn) {
+                    setFlashLightBtn()
+                }
                 Log.d("MainActivity", "FlashLight ON")
             } catch (e: CameraAccessException) {
                 Log.d("MainActivity", "FlashLight ON - ERROR: $e")
@@ -737,11 +790,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setFlashLightBtn () {
-        flashlightBtn.setImageResource(R.drawable.on_btn2)
+        flashlightBtn.setImageResource(R.drawable.turn_on)
     }
 
     private fun resetFlashLightBtn () {
-        flashlightBtn.setImageResource(R.drawable.off_btn2)
+        flashlightBtn.setImageResource(R.drawable.turn_off)
     }
 
     private fun setSOSBtn () {
@@ -899,8 +952,30 @@ class MainActivity : AppCompatActivity() {
         else if (isFlickering) {
             stopFlickering()
         }
-        else if (incomingCall) {
+
+        if (incomingCall) {
             unregisterReceiver(incomingCallReceiver)
+        }
+
+        if (isPhoneShaken) {
+            sensorManager.unregisterListener(sensorEventListener)
+        }
+
+        if (networkConnectivityCbIsSet) {
+            connectivityManager.unregisterNetworkCallback(connectivityCallback)
+        }
+
+        if (isSoundIncoming) {
+            audioRecord.stop()
+            audioRecord.release()
+            try {
+                recordingThread?.interrupt()
+            }
+            catch (e : SecurityException) {
+                Log.e("MainActivity", "THREAD SecurityException $e")
+            }
+            recordingThread?.join()
+            recordingThread = null
         }
     }
 
