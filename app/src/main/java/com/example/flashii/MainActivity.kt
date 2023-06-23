@@ -37,23 +37,22 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.provider.Telephony
-import kotlin.math.sqrt
 
 
 class MainActivity : AppCompatActivity() {
 
     // constants
-    private val MIN_FLICKER_HZ : Int = 1
-    private val MAX_FLICKER_HZ : Int = 10
-    private val DIT_DURATION : Long = 250
-    private val SPACE_DURATION : Long = DIT_DURATION
-    private val DAH_DURATION : Long = 3 * DIT_DURATION
-    private val SPACE_CHARS_DURATION : Long = 3 * SPACE_DURATION
-    private val SPACE_WORDS_DURATION : Long = 4 * SPACE_DURATION // results to 7*DIT_DURATION, considering that we add SPACE_CHARS_DURATION after each letter
+    private val minFlickerHz : Int = 1
+    private val maxFlickerHz : Int = 10
+    private val ditDuration : Long = 250
+    private val spaceDuration : Long = ditDuration
+    private val dahDuration : Long = 3 * ditDuration
+    private val spaceCharsDuration : Long = 3 * spaceDuration
+    private val spaceWordsDuration : Long = 4 * spaceDuration // results to 7*ditDuration, considering that we add spaceCharsDuration after each letter
     private lateinit var  rootView : View
-    private val MAX_FLICKER_DURATION_INCOMING_SMS : Long = 15000 // 15 seconds
-    private val MAX_FLICKER_DURATION_NETWORK : Long = 30000 // 30 seconds
-    private val APP_NAME : String = "Flashii"
+    private val maxFlickerDurationIncomingSMS : Long = 15000 // 15 seconds
+    private val maxFlickerDurationNetwork : Long = 30000 // 30 seconds
+    private val applicationName : String = "Flashii"
 
     enum class ACTION {
         CREATE,
@@ -69,13 +68,13 @@ class MainActivity : AppCompatActivity() {
         IN_SERVICE
     }
 
-    enum class REQUEST_KEY (val value: Int) {
+    enum class RequestKey (val value: Int) {
         CALL(1),
         SMS(2),
         AUDIO(3)
     }
 
-    val PERMISSIONS = mutableMapOf (
+    private val permissionsKeys = mutableMapOf (
         "CALL" to false,
         "SMS" to false,
         "AUDIO" to false
@@ -125,7 +124,7 @@ class MainActivity : AppCompatActivity() {
     private var hzInitialPosition = 0
     private lateinit var snackbar: Snackbar
     private lateinit var audioRecord : AudioRecord
-    var recordingThread: Thread? = null
+    private var recordingThread: Thread? = null
 
     @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,7 +140,7 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // flashLightBtn handler
-        setflashlightId()
+        setFlashlightId()
         flashlightBtn = findViewById(R.id.flashLightBtnId)
         flashlightBtn.setOnTouchListener { _, event ->
             when (event.action) {
@@ -188,8 +187,8 @@ class MainActivity : AppCompatActivity() {
         // flicker seekbar and textview handler
         flickeringBar = findViewById(R.id.flickeringBarId)
         flickerText = findViewById(R.id.flickerTextViewId)
-        flickeringBar.min = MIN_FLICKER_HZ
-        flickeringBar.max = MAX_FLICKER_HZ
+        flickeringBar.min = minFlickerHz
+        flickeringBar.max = maxFlickerHz
         flickeringBar.visibility = View.INVISIBLE
         flickerText.visibility = View.INVISIBLE
 
@@ -230,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         incomingCallBtn = findViewById(R.id.switchFlickerIncomingCallsId)
         incomingCallBtn.setOnClickListener {
             // Check first if permissions are granted
-            if (PERMISSIONS["CALL"] == true) {
+            if (permissionsKeys["CALL"] == true) {
                 if (!incomingCall) {
                     Log.i("MainActivity","incomingCallFlickerToBeEnabled is ON")
                     registerIncomingEvents(TypeOfEvent.INCOMING_CALL, true)
@@ -244,7 +243,7 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 // user should be asked for permissions again
-                showSnackbar("To use the feature, manually provide CALL permissions to $APP_NAME in your phone's Settings", Snackbar.LENGTH_LONG)
+                showSnackbar("To use the feature, manually provide CALL permissions to $applicationName in your phone's Settings", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -253,10 +252,10 @@ class MainActivity : AppCompatActivity() {
         incomingSoundBtn = findViewById(R.id.incomingSoundBtnId)
         incomingSoundBtn.setOnClickListener {
             Log.i("MainActivity","isSoundIncoming CLICKED")
-            if (PERMISSIONS["AUDIO"] == true) {
-                val SAMPLE_RATE = 44100
-                val BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
-                val THRESHOLD = 3500
+            if (permissionsKeys["AUDIO"] == true) {
+                val sampleRate = 44100
+                val bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
+                val threshold = 3500
 
                 if (isSoundIncoming) {
                     Log.i("MainActivity", "isSoundIncoming is OFF")
@@ -282,19 +281,19 @@ class MainActivity : AppCompatActivity() {
                     setIncomingSoundBtn()
                     audioRecord = AudioRecord(
                         MediaRecorder.AudioSource.MIC,
-                        SAMPLE_RATE,
+                        sampleRate,
                         AudioFormat.CHANNEL_IN_MONO,
                         AudioFormat.ENCODING_PCM_16BIT,
-                        BUFFER_SIZE
+                        bufferSize
                     )
 
-                    val buffer = ShortArray(BUFFER_SIZE)
+                    val buffer = ShortArray(bufferSize)
                     audioRecord.startRecording()
 
                     recordingThread = Thread {
                         while (isSoundIncoming) {
-                            val bytesRead = audioRecord.read(buffer, 0, BUFFER_SIZE)
-                            if (isAboveThreshold(buffer, bytesRead, THRESHOLD)) {
+                            val bytesRead = audioRecord.read(buffer, 0, bufferSize)
+                            if (isAboveThreshold(buffer, bytesRead, threshold)) {
                                 Log.i("MainActivity","LOOP ABOVE THRESHOLD")
                                 if (isFlashLightOn) {
                                     turnOffFlashlight()
@@ -311,7 +310,7 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 // user should be asked for permissions again
-                showSnackbar("To use the feature, manually provide AUDIO permissions to $APP_NAME in your phone's Settings", Snackbar.LENGTH_LONG)
+                showSnackbar("To use the feature, manually provide AUDIO permissions to $applicationName in your phone's Settings", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -322,32 +321,33 @@ class MainActivity : AppCompatActivity() {
             if (!isPhoneShaken) {
                 Log.i("MainActivity","isPhoneShaken is ON")
                 sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-                val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+                val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
                 if (accelerometerSensor != null) {
-                    var acceleration = 10f
-                    var currentAcceleration = SensorManager.GRAVITY_EARTH
-                    var lastAcceleration: Float
-                    var delta : Float
+                    var rotationAngle = 0f
                     sensorEventListener = object : SensorEventListener {
                         override fun onSensorChanged(event: SensorEvent) {
-                            val x = event.values[0]
-                            val y = event.values[1]
-                            val z = event.values[2]
-                            lastAcceleration = currentAcceleration
-                            currentAcceleration = sqrt((x * x + y * y + z * z).toDouble()).toFloat()
-                            delta = currentAcceleration - lastAcceleration
-                            acceleration = acceleration * 0.9f + delta
-                            if (acceleration > 12) {
-                                Log.i("MainActivity", "Shake event detected")
-                                if (isFlashLightOn) {
-                                    turnOffFlashlight()
-                                }
-                                else {
-                                    turnOnFlashlight()
+                            if (event.sensor?.type == Sensor.TYPE_ROTATION_VECTOR) {
+                                val rotationMatrix = FloatArray(9)
+                                SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+                                val orientationAngles = FloatArray(3)
+                                SensorManager.getOrientation(rotationMatrix, orientationAngles)
+
+                                val angleInDegrees = Math.toDegrees(orientationAngles[2].toDouble()).toFloat()
+                                if (angleInDegrees < -40 && rotationAngle < 10f) {
+                                    // Phone rotated to the left ~ 40 degrees
+                                    rotationAngle = angleInDegrees
+                                } else if (angleInDegrees > 0f && rotationAngle < -45) {
+                                    // Phone returned to portrait orientation
+                                    rotationAngle = 0f
+                                    if (isFlashLightOn) {
+                                        turnOffFlashlight()
+                                    }
+                                    else {
+                                        turnOnFlashlight()
+                                    }
                                 }
                             }
                         }
-
                         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
                             // Handle accuracy changes if needed
                         }
@@ -360,7 +360,7 @@ class MainActivity : AppCompatActivity() {
                 else {
                     // we have to disable the btn now since accelerometer sensor is not available on the device
                     Log.i("MainActivity","Accelerometer not available")
-                    incomingShakeBtn.setImageResource(R.drawable.shake_icon_not_available)
+                    incomingShakeBtn.setImageResource(R.drawable.rotate_no_permission)
                 }
             } else {
                 Log.i("MainActivity", "isPhoneShaken is OFF")
@@ -376,7 +376,7 @@ class MainActivity : AppCompatActivity() {
         incomingSMSBtn = findViewById(R.id.smsBtnId)
         incomingSMSBtn.setOnClickListener {
             // Check first if permissions are granted
-            if (PERMISSIONS["SMS"] == true) {
+            if (permissionsKeys["SMS"] == true) {
                 if (!incomingSMS) {
                     Log.i("MainActivity","SMS incoming handler is ON")
                     registerIncomingEvents(TypeOfEvent.SMS, true)
@@ -391,7 +391,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for SMS")
-                showSnackbar("To use the feature, manually provide SMS permissions to $APP_NAME in your phone's Settings", Snackbar.LENGTH_LONG)
+                showSnackbar("To use the feature, manually provide SMS permissions to $applicationName in your phone's Settings", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -475,26 +475,26 @@ class MainActivity : AppCompatActivity() {
             ACTION.CREATE -> {
                 // CALL
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), REQUEST_KEY.CALL.value)
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), RequestKey.CALL.value)
                 }
                 else {
-                    PERMISSIONS["CALL"] = true
+                    permissionsKeys["CALL"] = true
                 }
 
                 // SMS
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), REQUEST_KEY.SMS.value)
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), RequestKey.SMS.value)
                 }
                 else {
-                    PERMISSIONS["SMS"] = true
+                    permissionsKeys["SMS"] = true
                 }
 
                 // AUDIO
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_KEY.AUDIO.value)
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), RequestKey.AUDIO.value)
                 }
                 else {
-                    PERMISSIONS["AUDIO"] = true
+                    permissionsKeys["AUDIO"] = true
                 }
             }
             ACTION.RESUME -> {
@@ -502,43 +502,43 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "Ask for permissions again RESUME")
 
                 // CALL
-                if (PERMISSIONS["CALL"] == false) {
+                if (permissionsKeys["CALL"] == false) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), REQUEST_KEY.CALL.value)
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), RequestKey.CALL.value)
                     }
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                         setBtnUnavailable(incomingCallBtn, R.drawable.incoming_call_no_permission)
-                        PERMISSIONS["CALL"] = false
+                        permissionsKeys["CALL"] = false
                     }
                 }
 
                 // SMS
-                if (PERMISSIONS["SMS"] == false) {
+                if (permissionsKeys["SMS"] == false) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
                         Log.i("MainActivity", "Ask for SMS permissions again RESUME ")
-                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), REQUEST_KEY.SMS.value)
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), RequestKey.SMS.value)
                     }
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
                         setBtnUnavailable(incomingSMSBtn, R.drawable.sms_icon_no_permission)
-                        PERMISSIONS["SMS"] = false
+                        permissionsKeys["SMS"] = false
                     }
                 }
 
                 // AUDIO
-                if (PERMISSIONS["AUDIO"] == false) {
+                if (permissionsKeys["AUDIO"] == false) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
                         Log.i("MainActivity", "Ask for AUDIO permissions again RESUME ")
-                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_KEY.AUDIO.value)
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), RequestKey.AUDIO.value)
                     }
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                         setBtnUnavailable(incomingSoundBtn, R.drawable.sound_no_permission)
-                        PERMISSIONS["AUDIO"] = false
+                        permissionsKeys["AUDIO"] = false
                     }
                 }
             }
@@ -599,7 +599,7 @@ class MainActivity : AppCompatActivity() {
                         super.onLost(network)
                         Log.i("MainActivity", "NETWORK is LOST")
                         startFlickering()
-                        stopFlickeringAfterTimeout(MAX_FLICKER_DURATION_NETWORK)
+                        stopFlickeringAfterTimeout(maxFlickerDurationNetwork)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
                     }
@@ -607,7 +607,7 @@ class MainActivity : AppCompatActivity() {
                         super.onUnavailable()
                         Log.i("MainActivity", "NETWORK is UNAVAILABLE")
                         startFlickering()
-                        stopFlickeringAfterTimeout(MAX_FLICKER_DURATION_NETWORK)
+                        stopFlickeringAfterTimeout(maxFlickerDurationNetwork)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
                     }}
@@ -624,7 +624,7 @@ class MainActivity : AppCompatActivity() {
                         super.onAvailable(network)
                         Log.i("MainActivity", "NETWORK is AVAILABLE")
                         startFlickering()
-                        stopFlickeringAfterTimeout(MAX_FLICKER_DURATION_NETWORK)
+                        stopFlickeringAfterTimeout(maxFlickerDurationNetwork)
                         isPhoneOutOfNetwork = false
                         isPhoneInNetwork = true
                     }}
@@ -650,7 +650,7 @@ class MainActivity : AppCompatActivity() {
                             Log.i("MainActivity", "SMS_RECEIVED_ACTION EVENT")
                             Log.i("MainActivity", "Phone starts flickering")
                             startFlickering()
-                            stopFlickeringAfterTimeout(MAX_FLICKER_DURATION_INCOMING_SMS)
+                            stopFlickeringAfterTimeout(maxFlickerDurationIncomingSMS)
                         }
                     }
                 }
@@ -673,11 +673,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setShakeBtn () {
-        incomingShakeBtn.setImageResource(R.drawable.shake_enabled)
+        incomingShakeBtn.setImageResource(R.drawable.rotate_on)
     }
 
     private fun resetShakeBtn () {
-        incomingShakeBtn.setImageResource(R.drawable.shake_icon)
+        incomingShakeBtn.setImageResource(R.drawable.rotate_off)
     }
 
     private fun resetIncomingSMSBtn () {
@@ -826,7 +826,7 @@ class MainActivity : AppCompatActivity() {
         flickerFlashlightBtn.setImageResource(R.drawable.flicker_off3)
     }
 
-    private fun setflashlightId () {
+    private fun setFlashlightId () {
         // Iterate over the available camera devices
         for (id in cameraManager.cameraIdList) {
             val characteristics = cameraManager.getCameraCharacteristics(id)
@@ -847,36 +847,36 @@ class MainActivity : AppCompatActivity() {
     // dit flashing per Morse code
     private fun dit () {
         atomicFlashLightOn()
-        loopHandler.postDelayed({ atomicFlashLightOff() }, DIT_DURATION)
+        loopHandler.postDelayed({ atomicFlashLightOff() }, ditDuration)
     }
 
     // dah flashing per Morse code
     private fun dah () {
         atomicFlashLightOn()
-        loopHandler.postDelayed({ atomicFlashLightOff() }, DAH_DURATION)
+        loopHandler.postDelayed({ atomicFlashLightOff() }, dahDuration)
     }
 
     // S = ...
     // Function return the duration of S in milliseconds
-    private fun S (initialPauseByMilliseconds : Long = 0) : Long {
+    private fun s (initialPauseByMilliseconds : Long = 0) : Long {
         loopHandler.postDelayed({ dit() }, initialPauseByMilliseconds)
-        loopHandler.postDelayed({ dit() }, initialPauseByMilliseconds + DIT_DURATION + SPACE_DURATION)
-        loopHandler.postDelayed({ dit() }, initialPauseByMilliseconds + 2 * DIT_DURATION + 2 * SPACE_DURATION)
-        return initialPauseByMilliseconds + 3 * DIT_DURATION + 2 * SPACE_DURATION + SPACE_CHARS_DURATION
+        loopHandler.postDelayed({ dit() }, initialPauseByMilliseconds + ditDuration + spaceDuration)
+        loopHandler.postDelayed({ dit() }, initialPauseByMilliseconds + 2 * ditDuration + 2 * spaceDuration)
+        return initialPauseByMilliseconds + 3 * ditDuration + 2 * spaceDuration + spaceCharsDuration
     }
 
     // O = - - -
-    private fun O (initialPauseByMilliseconds : Long = 0) : Long {
+    private fun o (initialPauseByMilliseconds : Long = 0) : Long {
         loopHandler.postDelayed({ dah() }, initialPauseByMilliseconds)
-        loopHandler.postDelayed({ dah() }, initialPauseByMilliseconds + DAH_DURATION + SPACE_DURATION)
-        loopHandler.postDelayed({ dah() }, initialPauseByMilliseconds + 2 * DAH_DURATION + 2 * SPACE_DURATION)
-        return initialPauseByMilliseconds + 3 * DAH_DURATION + 2 * SPACE_DURATION + SPACE_CHARS_DURATION
+        loopHandler.postDelayed({ dah() }, initialPauseByMilliseconds + dahDuration + spaceDuration)
+        loopHandler.postDelayed({ dah() }, initialPauseByMilliseconds + 2 * dahDuration + 2 * spaceDuration)
+        return initialPauseByMilliseconds + 3 * dahDuration + 2 * spaceDuration + spaceCharsDuration
     }
 
     private fun repeatSOS() {
         isSendSOS = true
-        val durationOfWord = S(O(S()))
-        loopHandler.postDelayed({repeatSOS()}, durationOfWord + SPACE_WORDS_DURATION)
+        val durationOfWord = s(o(s()))
+        loopHandler.postDelayed({repeatSOS()}, durationOfWord + spaceWordsDuration)
     }
 
     private fun stopSOS (showSnack : Boolean = false) {
@@ -899,31 +899,31 @@ class MainActivity : AppCompatActivity() {
             // Permission has been granted, so register the TelephonyCallback
             Log.i("MainActivity", "Request granted")
             when (requestCode) {
-                REQUEST_KEY.CALL.value -> {
-                    PERMISSIONS["CALL"] = true
+                RequestKey.CALL.value -> {
+                    permissionsKeys["CALL"] = true
                     resetIncomingCallFlickeringBtn()
                 }
-                REQUEST_KEY.SMS.value -> {
-                    PERMISSIONS["SMS"] = true
+                RequestKey.SMS.value -> {
+                    permissionsKeys["SMS"] = true
                     resetSOSBtn()
                 }
-                REQUEST_KEY.AUDIO.value -> {
-                    PERMISSIONS["AUDIO"] = true
+                RequestKey.AUDIO.value -> {
+                    permissionsKeys["AUDIO"] = true
                     resetIncomingSoundBtn()
                 }
             }
         }
         else {
             when (requestCode) {
-                REQUEST_KEY.CALL.value -> {
+                RequestKey.CALL.value -> {
                     Log.i("MainActivity", "Request NOT granted for CALL")
                     setBtnUnavailable(incomingCallBtn, R.drawable.incoming_call_no_permission)
                 }
-                REQUEST_KEY.SMS.value -> {
+                RequestKey.SMS.value -> {
                     Log.i("MainActivity", "Request NOT granted for SMS")
                     setBtnUnavailable(incomingSMSBtn, R.drawable.sms_icon_no_permission)
                 }
-                REQUEST_KEY.AUDIO.value -> {
+                RequestKey.AUDIO.value -> {
                     Log.i("MainActivity", "Request NOT granted for AUDIO")
                     setBtnUnavailable(incomingSoundBtn, R.drawable.sound_no_permission)
                 }

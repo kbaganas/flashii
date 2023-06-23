@@ -129,13 +129,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="72dp"
         android:background="#00FFFFFF"
-        android:scaleType="fitCenter"
         android:contentDescription="@string/ShakenBtnContentDescription"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/networkConnectionBtn"
         app:layout_constraintStart_toEndOf="@+id/flashLightBtnId"
         app:layout_constraintTop_toTopOf="@+id/flickerFlashLightId"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/shake_icon" />
+        app:srcCompat="@drawable/rotate_off" />
 
     <ImageButton
         android:id="@+id/incomingSoundBtnId"
