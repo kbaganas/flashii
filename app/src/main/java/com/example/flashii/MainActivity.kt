@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     private val maxFlickerDurationIncomingSMS : Long = 15000 // 15 seconds
     private val maxFlickerDurationNetwork : Long = 30000 // 30 seconds
     private val applicationName : String = "Flashii"
+    private val initRotationAngle : Float = -1000f
 
     enum class ACTION {
         CREATE,
@@ -146,7 +147,7 @@ class MainActivity : AppCompatActivity() {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     if (isFlashLightOn) {
-                        turnOffFlashlight()
+                        turnOffFlashlight(true)
                     } else {
                         resetAllActivities()
                         touchStartTime = System.currentTimeMillis()
@@ -158,7 +159,7 @@ class MainActivity : AppCompatActivity() {
                     // If touch duration > 750ms, then its a press-and-hold action and we need to turn-off flashlight.
                     // If otherwise, user just clicked to enable or disable the flashlight.
                     if (System.currentTimeMillis() - touchStartTime > 350) {
-                        turnOffFlashlight()
+                        turnOffFlashlight(true)
                     }
                     false
                 }
@@ -319,11 +320,10 @@ class MainActivity : AppCompatActivity() {
         incomingShakeBtn = findViewById(R.id.incomingShakeBtnId)
         incomingShakeBtn.setOnClickListener {
             if (!isPhoneShaken) {
-                Log.i("MainActivity","isPhoneShaken is ON")
                 sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
                 val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
                 if (accelerometerSensor != null) {
-                    var rotationAngle = 0f
+                    var rotationAngle = initRotationAngle
                     sensorEventListener = object : SensorEventListener {
                         override fun onSensorChanged(event: SensorEvent) {
                             if (event.sensor?.type == Sensor.TYPE_ROTATION_VECTOR) {
@@ -331,14 +331,13 @@ class MainActivity : AppCompatActivity() {
                                 SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
                                 val orientationAngles = FloatArray(3)
                                 SensorManager.getOrientation(rotationMatrix, orientationAngles)
-
-                                val angleInDegrees = Math.toDegrees(orientationAngles[2].toDouble()).toFloat()
-                                if (angleInDegrees < -40 && rotationAngle < 10f) {
-                                    // Phone rotated to the left ~ 40 degrees
+                                val angleInDegrees = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
+                                if (angleInDegrees > -5f && rotationAngle == initRotationAngle) {
+                                    // Phone rotated to the left ~ 90 degrees
                                     rotationAngle = angleInDegrees
-                                } else if (angleInDegrees > 0f && rotationAngle < -45) {
+                                } else if (angleInDegrees < -80f && rotationAngle > -5f) {
                                     // Phone returned to portrait orientation
-                                    rotationAngle = 0f
+                                    rotationAngle = initRotationAngle
                                     if (isFlashLightOn) {
                                         turnOffFlashlight()
                                     }
@@ -352,6 +351,7 @@ class MainActivity : AppCompatActivity() {
                             // Handle accuracy changes if needed
                         }
                     }
+                    Log.i("MainActivity","isPhoneShaken is ON $sensorEventListener")
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
                     setShakeBtn()
                     isPhoneShaken = true
@@ -363,7 +363,8 @@ class MainActivity : AppCompatActivity() {
                     incomingShakeBtn.setImageResource(R.drawable.rotate_no_permission)
                 }
             } else {
-                Log.i("MainActivity", "isPhoneShaken is OFF")
+                Log.i("MainActivity", "isPhoneShaken is OFF $sensorEventListener")
+                turnOffFlashlight()
                 dismissSnackbar()
                 sensorManager.unregisterListener(sensorEventListener)
                 resetShakeBtn()
@@ -777,12 +778,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun turnOffFlashlight() {
+    private fun turnOffFlashlight (resetFlashlightBtn : Boolean = false) {
         if (isFlashLightOn) {
             try {
                 isFlashLightOn = false
                 atomicFlashLightOff()
-                resetFlashLightBtn()
+                if (resetFlashlightBtn) {
+                    resetFlashLightBtn()
+                }
                 Log.d("MainActivity", "FlashLight OFF")
             } catch (e: CameraAccessException) {
                 Log.d("MainActivity", "FlashLight OFF - ERROR: $e")
@@ -983,7 +986,7 @@ class MainActivity : AppCompatActivity() {
     private fun resetAllActivities () {
         Log.i("MainActivity", "Reset all activities")
         if (isFlashLightOn) {
-            turnOffFlashlight()
+            turnOffFlashlight(true)
         }
         else if (isFlickering) {
             stopFlickering()
