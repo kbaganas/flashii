@@ -355,6 +355,7 @@ class MainActivity : AppCompatActivity() {
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
                     setShakeBtn()
                     isPhoneShaken = true
+                    showSnackbar("Flashlight will turn ON/OFF on Phone short rotations")
                 }
                 else {
                     // we have to disable the btn now since accelerometer sensor is not available on the device
