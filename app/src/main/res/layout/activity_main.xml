@@ -166,4 +166,30 @@
         app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId"
         app:srcCompat="@drawable/altitude_btn_off" />
 
+    <ImageButton
+        android:id="@+id/batteryBtnId"
+        android:layout_width="55dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="12dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/altitudeBtnId"
+        app:srcCompat="@drawable/battery_off" />
+
+    <ImageButton
+        android:id="@+id/timerBtnId"
+        android:layout_width="41dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="100dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/batteryBtnId"
+        app:layout_constraintTop_toBottomOf="@+id/altitudeBtnId"
+        app:srcCompat="@drawable/timer_off" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
