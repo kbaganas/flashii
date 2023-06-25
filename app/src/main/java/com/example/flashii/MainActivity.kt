@@ -36,6 +36,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import android.os.BatteryManager
 import android.provider.Telephony
 import java.lang.Exception
 
@@ -51,9 +52,8 @@ class MainActivity : AppCompatActivity() {
     private val spaceCharsDuration : Long = 3 * spaceDuration
     private val spaceWordsDuration : Long = 4 * spaceDuration // results to 7*ditDuration, considering that we add spaceCharsDuration after each letter
     private lateinit var  rootView : View
-    private val maxFlickerDurationIncomingSMS : Long = 15000 // 15 seconds
-    private val maxFlickerDurationNetwork : Long = 30000 // 30 seconds
-    private val maxFlickerDurationAltitude : Long = 15000 // 30 seconds
+    private val maxFlickerDuration15 : Long = 15000 // 15 seconds
+    private val maxFlickerDuration30 : Long = 30000 // 30 seconds
     private val applicationName : String = "Flashii"
     private val initRotationAngle : Float = -1000f
     private val snackbarDelay : Long = 3000
@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var connectivityCallback: ConnectivityManager.NetworkCallback
     private lateinit var incomingCallReceiver : BroadcastReceiver
     private lateinit var incomingSMSReceiver : BroadcastReceiver
+    private lateinit var batteryReceiver : BroadcastReceiver
 
     // Booleans
     private var isFlashLightOn = false
@@ -147,6 +148,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var snackbar: Snackbar
     private lateinit var audioRecord : AudioRecord
     private var recordingThread: Thread? = null
+    private var timerSetAfter: Long = 60 * 60 * 1000 // 1 hour
 
     @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -240,8 +242,8 @@ class MainActivity : AppCompatActivity() {
         flickerFlashlightBtn = findViewById(R.id.flickerFlashLightId)
         flickerFlashlightBtn.setOnClickListener {
             if (!isFlickeringOnDemand) {
-                Log.i("MainActivity","flickerFlashlightBtn is ON with ${flickerFlashlightHz}Hz")
                 resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                Log.i("MainActivity","flickerFlashlightBtn is ON with ${flickerFlashlightHz}Hz")
                 startFlickering()
                 setFlickeringFlashlightBtn()
             }
@@ -323,11 +325,12 @@ class MainActivity : AppCompatActivity() {
                         while (isSoundIncoming) {
                             val bytesRead = audioRecord.read(buffer, 0, bufferSize)
                             if (isAboveThreshold(buffer, bytesRead)) {
-                                Log.i("MainActivity","LOOP ABOVE THRESHOLD")
                                 if (isFlashLightOn) {
+                                    Log.i("MainActivity","LOOP ABOVE THRESHOLD - TURN OFF Flashlight")
                                     turnOffFlashlight()
                                 }
                                 else {
+                                    Log.i("MainActivity","LOOP ABOVE THRESHOLD - TURN ON Flashlight")
                                     turnOnFlashlight()
                                 }
                             }
@@ -368,9 +371,11 @@ class MainActivity : AppCompatActivity() {
                                     // Phone returned to portrait orientation
                                     rotationAngle = initRotationAngle
                                     if (isFlashLightOn) {
+                                        Log.i("MainActivity","TILT REACHED ANGLE - TURN OFF Flashlight")
                                         turnOffFlashlight()
                                     }
                                     else {
+                                        Log.i("MainActivity","TILT REACHED ANGLE - TURN ON Flashlight")
                                         turnOnFlashlight()
                                     }
                                 }
@@ -501,16 +506,39 @@ class MainActivity : AppCompatActivity() {
         batteryBtn = findViewById(R.id.batteryBtnId)
         batteryBtn.setOnClickListener {
             if (!isBatteryOn) {
-                resetAllActivities(disableSensorListeners = true)
                 Log.i("MainActivity","batteryBtn is ON")
                 isBatteryOn = true
                 setBatteryBtn()
+
+                val batteryThreshold = 20 // Set your desired battery threshold here
+                batteryReceiver = object : BroadcastReceiver() {
+                    override fun onReceive(context: Context, intent: Intent) {
+                        if (intent.action == Intent.ACTION_BATTERY_CHANGED) {
+                            val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+                            val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+                            val batteryPercentage = (level.toFloat() / scale.toFloat()) * 100
+
+                            if (batteryPercentage < batteryThreshold) {
+                                Log.i("MainActivity", "Battery has reached the threshold of ${batteryPercentage}%")
+                                showSnackbar("Battery has reached the threshold of ${batteryPercentage}%", Snackbar.LENGTH_LONG)
+                                Log.d("MainActivity", "flickeringBar ON with ${flickerFlashlightHz}Hz")
+                                startFlickering()
+                                stopFlickeringAfterTimeout(maxFlickerDuration15)
+                            }
+                        }
+                    }
+                }
+                registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
             }
             else {
                 Log.i("MainActivity","batteryBtn is OFF")
+                unregisterReceiver(batteryReceiver)
                 isBatteryOn = false
                 dismissSnackbar()
                 resetBatteryBtn()
+                if (!isFlickeringOnDemand) {
+                    stopFlickering()
+                }
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -519,15 +547,19 @@ class MainActivity : AppCompatActivity() {
         timerBtn.setOnClickListener {
             if (!isTimerOn) {
                 resetAllActivities(disableSensorListeners = true)
-                Log.i("MainActivity","timerBtn is ON")
+                Log.i("MainActivity","timerBtn is ON (after ${timerSetAfter/1000/60} minutes)")
                 isTimerOn = true
                 setTimerBtn()
+                loopHandler.postDelayed({ Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz and after ${timerSetAfter/1000/60} minutes") }, timerSetAfter)
+                loopHandler.postDelayed({ startFlickering() }, timerSetAfter)
+                stopFlickeringAfterTimeout(timerSetAfter + maxFlickerDuration15)
             }
             else {
                 Log.i("MainActivity","timerBtn is OFF")
                 isTimerOn = false
                 dismissSnackbar()
                 resetTimerBtn()
+                loopHandler.removeCallbacksAndMessages(null)
             }
         }
 
@@ -540,7 +572,6 @@ class MainActivity : AppCompatActivity() {
                     sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
                     val altitudeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
                     if (altitudeSensor != null) {
-                        resetAllActivities(disableSOS = true, disableSensorListeners = true)
                         sensorEventListener = object : SensorEventListener {
                             override fun onSensorChanged(event: SensorEvent) {
                                 if (event.sensor?.type == Sensor.TYPE_PRESSURE) {
@@ -551,10 +582,12 @@ class MainActivity : AppCompatActivity() {
                                     }
                                     else {
                                         if (!isFlickering) {
-                                            Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
+                                            turnOffFlashlight(true)
+                                            stopFlickering()
+                                            Log.d("MainActivity", "Flickering ON due to altitude reached with ${flickerFlashlightHz}Hz")
                                             startFlickering()
                                             loopHandler.postDelayed({ showSnackbar("WARNING: altitude reached is $altitude meters high") }, snackbarDelay)
-                                            stopFlickeringAfterTimeout(maxFlickerDurationAltitude)
+                                            stopFlickeringAfterTimeout(maxFlickerDuration15)
                                             sensorManager.unregisterListener(sensorEventListener)
                                         }
                                     }
@@ -578,7 +611,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     Log.i("MainActivity","altitudeBtn is OFF ($sensorEventListener)")
-                    turnOffFlashlight()
+                    if (!isFlickeringOnDemand) {
+                        stopFlickering()
+                    }
                     dismissSnackbar()
                     try {
                         sensorManager.unregisterListener(sensorEventListener)
@@ -739,8 +774,8 @@ class MainActivity : AppCompatActivity() {
                             Log.i("MainActivity", "ACTION_PHONE_STATE_CHANGED EVENT")
                             val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
                             if (state == TelephonyManager.EXTRA_STATE_RINGING) {
-                                Log.d("MainActivity", "EXTRA_STATE_RINGING - Flickering ON with ${flickerFlashlightHz}Hz")
                                 resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                                Log.d("MainActivity", "EXTRA_STATE_RINGING - Flickering ON with ${flickerFlashlightHz}Hz")
                                 startFlickering()
                             }
                             else if (state == TelephonyManager.EXTRA_STATE_IDLE || state == TelephonyManager.EXTRA_STATE_OFFHOOK) {
@@ -760,22 +795,22 @@ class MainActivity : AppCompatActivity() {
                     override fun onLost(network: Network) {
                         super.onLost(network)
                         Log.i("MainActivity", "NETWORK is LOST")
-                        Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                        Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
                         setNetworkBtn(NetworkState.LOST)
-                        stopFlickeringAfterTimeout(maxFlickerDurationNetwork)
+                        stopFlickeringAfterTimeout(maxFlickerDuration30)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
                     }
                     override fun onUnavailable() {
                         super.onUnavailable()
                         Log.i("MainActivity", "NETWORK is UNAVAILABLE")
-                        Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         resetAllActivities(disableSOS = true, disableSensorListeners = true)
                         setNetworkBtn(NetworkState.UNAVAILABLE)
+                        Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
-                        stopFlickeringAfterTimeout(maxFlickerDurationNetwork)
+                        stopFlickeringAfterTimeout(maxFlickerDuration30)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
                     }}
@@ -789,11 +824,11 @@ class MainActivity : AppCompatActivity() {
                     override fun onAvailable(network: Network) {
                         super.onAvailable(network)
                         Log.i("MainActivity", "NETWORK is AVAILABLE")
-                        Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         resetAllActivities(disableSOS = true, disableSensorListeners = true)
                         setNetworkBtn(NetworkState.AVAILABLE)
+                        Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
-                        stopFlickeringAfterTimeout(maxFlickerDurationNetwork)
+                        stopFlickeringAfterTimeout(maxFlickerDuration30)
                         isPhoneOutOfNetwork = false
                         isPhoneInNetwork = true
                     }}
@@ -815,10 +850,10 @@ class MainActivity : AppCompatActivity() {
                         Log.i("MainActivity", "EVENT INCOMING")
                         if (intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
                             Log.i("MainActivity", "SMS_RECEIVED_ACTION EVENT")
-                            Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                             resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                            Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                             startFlickering()
-                            stopFlickeringAfterTimeout(maxFlickerDurationIncomingSMS)
+                            stopFlickeringAfterTimeout(maxFlickerDuration15)
                         }
                     }
                 }
@@ -1211,28 +1246,54 @@ class MainActivity : AppCompatActivity() {
     private fun resetAllActivities (disableSOS : Boolean = false, disableIncomingEvents : Boolean = false, disableSensorListeners : Boolean = false) {
         Log.i("MainActivity", "Reset all activities")
         if (isFlashLightOn) {
+            Log.i("MainActivity", "RAA - TURN OFF Flashlight")
             turnOffFlashlight(true)
         }
         else if (isFlickering && isFlickeringOnDemand) {
+            Log.i("MainActivity", "RAA - STOP FLICKERING")
             stopFlickering()
             resetFlickeringFlashlightBtn()
             setFlickeringHz(minFlickerHz.toLong())
         }
 
-        if (disableSOS) {
+        if (disableSOS and isSendSOS) {
+            Log.i("MainActivity", "RAA - DISABLE SOS")
             stopSOS()
         }
 
         if (disableSensorListeners) {
             if (isPhoneShaken) {
+                Log.i("MainActivity", "RAA - TURN OFF isPhoneShaken")
                 turnOffFlashlight()
                 dismissSnackbar()
                 sensorManager.unregisterListener(sensorEventListener)
                 resetShakeBtn()
                 isPhoneShaken = false
+                loopHandler.removeCallbacksAndMessages(null)
+            }
+
+            if (isAltitudeOn) {
+                Log.i("MainActivity", "RAA - TURN OFF isAltitudeOn")
+                turnOffFlashlight()
+                dismissSnackbar()
+                sensorManager.unregisterListener(sensorEventListener)
+                resetAltitudeBtn()
+                isAltitudeOn = false
+                loopHandler.removeCallbacksAndMessages(null)
+            }
+
+            if (isBatteryOn) {
+                Log.i("MainActivity", "RAA - TURN OFF isBatteryOn")
+                turnOffFlashlight()
+                dismissSnackbar()
+                unregisterReceiver(batteryReceiver)
+                resetBatteryBtn()
+                isBatteryOn = false
+                loopHandler.removeCallbacksAndMessages(null)
             }
 
             if (isSoundIncoming) {
+                Log.i("MainActivity", "RAA - TURN OFF isSoundIncoming")
                 isSoundIncoming = false
                 turnOffFlashlight()
                 resetIncomingSoundBtn()
@@ -1246,17 +1307,21 @@ class MainActivity : AppCompatActivity() {
                 }
                 recordingThread?.join()
                 recordingThread = null
+                loopHandler.removeCallbacksAndMessages(null)
             }
+
         }
 
         if (disableIncomingEvents) {
             if (incomingCall) {
+                Log.i("MainActivity", "RAA - TURN OFF incomingCall")
                 dismissSnackbar()
                 disableIncomingCallFlickering()
                 resetIncomingCallFlickeringBtn()
             }
 
             if (networkConnectivityCbIsSet) {
+                Log.i("MainActivity", "RAA - TURN OFF networkConnectivityCbIsSet")
                 networkConnectivityCbIsSet = false
                 dismissSnackbar()
                 stopFlickering()
