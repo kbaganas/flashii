@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
     private var timerSetAfter = 0.minutes
     private var batteryThreshold : Int = 5 // 5%
     private var altitudeThreshold : Int = 0 // sea level
+    private val hideSeekBarAfterDelay3 : Long = 3000
 
     enum class ACTION {
         CREATE,
@@ -110,9 +111,7 @@ class MainActivity : AppCompatActivity() {
         CALL(1),
         SMS(2),
         AUDIO(3),
-        ALTITUDE(4),
-        LOW_ALTITUDE (-5),
-        HIGH_ALTITUDE (1800)
+        ALTITUDE(4)
     }
 
     private val permissionsKeys = mutableMapOf (
@@ -259,8 +258,19 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                dismissSnackbar()
                 loopHandler.removeCallbacksAndMessages(null)
                 atomicFlashLightOff()
+
+                if (isBatteryOn && isBatteryThresholdSet) {
+                    isBatteryThresholdSet = false
+                }
+                else if (isAltitudeOn && isAltitudeThresholdSet) {
+                    isAltitudeThresholdSet = false
+                }
+                else if (isTimerOn && isTimerThresholdSet) {
+                    isTimerThresholdSet = false
+                }
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -270,12 +280,24 @@ class MainActivity : AppCompatActivity() {
                 }
                 else if (isBatteryOn && !isBatteryThresholdSet) {
                     isBatteryThresholdSet = true
+                    Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz and batteryThreshold $batteryThreshold")
+                    showSnackbar("Battery power level set to $batteryThreshold %", Snackbar.LENGTH_LONG)
+                    loopHandler.postDelayed({ resetSeekBar(true) }, hideSeekBarAfterDelay3)
                 }
                 else if (isAltitudeOn && !isAltitudeThresholdSet) {
                     isAltitudeThresholdSet = true
+                    Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz and altitudeThreshold $altitudeThreshold")
+                    showSnackbar("Altitude set to $altitudeThreshold meters", Snackbar.LENGTH_LONG)
+                    loopHandler.postDelayed({ resetSeekBar(true) }, hideSeekBarAfterDelay3)
                 }
                 else if (isTimerOn && !isTimerThresholdSet) {
                     isTimerThresholdSet = true
+                    Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz and timerSetAfter $timerSetAfter")
+                    loopHandler.postDelayed({ Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz and after ${timerSetAfter.inWholeMinutes} minutes") }, timerSetAfter.inWholeMilliseconds)
+                    loopHandler.postDelayed({ startFlickering() }, timerSetAfter.inWholeMilliseconds)
+                    stopFlickeringAfterTimeout(timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
+                    showSnackbar("Timer set to $isTimerThresholdSet minutes", Snackbar.LENGTH_LONG)
+                    loopHandler.postDelayed({ resetSeekBar(true) }, hideSeekBarAfterDelay3)
                 }
             }
         })
@@ -592,17 +614,17 @@ class MainActivity : AppCompatActivity() {
         timerBtn.setOnClickListener {
             if (!isTimerOn) {
                 resetAllActivities(disableSensorListeners = true)
-                Log.i("MainActivity","timerBtn is ON (after ${timerSetAfter/1000/60} minutes)")
+                Log.i("MainActivity","timerBtn is ON (after ${timerSetAfter.inWholeMinutes} minutes)")
                 isTimerOn = true
+                setSeekBar(SeekBarMode.HOURS)
                 setTimerBtn()
-                loopHandler.postDelayed({ Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz and after ${timerSetAfter.inWholeMinutes} minutes") }, timerSetAfter.inWholeMinutes)
-                loopHandler.postDelayed({ startFlickering() }, timerSetAfter.inWholeMicroseconds)
-                stopFlickeringAfterTimeout(timerSetAfter.inWholeMicroseconds.toInt() + maxFlickerDuration15)
             }
             else {
                 Log.i("MainActivity","timerBtn is OFF")
                 isTimerOn = false
+                isTimerThresholdSet = false
                 dismissSnackbar()
+                resetSeekBar()
                 resetTimerBtn()
                 loopHandler.removeCallbacksAndMessages(null)
             }
@@ -622,7 +644,7 @@ class MainActivity : AppCompatActivity() {
                                 if (event.sensor?.type == Sensor.TYPE_PRESSURE) {
                                     val pressureValue = event.values[0] // Get the pressure value in hPa
                                     val altitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressureValue) // altitude in meters
-                                    if (altitude > RequestKey.LOW_ALTITUDE.value && altitude < RequestKey.HIGH_ALTITUDE.value) {
+                                    if (altitude < altitudeThreshold) {
                                         // these are the acceptable altitude limits
                                     }
                                     else {
@@ -943,10 +965,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun resetSeekBar () {
+    private fun resetSeekBar (hideBarOnly : Boolean = false) {
         flickeringBar.visibility = View.INVISIBLE
         flickerText.visibility = View.INVISIBLE
-        flickeringBar.progress = flickeringBar.min
+        if (!hideBarOnly) {
+            flickeringBar.progress = flickeringBar.min
+        }
     }
 
     private fun isAboveThreshold(buffer: ShortArray, bytesRead: Int): Boolean {
