@@ -8,14 +8,14 @@
     android:background="@color/black"
     tools:context=".MainActivity"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="-23dp">
+    tools:layout_editor_absoluteY="-57dp">
 
 
     <SeekBar
         android:id="@+id/flickeringBarId"
         android:layout_width="221dp"
         android:layout_height="68dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="4dp"
         android:progressTint="#47C4EE"
         android:rotation="0"
         android:scaleX="1.25"
@@ -28,7 +28,7 @@
         android:id="@+id/flickerTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/oneHz"
         android:textColor="#4ecbf7"
         android:textStyle="bold|italic"
@@ -38,10 +38,109 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
+        android:id="@+id/sosBtn"
+        android:layout_width="54dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/SOSBtnContentDescription"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/incomingShakeBtnId"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/networkConnectionBtn"
+        app:srcCompat="@drawable/sosbtn" />
+
+    <ImageButton
+        android:id="@+id/networkConnectionBtn"
+        android:layout_width="59dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/batteryBtnId"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerBtnId"
+        app:srcCompat="@drawable/wifi_icon" />
+
+    <ImageButton
+        android:id="@+id/smsBtnId"
+        android:layout_width="64dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="16dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/IncomingSMSContentDescription"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/switchFlickerIncomingCallsId"
+        app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId"
+        app:srcCompat="@drawable/sms_icon" />
+
+    <ImageButton
+        android:id="@+id/switchFlickerIncomingCallsId"
+        android:layout_width="63dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/IncomingCallContentDescription"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/smsBtnId"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/timerBtnId"
+        app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId"
+        app:srcCompat="@drawable/incoming_call_icon" />
+
+    <ImageButton
+        android:id="@+id/flashLightBtnId"
+        android:layout_width="174dp"
+        android:layout_height="222dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/FlashlightBtnContentDescription"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.388"
+        app:srcCompat="@drawable/turn_off" />
+
+    <ImageButton
+        android:id="@+id/incomingSoundBtnId"
+        android:layout_width="74dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="20dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/IncomingSoundContentDescription"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/incomingShakeBtnId"
+        app:layout_constraintTop_toBottomOf="@+id/altitudeBtnId"
+        app:srcCompat="@drawable/sound_off" />
+
+    <ImageButton
+        android:id="@+id/incomingShakeBtnId"
+        android:layout_width="71dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="12dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/ShakenBtnContentDescription"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/incomingSoundBtnId"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/sosBtn"
+        app:layout_constraintTop_toBottomOf="@+id/batteryBtnId"
+        app:srcCompat="@drawable/rotate_off" />
+
+    <ImageButton
         android:id="@+id/flickerFlashLightId"
         android:layout_width="71dp"
         android:layout_height="54dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="18dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/FlashlightFlickeringContentDescription"
         android:scaleType="fitCenter"
@@ -51,145 +150,45 @@
         app:srcCompat="@drawable/flicker_off3" />
 
     <ImageButton
-        android:id="@+id/sosBtn"
-        android:layout_width="63dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="84dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/SOSBtnContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toStartOf="@+id/flashLightBtnId"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/flashLightBtnId"
-        app:srcCompat="@drawable/sosbtn" />
-
-    <ImageButton
-        android:id="@+id/networkConnectionBtn"
-        android:layout_width="58dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="84dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/flashLightBtnId"
-        app:layout_constraintTop_toTopOf="@+id/flashLightBtnId"
-        app:srcCompat="@drawable/wifi_icon" />
-
-    <ImageButton
-        android:id="@+id/smsBtnId"
-        android:layout_width="60dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="90dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/IncomingSMSContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/switchFlickerIncomingCallsId"
-        app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId"
-        app:srcCompat="@drawable/sms_icon" />
-
-    <ImageButton
-        android:id="@+id/switchFlickerIncomingCallsId"
-        android:layout_width="63dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/IncomingCallContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toStartOf="@+id/smsBtnId"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId"
-        app:srcCompat="@drawable/incoming_call_icon" />
-
-    <ImageButton
-        android:id="@+id/flashLightBtnId"
-        android:layout_width="152dp"
-        android:layout_height="189dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/FlashlightBtnContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.459"
-        app:srcCompat="@drawable/turn_off" />
-
-    <ImageButton
-        android:id="@+id/incomingShakeBtnId"
-        android:layout_width="80dp"
-        android:layout_height="74dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="72dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/ShakenBtnContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/networkConnectionBtn"
-        app:layout_constraintStart_toEndOf="@+id/flashLightBtnId"
-        app:layout_constraintTop_toTopOf="@+id/flickerFlashLightId"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/rotate_off" />
-
-    <ImageButton
-        android:id="@+id/incomingSoundBtnId"
-        android:layout_width="76dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="80dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/IncomingSoundContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/sosBtn"
-        app:layout_constraintEnd_toStartOf="@+id/flashLightBtnId"
-        app:layout_constraintTop_toTopOf="@+id/flickerFlashLightId"
-        app:srcCompat="@drawable/sound_off" />
-
-    <ImageButton
         android:id="@+id/altitudeBtnId"
-        android:layout_width="83dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="80dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="32dp"
         android:background="#00FFFFFF"
+        android:contentDescription="@string/AltitudeContentDescription"
         android:scaleType="fitCenter"
-        app:layout_constraintEnd_toStartOf="@+id/smsBtnId"
-        app:layout_constraintStart_toEndOf="@+id/switchFlickerIncomingCallsId"
-        app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/batteryBtnId"
+        app:layout_constraintTop_toBottomOf="@+id/smsBtnId"
         app:srcCompat="@drawable/altitude_btn_off" />
 
     <ImageButton
         android:id="@+id/batteryBtnId"
-        android:layout_width="55dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="62dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="32dp"
         android:background="#00FFFFFF"
+        android:contentDescription="@string/BatteryContentDescription"
         android:scaleType="fitCenter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/altitudeBtnId"
+        app:layout_constraintEnd_toStartOf="@+id/altitudeBtnId"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/networkConnectionBtn"
+        app:layout_constraintTop_toBottomOf="@+id/switchFlickerIncomingCallsId"
         app:srcCompat="@drawable/battery_off" />
 
     <ImageButton
         android:id="@+id/timerBtnId"
-        android:layout_width="41dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="106dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="100dp"
+        android:layout_width="53dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="16dp"
         android:background="#00FFFFFF"
+        android:contentDescription="@string/TimerContentDescription"
         android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/batteryBtnId"
-        app:layout_constraintTop_toBottomOf="@+id/altitudeBtnId"
+        app:layout_constraintEnd_toStartOf="@+id/switchFlickerIncomingCallsId"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId"
         app:srcCompat="@drawable/timer_off" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

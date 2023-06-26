@@ -17,4 +17,7 @@
     <string name="IncomingSoundContentDescription">Flashlight on/off on user sounds</string>
     <string name="FlashlightFlickeringContentDescription">Flashlight flickers</string>
     <string name="FlashlightFlickeringOnOffNetworkContentDescription">Flashlight flickers going on/off the network</string>
+    <string name="AltitudeContentDescription">Flashlight flickers on reaching altitude threshold</string>
+    <string name="BatteryContentDescription">Flashlight flickers on reaching battery power threshold</string>
+    <string name="TimerContentDescription">Flashlight flickers on reaching timer threshold</string>
 </resources>
