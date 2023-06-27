@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     private val maxBattery : Int = 100
     private val minAltitude : Int = 1   // sea level
     private val maxAltitude : Int = 7000
-    private val minTimerMinutes = 0.minutes
+    private val minTimerMinutes = 1.minutes
     private val maxTimerMinutes = 240.minutes
     private val ditDuration : Long = 250
     private val spaceDuration : Long = ditDuration
@@ -207,7 +207,7 @@ class MainActivity : AppCompatActivity() {
                         turnOffFlashlight(true)
                     } else {
                         Log.i("MainActivity","flashlightBtn is ON")
-                        resetAllActivities(true, disableSensorListeners = true)
+                        resetAllActivities(disableFlickeringOnDemand = true, disableSOS = true)
                         touchStartTime = System.currentTimeMillis()
                         turnOnFlashlight(true)
                     }
@@ -231,7 +231,7 @@ class MainActivity : AppCompatActivity() {
         sosBtn = findViewById(R.id.sosBtn)
         sosBtn.setOnClickListener {
             if (!isSendSOS) {
-                resetAllActivities(disableSensorListeners = true)
+                resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableTilt = true, disableAudioIncoming = true)
                 Log.i("MainActivity","sosBtn is ON")
                 repeatSOS(true)
                 showSnackbar("SOS message transmission")
@@ -268,7 +268,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else if (isTimerOn && !isTimerThresholdSet) {
                     timerSetAfter = progress.minutes
-                    setSeekBarDisplayText(timerSetAfter.inWholeHours.toString(), SeekBarMode.HOURS, ACTION.PROGRESS)
+                    setSeekBarDisplayText(timerSetAfter.toString(), SeekBarMode.HOURS, ACTION.PROGRESS)
                 }
             }
 
@@ -313,8 +313,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 else if (isTimerOn && !isTimerThresholdSet) {
                     isTimerThresholdSet = true
-                    setSeekBarDisplayText(timerSetAfter.inWholeHours.toString(), SeekBarMode.HOURS, ACTION.STOP)
-                    Log.d("MainActivity", "Timer set to $timerSetAfter minutes")
+                    setSeekBarDisplayText(timerSetAfter.toString(), SeekBarMode.HOURS, ACTION.STOP)
+                    Log.d("MainActivity", "Timer set to $timerSetAfter")
                     loopHandler.postDelayed({ startFlickering() }, timerSetAfter.inWholeMilliseconds)
                     stopFlickeringAfterTimeout(timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
 //                    showSnackbar("Timer set to $isTimerThresholdSet minutes", Snackbar.LENGTH_LONG)
@@ -328,7 +328,7 @@ class MainActivity : AppCompatActivity() {
         flickerFlashlightBtn = findViewById(R.id.flickerFlashLightId)
         flickerFlashlightBtn.setOnClickListener {
             if (!isFlickeringOnDemand) {
-                resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                resetAllActivities(disableFlashLight = true, disableSOS = true, disableTilt = true, disableAudioIncoming = true)
                 Log.i("MainActivity","flickerFlashlightBtn is ON with ${flickerFlashlightHz}Hz")
                 isFlickeringOnDemand = true
                 startFlickering()
@@ -396,7 +396,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     Log.i("MainActivity","incomingSoundBtn is ON")
-                    resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                    resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableSOS = true, disableTilt = true)
                     isAudioIncoming = true
                     setIncomingSoundBtn()
                     audioRecordHandler = AudioRecord(
@@ -443,7 +443,7 @@ class MainActivity : AppCompatActivity() {
                 sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
                 val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
                 if (accelerometerSensor != null) {
-                    resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                    resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableSOS = true, disableAudioIncoming = true)
                     var rotationAngle = initRotationAngle
                     sensorEventListener = object : SensorEventListener {
                         override fun onSensorChanged(event: SensorEvent) {
@@ -597,6 +597,7 @@ class MainActivity : AppCompatActivity() {
         batteryBtn.setOnClickListener {
             if (!isBatteryOn) {
                 Log.i("MainActivity","batteryBtn is ON")
+                resetAllActivities(disableFlickeringOnDemand = true, disableTimer = true, disableAltitudeSensor = true)
                 isBatteryOn = true
                 setBatteryBtn(ACTION.SET)
                 setSeekBar(SeekBarMode.PERCENTAGE)
@@ -676,7 +677,7 @@ class MainActivity : AppCompatActivity() {
         setTimerThresholdDisplayText(ACTION.RESET)
         timerBtn.setOnClickListener {
             if (!isTimerOn) {
-                resetAllActivities(disableSensorListeners = true)
+                resetAllActivities(disableFlickeringOnDemand = true, disableBatterySensor = true, disableAltitudeSensor = true)
                 Log.i("MainActivity","timerBtn is ON (after ${timerSetAfter.inWholeMinutes} minutes)")
                 isTimerOn = true
                 setSeekBar(SeekBarMode.HOURS)
@@ -757,6 +758,7 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                         Log.i("MainActivity","altitudeBtn is ON ($sensorEventListener)")
+                        resetAllActivities(disableFlickeringOnDemand = true, disableTimer = true, disableBatterySensor = true)
                         sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
                         setSeekBar(SeekBarMode.METERS)
                         setAltitudeBtn(ACTION.SET)
@@ -946,7 +948,7 @@ class MainActivity : AppCompatActivity() {
                             Log.i("MainActivity", "ACTION_PHONE_STATE_CHANGED EVENT")
                             val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
                             if (state == TelephonyManager.EXTRA_STATE_RINGING) {
-                                resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                                resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableSOS = true, disableAudioIncoming = true, disableTilt = true)
                                 Log.d("MainActivity", "EXTRA_STATE_RINGING - Flickering ON with ${flickerFlashlightHz}Hz")
                                 startFlickering()
                             }
@@ -967,7 +969,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onLost(network: Network) {
                         super.onLost(network)
                         Log.i("MainActivity", "NETWORK is LOST")
-                        resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                        resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableSOS = true)
                         Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
                         setNetworkBtn(NetworkState.LOST)
@@ -978,7 +980,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onUnavailable() {
                         super.onUnavailable()
                         Log.i("MainActivity", "NETWORK is UNAVAILABLE")
-                        resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                        resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableSOS = true)
                         setNetworkBtn(NetworkState.UNAVAILABLE)
                         Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
@@ -996,7 +998,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onAvailable(network: Network) {
                         super.onAvailable(network)
                         Log.i("MainActivity", "NETWORK is AVAILABLE")
-                        resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                        resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableSOS = true)
                         setNetworkBtn(NetworkState.AVAILABLE)
                         Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
@@ -1022,7 +1024,7 @@ class MainActivity : AppCompatActivity() {
                         Log.i("MainActivity", "EVENT INCOMING")
                         if (intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
                             Log.i("MainActivity", "SMS_RECEIVED_ACTION EVENT")
-                            resetAllActivities(disableSOS = true, disableSensorListeners = true)
+                            resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableSOS = true)
                             Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                             startFlickering()
                             stopFlickeringAfterTimeout(maxFlickerDuration15)
@@ -1068,8 +1070,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setTimerThresholdDisplayText (action : ACTION) {
         val textView = findViewById<TextView>(R.id.timerThresholdId)
-        val text = "$timerSetAfter"
-        textView.text = text
+        textView.text = timerSetAfter.toString()
         textView.setTextColor(Color.parseColor("#4ECAF6"))
         textView.visibility = when (action) {
             ACTION.SET -> {
@@ -1123,13 +1124,13 @@ class MainActivity : AppCompatActivity() {
                         "Set Timer"
                     }
                     ACTION.PROGRESS -> {
-                        "Timer set to $displayValue Hours"
+                        "Timer set to $displayValue"
                     }
                     ACTION.STOP -> {
-                        "Phone will start flickering after $displayValue Hours"
+                        "Phone will start flickering after $displayValue"
                     }
                     else -> {
-                        "Timer set to $displayValue Hours"
+                        "Timer set to $displayValue"
                     }
                 }
                 flickerText.text = displayText
@@ -1172,7 +1173,7 @@ class MainActivity : AppCompatActivity() {
                 displayText = when (action) {
                     ACTION.INIT -> {
                         if (initBatteryLevel != minBattery) {
-                            "Set battery level (currently $initBatteryLevel%)"
+                            "Set battery level (currently $initBatteryLevel%):"
                         }
                         else {
                             "Set battery level"
@@ -1182,7 +1183,7 @@ class MainActivity : AppCompatActivity() {
                         "Battery level set to ${displayValue.toInt()}%"
                     }
                     ACTION.STOP -> {
-                        "Phone will start flickering at the battery level of ${displayValue.toInt()}%"
+                        "Phone will start flickering at battery level ${displayValue.toInt()}%"
                     }
                     else -> {
                         "Battery level set to ${displayValue.toInt()}%"
@@ -1647,14 +1648,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun resetAllActivities (disableSOS : Boolean = false, disableIncomingEvents : Boolean = false, disableSensorListeners : Boolean = false) {
+    private fun resetAllActivities (disableFlashLight : Boolean = false, disableFlickeringOnDemand : Boolean = false, disableSOS : Boolean = false, disableIncomingEvents : Boolean = false,
+                                    disableTilt : Boolean = false, disableAudioIncoming : Boolean = false, disableNw : Boolean = false, disableBatterySensor : Boolean = false,
+                                    disableAltitudeSensor : Boolean = false, disableTimer : Boolean = false) {
         Log.i("MainActivity", "Reset all activities")
-        if (isFlashLightOn) {
+        if (disableFlashLight && isFlashLightOn) {
             Log.i("MainActivity", "RAA - TURN OFF Flashlight")
             turnOffFlashlight(true)
         }
-        else if (isFlickering && isFlickeringOnDemand) {
-            Log.i("MainActivity", "RAA - STOP FLICKERING")
+
+        if (disableFlickeringOnDemand && isFlickering && isFlickeringOnDemand) {
+            Log.i("MainActivity", "RAA - STOP FLICKERING on demand")
             stopFlickering()
             resetFlickeringFlashlightBtn()
             setFlickeringHz(minFlickerHz.toLong())
@@ -1665,57 +1669,6 @@ class MainActivity : AppCompatActivity() {
             stopSOS(true)
         }
 
-        if (disableSensorListeners) {
-            if (isPhoneTilt) {
-                Log.i("MainActivity", "RAA - TURN OFF isPhoneTilt")
-                turnOffFlashlight()
-                dismissSnackbar()
-                sensorManager.unregisterListener(sensorEventListener)
-                resetShakeBtn()
-                isPhoneTilt = false
-                loopHandler.removeCallbacksAndMessages(null)
-            }
-
-            if (isAltitudeOn) {
-                Log.i("MainActivity", "RAA - TURN OFF isAltitudeOn")
-                turnOffFlashlight()
-                dismissSnackbar()
-                sensorManager.unregisterListener(sensorEventListener)
-                setAltitudeBtn(ACTION.RESET)
-                isAltitudeOn = false
-                loopHandler.removeCallbacksAndMessages(null)
-            }
-
-            if (isBatteryOn) {
-                Log.i("MainActivity", "RAA - TURN OFF isBatteryOn")
-                turnOffFlashlight()
-                dismissSnackbar()
-                unregisterReceiver(batteryReceiver)
-                setBatteryBtn(ACTION.RESET)
-                isBatteryOn = false
-                loopHandler.removeCallbacksAndMessages(null)
-            }
-
-            if (isAudioIncoming) {
-                Log.i("MainActivity", "RAA - TURN OFF isAudioIncoming")
-                isAudioIncoming = false
-                turnOffFlashlight()
-                resetIncomingSoundBtn()
-                audioRecordHandler.stop()
-                audioRecordHandler.release()
-                try {
-                    recordingThread?.interrupt()
-                }
-                catch (e : SecurityException) {
-                    Log.e("MainActivity", "THREAD SecurityException $e")
-                }
-                recordingThread?.join()
-                recordingThread = null
-                loopHandler.removeCallbacksAndMessages(null)
-            }
-
-        }
-
         if (disableIncomingEvents) {
             if (isIncomingCall) {
                 Log.i("MainActivity", "RAA - TURN OFF isIncomingCall")
@@ -1723,15 +1676,92 @@ class MainActivity : AppCompatActivity() {
                 disableIncomingCallFlickering()
                 resetIncomingCallFlickeringBtn()
             }
-
-            if (networkConnectivityCbIsSet) {
-                Log.i("MainActivity", "RAA - TURN OFF networkConnectivityCbIsSet")
-                networkConnectivityCbIsSet = false
+            if (isIncomingSMS) {
+                Log.i("MainActivity", "RAA - TURN OFF isIncomingSMS")
                 dismissSnackbar()
-                stopFlickering()
-                connectivityManager.unregisterNetworkCallback(connectivityCallback)
-                resetNetworkBtn()
+                disableIncomingSMSHandler()
+                resetIncomingSMSBtn()
             }
+        }
+
+        if (disableTilt && isPhoneTilt) {
+            Log.i("MainActivity", "RAA - TURN OFF isPhoneTilt")
+            turnOffFlashlight()
+            dismissSnackbar()
+            sensorManager.unregisterListener(sensorEventListener)
+            resetShakeBtn()
+            isPhoneTilt = false
+            loopHandler.removeCallbacksAndMessages(null)
+        }
+
+        if (disableAudioIncoming && isAudioIncoming) {
+            Log.i("MainActivity", "RAA - TURN OFF isAudioIncoming")
+            isAudioIncoming = false
+            turnOffFlashlight()
+            resetIncomingSoundBtn()
+            audioRecordHandler.stop()
+            audioRecordHandler.release()
+            try {
+                recordingThread?.interrupt()
+            }
+            catch (e : SecurityException) {
+                Log.e("MainActivity", "THREAD SecurityException $e")
+            }
+            recordingThread?.join()
+            recordingThread = null
+            loopHandler.removeCallbacksAndMessages(null)
+        }
+
+        if (disableNw && networkConnectivityCbIsSet) {
+            Log.i("MainActivity", "RAA - TURN OFF networkConnectivityCbIsSet")
+            networkConnectivityCbIsSet = false
+            dismissSnackbar()
+            stopFlickering()
+            connectivityManager.unregisterNetworkCallback(connectivityCallback)
+            resetNetworkBtn()
+        }
+
+        if (disableBatterySensor && isBatteryOn && !isBatteryThresholdSet) {
+            Log.i("MainActivity", "RAA - TURN OFF isBatteryOn")
+            turnOffFlashlight()
+            dismissSnackbar()
+            try {
+                unregisterReceiver(batteryReceiver)
+            }
+            catch (e : Exception) {
+                // We are OK, receiver is already unregistered
+            }
+            setBatteryBtn(ACTION.RESET)
+            isBatteryOn = false
+            resetSeekBar()
+            batteryThreshold = minBattery
+            initBatteryLevel = minBattery
+            setPowerLevelDisplayText(ACTION.RESET)
+            loopHandler.removeCallbacksAndMessages(null)
+        }
+
+        if (disableAltitudeSensor && isAltitudeOn && !isAltitudeThresholdSet) {
+            Log.i("MainActivity", "RAA - TURN OFF isAltitudeOn")
+            turnOffFlashlight()
+            dismissSnackbar()
+            resetSeekBar()
+            sensorManager.unregisterListener(sensorEventListener)
+            setAltitudeBtn(ACTION.RESET)
+            isAltitudeOn = false
+            altitudeThreshold = minAltitude
+            setAltitudeLevelDisplayText(ACTION.RESET)
+            loopHandler.removeCallbacksAndMessages(null)
+        }
+
+        if (disableTimer && isTimerOn && !isTimerThresholdSet) {
+            Log.i("MainActivity", "RAA - TURN OFF isTimerOn")
+            isTimerOn = false
+            isTimerThresholdSet = false
+            timerSetAfter = minTimerMinutes
+            dismissSnackbar()
+            resetSeekBar()
+            resetTimerBtn()
+            setTimerThresholdDisplayText(ACTION.RESET)
         }
     }
 
