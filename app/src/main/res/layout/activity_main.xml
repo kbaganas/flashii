@@ -191,4 +191,36 @@
         app:layout_constraintTop_toBottomOf="@+id/flashLightBtnId"
         app:srcCompat="@drawable/timer_off" />
 
+    <CheckedTextView
+        android:id="@+id/powerLevelId"
+        android:layout_width="33dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="60dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/batteryBtnId"
+        app:layout_constraintStart_toStartOf="@+id/batteryBtnId"
+        app:layout_constraintTop_toTopOf="@+id/batteryBtnId"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <CheckedTextView
+        android:id="@+id/timerThresholdId"
+        android:layout_width="30dp"
+        android:layout_height="19dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toBottomOf="@+id/timerBtnId"
+        app:layout_constraintStart_toEndOf="@+id/timerBtnId"
+        app:layout_constraintTop_toTopOf="@+id/timerBtnId"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <CheckedTextView
+        android:id="@+id/altitudeLevelId"
+        android:layout_width="54dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="42dp"
+        app:layout_constraintBottom_toBottomOf="@+id/altitudeBtnId"
+        app:layout_constraintStart_toStartOf="@+id/altitudeBtnId"
+        app:layout_constraintTop_toTopOf="@+id/altitudeBtnId"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
