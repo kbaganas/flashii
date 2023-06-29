@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     private val hideSeekBarAfterDelay3 : Long = 3000
     private var initBatteryLevel : Int = minBattery
     private var initAltitudeLevel : Int = minAltitude
+    private val checkInterval : Long = 5000 // 5 seconds
     private lateinit var token : Token
 
     enum class ACTION {
@@ -118,7 +119,6 @@ class MainActivity : AppCompatActivity() {
         METERS,
         HOURS
     }
-
 
     enum class RequestKey (val value: Int) {
         CALL(1),
@@ -661,6 +661,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+                loopHandler.postDelayed({ checkStatus(Token.BATTERY) }, checkInterval)
             }
             else {
                 Log.i("MainActivity","batteryBtn is OFF")
@@ -694,6 +695,7 @@ class MainActivity : AppCompatActivity() {
                 isTimerOn = true
                 setSeekBar(SeekBarMode.HOURS)
                 setTimerBtn()
+                loopHandler.postDelayed({ checkStatus(Token.TIMER) }, checkInterval)
             }
             else {
                 Log.i("MainActivity","timerBtn is OFF")
@@ -776,6 +778,7 @@ class MainActivity : AppCompatActivity() {
                         setSeekBar(SeekBarMode.METERS)
                         setAltitudeBtn(ACTION.SET)
                         isAltitudeOn = true
+                        loopHandler.postDelayed({ checkStatus(Token.ALTITUDE) }, checkInterval)
 //                        showSnackbar("Flashlight will turn ON/OFF based on the altitude")
                     }
                     else {
@@ -850,6 +853,7 @@ class MainActivity : AppCompatActivity() {
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
+
 
     private fun checkPermissions (activity: ACTION) {
         when (activity) {
@@ -1064,6 +1068,60 @@ class MainActivity : AppCompatActivity() {
 //            else -> {}
 //        }
 //    }
+
+    private fun checkStatus (token : Token) {
+        when (token) {
+            Token.TIMER -> {
+                if (isTimerOn && !isTimerThresholdSet) {
+                    Log.i("MainActivity", "TURN OFF isTimerOn after inactivity")
+                    // we have to reset timer key due to user inactivity
+                    isTimerOn = false
+                    timerSetAfter = minTimerMinutes
+                    resetSeekBar()
+                    resetTimerBtn()
+                    setTimerThresholdDisplayText(ACTION.RESET)
+                }
+            }
+            Token.BATTERY -> {
+                 if (isBatteryOn && !isBatteryThresholdSet) {
+                     Log.i("MainActivity", "TURN OFF isBatteryOn after inactivity")
+                     // we have to reset timer key due to user inactivity
+                     try {
+                         unregisterReceiver(batteryReceiver)
+                     }
+                     catch (e : Exception) {
+                         // We are OK, receiver is already unregistered
+                     }
+                     setBatteryBtn(ACTION.RESET)
+                     isBatteryOn = false
+                     resetSeekBar()
+                     batteryThreshold = minBattery
+                     initBatteryLevel = minBattery
+                     setPowerLevelDisplayText(ACTION.RESET)
+                     loopHandler.removeCallbacksAndMessages(null)
+                 }
+            }
+            Token.ALTITUDE -> {
+                if (isAltitudeOn && !isAltitudeThresholdSet) {
+                    // we have to reset timer key due to user inactivity
+                    Log.i("MainActivity", "TURN OFF isAltitudeOn after inactivity")
+                    try {
+                        resetSeekBar()
+                        sensorManager.unregisterListener(sensorEventListener)
+                        setAltitudeBtn(ACTION.RESET)
+                        isAltitudeOn = false
+                        altitudeThreshold = minAltitude
+                        setAltitudeLevelDisplayText(ACTION.RESET)
+                        loopHandler.removeCallbacksAndMessages(null)
+                    }
+                    catch (e : Exception) {
+                        // We are OK, receiver is already unregistered
+                    }
+                }
+            }
+            else -> {}
+        }
+    }
 
     private fun setPowerLevelDisplayText (action : ACTION) {
         val textView = findViewById<TextView>(R.id.powerLevelId)
@@ -1432,7 +1490,7 @@ class MainActivity : AppCompatActivity() {
         isFlickering = true
         val periodOfFlashLightInMilliseconds =  1000 / flickerFlashlightHz
         atomicFlashLightOn()
-        Log.d("MainActivity", "startFlickering ${flickerFlashlightHz}Hz")
+//        Log.d("MainActivity", "startFlickering ${flickerFlashlightHz}Hz")
         loopHandler.postDelayed({ atomicFlashLightOff() }, (periodOfFlashLightInMilliseconds / 2))
         loopHandler.postDelayed({ startFlickering() }, periodOfFlashLightInMilliseconds)
     }
