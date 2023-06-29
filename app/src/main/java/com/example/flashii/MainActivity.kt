@@ -785,7 +785,8 @@ class MainActivity : AppCompatActivity() {
                         // we have to disable the btn now since sensor is not available on the device
                         Log.i("MainActivity","Barometer not available")
                         showSnackbar("Device's barometer sensor is not available; feature is not feasible")
-                        altitudeBtn.setImageResource(R.drawable.altitude_no_permission_r1)
+                        setAltitudeBtn(ACTION.NO_PERMISSION)
+                        setAltitudeLevelDisplayText(ACTION.NO_PERMISSION)
                     }
                 } else {
                     Log.i("MainActivity","altitudeBtn is OFF ($sensorEventListener)")
@@ -945,7 +946,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnImage(altitudeBtn, R.drawable.altitude_no_permission_r1)
+                        setAltitudeBtn(ACTION.NO_PERMISSION)
+                        setAltitudeLevelDisplayText(ACTION.NO_PERMISSION)
                         permissionsKeys["ALTITUDE"] = false
                     }
                 }
@@ -1136,6 +1138,11 @@ class MainActivity : AppCompatActivity() {
                 text = "Power %"
                 textView.text = text
             }
+            ACTION.NO_PERMISSION -> {
+                textView.setTextColor(Color.parseColor("#383838"))
+                text = "Power %"
+                textView.text = text
+            }
             else -> {}
         }
     }
@@ -1186,6 +1193,11 @@ class MainActivity : AppCompatActivity() {
                 text = "Height -"
                 textView.text = text
                 textView.setTextColor(Color.parseColor("#5a85a0"))
+            }
+            ACTION.NO_PERMISSION -> {
+                text = "Height -"
+                textView.text = text
+                textView.setTextColor(Color.parseColor("#383838"))
             }
             else -> {}
         }
@@ -1678,7 +1690,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 RequestKey.ALTITUDE.value -> {
                     Log.i("MainActivity", "Request NOT granted for LOCATION")
-                    setBtnImage(altitudeBtn, R.drawable.altitude_btn_no_permission)
+                    setAltitudeBtn(ACTION.NO_PERMISSION)
                 }
             }
         }
