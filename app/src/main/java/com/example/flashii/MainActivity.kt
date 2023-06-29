@@ -495,7 +495,7 @@ class MainActivity : AppCompatActivity() {
                     // we have to disable the btn now since rotation sensor is not available on the device
                     Log.i("MainActivity","Accelerometer not available")
                     showSnackbar("Device's rotation sensor is not available; feature is not feasible")
-                    incomingTiltBtn.setImageResource(R.drawable.rotate_no_permission)
+                    incomingTiltBtn.setImageResource(R.drawable.tilt_no_permission_r1)
                 }
             } else {
                 Log.i("MainActivity","incomingTiltBtn is OFF ($sensorEventListener)")
@@ -782,7 +782,7 @@ class MainActivity : AppCompatActivity() {
                         // we have to disable the btn now since sensor is not available on the device
                         Log.i("MainActivity","Barometer not available")
                         showSnackbar("Device's barometer sensor is not available; feature is not feasible")
-                        altitudeBtn.setImageResource(R.drawable.altitude_btn_no_permission)
+                        altitudeBtn.setImageResource(R.drawable.altitude_no_permission_r1)
                     }
                 } else {
                     Log.i("MainActivity","altitudeBtn is OFF ($sensorEventListener)")
@@ -899,7 +899,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnImage(incomingCallBtn, R.drawable.incoming_call_no_permission)
+                        setBtnImage(incomingCallBtn, R.drawable.incoming_call_no_permission_r1)
                         permissionsKeys["CALL"] = false
                     }
                 }
@@ -913,7 +913,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnImage(incomingSMSBtn, R.drawable.sms_icon_no_permission)
+                        setBtnImage(incomingSMSBtn, R.drawable.incoming_sms_no_permission_r1)
                         permissionsKeys["SMS"] = false
                     }
                 }
@@ -927,7 +927,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnImage(incomingSoundBtn, R.drawable.sound_no_permission)
+                        setBtnImage(incomingSoundBtn, R.drawable.sound_no_permission_r1)
                         permissionsKeys["AUDIO"] = false
                     }
                 }
@@ -941,7 +941,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnImage(altitudeBtn, R.drawable.altitude_btn_no_permission)
+                        setBtnImage(altitudeBtn, R.drawable.altitude_no_permission_r1)
                         permissionsKeys["ALTITUDE"] = false
                     }
                 }
@@ -1067,64 +1067,69 @@ class MainActivity : AppCompatActivity() {
 
     private fun setPowerLevelDisplayText (action : ACTION) {
         val textView = findViewById<TextView>(R.id.powerLevelId)
-        val text = "$batteryThreshold%"
-        textView.text = text
-        textView.setTextColor(Color.parseColor("#4ECAF6"))
-        textView.visibility = when (action) {
+        var text = "$batteryThreshold%"
+        when (action) {
             ACTION.SET -> {
-                TextView.VISIBLE
+                textView.setTextColor(Color.parseColor("#4ECAF6"))
+                textView.text = text
             }
             ACTION.RESET -> {
-                TextView.INVISIBLE
+                textView.setTextColor(Color.parseColor("#5a85a0"))
+                text = "Power %"
+                textView.text = text
             }
-            else -> {TextView.INVISIBLE}
+            else -> {}
         }
     }
 
     private fun setTimerThresholdDisplayText (action : ACTION) {
         val textView = findViewById<TextView>(R.id.timerThresholdId)
-        textView.text = timerSetAfter.toString()
-        textView.setTextColor(Color.parseColor("#4ECAF6"))
-        textView.visibility = when (action) {
+        var text = timerSetAfter.toString()
+        when (action) {
             ACTION.SET -> {
-                TextView.VISIBLE
+                textView.text = text
+                textView.setTextColor(Color.parseColor("#4ECAF6"))
             }
             ACTION.RESET -> {
-                TextView.INVISIBLE
+                text = "Timer -"
+                textView.text = text
+                textView.setTextColor(Color.parseColor("#5a85a0"))
             }
-            else -> {TextView.INVISIBLE}
+            else -> {}
         }
     }
 
     private fun setAltitudeLevelDisplayText(action : ACTION) {
         // set/init textView
-        var textView = findViewById<TextView>(R.id.initAltitudeLevelId)
-        var text = "${initAltitudeLevel}m"
-        textView.text = text
-        textView.setTextColor(Color.parseColor("#FF5A849F"))
-        textView.visibility = when (action) {
-            ACTION.SET -> {
-                TextView.VISIBLE
-            }
-            ACTION.RESET -> {
-                TextView.INVISIBLE
-            }
-            else -> {TextView.INVISIBLE}
-        }
+//        var textView = findViewById<TextView>(R.id.initAltitudeLevelId)
+//        var text = "${initAltitudeLevel}m"
+//        textView.text = text
+//        textView.setTextColor(Color.parseColor("#FF5A849F"))
+//        textView.visibility = when (action) {
+//            ACTION.SET -> {
+//                TextView.VISIBLE
+//            }
+//            ACTION.RESET -> {
+//                TextView.INVISIBLE
+//            }
+//            else -> {TextView.INVISIBLE}
+//        }
 
         // target textView
-        textView = findViewById(R.id.targetAltitudeLevelId)
-        text = "${altitudeThreshold}m"
-        textView.text = text
-        textView.setTextColor(Color.parseColor("#4ECAF6"))
-        textView.visibility = when (action) {
+        val textView = findViewById<TextView>(R.id.targetAltitudeLevelId)
+        var text = "${altitudeThreshold}m"
+        textView.visibility = TextView.VISIBLE
+        when (action) {
             ACTION.SET -> {
-                TextView.VISIBLE
+                textView.text = text
+                textView.setTextColor(Color.parseColor("#4ECAF6"))
             }
             ACTION.RESET -> {
-                TextView.INVISIBLE
+                text = "Height -"
+                textView.text = text
+                textView.setTextColor(Color.parseColor("#5a85a0"))
             }
-            else -> {TextView.INVISIBLE}
+            else -> {}
         }
     }
 
@@ -1279,26 +1284,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setTimerBtn () {
-        timerBtn.setImageResource(R.drawable.timer_on)
+        timerBtn.setImageResource(R.drawable.timer_on_r1)
     }
 
     private fun resetTimerBtn () {
-        timerBtn.setImageResource(R.drawable.timer_off)
+        timerBtn.setImageResource(R.drawable.timer_off_r1)
     }
 
     private fun setBatteryBtn (action : ACTION) {
         when (action) {
             ACTION.SET -> {
-                batteryBtn.setImageResource(R.drawable.battery_on)
+                batteryBtn.setImageResource(R.drawable.battery_on_r1)
             }
             ACTION.RESET -> {
-                batteryBtn.setImageResource(R.drawable.battery_off)
+                batteryBtn.setImageResource(R.drawable.battery_off_r1)
             }
             ACTION.SUCCESS -> {
-                batteryBtn.setImageResource(R.drawable.battery_success)
+                batteryBtn.setImageResource(R.drawable.battery_success_r1)
             }
             else -> {
-                batteryBtn.setImageResource(R.drawable.battery_off)
+                batteryBtn.setImageResource(R.drawable.battery_off_r1)
             }
         }
     }
@@ -1306,62 +1311,62 @@ class MainActivity : AppCompatActivity() {
     private fun setAltitudeBtn (action : ACTION) {
         when (action) {
             ACTION.SET -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_btn_on)
+                altitudeBtn.setImageResource(R.drawable.altitude_on_r1)
             }
             ACTION.RESET -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_btn_off)
+                altitudeBtn.setImageResource(R.drawable.altitude_off_r1)
             }
             ACTION.SUCCESS -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_btn_success)
+                altitudeBtn.setImageResource(R.drawable.altitude_success_r1)
             }
             ACTION.NO_PERMISSION -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_btn_no_permission)
+                altitudeBtn.setImageResource(R.drawable.altitude_no_permission_r1)
             }
             else -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_btn_off)
+                altitudeBtn.setImageResource(R.drawable.altitude_off_r1)
             }
         }
     }
 
     private fun setIncomingSoundBtn () {
-        incomingSoundBtn.setImageResource(R.drawable.sound_on)
+        incomingSoundBtn.setImageResource(R.drawable.sound_on_r1)
     }
 
     private fun resetIncomingSoundBtn () {
-        incomingSoundBtn.setImageResource(R.drawable.sound_off)
+        incomingSoundBtn.setImageResource(R.drawable.sound_off_r1)
     }
 
     private fun setShakeBtn () {
-        incomingTiltBtn.setImageResource(R.drawable.rotate_on)
+        incomingTiltBtn.setImageResource(R.drawable.tilt_on_r1)
     }
 
     private fun resetShakeBtn () {
-        incomingTiltBtn.setImageResource(R.drawable.rotate_off)
+        incomingTiltBtn.setImageResource(R.drawable.tilt_off_r1)
     }
 
     private fun resetIncomingSMSBtn () {
-        incomingSMSBtn.setImageResource(R.drawable.sms_icon)
+        incomingSMSBtn.setImageResource(R.drawable.incoming_sms_off_r1)
     }
 
     private fun setIncomingSMSBtn () {
-        incomingSMSBtn.setImageResource(R.drawable.sms_enabled)
+        incomingSMSBtn.setImageResource(R.drawable.incoming_sms_on_r1)
     }
 
     private fun resetNetworkBtn () {
-        outInNetworkBtn.setImageResource(R.drawable.wifi_icon)
+        outInNetworkBtn.setImageResource(R.drawable.wifi_off_r1)
     }
 
     private fun setNetworkBtn (networkState : NetworkState = NetworkState.ASIS) {
         if (isPhoneInNetwork) {
             when (networkState) {
                 NetworkState.LOST -> {
-                    outInNetworkBtn.setImageResource(R.drawable.wifi_lost)
+                    outInNetworkBtn.setImageResource(R.drawable.wifi_lost_r1)
                 }
                 NetworkState.UNAVAILABLE -> {
-                    outInNetworkBtn.setImageResource(R.drawable.wifi_lost)
+                    outInNetworkBtn.setImageResource(R.drawable.wifi_lost_r1)
                 }
                 NetworkState.ASIS -> {
-                    outInNetworkBtn.setImageResource(R.drawable.wifi_off_enabled)
+                    outInNetworkBtn.setImageResource(R.drawable.wifi_off_enabled_r1)
                 }
 
                 else -> {}
@@ -1370,10 +1375,10 @@ class MainActivity : AppCompatActivity() {
         else if (isPhoneOutOfNetwork) {
             when (networkState) {
                 NetworkState.AVAILABLE -> {
-                    outInNetworkBtn.setImageResource(R.drawable.wifi_on_found)
+                    outInNetworkBtn.setImageResource(R.drawable.wifi_on_found_r1)
                 }
                 NetworkState.ASIS -> {
-                    outInNetworkBtn.setImageResource(R.drawable.wifi_on_enabled)
+                    outInNetworkBtn.setImageResource(R.drawable.wifi_on_enabled_r1)
                 }
                 else -> {}
             }
@@ -1403,11 +1408,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setIncomingCallFlickeringBtn () {
-        incomingCallBtn.setImageResource(R.drawable.incoming_call_icon_enabled)
+        incomingCallBtn.setImageResource(R.drawable.incoming_call_icon_on_r1)
     }
 
     private fun resetIncomingCallFlickeringBtn () {
-        incomingCallBtn.setImageResource(R.drawable.incoming_call_icon)
+        incomingCallBtn.setImageResource(R.drawable.incoming_call_icon_off_r1)
     }
 
     fun setFlickeringHz(hz : Long) {
@@ -1484,11 +1489,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setSOSBtn () {
-        sosBtn.setImageResource(R.drawable.sosbtn_enabled)
+        sosBtn.setImageResource(R.drawable.sos_on_r1)
     }
 
     private fun resetSOSBtn () {
-        sosBtn.setImageResource(R.drawable.sosbtn)
+        sosBtn.setImageResource(R.drawable.sos_off_r1)
     }
 
     private fun setBtnImage (btn : ImageButton, icon : Int) {
@@ -1497,11 +1502,11 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setFlickeringFlashlightBtn () {
-        flickerFlashlightBtn.setImageResource(R.drawable.flicker_on3)
+        flickerFlashlightBtn.setImageResource(R.drawable.flicker_on_r1)
     }
 
     private fun resetFlickeringFlashlightBtn () {
-        flickerFlashlightBtn.setImageResource(R.drawable.flicker_off3)
+        flickerFlashlightBtn.setImageResource(R.drawable.flicker_off_r1)
     }
 
     private fun setFlashlightId () {
