@@ -27,8 +27,8 @@
 
     <ImageButton
         android:id="@+id/switchFlickerIncomingCallsId"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
         android:layout_marginTop="15dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/IncomingCallContentDescription"
@@ -42,8 +42,8 @@
 
     <ImageButton
         android:id="@+id/incomingSoundBtnId"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/IncomingSoundContentDescription"
         android:scaleType="fitCenter"
@@ -67,7 +67,7 @@
 
     <ImageButton
         android:id="@+id/networkConnectionBtn"
-        android:layout_width="72dp"
+        android:layout_width="82dp"
         android:layout_height="72dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
@@ -81,8 +81,8 @@
 
     <ImageButton
         android:id="@+id/batteryBtnId"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/BatteryContentDescription"
         android:scaleType="fitCenter"
@@ -96,7 +96,7 @@
 
     <ImageButton
         android:id="@+id/timerBtnId"
-        android:layout_width="72dp"
+        android:layout_width="82dp"
         android:layout_height="72dp"
         android:layout_marginTop="15dp"
         android:background="#00FFFFFF"
@@ -112,8 +112,8 @@
 
     <ImageButton
         android:id="@+id/altitudeBtnId"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/AltitudeContentDescription"
         android:scaleType="fitCenter"
@@ -127,7 +127,7 @@
 
     <ImageButton
         android:id="@+id/sosBtn"
-        android:layout_width="72dp"
+        android:layout_width="82dp"
         android:layout_height="72dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/SOSBtnContentDescription"
@@ -154,7 +154,7 @@
 
     <ImageButton
         android:id="@+id/flickerFlashLightId"
-        android:layout_width="72dp"
+        android:layout_width="82dp"
         android:layout_height="72dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/FlashlightFlickeringContentDescription"
@@ -168,7 +168,7 @@
 
     <ImageButton
         android:id="@+id/smsBtnId"
-        android:layout_width="72dp"
+        android:layout_width="82dp"
         android:layout_height="72dp"
         android:layout_marginTop="15dp"
         android:background="#00FFFFFF"
@@ -208,25 +208,25 @@
 
     <ImageButton
         android:id="@+id/flashLightBtnId"
-        android:layout_width="120dp"
-        android:layout_height="168dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="120dp"
+        android:layout_width="220dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/FlashlightBtnContentDescription"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/donateBtnId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/incomingShakeBtnId"
         app:layout_constraintVertical_bias="0.5"
-        app:srcCompat="@drawable/turn_off" />
+        app:srcCompat="@drawable/turn_off_r2" />
 
     <ImageButton
         android:id="@+id/incomingShakeBtnId"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
         android:layout_marginTop="15dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/ShakenBtnContentDescription"
@@ -238,5 +238,44 @@
         app:layout_constraintTop_toBottomOf="@+id/sosBtn"
         app:layout_constraintVertical_bias="0.5"
         app:srcCompat="@drawable/tilt_off_r" />
+
+    <ImageButton
+        android:id="@+id/infoBtnId"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/rateBtnId"
+        app:layout_constraintEnd_toStartOf="@+id/rateBtnId"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rateBtnId"
+        app:srcCompat="@drawable/info" />
+
+    <ImageButton
+        android:id="@+id/rateBtnId"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/donateBtnId"
+        app:layout_constraintEnd_toStartOf="@+id/donateBtnId"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/infoBtnId"
+        app:layout_constraintTop_toTopOf="@+id/donateBtnId"
+        app:srcCompat="@drawable/rate" />
+
+    <ImageButton
+        android:id="@+id/donateBtnId"
+        android:layout_width="36dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="5dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/rateBtnId"
+        app:srcCompat="@drawable/donate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

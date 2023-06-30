@@ -496,7 +496,7 @@ class MainActivity : AppCompatActivity() {
                     // we have to disable the btn now since rotation sensor is not available on the device
                     Log.i("MainActivity","Accelerometer not available")
                     showSnackbar("Device's rotation sensor is not available; feature is not feasible")
-                    incomingTiltBtn.setImageResource(R.drawable.tilt_no_permission_r1)
+                    incomingTiltBtn.setImageResource(R.drawable.tilt_no_permission_r)
                 }
             } else {
                 Log.i("MainActivity","incomingTiltBtn is OFF ($sensorEventListener)")
@@ -905,7 +905,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnImage(incomingCallBtn, R.drawable.incoming_call_no_permission_r1)
+                        setBtnImage(incomingCallBtn, R.drawable.incoming_call_no_permission_r)
                         permissionsKeys["CALL"] = false
                     }
                 }
@@ -919,7 +919,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnImage(incomingSMSBtn, R.drawable.incoming_sms_no_permission_r1)
+                        setBtnImage(incomingSMSBtn, R.drawable.incoming_sms_no_permission_r)
                         permissionsKeys["SMS"] = false
                     }
                 }
@@ -933,7 +933,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnImage(incomingSoundBtn, R.drawable.sound_no_permission_r1)
+                        setBtnImage(incomingSoundBtn, R.drawable.sound_no_permission_r)
                         permissionsKeys["AUDIO"] = false
                     }
                 }
@@ -1355,26 +1355,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setTimerBtn () {
-        timerBtn.setImageResource(R.drawable.timer_on_r1)
+        timerBtn.setImageResource(R.drawable.timer_on_r)
     }
 
     private fun resetTimerBtn () {
-        timerBtn.setImageResource(R.drawable.timer_off_r1)
+        timerBtn.setImageResource(R.drawable.timer_off_r)
     }
 
     private fun setBatteryBtn (action : ACTION) {
         when (action) {
             ACTION.SET -> {
-                batteryBtn.setImageResource(R.drawable.battery_on_r1)
+                batteryBtn.setImageResource(R.drawable.battery_full_on_r)
             }
             ACTION.RESET -> {
-                batteryBtn.setImageResource(R.drawable.battery_off_r1)
+                batteryBtn.setImageResource(R.drawable.battery_full_off_r)
             }
             ACTION.SUCCESS -> {
-                batteryBtn.setImageResource(R.drawable.battery_success_r1)
+                batteryBtn.setImageResource(R.drawable.battery_full_on_r)
             }
             else -> {
-                batteryBtn.setImageResource(R.drawable.battery_off_r1)
+                batteryBtn.setImageResource(R.drawable.battery_full_off_r)
             }
         }
     }
@@ -1382,62 +1382,62 @@ class MainActivity : AppCompatActivity() {
     private fun setAltitudeBtn (action : ACTION) {
         when (action) {
             ACTION.SET -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_on_r1)
+                altitudeBtn.setImageResource(R.drawable.altitude_on_r)
             }
             ACTION.RESET -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_off_r1)
+                altitudeBtn.setImageResource(R.drawable.altitude_off_r)
             }
             ACTION.SUCCESS -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_success_r1)
+                altitudeBtn.setImageResource(R.drawable.altitude_on_r)
             }
             ACTION.NO_PERMISSION -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_no_permission_r1)
+                altitudeBtn.setImageResource(R.drawable.altitude_no_permission_r)
             }
             else -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_off_r1)
+                altitudeBtn.setImageResource(R.drawable.altitude_off_r)
             }
         }
     }
 
     private fun setIncomingSoundBtn () {
-        incomingSoundBtn.setImageResource(R.drawable.sound_on_r1)
+        incomingSoundBtn.setImageResource(R.drawable.sound_on_r)
     }
 
     private fun resetIncomingSoundBtn () {
-        incomingSoundBtn.setImageResource(R.drawable.sound_off_r1)
+        incomingSoundBtn.setImageResource(R.drawable.sound_off_r)
     }
 
     private fun setShakeBtn () {
-        incomingTiltBtn.setImageResource(R.drawable.tilt_on_r1)
+        incomingTiltBtn.setImageResource(R.drawable.tilt_on_r)
     }
 
     private fun resetShakeBtn () {
-        incomingTiltBtn.setImageResource(R.drawable.tilt_off_r1)
+        incomingTiltBtn.setImageResource(R.drawable.tilt_off_r)
     }
 
     private fun resetIncomingSMSBtn () {
-        incomingSMSBtn.setImageResource(R.drawable.incoming_sms_off_r1)
+        incomingSMSBtn.setImageResource(R.drawable.incoming_sms_off_r)
     }
 
     private fun setIncomingSMSBtn () {
-        incomingSMSBtn.setImageResource(R.drawable.incoming_sms_on_r1)
+        incomingSMSBtn.setImageResource(R.drawable.incoming_sms_on_r)
     }
 
     private fun resetNetworkBtn () {
-        outInNetworkBtn.setImageResource(R.drawable.wifi_off_r1)
+        outInNetworkBtn.setImageResource(R.drawable.network_off_r)
     }
 
     private fun setNetworkBtn (networkState : NetworkState = NetworkState.ASIS) {
         if (isPhoneInNetwork) {
             when (networkState) {
                 NetworkState.LOST -> {
-                    outInNetworkBtn.setImageResource(R.drawable.wifi_lost_r1)
+                    outInNetworkBtn.setImageResource(R.drawable.network_off_r) // wifi_lost_r1
                 }
                 NetworkState.UNAVAILABLE -> {
-                    outInNetworkBtn.setImageResource(R.drawable.wifi_lost_r1)
+                    outInNetworkBtn.setImageResource(R.drawable.network_off_r) // wifi_lost_r1
                 }
                 NetworkState.ASIS -> {
-                    outInNetworkBtn.setImageResource(R.drawable.wifi_off_enabled_r1)
+                    outInNetworkBtn.setImageResource(R.drawable.network_off_r) //wifi_off_enabled_r1
                 }
 
                 else -> {}
@@ -1446,10 +1446,10 @@ class MainActivity : AppCompatActivity() {
         else if (isPhoneOutOfNetwork) {
             when (networkState) {
                 NetworkState.AVAILABLE -> {
-                    outInNetworkBtn.setImageResource(R.drawable.wifi_on_found_r1)
+                    outInNetworkBtn.setImageResource(R.drawable.network_on_r) //wifi_on_found_r1
                 }
                 NetworkState.ASIS -> {
-                    outInNetworkBtn.setImageResource(R.drawable.wifi_on_enabled_r1)
+                    outInNetworkBtn.setImageResource(R.drawable.network_on_r) //wifi_on_enabled_r1
                 }
                 else -> {}
             }
@@ -1479,11 +1479,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setIncomingCallFlickeringBtn () {
-        incomingCallBtn.setImageResource(R.drawable.incoming_call_icon_on_r1)
+        incomingCallBtn.setImageResource(R.drawable.incoming_call_on_r)
     }
 
     private fun resetIncomingCallFlickeringBtn () {
-        incomingCallBtn.setImageResource(R.drawable.incoming_call_icon_off_r1)
+        incomingCallBtn.setImageResource(R.drawable.incoming_call_off_r)
     }
 
     fun setFlickeringHz(hz : Long) {
@@ -1552,19 +1552,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setFlashLightBtn () {
-        flashlightBtn.setImageResource(R.drawable.turn_on)
+        flashlightBtn.setImageResource(R.drawable.turn_on_r2)
     }
 
     private fun resetFlashLightBtn () {
-        flashlightBtn.setImageResource(R.drawable.turn_off)
+        flashlightBtn.setImageResource(R.drawable.turn_off_r2)
     }
 
     private fun setSOSBtn () {
-        sosBtn.setImageResource(R.drawable.sos_on_r1)
+        sosBtn.setImageResource(R.drawable.sos_on_r)
     }
 
     private fun resetSOSBtn () {
-        sosBtn.setImageResource(R.drawable.sos_off_r1)
+        sosBtn.setImageResource(R.drawable.sos_off_r)
     }
 
     private fun setBtnImage (btn : ImageButton, icon : Int) {
@@ -1573,11 +1573,11 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setFlickeringFlashlightBtn () {
-        flickerFlashlightBtn.setImageResource(R.drawable.flicker_on_r1)
+        flickerFlashlightBtn.setImageResource(R.drawable.flickering_on_r)
     }
 
     private fun resetFlickeringFlashlightBtn () {
-        flickerFlashlightBtn.setImageResource(R.drawable.flicker_off_r1)
+        flickerFlashlightBtn.setImageResource(R.drawable.flickering_off_r)
     }
 
     private fun setFlashlightId () {
@@ -1671,7 +1671,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 RequestKey.ALTITUDE.value -> {
                     permissionsKeys["ALTITUDE"] = true
-                    setBtnImage(altitudeBtn, R.drawable.altitude_btn_off)
+                    setBtnImage(altitudeBtn, R.drawable.altitude_off_r)
                 }
             }
         }
@@ -1679,15 +1679,15 @@ class MainActivity : AppCompatActivity() {
             when (requestCode) {
                 RequestKey.CALL.value -> {
                     Log.i("MainActivity", "Request NOT granted for CALL")
-                    setBtnImage(incomingCallBtn, R.drawable.incoming_call_no_permission)
+                    setBtnImage(incomingCallBtn, R.drawable.incoming_call_no_permission_r)
                 }
                 RequestKey.SMS.value -> {
                     Log.i("MainActivity", "Request NOT granted for SMS")
-                    setBtnImage(incomingSMSBtn, R.drawable.sms_icon_no_permission)
+                    setBtnImage(incomingSMSBtn, R.drawable.incoming_sms_no_permission_r)
                 }
                 RequestKey.AUDIO.value -> {
                     Log.i("MainActivity", "Request NOT granted for AUDIO")
-                    setBtnImage(incomingSoundBtn, R.drawable.sound_no_permission)
+                    setBtnImage(incomingSoundBtn, R.drawable.sound_no_permission_r)
                 }
                 RequestKey.ALTITUDE.value -> {
                     Log.i("MainActivity", "Request NOT granted for LOCATION")
@@ -1874,7 +1874,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         Log.i("MainActivity", "onResume is running")
         checkPermissions(ACTION.RESUME)
-        turnOnFlashlight(true)
     }
 
 }
