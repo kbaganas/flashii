@@ -255,7 +255,7 @@ class MainActivity : AppCompatActivity() {
         ///////////////////////////////////////////////////////////////////////////////////////
         // flicker seekbar and textview handler
         flickeringBar = findViewById(R.id.flickeringBarId)
-        flickerText = findViewById(R.id.flickerTextViewId)
+        flickerText = findViewById(R.id.messageId)
         flickeringBar.min = minFlickerHz
         flickeringBar.max = maxFlickerHz
         flickeringBar.visibility = View.INVISIBLE

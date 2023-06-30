@@ -13,17 +13,16 @@
 
     <SeekBar
         android:id="@+id/flickeringBarId"
-        android:layout_width="221dp"
-        android:layout_height="68dp"
+        android:layout_width="250dp"
+        android:layout_height="28dp"
+        android:layout_marginBottom="8dp"
         android:progressTint="#47C4EE"
         android:rotation="0"
         android:scaleX="1.25"
         android:scaleY="1.25"
-        app:layout_constraintBottom_toTopOf="@+id/batteryBtnId"
+        app:layout_constraintBottom_toTopOf="@+id/timerThresholdId"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flickerTextViewId"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/switchFlickerIncomingCallsId"
@@ -56,13 +55,12 @@
 
     <CheckedTextView
         android:id="@+id/powerLevelId"
-        android:layout_width="72dp"
+        android:layout_width="82dp"
         android:layout_height="21dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="80dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/batteryBtnId"
         app:layout_constraintEnd_toStartOf="@+id/batteryBtnId"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toEndOf="@+id/batteryBtnId" />
 
     <ImageButton
@@ -141,16 +139,15 @@
 
     <CheckedTextView
         android:id="@+id/targetAltitudeLevelId"
-        android:layout_width="72dp"
+        android:layout_width="82dp"
         android:layout_height="21dp"
+        android:layout_marginBottom="80dp"
         android:textAlignment="center"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/altitudeBtnId"
         app:layout_constraintEnd_toEndOf="@+id/altitudeBtnId"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/altitudeBtnId"
-        app:layout_constraintTop_toTopOf="@+id/altitudeBtnId"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintStart_toStartOf="@+id/altitudeBtnId" />
 
     <ImageButton
         android:id="@+id/flickerFlashLightId"
@@ -184,27 +181,14 @@
 
     <CheckedTextView
         android:id="@+id/timerThresholdId"
-        android:layout_width="72dp"
+        android:layout_width="82dp"
         android:layout_height="20dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="72dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/timerBtnId"
         app:layout_constraintEnd_toEndOf="@+id/timerBtnId"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="@+id/timerBtnId" />
-
-    <TextView
-        android:id="@+id/flickerTextViewId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/oneHz"
-        android:textAlignment="center"
-        android:textColor="#4ecbf7"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/flickeringBarId"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/flashLightBtnId"
@@ -241,8 +225,8 @@
 
     <ImageButton
         android:id="@+id/infoBtnId"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/rateBtnId"
@@ -254,8 +238,8 @@
 
     <ImageButton
         android:id="@+id/rateBtnId"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/donateBtnId"
@@ -267,8 +251,8 @@
 
     <ImageButton
         android:id="@+id/donateBtnId"
-        android:layout_width="36dp"
-        android:layout_height="72dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="5dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
@@ -277,5 +261,22 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/rateBtnId"
         app:srcCompat="@drawable/donate" />
+
+    <TextView
+        android:id="@+id/messageId"
+        android:layout_width="312dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/cabin_semibold"
+        android:textAlignment="viewStart"
+        android:textColor="#3F64A1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/flickeringBarId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
