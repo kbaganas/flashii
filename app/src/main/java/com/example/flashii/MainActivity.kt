@@ -207,6 +207,7 @@ class MainActivity : AppCompatActivity() {
         // flashLightBtn handler
         setFlashlightId()
         flashlightBtn = findViewById(R.id.flashLightBtnId)
+        turnOnFlashlight(true)
         flashlightBtn.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -1873,6 +1874,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         Log.i("MainActivity", "onResume is running")
         checkPermissions(ACTION.RESUME)
+        turnOnFlashlight(true)
     }
 
 }
