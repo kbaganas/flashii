@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     private var altitudeThreshold : Int = minAltitude // sea level
     private val hideSeekBarAfterDelay3 : Long = 3000
     private val hideMessageTextAfter3 : Long = 3500
+    private val hideMessageTextAfter1 : Long = 1500
     private var initBatteryLevel : Int = minBattery
     private var initAltitudeLevel : Int = minAltitude
     private val checkInterval : Long = 5000 // 5 seconds
@@ -212,7 +213,7 @@ class MainActivity : AppCompatActivity() {
         setFlashlightId()
         flashlightBtn = findViewById(R.id.flashLightBtnId)
         turnOnFlashlight(true)
-        setMessageText("Flashlight is turned on")
+        setMessageText("Flashlight is turned on", hideMessageTextAfter3)
         flashlightBtn.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -220,12 +221,12 @@ class MainActivity : AppCompatActivity() {
                     if (isFlashLightOn) {
                         Log.i("MainActivity","flashlightBtn is OFF")
                         turnOffFlashlight(true)
-                        setMessageText("Flashlight is turned off", hideMessageTextAfter3)
+                        setMessageText("Flashlight is turned off", hideMessageTextAfter1)
                     } else {
                         Log.i("MainActivity","flashlightBtn is ON")
-                        resetAllActivities(disableFlickeringOnDemand = true, disableSOS = true)
+                        resetAllActivities(disableFlickeringOnDemand = true, disableSOS = true, disableTilt = true, disableAudioIncoming = true, disableTimer = true, disableBatterySensor = true)
                         turnOnFlashlight(true)
-                        setMessageText("Flashlight is turned on")
+                        setMessageText("Flashlight is turned on", hideMessageTextAfter3)
                     }
                     true
                 }
@@ -235,7 +236,7 @@ class MainActivity : AppCompatActivity() {
                     if (System.currentTimeMillis() - touchStartTime > 350) {
                         Log.i("MainActivity","flashlightBtn is OFF after press/hold")
                         turnOffFlashlight(true)
-                        setMessageText("Flashlight is turned off", hideMessageTextAfter3)
+                        setMessageText("Flashlight is turned off", hideMessageTextAfter1)
                     }
                     false
                 }
@@ -252,13 +253,13 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity","sosBtn is ON")
                 repeatSOS(true)
 //                showSnackbar("SOS message transmission")
-                setMessageText("SOS is transmitted")
+                setMessageText("SOS is transmitted", hideMessageTextAfter3)
             }
             else {
                 Log.i("MainActivity","sosBtn is OFF")
                 dismissSnackbar()
                 stopSOS(true)
-                setMessageText("SOS transmission is stopped", hideMessageTextAfter3)
+                setMessageText("SOS transmission is stopped", hideMessageTextAfter1)
             }
         }
 
@@ -353,16 +354,16 @@ class MainActivity : AppCompatActivity() {
                 isFlickeringOnDemand = true
                 setSeekBar(SeekBarMode.HZ)
                 startFlickering()
-                setFlickeringFlashlightBtn()
+                setBtnImage(flickerFlashlightBtn, R.drawable.flickering_on_m3)
             }
             else {
                 Log.i("MainActivity","flickerFlashlightBtn is OFF")
                 isFlickeringOnDemand = false
                 stopFlickering()
-                resetFlickeringFlashlightBtn()
+                setBtnImage(flickerFlashlightBtn, R.drawable.flickering_off_m3)
                 resetSeekBar()
                 setFlickeringHz(minFlickerHz.toLong())
-                setMessageText("Feature is disabled", hideSeekBarAfterDelay3)
+                setMessageText("Feature is disabled", hideMessageTextAfter1)
             }
         }
 
@@ -375,19 +376,19 @@ class MainActivity : AppCompatActivity() {
                 if (!isIncomingCall) {
                     Log.i("MainActivity","incomingCallBtn is ON")
                     registerIncomingEvents(TypeOfEvent.INCOMING_CALL)
-                    setIncomingCallFlickeringBtn()
-                    setMessageText("Flashlight will flicker\non incoming calls")
+                    setBtnImage(incomingCallBtn, R.drawable.incoming_call_on_m3)
+                    setMessageText("Flashlight will flicker\non incoming calls", hideMessageTextAfter3)
                 } else {
                     Log.i("MainActivity", "incomingCallBtn is OFF")
                     dismissSnackbar()
                     disableIncomingCallFlickering()
-                    resetIncomingCallFlickeringBtn()
-                    setMessageText("Feature is disabled", hideMessageTextAfter3)
+                    setBtnImage(incomingCallBtn, R.drawable.incoming_call_off_m3)
+                    setMessageText("Feature is disabled", hideMessageTextAfter1)
                 }
             }
             else {
                 // user should be asked for permissions again
-                setMessageText("To use the feature, manually provide\nCALL permissions to $applicationName in your phone's Settings")
+                setMessageText("To use the feature, manually provide\nCALL permissions to $applicationName in your phone's Settings", hideMessageTextAfter3)
 //                showSnackbar("To use the feature, manually provide CALL permissions to $applicationName in your phone's Settings", Snackbar.LENGTH_LONG)
             }
         }
@@ -403,12 +404,12 @@ class MainActivity : AppCompatActivity() {
 
                 if (isAudioIncoming) {
                     Log.i("MainActivity","incomingSoundBtn is OFF")
-                    setMessageText("Feature is disabled", hideMessageTextAfter3)
+                    setMessageText("Feature is disabled", hideMessageTextAfter1)
                     isAudioIncoming = false
                     audioRecordHandler.stop()
                     audioRecordHandler.release()
                     dismissSnackbar()
-                    resetIncomingSoundBtn()
+                    setBtnImage(incomingSoundBtn, R.drawable.sound_off_m3)
                     try {
                         recordingThread?.interrupt()
                     }
@@ -422,7 +423,7 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity","incomingSoundBtn is ON")
                     resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableSOS = true, disableTilt = true)
                     isAudioIncoming = true
-                    setIncomingSoundBtn()
+                    setBtnImage(incomingSoundBtn, R.drawable.sound_on_m3)
                     audioRecordHandler = AudioRecord(
                         MediaRecorder.AudioSource.MIC,
                         sampleRate,
@@ -441,19 +442,19 @@ class MainActivity : AppCompatActivity() {
                                 if (isFlashLightOn) {
                                     Log.i("MainActivity","LOOP ABOVE THRESHOLD - TURN OFF Flashlight")
                                     turnOffFlashlight()
-                                    setMessageText("Flashlight OFF")
+                                    setMessageText("Flashlight OFF", hideMessageTextAfter1)
                                 }
                                 else {
                                     Log.i("MainActivity","LOOP ABOVE THRESHOLD - TURN ON Flashlight")
                                     turnOnFlashlight()
-                                    setMessageText("Flashlight ON")
+                                    setMessageText("Flashlight ON", hideMessageTextAfter3)
                                 }
                             }
                         }
                     }
                     recordingThread?.start()
 //                    showSnackbar("Flashlight will turn ON/OFF on short sounds")
-                    setMessageText("Flashlight will turn ON/OFF\non short sounds")
+                    setMessageText("Flashlight will turn ON/OFF\non short sounds", hideMessageTextAfter3)
                 }
             }
             else {
@@ -503,10 +504,10 @@ class MainActivity : AppCompatActivity() {
                     }
                     Log.i("MainActivity","incomingTiltBtn is ON ($sensorEventListener)")
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
-                    setShakeBtn()
+                    setBtnImage(incomingTiltBtn, R.drawable.tilt_on_m3)
                     isPhoneTilt = true
 //                    showSnackbar("Flashlight will turn ON/OFF on 90 degrees angle phone tilts")
-                    setMessageText("Flashlight will turn ON/OFF \non 90 degrees angle phone tilts")
+                    setMessageText("Flashlight will turn ON/OFF \non 90 degrees angle phone tilts", hideMessageTextAfter3)
                 }
                 else {
                     // we have to disable the btn now since rotation sensor is not available on the device
@@ -516,11 +517,11 @@ class MainActivity : AppCompatActivity() {
                 }
             } else {
                 Log.i("MainActivity","incomingTiltBtn is OFF ($sensorEventListener)")
-                setMessageText("Feature is disabled", hideMessageTextAfter3)
+                setMessageText("Feature is disabled", hideMessageTextAfter1)
                 turnOffFlashlight()
                 dismissSnackbar()
                 sensorManager.unregisterListener(sensorEventListener)
-                resetShakeBtn()
+                setBtnImage(incomingTiltBtn, R.drawable.tilt_off_m3)
                 isPhoneTilt = false
             }
         }
@@ -533,15 +534,15 @@ class MainActivity : AppCompatActivity() {
             if (permissionsKeys["SMS"] == true) {
                 if (!isIncomingSMS) {
                     Log.i("MainActivity","incomingSMSBtn is ON")
-                    setMessageText("Flashlight will flicker\non incoming SMSes")
+                    setMessageText("Flashlight will flicker\non incoming SMSes", hideMessageTextAfter3)
                     registerIncomingEvents(TypeOfEvent.SMS)
-                    setIncomingSMSBtn()
+                    setBtnImage(incomingSMSBtn, R.drawable.incoming_sms_on_m3)
                 } else {
                     Log.i("MainActivity", "incomingSMSBtn is OFF")
-                    setMessageText("Feature is disabled", hideMessageTextAfter3)
+                    setMessageText("Feature is disabled", hideMessageTextAfter1)
                     dismissSnackbar()
                     disableIncomingSMSHandler()
-                    resetIncomingSMSBtn()
+                    setBtnImage(incomingSMSBtn, R.drawable.incoming_sms_off_m3)
                 }
             }
             else {
@@ -559,7 +560,7 @@ class MainActivity : AppCompatActivity() {
             if (networkConnectivityCbIsSet) {
                 // User wants to disable the feature
                 Log.i("MainActivity","outInNetworkBtn is OFF")
-                setMessageText("Feature is disabled", hideMessageTextAfter3)
+                setMessageText("Feature is disabled", hideMessageTextAfter1)
                 networkConnectivityCbIsSet = false
                 dismissSnackbar()
                 if (!isFlickeringOnDemand) {
@@ -567,7 +568,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 Log.i("MainActivity", "Unregister running CB $connectivityCallback")
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
-                resetNetworkBtn()
+                setBtnImage(outInNetworkBtn, R.drawable.network_off_m3)
             }
             else {
                 val networkRequest = NetworkRequest.Builder().build()
@@ -686,7 +687,7 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 Log.i("MainActivity","batteryBtn is OFF")
-                setMessageText("Feature is disabled", hideMessageTextAfter3)
+                setMessageText("Feature is disabled", hideMessageTextAfter1)
                 try {
                     unregisterReceiver(batteryReceiver)
                 }
@@ -721,7 +722,7 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 Log.i("MainActivity","timerBtn is OFF")
-                setMessageText("Timer is reset", hideMessageTextAfter3)
+                setMessageText("Timer is reset", hideMessageTextAfter1)
                 isTimerOn = false
                 isTimerThresholdSet = false
                 timerSetAfter = minTimerMinutes
@@ -813,7 +814,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     Log.i("MainActivity","altitudeBtn is OFF ($sensorEventListener)")
-                    setMessageText("Feature is disabled", hideMessageTextAfter3)
+                    setMessageText("Feature is disabled", hideMessageTextAfter1)
                     dismissSnackbar()
                     resetSeekBar()
                     sensorManager.unregisterListener(sensorEventListener)
@@ -1015,7 +1016,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
                 registerReceiver(incomingCallReceiver, intentFilter)
-                setMessageText("Flashlight will flicker\non incoming phone calls")
+                setMessageText("Flashlight will flicker\non incoming phone calls", hideMessageTextAfter3)
             }
             TypeOfEvent.OUT_OF_SERVICE -> {
                 val networkRequest = NetworkRequest.Builder().build()
@@ -1044,7 +1045,7 @@ class MainActivity : AppCompatActivity() {
                     }}
                 Log.i("MainActivity", "Register CB for OUT_OF_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
-                setMessageText("Flashlight will flicker if WiFi or Network signal gets lost")
+                setMessageText("Flashlight will flicker if WiFi or Network signal gets lost", hideMessageTextAfter3)
             }
             TypeOfEvent.IN_SERVICE -> {
                 val networkRequest = NetworkRequest.Builder().build()
@@ -1062,7 +1063,7 @@ class MainActivity : AppCompatActivity() {
                     }}
                 Log.i("MainActivity", "Register CB for IN_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
-                setMessageText("Flashlight will flicker if\nWiFi or Network signal is found")
+                setMessageText("Flashlight will flicker if\nWiFi or Network signal is found", hideMessageTextAfter3)
             }
             TypeOfEvent.PHONE_TILT -> {
 
@@ -1087,7 +1088,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 val intentFilter = IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
                 registerReceiver(incomingSMSReceiver, intentFilter)
-                setMessageText("Flashlight will flicker\non incoming SMSes")
+                setMessageText("Flashlight will flicker\non incoming SMSes", hideMessageTextAfter3)
             }
         }
     }
@@ -1117,6 +1118,7 @@ class MainActivity : AppCompatActivity() {
                     resetSeekBar()
                     resetTimerBtn()
                     setTimerThresholdDisplayText(ACTION.RESET)
+                    setMessageText()
                 }
             }
             Token.BATTERY -> {
@@ -1132,6 +1134,7 @@ class MainActivity : AppCompatActivity() {
                      setBatteryBtn(ACTION.RESET)
                      isBatteryOn = false
                      resetSeekBar()
+                     setMessageText()
                      batteryThreshold = minBattery
                      initBatteryLevel = minBattery
                      setPowerLevelDisplayText(ACTION.RESET)
@@ -1239,6 +1242,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setSeekBarDisplayText (displayValue: String, mode: SeekBarMode, action : ACTION) {
+        Log.i("MainActivity", "LOC1 $displayValue, $mode, $action")
         val displayText : String
         when (mode) {
             SeekBarMode.HOURS -> {
@@ -1431,34 +1435,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setIncomingSoundBtn () {
-        incomingSoundBtn.setImageResource(R.drawable.sound_on_m3)
-    }
-
-    private fun resetIncomingSoundBtn () {
-        incomingSoundBtn.setImageResource(R.drawable.sound_off_m3)
-    }
-
-    private fun setShakeBtn () {
-        incomingTiltBtn.setImageResource(R.drawable.tilt_on_m3)
-    }
-
-    private fun resetShakeBtn () {
-        incomingTiltBtn.setImageResource(R.drawable.tilt_off_m3)
-    }
-
-    private fun resetIncomingSMSBtn () {
-        incomingSMSBtn.setImageResource(R.drawable.incoming_sms_off_m3)
-    }
-
-    private fun setIncomingSMSBtn () {
-        incomingSMSBtn.setImageResource(R.drawable.incoming_sms_on_m3)
-    }
-
-    private fun resetNetworkBtn () {
-        outInNetworkBtn.setImageResource(R.drawable.network_off_m3)
-    }
-
     private fun setNetworkBtn (networkState : NetworkState = NetworkState.ASIS) {
         if (isPhoneInNetwork) {
             when (networkState) {
@@ -1510,14 +1486,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setIncomingCallFlickeringBtn () {
-        incomingCallBtn.setImageResource(R.drawable.incoming_call_on_m3)
-    }
-
-    private fun resetIncomingCallFlickeringBtn () {
-        incomingCallBtn.setImageResource(R.drawable.incoming_call_off_m3)
-    }
-
     fun setFlickeringHz(hz : Long) {
         flickerFlashlightHz = hz
     }
@@ -1559,7 +1527,7 @@ class MainActivity : AppCompatActivity() {
                 isFlashLightOn = true
                 atomicFlashLightOn()
                 if (setFlashlightBtn) {
-                    setFlashLightBtn()
+                    setBtnImage(flashlightBtn, R.drawable.flashlight_on2)
                 }
                 Log.d("MainActivity", "FlashLight ON")
             } catch (e: CameraAccessException) {
@@ -1574,7 +1542,7 @@ class MainActivity : AppCompatActivity() {
                 isFlashLightOn = false
                 atomicFlashLightOff()
                 if (resetFlashlightBtn) {
-                    resetFlashLightBtn()
+                    setBtnImage(flashlightBtn, R.drawable.flashlight_off2)
                 }
                 Log.d("MainActivity", "FlashLight OFF")
             } catch (e: CameraAccessException) {
@@ -1583,33 +1551,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setFlashLightBtn () {
-        flashlightBtn.setImageResource(R.drawable.flashlight_on2)
-    }
-
-    private fun resetFlashLightBtn () {
-        flashlightBtn.setImageResource(R.drawable.flashlight_off2)
-    }
-
-    private fun setSOSBtn () {
-        sosBtn.setImageResource(R.drawable.sos_on_m3)
-    }
-
-    private fun resetSOSBtn () {
-        sosBtn.setImageResource(R.drawable.sos_off_m3)
-    }
-
     private fun setBtnImage (btn : ImageButton, icon : Int) {
         btn.setImageResource(icon)
-    }
-
-
-    private fun setFlickeringFlashlightBtn () {
-        flickerFlashlightBtn.setImageResource(R.drawable.flickering_on_m3)
-    }
-
-    private fun resetFlickeringFlashlightBtn () {
-        flickerFlashlightBtn.setImageResource(R.drawable.flickering_off_m3)
     }
 
     private fun setFlashlightId () {
@@ -1664,7 +1607,7 @@ class MainActivity : AppCompatActivity() {
             val durationOfWord = s(o(s()))
             loopHandler.postDelayed({ repeatSOS() }, durationOfWord + spaceWordsDuration)
             if (setSOSBtn) {
-                setSOSBtn()
+                setBtnImage(sosBtn, R.drawable.sos_on_m3)
             }
             isSendSOS = true
         }
@@ -1676,7 +1619,7 @@ class MainActivity : AppCompatActivity() {
             loopHandler.removeCallbacksAndMessages(null)
             atomicFlashLightOff()
             if (resetSOSBtn) {
-                resetSOSBtn()
+                setBtnImage(sosBtn, R.drawable.sos_off_m3)
             }
             isSendSOS = false
         }
@@ -1691,15 +1634,15 @@ class MainActivity : AppCompatActivity() {
             when (requestCode) {
                 RequestKey.CALL.value -> {
                     permissionsKeys["CALL"] = true
-                    resetIncomingCallFlickeringBtn()
+                    setBtnImage(incomingCallBtn, R.drawable.incoming_call_off_m3)
                 }
                 RequestKey.SMS.value -> {
                     permissionsKeys["SMS"] = true
-                    resetSOSBtn()
+                    setBtnImage(sosBtn, R.drawable.sos_off_m3)
                 }
                 RequestKey.AUDIO.value -> {
                     permissionsKeys["AUDIO"] = true
-                    resetIncomingSoundBtn()
+                    setBtnImage(incomingSoundBtn, R.drawable.sound_off_m3)
                 }
                 RequestKey.ALTITUDE.value -> {
                     permissionsKeys["ALTITUDE"] = true
@@ -1723,7 +1666,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 RequestKey.ALTITUDE.value -> {
                     Log.i("MainActivity", "Request NOT granted for LOCATION")
-                    setAltitudeBtn(ACTION.NO_PERMISSION)
+                    setBtnImage(altitudeBtn, R.drawable.altitude_no_permission_m3)
                 }
             }
         }
@@ -1791,7 +1734,7 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", "RAA - STOP FLICKERING on demand")
             isFlickeringOnDemand = false
             stopFlickering()
-            resetFlickeringFlashlightBtn()
+            setBtnImage(flickerFlashlightBtn, R.drawable.flickering_off_m3)
             resetSeekBar()
             setFlickeringHz(minFlickerHz.toLong())
         }
@@ -1806,13 +1749,13 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "RAA - TURN OFF isIncomingCall")
                 dismissSnackbar()
                 disableIncomingCallFlickering()
-                resetIncomingCallFlickeringBtn()
+                setBtnImage(incomingCallBtn, R.drawable.incoming_call_off_m3)
             }
             if (isIncomingSMS) {
                 Log.i("MainActivity", "RAA - TURN OFF isIncomingSMS")
                 dismissSnackbar()
                 disableIncomingSMSHandler()
-                resetIncomingSMSBtn()
+                setBtnImage(incomingSMSBtn, R.drawable.incoming_sms_off_m3)
             }
         }
 
@@ -1821,7 +1764,7 @@ class MainActivity : AppCompatActivity() {
             turnOffFlashlight()
             dismissSnackbar()
             sensorManager.unregisterListener(sensorEventListener)
-            resetShakeBtn()
+            setBtnImage(incomingTiltBtn, R.drawable.tilt_off_m3)
             isPhoneTilt = false
             loopHandler.removeCallbacksAndMessages(null)
         }
@@ -1830,7 +1773,7 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", "RAA - TURN OFF isAudioIncoming")
             isAudioIncoming = false
             turnOffFlashlight()
-            resetIncomingSoundBtn()
+            setBtnImage(incomingSoundBtn, R.drawable.sound_off_m3)
             audioRecordHandler.stop()
             audioRecordHandler.release()
             try {
@@ -1850,7 +1793,7 @@ class MainActivity : AppCompatActivity() {
             dismissSnackbar()
             stopFlickering()
             connectivityManager.unregisterNetworkCallback(connectivityCallback)
-            resetNetworkBtn()
+            setBtnImage(outInNetworkBtn, R.drawable.network_off_m3)
         }
 
         if (disableBatterySensor && isBatteryOn && !isBatteryThresholdSet) {
