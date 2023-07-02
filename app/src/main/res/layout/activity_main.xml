@@ -15,7 +15,7 @@
         android:id="@+id/flickeringBarId"
         android:layout_width="250dp"
         android:layout_height="28dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="10dp"
         android:progressTint="#47C4EE"
         android:rotation="0"
         android:scaleX="1.25"
@@ -37,7 +37,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timerBtnId"
-        app:srcCompat="@drawable/incoming_call_off_r" />
+        app:srcCompat="@drawable/incoming_call_off_m3" />
 
     <ImageButton
         android:id="@+id/incomingSoundBtnId"
@@ -51,13 +51,13 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/sosBtn"
         app:layout_constraintTop_toTopOf="@+id/sosBtn"
-        app:srcCompat="@drawable/sound_off_r" />
+        app:srcCompat="@drawable/sound_off_m3" />
 
     <CheckedTextView
         android:id="@+id/powerLevelId"
         android:layout_width="82dp"
         android:layout_height="21dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="83dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/batteryBtnId"
         app:layout_constraintEnd_toStartOf="@+id/batteryBtnId"
@@ -66,7 +66,7 @@
     <ImageButton
         android:id="@+id/networkConnectionBtn"
         android:layout_width="82dp"
-        android:layout_height="72dp"
+        android:layout_height="82dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
         android:scaleType="fitCenter"
@@ -75,7 +75,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/flickerFlashLightId"
         app:layout_constraintTop_toTopOf="@+id/flickerFlashLightId"
-        app:srcCompat="@drawable/network_off_r" />
+        app:srcCompat="@drawable/network_off_m3" />
 
     <ImageButton
         android:id="@+id/batteryBtnId"
@@ -90,12 +90,12 @@
         app:layout_constraintStart_toEndOf="@+id/altitudeBtnId"
         app:layout_constraintTop_toTopOf="@+id/altitudeBtnId"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/battery_full_off_r" />
+        app:srcCompat="@drawable/battery_off_m3" />
 
     <ImageButton
         android:id="@+id/timerBtnId"
         android:layout_width="82dp"
-        android:layout_height="72dp"
+        android:layout_height="82dp"
         android:layout_marginTop="15dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/TimerContentDescription"
@@ -106,7 +106,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flickeringBarId"
         app:layout_constraintVertical_bias="0.5"
-        app:srcCompat="@drawable/timer_off_r" />
+        app:srcCompat="@drawable/timer_off_m3" />
 
     <ImageButton
         android:id="@+id/altitudeBtnId"
@@ -121,12 +121,12 @@
         app:layout_constraintStart_toEndOf="@+id/timerBtnId"
         app:layout_constraintTop_toTopOf="@+id/timerBtnId"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/altitude_off_r" />
+        app:srcCompat="@drawable/altitude_off_m3" />
 
     <ImageButton
         android:id="@+id/sosBtn"
         android:layout_width="82dp"
-        android:layout_height="72dp"
+        android:layout_height="82dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/SOSBtnContentDescription"
         android:scaleType="fitCenter"
@@ -135,13 +135,13 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/smsBtnId"
         app:layout_constraintTop_toTopOf="@+id/smsBtnId"
-        app:srcCompat="@drawable/sos_off_r" />
+        app:srcCompat="@drawable/sos_off_m3" />
 
     <CheckedTextView
         android:id="@+id/targetAltitudeLevelId"
         android:layout_width="82dp"
         android:layout_height="21dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="83dp"
         android:textAlignment="center"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/altitudeBtnId"
@@ -152,7 +152,7 @@
     <ImageButton
         android:id="@+id/flickerFlashLightId"
         android:layout_width="82dp"
-        android:layout_height="72dp"
+        android:layout_height="82dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/FlashlightFlickeringContentDescription"
         android:scaleType="fitCenter"
@@ -161,12 +161,12 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/switchFlickerIncomingCallsId"
         app:layout_constraintTop_toTopOf="@+id/switchFlickerIncomingCallsId"
-        app:srcCompat="@drawable/flickering_off_r" />
+        app:srcCompat="@drawable/flickering_off_m3" />
 
     <ImageButton
         android:id="@+id/smsBtnId"
         android:layout_width="82dp"
-        android:layout_height="72dp"
+        android:layout_height="82dp"
         android:layout_marginTop="15dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/IncomingSMSContentDescription"
@@ -177,13 +177,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchFlickerIncomingCallsId"
         app:layout_constraintVertical_bias="0.5"
-        app:srcCompat="@drawable/incoming_sms_off_r" />
+        app:srcCompat="@drawable/incoming_sms_off_m3" />
 
     <CheckedTextView
         android:id="@+id/timerThresholdId"
         android:layout_width="82dp"
         android:layout_height="20dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="83dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/timerBtnId"
         app:layout_constraintEnd_toEndOf="@+id/timerBtnId"
@@ -194,8 +194,8 @@
         android:id="@+id/flashLightBtnId"
         android:layout_width="250dp"
         android:layout_height="60dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="45dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/FlashlightBtnContentDescription"
         android:scaleType="centerInside"
@@ -205,7 +205,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/incomingShakeBtnId"
         app:layout_constraintVertical_bias="0.5"
-        app:srcCompat="@drawable/turn_off_r2" />
+        app:srcCompat="@drawable/flashlight_off2" />
 
     <ImageButton
         android:id="@+id/incomingShakeBtnId"
@@ -221,7 +221,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sosBtn"
         app:layout_constraintVertical_bias="0.5"
-        app:srcCompat="@drawable/tilt_off_r" />
+        app:srcCompat="@drawable/tilt_off_m3" />
 
     <ImageButton
         android:id="@+id/infoBtnId"
@@ -253,7 +253,7 @@
         android:id="@+id/donateBtnId"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="15dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -265,9 +265,9 @@
     <TextView
         android:id="@+id/messageId"
         android:layout_width="312dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
         android:fontFamily="@font/cabin_semibold"
         android:textAlignment="center"
         android:textColor="#3F64A1"
