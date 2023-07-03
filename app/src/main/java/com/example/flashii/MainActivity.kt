@@ -150,6 +150,7 @@ class MainActivity : AppCompatActivity() {
     // Handlers, Threads, Managers, Receivers, Detectors
     private var loopHandler : Handler = Handler(Looper.getMainLooper())
     private var messageLoopHandler : Handler = Handler(Looper.getMainLooper())
+    private var timerLoopHandler : Handler = Handler(Looper.getMainLooper())
     private lateinit var audioRecordHandler : AudioRecord
     private var recordingThread: Thread? = null
     private lateinit var cameraManager : CameraManager
@@ -334,10 +335,12 @@ class MainActivity : AppCompatActivity() {
                     isTimerThresholdSet = true
                     setMessageDisplayTextEnhanced(timerSetAfter.toString(), SeekBarMode.HOURS, ACTION.STOP)
                     Log.d("MainActivity", "Timer set to $timerSetAfter")
-                    loopHandler.postDelayed({ startFlickering() }, timerSetAfter.inWholeMilliseconds)
-                    stopFlickeringAfterTimeout(timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
+                    timerLoopHandler.postDelayed({ startFlickering() }, timerSetAfter.inWholeMilliseconds)
+                    timerLoopHandler.postDelayed({ setBtnImage(timerBtn, R.drawable.timer_success) }, timerSetAfter.inWholeMilliseconds)
+                    timerLoopHandler.postDelayed({ stopFlickering() }, timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
+                    timerLoopHandler.postDelayed({ setBtnImage(timerBtn, R.drawable.timer_off_m3) }, timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
                     setTimerThresholdDisplayText(ACTION.SET)
-                    loopHandler.postDelayed({ resetSeekBar(true) }, hideSeekBarAfterDelay35)
+                    loopHandler.postDelayed({ resetSeekBar() }, hideSeekBarAfterDelay35)
                 }
                 isStartTrackingTouched = false
             }
@@ -731,7 +734,7 @@ class MainActivity : AppCompatActivity() {
                 resetAllActivities(disableFlickeringOnDemand = true, disableBatterySensor = true, disableAltitudeSensor = true)
                 isTimerOn = true
                 setSeekBar(SeekBarMode.HOURS)
-                setTimerBtn()
+                setTimerBtn(ACTION.SET)
                 loopHandler.postDelayed({ checkStatus(Token.TIMER) }, checkInterval50)
                 setMessageToken(Token.TIMER)
             }
@@ -743,11 +746,12 @@ class MainActivity : AppCompatActivity() {
                 isTimerThresholdSet = false
                 timerSetAfter = minTimerMinutes
                 resetSeekBar()
-                resetTimerBtn()
+                setTimerBtn(ACTION.RESET)
                 setTimerThresholdDisplayText(ACTION.RESET)
                 if (!isFlickeringOnDemand) {
                     stopFlickering()
                 }
+                timerLoopHandler.removeCallbacksAndMessages(null)
             }
         }
 
@@ -1099,7 +1103,7 @@ class MainActivity : AppCompatActivity() {
                     isTimerOn = false
                     timerSetAfter = minTimerMinutes
                     resetSeekBar()
-                    resetTimerBtn()
+                    setTimerBtn(ACTION.RESET)
                     setTimerThresholdDisplayText(ACTION.RESET)
                     setMessageToken(Token.TIMER)
                     setMessageText(token = Token.TIMER)
@@ -1369,13 +1373,23 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    private fun setTimerBtn () {
-        timerBtn.setImageResource(R.drawable.timer_on_m3)
+    private fun setTimerBtn (action : ACTION) {
+        when (action) {
+            ACTION.SET -> {
+                timerBtn.setImageResource(R.drawable.timer_on_m3)
+            }
+            ACTION.RESET -> {
+                timerBtn.setImageResource(R.drawable.timer_off_m3)
+            }
+            ACTION.SUCCESS -> {
+                timerBtn.setImageResource(R.drawable.timer_success)
+            }
+            else -> {
+                timerBtn.setImageResource(R.drawable.timer_off_m3)
+            }
+        }
     }
 
-    private fun resetTimerBtn () {
-        timerBtn.setImageResource(R.drawable.timer_off_m3)
-    }
 
     private fun setBatteryBtn (action : ACTION) {
         when (action) {
@@ -1386,7 +1400,7 @@ class MainActivity : AppCompatActivity() {
                 batteryBtn.setImageResource(R.drawable.battery_off_m3)
             }
             ACTION.SUCCESS -> {
-                batteryBtn.setImageResource(R.drawable.battery_on_m3)
+                batteryBtn.setImageResource(R.drawable.battery_success)
             }
             else -> {
                 batteryBtn.setImageResource(R.drawable.battery_off_m3)
@@ -1403,7 +1417,7 @@ class MainActivity : AppCompatActivity() {
                 altitudeBtn.setImageResource(R.drawable.altitude_off_m3)
             }
             ACTION.SUCCESS -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_on_m3)
+                altitudeBtn.setImageResource(R.drawable.altitude_success)
             }
             ACTION.NO_PERMISSION -> {
                 altitudeBtn.setImageResource(R.drawable.altitude_no_permission_m3)
@@ -1418,13 +1432,13 @@ class MainActivity : AppCompatActivity() {
         if (isPhoneInNetwork) {
             when (networkState) {
                 NetworkState.LOST -> {
-                    outInNetworkBtn.setImageResource(R.drawable.network_no_signal_m3) // wifi_lost_r1
+                    outInNetworkBtn.setImageResource(R.drawable.network_lost_m3) // wifi_lost_r1
                 }
                 NetworkState.UNAVAILABLE -> {
-                    outInNetworkBtn.setImageResource(R.drawable.network_no_signal_m3) // wifi_lost_r1
+                    outInNetworkBtn.setImageResource(R.drawable.network_lost_m3) // wifi_lost_r1
                 }
                 NetworkState.ASIS -> {
-                    outInNetworkBtn.setImageResource(R.drawable.network_on_m3) //wifi_off_enabled_r1
+                    outInNetworkBtn.setImageResource(R.drawable.network_on_to_lost_m3) //wifi_off_enabled_r1
                 }
                 else -> {}
             }
@@ -1432,10 +1446,10 @@ class MainActivity : AppCompatActivity() {
         else if (isPhoneOutOfNetwork) {
             when (networkState) {
                 NetworkState.AVAILABLE -> {
-                    outInNetworkBtn.setImageResource(R.drawable.network_off_to_on_m3) //wifi_on_found_r1
+                    outInNetworkBtn.setImageResource(R.drawable.network_success) //wifi_on_found_r1
                 }
                 NetworkState.ASIS -> {
-                    outInNetworkBtn.setImageResource(R.drawable.network_no_signal_m3) //wifi_on_enabled_r1
+                    outInNetworkBtn.setImageResource(R.drawable.network_on_m3) //wifi_on_enabled_r1
                 }
                 else -> {}
             }
@@ -1712,6 +1726,15 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity", "onDestroy batteryReceiver exception $e")
             }
         }
+
+        if (isTimerOn) {
+            try {
+                timerLoopHandler.removeCallbacksAndMessages(null)
+            }
+            catch (e: java.lang.Exception) {
+                // DO nothing here
+            }
+        }
     }
 
     private fun resetAllActivities (disableFlashLight : Boolean = false, disableFlickeringOnDemand : Boolean = false, disableSOS : Boolean = false, disableIncomingEvents : Boolean = false,
@@ -1821,8 +1844,14 @@ class MainActivity : AppCompatActivity() {
             isTimerThresholdSet = false
             timerSetAfter = minTimerMinutes
             resetSeekBar()
-            resetTimerBtn()
+            setTimerBtn(ACTION.RESET)
             setTimerThresholdDisplayText(ACTION.RESET)
+            try {
+                timerLoopHandler.removeCallbacksAndMessages(null)
+            }
+            catch (e: java.lang.Exception) {
+                // DO nothing here
+            }
         }
     }
 
