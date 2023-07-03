@@ -1475,7 +1475,6 @@ class MainActivity : AppCompatActivity() {
         isFlickering = true
         val periodOfFlashLightInMilliseconds =  1000 / flickerFlashlightHz
         atomicFlashLightOn()
-//        Log.d("MainActivity", "startFlickering ${flickerFlashlightHz}Hz")
         loopHandler.postDelayed({ atomicFlashLightOff() }, (periodOfFlashLightInMilliseconds / 2))
         loopHandler.postDelayed({ startFlickering() }, periodOfFlashLightInMilliseconds)
     }
@@ -1514,7 +1513,7 @@ class MainActivity : AppCompatActivity() {
                 isFlashLightOn = false
                 atomicFlashLightOff()
                 if (resetFlashlightBtn) {
-                    setBtnImage(flashlightBtn, R.drawable.flashlight_off2)
+                    setBtnImage(flashlightBtn, R.drawable.flashlight_off_m3)
                 }
                 Log.d("MainActivity", "FlashLight OFF")
             } catch (e: CameraAccessException) {
@@ -1671,6 +1670,10 @@ class MainActivity : AppCompatActivity() {
             unregisterReceiver(incomingCallReceiver)
         }
 
+        if (isIncomingSMS) {
+            unregisterReceiver(incomingSMSReceiver)
+        }
+
         if (isPhoneTilt) {
             sensorManager.unregisterListener(sensorEventListener)
         }
@@ -1686,10 +1689,28 @@ class MainActivity : AppCompatActivity() {
                 recordingThread?.interrupt()
             }
             catch (e : SecurityException) {
-                Log.e("MainActivity", "THREAD SecurityException $e")
+                Log.e("MainActivity", "onDestroy recordingThread exception $e")
             }
             recordingThread?.join()
             recordingThread = null
+        }
+
+        if (isAltitudeOn) {
+            try {
+                sensorManager.unregisterListener(sensorEventListener)
+            }
+            catch (e : SecurityException) {
+                Log.e("MainActivity", "onDestroy sensorManager exception $e")
+            }
+        }
+
+        if (isBatteryOn) {
+            try {
+                unregisterReceiver(batteryReceiver)
+            }
+            catch (e : SecurityException) {
+                Log.e("MainActivity", "onDestroy batteryReceiver exception $e")
+            }
         }
     }
 
