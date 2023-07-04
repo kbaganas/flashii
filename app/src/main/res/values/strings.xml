@@ -26,6 +26,7 @@
     <string name="infoAltitudeReached">Application related</string>
     <string name="infoTimerOff">Click and you can set exactly after how much time you want to get notified by flashlight flickering.</string>
     <string name="infoTimerOn">Feature is enabled and currently running. Click to disable it.</string>
+    <string name="infoTimerSuccess">Indication that time specified has reached and flashlight is now flickering. The latter shall stop after 15 seconds by default.</string>
     <string name="infoBatteryOff">Click and phone\'s battery power shall be monitored at the level you specify. If reached you will get notified by flashlight flickering.</string>
     <string name="infoBatteryOn">Feature is enabled and currently running. Click to disable it.</string>
     <string name="infoIncomingCallOff">Click and you will get notified by flashlight flickering when an incoming Call is in progress. Flashlight and Feature will stop if you answer or reject the Call, or after 30 seconds by default.</string>

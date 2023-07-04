@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -24,8 +25,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
+                android:fontFamily="@font/cabin_semibold"
                 android:text="@string/infoHelp"
                 android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/altitudeTextId"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -46,13 +50,41 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="8dp"
                     android:scaleType="fitCenter"
+                    android:contentDescription="@string/GeneralContentDescription"
                     app:srcCompat="@drawable/incoming_call_off_m3" />
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/infoIncomingCallOff" />
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoIncomingCallOff"
+                    tools:ignore="VisualLintLongText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/horLayout11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/incomingCall1"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    app:srcCompat="@drawable/incoming_call_on_m3" />
+
+                <TextView
+                    android:id="@+id/incomingCall2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoIncomingCallOn" />
             </LinearLayout>
 
             <LinearLayout
@@ -62,17 +94,19 @@
                 android:layout_marginVertical="8dp">
 
                 <ImageView
-                    android:id="@+id/flickerImageId"
+                    android:id="@+id/flickerImageId1"
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="8dp"
                     android:scaleType="fitCenter"
+                    android:contentDescription="@string/GeneralContentDescription"
                     app:srcCompat="@drawable/flickering_off_m3" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/flickerImageId12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoFlickeringOff" />
             </LinearLayout>
 
@@ -83,18 +117,20 @@
                 android:layout_marginVertical="8dp">
 
                 <ImageView
-                    android:id="@+id/altitudeImageId"
+                    android:id="@+id/flickerImageId2"
                     android:layout_width="48dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:layout_marginHorizontal="8dp"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/altitude_off_m3" />
+                    android:contentDescription="@string/GeneralContentDescription"
+                    app:srcCompat="@drawable/flickering_on_m3" />
 
                 <TextView
-                    android:id="@+id/altitudeTextId"
+                    android:id="@+id/flickerImageId21"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/infoAltitudeOff" />
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoFlickeringOn" />
             </LinearLayout>
 
             <LinearLayout
@@ -104,19 +140,213 @@
                 android:layout_marginVertical="8dp">
 
                 <ImageView
-                    android:id="@+id/batteryImageId"
+                    android:id="@+id/altitudeImageId11"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    app:srcCompat="@drawable/altitude_off_m3" />
+
+                <TextView
+                    android:id="@+id/altitudeTextId12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoAltitudeOff"
+                    tools:ignore="VisualLintLongText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/altitudeImageId21"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginHorizontal="8dp"
                     android:scaleType="fitCenter"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    app:srcCompat="@drawable/altitude_on_m3" />
+
+                <TextView
+                    android:id="@+id/altitudeTextId22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoAltitudeOn" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/batteryImageId11"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/battery_off_m3" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/batteryImageId112"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/infoBatteryOff" />
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoBatteryOff"
+                    tools:ignore="VisualLintLongText" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/batteryImageId121"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    app:srcCompat="@drawable/battery_on_m3" />
+
+                <TextView
+                    android:id="@+id/batteryImageId122"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoBatteryOn" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/smsId11"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/incoming_sms_off_m3" />
+
+                <TextView
+                    android:id="@+id/smsId12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoIncomingSMSOff"
+                    tools:ignore="VisualLintLongText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/smsId21"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    app:srcCompat="@drawable/incoming_sms_on_m3" />
+
+                <TextView
+                    android:id="@+id/smsId22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoIncomingSMSOn" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/timerId11"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    app:srcCompat="@drawable/timer_off_m3" />
+
+                <TextView
+                    android:id="@+id/timerId12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoTimerOff" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/timerId21"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    app:srcCompat="@drawable/timer_on_m3" />
+
+                <TextView
+                    android:id="@+id/timerId22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoTimerOn" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/timerId31"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/timer_success" />
+
+                <TextView
+                    android:id="@+id/timerId32"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/infoTimerSuccess"
+                    tools:ignore="VisualLintLongText" />
+            </LinearLayout>
+
+
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -130,11 +360,11 @@
                     android:id="@+id/closeBtnId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_semibold"
                     android:gravity="center|center_horizontal"
-                    android:text="@string/close" />
+                    android:text="@string/close"
+                    app:backgroundTint="@color/blueOff" />
             </LinearLayout>
-
-
 
         </LinearLayout>
     </ScrollView>
