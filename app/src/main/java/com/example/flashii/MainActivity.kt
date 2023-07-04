@@ -39,6 +39,7 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.BatteryManager
 import android.provider.Telephony
+import android.view.WindowManager
 import android.widget.Button
 import kotlin.Exception
 import kotlin.time.Duration.Companion.minutes
@@ -873,8 +874,35 @@ class MainActivity : AppCompatActivity() {
             val dialog = Dialog(this)
             dialog.setContentView(R.layout.dialog_info)
 
+            dialog.window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+
             // Find the close button in the dialog layout
-            val closeButton = dialog.findViewById<Button>(R.id.closeBtnId)
+            val closeButton = dialog.findViewById<Button>(R.id.infoCloseBtn)
+
+            // Set click listener for the close button
+            closeButton.setOnClickListener {
+                dialog.dismiss() // Dismiss the dialog when the close button is clicked
+            }
+            dialog.show()
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // settings button
+        settingsBtn = findViewById(R.id.settingsBtnId)
+        settingsBtn.setOnClickListener{
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.settings)
+
+            dialog.window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+
+            // Find the close button in the dialog layout
+            val closeButton = dialog.findViewById<Button>(R.id.settingsCloseBtn)
 
             // Set click listener for the close button
             closeButton.setOnClickListener {
@@ -885,23 +913,46 @@ class MainActivity : AppCompatActivity() {
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // rate button
-        settingsBtn = findViewById(R.id.settingsBtnId)
-        settingsBtn.setOnClickListener{
-
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////
-        // rate button
         rateBtn = findViewById(R.id.rateBtnId)
         rateBtn.setOnClickListener{
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.rate)
 
+            dialog.window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+
+            // Find the close button in the dialog layout
+            val closeButton = dialog.findViewById<Button>(R.id.rateCloseBtn)
+
+            // Set click listener for the close button
+            closeButton.setOnClickListener {
+                dialog.dismiss() // Dismiss the dialog when the close button is clicked
+            }
+            dialog.show()
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // donate button
         donateBtn = findViewById(R.id.donateBtnId)
         donateBtn.setOnClickListener {
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.donate)
 
+            dialog.window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+
+            // Find the close button in the dialog layout
+            val closeButton = dialog.findViewById<Button>(R.id.donateCloseBtn)
+
+            // Set click listener for the close button
+            closeButton.setOnClickListener {
+                dialog.dismiss() // Dismiss the dialog when the close button is clicked
+            }
+            dialog.show()
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
