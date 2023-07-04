@@ -21,6 +21,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flashii.databinding.ActivityMainBinding
 import android.Manifest
+import android.app.Dialog
 import androidx.core.content.ContextCompat
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -38,6 +39,7 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.BatteryManager
 import android.provider.Telephony
+import android.widget.Button
 import kotlin.Exception
 import kotlin.time.Duration.Companion.minutes
 
@@ -195,6 +197,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var altitudeBtn : ImageButton
     private lateinit var batteryBtn : ImageButton
     private lateinit var timerBtn : ImageButton
+    private lateinit var infoBtn : ImageButton
+    private lateinit var settingsBtn : ImageButton
+    private lateinit var rateBtn : ImageButton
+    private lateinit var donateBtn : ImageButton
 
     @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -858,6 +864,45 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // info button
+        infoBtn = findViewById(R.id.infoBtnId)
+        infoBtn.setOnClickListener {
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.dialog_info)
+
+            // Find the close button in the dialog layout
+            val closeButton = dialog.findViewById<Button>(R.id.closeBtnId)
+
+            // Set click listener for the close button
+            closeButton.setOnClickListener {
+                dialog.dismiss() // Dismiss the dialog when the close button is clicked
+            }
+            dialog.show()
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // rate button
+        settingsBtn = findViewById(R.id.settingsBtnId)
+        settingsBtn.setOnClickListener{
+
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // rate button
+        rateBtn = findViewById(R.id.rateBtnId)
+        rateBtn.setOnClickListener{
+
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // donate button
+        donateBtn = findViewById(R.id.donateBtnId)
+        donateBtn.setOnClickListener {
+
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Permissions handling

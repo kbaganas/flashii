@@ -80,8 +80,8 @@
 
     <ImageButton
         android:id="@+id/batteryBtnId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/BatteryContentDescription"
         android:scaleType="fitCenter"
@@ -95,8 +95,8 @@
 
     <ImageButton
         android:id="@+id/timerBtnId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginTop="15dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/TimerContentDescription"
@@ -111,8 +111,8 @@
 
     <ImageButton
         android:id="@+id/altitudeBtnId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/AltitudeContentDescription"
         android:scaleType="fitCenter"
@@ -222,13 +222,14 @@
         android:id="@+id/infoBtnId"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
         android:background="#00FFFFFF"
+        android:contentDescription="@string/GeneralContentDescription"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/rateBtnId"
-        app:layout_constraintEnd_toStartOf="@+id/rateBtnId"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/settingsBtnId"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rateBtnId"
         app:srcCompat="@drawable/info" />
 
     <ImageButton
@@ -236,25 +237,27 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="#00FFFFFF"
+        android:contentDescription="@string/GeneralContentDescription"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/donateBtnId"
+        app:layout_constraintBottom_toBottomOf="@+id/settingsBtnId"
         app:layout_constraintEnd_toStartOf="@+id/donateBtnId"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/infoBtnId"
-        app:layout_constraintTop_toTopOf="@+id/donateBtnId"
+        app:layout_constraintStart_toEndOf="@+id/settingsBtnId"
+        app:layout_constraintTop_toTopOf="@+id/settingsBtnId"
         app:srcCompat="@drawable/rate" />
 
     <ImageButton
         android:id="@+id/donateBtnId"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="15dp"
         android:background="#00FFFFFF"
+        android:contentDescription="@string/GeneralContentDescription"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/rateBtnId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/rateBtnId"
+        app:layout_constraintTop_toTopOf="@+id/rateBtnId"
         app:srcCompat="@drawable/donate" />
 
     <TextView
@@ -272,5 +275,18 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/settingsBtnId"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/infoBtnId"
+        app:layout_constraintEnd_toStartOf="@+id/rateBtnId"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/infoBtnId"
+        app:layout_constraintTop_toTopOf="@+id/infoBtnId"
+        app:srcCompat="@drawable/settings" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
