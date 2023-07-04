@@ -51,4 +51,7 @@
     <string name="settings">Settings</string>
     <string name="close">Close</string>
     <string name="reset">Reset</string>
+    <string name="s_continue">Continue</string>
+    <string name="enterAmount">Enter your amount</string>
+    <string name="donateText">Thank you so much for donating!</string>
 </resources>

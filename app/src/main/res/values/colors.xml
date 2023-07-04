@@ -4,5 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blueOff">#3f95a2</color>
     <color name="yellowOff">#f1f7db</color>
-    <color name="no_permission">#797980</color>
+    <color name="no_permission">#97b0b4</color>
+    <color name="whiteCollar">#ecf8f9</color>
 </resources>
