@@ -880,7 +880,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             // Find the close button in the dialog layout
-            val closeButton = dialog.findViewById<Button>(R.id.infoCloseBtn)
+            val closeButton = dialog.findViewById<ImageButton>(R.id.infoGoBackArrow)
 
             // Set click listener for the close button
             closeButton.setOnClickListener {

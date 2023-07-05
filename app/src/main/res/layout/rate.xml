@@ -27,9 +27,9 @@
 
                 <ImageButton
                     android:id="@+id/rateGoBackArrow"
-                    android:layout_width="wrap_content"
+                    android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="#00FFFFFF"
+                    android:background="@color/backgroundWhite"
                     android:contentDescription="@string/backArrow"
                     android:scaleType="fitStart"
                     android:src="@drawable/arrow_left" />

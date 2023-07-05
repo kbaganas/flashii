@@ -28,14 +28,20 @@
 
                 <ImageButton
                     android:id="@+id/settingsGoBackArrow"
-                    android:layout_width="0dp"
+                    android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
+                    android:background="@color/backgroundWhite"
                     android:scaleType="fitStart"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="@string/backArrow"
                     android:src="@drawable/arrow_left" />
+
+                <View
+                    android:id="@+id/firstDivider"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_vertical" />
 
                 <Button
                     android:id="@+id/resetBtn"

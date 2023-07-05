@@ -29,7 +29,7 @@
     <string name="infoTimerSuccess">Time specified is reached and flashlight is now flickering. The latter shall stop after 15 seconds by default.</string>
     <string name="infoBatteryOff">Phone\'s battery power shall be monitored at the level you \'ve specified. If that level is reached you will get notified by flashlight flickering.</string>
     <string name="infoBatteryOn">Feature is enabled and currently running. Click to disable it.</string>
-    <string name="infoIncomingCallOff">Get notified by flashlight flickering when an incoming Call is in progress. Flickering and Feature will stop if you answer or reject the Call, or after 30 seconds by default.</string>
+    <string name="infoIncomingCallOff">By enabling this feature you will get notified by flashlight flickering when an incoming Call reaches your phone.\n\nFlickering and feature will stop (and button will return to it\'s initial state) if you answer or reject the incoming Call, or automatically after 15 seconds.\n\nNote that the default flickering time of 15s can be configured in the Settings view.\n\n When Feature is enabled (green bright button) you can click to disable it.The same holds for all activated features\' buttons.</string>
     <string name="infoIncomingCallOn">Feature is enabled and currently running. Click to disable it.</string>
     <string name="infoIncomingSMSOff">Click and you will get notified by flashlight flickering on an incoming SMS. Flickering shall stop after 15 seconds by default.</string>
     <string name="infoIncomingSMSOn">Feature is enabled and currently running. Click to disable it.</string>
@@ -44,7 +44,7 @@
     <string name="infoNetworkFound">Network signal, Data or WiFi are been found!</string>
     <string name="infoNetworkLost">Network signal, Data or WiFi has been lost.</string>
     <string name="infoFlickeringOff">Flashlight will be flickering at the frequency (in Hz) you specify. By default frequency ranges from 1 to 10Hz.</string>
-    <string name="infoFlickeringOn">Feature is enabled and currently running. Click to disable it.</string>
+    <string name="infoFeatureOn">Feature is enabled and currently running. Click to disable it.The same holds for all activated features\' buttons.</string>
     <string name="infoHelp">Help info</string>
     <string name="rate">RATE</string>
     <string name="donate">DONATE</string>
@@ -77,4 +77,16 @@
     <string name="maxHz">Max flickering frequency (in Hertz).\nRange from 10Hz (default) to 100Hz.</string>
     <string name="maxFlickeringTimer">Max flickering time (in seconds) \nafter an incoming Call.\nRange from 3s to 180s (default 15s)</string>
     <string name="backArrow">Back arrow</string>
+    <string name="infoMoreComments">You may find below full description of each button\'s functionality and usage.</string>
+    <string name="timerFeature">Flickering after Time</string>
+    <string name="batteryFeature">Flickering at Battery level</string>
+    <string name="altitudeFeature">Flickering at Altitude height</string>
+    <string name="callFeature">Flickering on Incoming Calls</string>
+    <string name="smsFeature">Flickering on Incoming SMSes</string>
+    <string name="networkFeature">Flickering on Network/Data found or lost</string>
+    <string name="tiltFeature">Flickering on Phone Tilts</string>
+    <string name="soundFeature">Flickering on Sounds</string>
+    <string name="flickerFeature">Flickering on demand</string>
+    <string name="flashlightFeature">Flashlight On/Off</string>
+    <string name="sosFeature">Send SOS</string>
 </resources>

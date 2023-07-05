@@ -18,5 +18,6 @@
     <color name="greyNoteDarker5">#545351</color>
     <color name="greyNoteDarker6">#434241</color>
     <color name="greyDivider">#ededec</color>
+    <color name="backgroundWhite">#00FFFFFF</color>
 </resources>
 
