@@ -59,12 +59,58 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginVertical="16dp"
+                android:layout_marginVertical="28dp"
                 android:background="@color/greyDivider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/flashlightFeature"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/flashlight_off_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/flashlight_on2" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:text="TODO"
+                        tools:ignore="VisualLintLongText" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="28dp"
+                    android:background="@color/greyDivider" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -117,7 +163,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="28dp"
                     android:background="@color/greyDivider" />
 
                 <TextView
@@ -163,7 +209,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="28dp"
                     android:background="@color/greyDivider" />
 
                 <TextView
@@ -222,7 +268,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="28dp"
                     android:background="@color/greyDivider" />
 
                 <TextView
@@ -281,7 +327,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="28dp"
                     android:background="@color/greyDivider" />
 
                 <TextView
@@ -334,7 +380,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="28dp"
                     android:background="@color/greyDivider" />
 
                 <TextView
@@ -385,12 +431,225 @@
 
                 <View
                     android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:layout_marginVertical="16dp"
+                    android:background="@color/greyDivider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/sosFeature"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sos_off_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sos_on_m3" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:text="@string/infoTimerOff" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="16dp"
                     android:background="@color/greyDivider" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/tiltFeature"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/tilt_off_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/tilt_on_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/tilt_no_permission_m3" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:text="@string/infoTimerOff" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="16dp"
+                    android:background="@color/greyDivider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/soundFeature"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sound_off_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sound_on_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sound_no_permission_m3" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:text="@string/infoTimerOff" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="16dp"
+                    android:background="@color/greyDivider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/networkFeature"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/network_off_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/network_off_to_on_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/network_success" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/network_lost_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/network_no_signal_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/network_on_to_lost_m3" />
+                        <ImageView
+                            android:layout_marginTop="16dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/network_no_permission_m3" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:text="@string/infoTimerOff" />
+                </LinearLayout>
 
             </LinearLayout>
 
