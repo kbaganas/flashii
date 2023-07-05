@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textAlignment="center">
@@ -18,6 +19,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="76dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="6dp">
+
+                <ImageButton
+                    android:id="@+id/goBackArrow"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/arrow_left"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
             <!-- Title -->
             <TextView
                 android:id="@+id/textView5"
@@ -25,16 +44,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:layout_marginBottom="6dp"
+                android:layout_marginHorizontal="76dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:text="@string/donateText"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/altitudeTextId"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="24sp"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/donate1Btn"
@@ -45,12 +59,14 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
-                android:minHeight="66dp"
-                android:text="$1"
+                android:text="@string/dollar1"
                 android:textSize="14sp"
-                app:backgroundTint="@color/blueOff"
-                app:strokeColor="#ECF8F9"
-                app:strokeWidth="3dp" />
+                android:textColor="@color/greyNote"
+                app:backgroundTint="@color/blueOffBack2"
+                app:strokeColor="@color/whiteCollar"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp"
+                tools:ignore="VisualLintButtonSize" />
 
             <Button
                 android:id="@+id/donate10Btn"
@@ -59,12 +75,14 @@
                 android:layout_marginHorizontal="76dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
-                android:minHeight="66dp"
-                android:text="$10"
+                android:text="@string/dollar10"
+                android:textColor="@color/greyNote"
                 android:textSize="14sp"
-                app:backgroundTint="@color/blueOff"
-                app:strokeColor="#ECF8F9"
-                app:strokeWidth="3dp" />
+                app:backgroundTint="@color/blueOffBack2"
+                app:strokeColor="@color/whiteCollar"
+                app:strokeWidth="1dp"
+                tools:ignore="VisualLintButtonSize"
+                app:cornerRadius="8dp"/>
 
             <Button
                 android:id="@+id/donate100Btn"
@@ -75,52 +93,54 @@
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
-                android:minHeight="66dp"
-                android:text="$100"
+                android:text="@string/dollar100"
+                android:textColor="@color/greyNote"
                 android:textSize="14sp"
-                app:backgroundTint="@color/blueOff"
-                app:strokeColor="#ECF8F9"
-                app:strokeWidth="3dp" />
+                app:backgroundTint="@color/blueOffBack2"
+                app:strokeColor="@color/whiteCollar"
+                app:strokeWidth="1dp"
+                tools:ignore="VisualLintButtonSize"
+                app:cornerRadius="8dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:gravity="center_horizontal"
-            android:layout_marginHorizontal="76dp"
-            android:textAlignment="center"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/dividers"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="center_horizontal"
+                android:layout_marginHorizontal="76dp"
+                android:textAlignment="center"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
 
-            <View
-                android:id="@+id/divider1"
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:fontFamily="@font/cabin_semibold"
-                android:text="or"
-                android:layout_marginTop="16dp"
-                android:background="@color/blueOff" />
+                <View
+                    android:id="@+id/firstDivider"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/or"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/blueOff"
+                    tools:ignore="ExtraText" />
 
-            <TextView
-                android:id="@+id/dividerText"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/cabin_regular"
-                android:text="or"
-                android:layout_marginHorizontal="5dp"
-                android:gravity="center_vertical|center"
-                android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/textInDividers"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/or"
+                    android:layout_marginHorizontal="5dp"
+                    android:gravity="center_vertical|center"
+                    android:textSize="14sp" />
 
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:fontFamily="@font/cabin_semibold"
-                android:layout_marginTop="16dp"
-                android:text="or"
-                android:background="@color/blueOff" />
-        </LinearLayout>
-
-
+                <View
+                    android:id="@+id/secondDivider"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/or"
+                    android:background="@color/blueOff" />
+            </LinearLayout>
 
 
             <EditText
@@ -132,43 +152,26 @@
                 android:layout_marginHorizontal="76dp"
                 android:layout_marginBottom="26dp"
                 android:textAlignment="center"
+                android:textSize="14sp"
                 android:fontFamily="@font/cabin_regular"
-                android:autofillHints="" />
+                android:autofillHints=""
+                tools:ignore="VisualLintTextFieldSize" />
 
-
-            <LinearLayout
+            <Button
+                android:id="@+id/donateContinueBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|center_horizontal"
+                android:layout_marginHorizontal="76dp"
+                android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
-                android:layout_marginBottom="36dp">
-
-                <Button
-                    android:id="@+id/donateCloseBtn"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/cabin_semibold"
-                    android:minHeight="48dp"
-                    android:text="@string/close"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:backgroundTint="@color/blueOff" />
-
-                <Button
-                    android:id="@+id/donateContinueBtn"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/cabin_semibold"
-                    android:minHeight="48dp"
-                    android:text="@string/s_continue"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:backgroundTint="@color/blueOff" />
-
-            </LinearLayout>
-
+                android:text="@string/donate"
+                android:textSize="14sp"
+                app:backgroundTint="@color/blueOff"
+                app:strokeColor="@color/whiteCollar"
+                app:strokeWidth="1dp"
+                tools:ignore="VisualLintButtonSize"
+                app:cornerRadius="8dp"
+                android:layout_marginBottom="36dp"/>
 
         </LinearLayout>
     </ScrollView>

@@ -3,7 +3,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blueOff">#3f95a2</color>
+    <color name="blueOffBack1">#ebf4f5</color>
+    <color name="blueOffBack2">#d8e9ec</color>
+    <color name="blueOffBack3">#c5dfe3</color>
+    <color name="blueOffBack4">#b2d4d9</color>
     <color name="yellowOff">#f1f7db</color>
     <color name="no_permission">#97b0b4</color>
     <color name="whiteCollar">#ecf8f9</color>
+    <color name="greyNote">#a8a7a3</color>
+    <color name="greyDivider">#ededec</color>
 </resources>
+

@@ -47,11 +47,22 @@
     <string name="infoFlickeringOn">Feature is enabled and currently running. Click to disable it.</string>
     <string name="infoHelp">Help info</string>
     <string name="rate">Rate</string>
-    <string name="donate">Donate</string>
+    <string name="donate">DONATE</string>
     <string name="settings">Settings</string>
-    <string name="close">Close</string>
+    <string name="close">CLOSE</string>
     <string name="reset">Reset</string>
-    <string name="s_continue">Continue</string>
+    <string name="s_continue">CONTINUE</string>
     <string name="enterAmount">Enter your amount</string>
-    <string name="donateText">Thank you so much for donating!</string>
+    <string name="donateText">Thank you for donating!</string>
+    <string name="rateText">Give feedback</string>
+    <string name="publishFeedback">PUBLISH FEEDBACK</string>
+    <string name="publishNote">Your review will be posted to the Google Play store</string>
+    <string name="howDidWeDo">How did we do?</string>
+    <string name="careToShare">Care to share more about it?</string>
+    <string name="dollar1">$1</string>
+    <string name="dollar5">$5</string>
+    <string name="dollar10">$10</string>
+    <string name="dollar100">$100</string>
+    <string name="or">or</string>
+    <string name="enterComments">Enter your comments</string>
 </resources>
