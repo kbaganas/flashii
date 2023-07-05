@@ -27,14 +27,14 @@
                 android:layout_marginTop="36dp">
 
                 <ImageButton
-                    android:id="@+id/goBackArrow"
+                    android:id="@+id/settingsGoBackArrow"
                     android:layout_width="0dp"
-                    android:layout_height="18dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="#00FFFFFF"
                     android:scaleType="fitStart"
                     android:layout_gravity="center_vertical"
-                    android:contentDescription="@string/GeneralContentDescription"
+                    android:contentDescription="@string/backArrow"
                     android:src="@drawable/arrow_left" />
 
                 <Button
@@ -88,6 +88,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="0dp"
@@ -102,22 +103,24 @@
 
                         <EditText
                             android:layout_width="80dp"
-                            android:layout_height="36dp"
-                            android:layout_gravity="center_vertical"
-                            android:padding="3dp"
-                            android:hint="@string/enterValue"
-                            android:inputType="phone"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/cabin_regular"
+                            android:layout_height="48dp"
                             android:autofillHints=""
                             android:background="@drawable/shape"
-                            tools:ignore="VisualLintTextFieldSize" />
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center"
+                            android:hint="@string/enterValue"
+                            android:inputType="phone"
+                            android:padding="3dp"
+                            android:textColorHint="@color/greyNoteDarker4"
+                            android:textSize="12sp"
+                            tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="0dp"
@@ -132,14 +135,15 @@
 
                         <EditText
                             android:layout_width="80dp"
-                            android:layout_height="36dp"
-                            android:layout_gravity="center_vertical"
+                            android:layout_height="48dp"
+                            android:gravity="center"
                             android:padding="3dp"
                             android:hint="@string/enterValue"
                             android:inputType="phone"
                             android:textSize="12sp"
                             android:fontFamily="@font/cabin_regular"
                             android:autofillHints=""
+                            android:textColorHint="@color/greyNoteDarker4"
                             android:background="@drawable/shape"
                             tools:ignore="VisualLintTextFieldSize" />
                     </LinearLayout>
@@ -187,15 +191,16 @@
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="center_vertical"
-                    android:padding="3dp"
-                    android:hint="@string/enterValue"
-                    android:inputType="phone"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/cabin_regular"
+                    android:layout_height="48dp"
                     android:autofillHints=""
                     android:background="@drawable/shape"
+                    android:fontFamily="@font/cabin_regular"
+                    android:gravity="center"
+                    android:hint="@string/enterValue"
+                    android:inputType="phone"
+                    android:padding="3dp"
+                    android:textColorHint="@color/greyNoteDarker4"
+                    android:textSize="12sp"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
@@ -211,6 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
 
@@ -234,8 +240,8 @@
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="48dp"
+                    android:gravity="center"
                     android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
@@ -243,6 +249,7 @@
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
                     android:background="@drawable/shape"
+                    android:textColorHint="@color/greyNoteDarker4"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
@@ -258,6 +265,7 @@
                 android:id="@+id/soundSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:layout_marginTop="16dp"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
@@ -284,14 +292,15 @@
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="48dp"
+                    android:gravity="center"
                     android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
+                    android:textColorHint="@color/greyNoteDarker4"
                     android:background="@drawable/shape"
                     tools:ignore="VisualLintTextFieldSize" />
 
@@ -310,6 +319,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:minHeight="34dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -334,14 +344,15 @@
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="48dp"
                     android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
                     android:fontFamily="@font/cabin_regular"
+                    android:textAlignment="center"
                     android:autofillHints=""
+                    android:textColorHint="@color/greyNoteDarker4"
                     android:background="@drawable/shape"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
@@ -357,6 +368,7 @@
                 android:id="@+id/smsSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:layout_marginTop="16dp"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
@@ -383,14 +395,15 @@
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="48dp"
+                    android:gravity="center"
                     android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
+                    android:textColorHint="@color/greyNoteDarker4"
                     android:background="@drawable/shape"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
@@ -408,6 +421,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:minHeight="34dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -432,14 +446,15 @@
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="48dp"
+                    android:gravity="center"
                     android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
+                    android:textColorHint="@color/greyNoteDarker4"
                     android:background="@drawable/shape"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
@@ -456,6 +471,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
 
@@ -481,14 +497,15 @@
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="48dp"
+                    android:gravity="center"
                     android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
+                    android:textColorHint="@color/greyNoteDarker4"
                     android:background="@drawable/shape"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>

@@ -76,4 +76,5 @@
     <string name="settingsCall">Max flickering time (in seconds) \nafter an incoming Call.\nRange from 3s to 180s (default 15s)</string>
     <string name="maxHz">Max flickering frequency (in Hertz).\nRange from 10Hz (default) to 100Hz.</string>
     <string name="maxFlickeringTimer">Max flickering time (in seconds) \nafter an incoming Call.\nRange from 3s to 180s (default 15s)</string>
+    <string name="backArrow">Back arrow</string>
 </resources>

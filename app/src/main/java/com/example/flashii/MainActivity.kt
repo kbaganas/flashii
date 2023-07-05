@@ -902,7 +902,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             // Find the close button in the dialog layout
-            val closeButton = dialog.findViewById<Button>(R.id.settingsCloseBtn)
+            val closeButton = dialog.findViewById<ImageButton>(R.id.settingsGoBackArrow)
 
             // Set click listener for the close button
             closeButton.setOnClickListener {
@@ -924,7 +924,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             // Find the close button in the dialog layout
-            val closeButton = dialog.findViewById<ImageButton>(R.id.goBackArrow)
+            val closeButton = dialog.findViewById<ImageButton>(R.id.rateGoBackArrow)
 
             // Set click listener for the close button
             closeButton.setOnClickListener {
@@ -946,7 +946,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             // Find the close button in the dialog layout
-            val closeButton = dialog.findViewById<ImageButton>(R.id.goBackArrow)
+            val closeButton = dialog.findViewById<ImageButton>(R.id.donateGoBackArrow)
             val continueBtn = dialog.findViewById<Button>(R.id.donateContinueBtn)
 
             // Set click listener for the close button

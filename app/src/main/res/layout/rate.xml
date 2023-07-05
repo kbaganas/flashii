@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -25,12 +26,12 @@
                 android:layout_marginTop="36dp">
 
                 <ImageButton
-                    android:id="@+id/goBackArrow"
+                    android:id="@+id/rateGoBackArrow"
                     android:layout_width="wrap_content"
-                    android:layout_height="18dp"
+                    android:layout_height="48dp"
                     android:background="#00FFFFFF"
+                    android:contentDescription="@string/backArrow"
                     android:scaleType="fitStart"
-                    android:contentDescription="@string/GeneralContentDescription"
                     android:src="@drawable/arrow_left" />
             </LinearLayout>
 
@@ -60,6 +61,7 @@
                 android:layout_marginTop="8dp"
                 android:numStars="5"
                 android:stepSize="1"
+                android:contentDescription="@string/GeneralContentDescription"
                 android:rating="0.0"/>
 
             <View
@@ -82,19 +84,21 @@
                 android:id="@+id/commentsEditText"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:hint="@string/enterComments"
-                android:padding="3dp"
-                android:textSize="12sp"
-                android:fontFamily="@font/cabin_regular"
-                android:inputType="textMultiLine"
                 android:layout_marginTop="8dp"
-                android:minHeight="120dp"
-                android:gravity="top|start"
-                android:background="@drawable/shape"
-                android:maxLength="230"
                 android:layout_weight="1"
+                android:autofillHints=""
+                android:background="@drawable/shape"
+                android:fontFamily="@font/cabin_regular"
+                android:gravity="top|start"
+                android:hint="@string/enterComments"
+                android:inputType="textMultiLine"
+                android:maxLength="230"
                 android:maxLines="5"
-                android:autofillHints="" />
+                android:minHeight="120dp"
+                android:padding="3dp"
+                android:textColorHint="@color/greyNoteDarker4"
+                android:textSize="12sp"
+                tools:ignore="VisualLintTextFieldSize" />
 
 
             <View
@@ -117,19 +121,19 @@
                 app:backgroundTint="@color/blueOff"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
-                app:cornerRadius="8dp"/>
+                app:cornerRadius="8dp"
+                tools:ignore="VisualLintButtonSize" />
 
             <!-- Note -->
             <TextView
                 android:id="@+id/rateText4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="36dp"
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/publishNote"
-                android:textSize="12sp"
-                android:textColor="@color/greyNote"
-                android:layout_marginBottom="36dp">
-            </TextView>
+                android:textColor="@color/greyNoteDarker4"
+                android:textSize="12sp"/>
 
         </LinearLayout>
     </ScrollView>

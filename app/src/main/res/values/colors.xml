@@ -11,6 +11,12 @@
     <color name="no_permission">#97b0b4</color>
     <color name="whiteCollar">#ecf8f9</color>
     <color name="greyNote">#a8a7a3</color>
+    <color name="greyNoteDarker1">#9c9a96</color>
+    <color name="greyNoteDarker2">#8f8e89</color>
+    <color name="greyNoteDarker3">#83817c</color>
+    <color name="greyNoteDarker4">#646461</color>
+    <color name="greyNoteDarker5">#545351</color>
+    <color name="greyNoteDarker6">#434241</color>
     <color name="greyDivider">#ededec</color>
 </resources>
 

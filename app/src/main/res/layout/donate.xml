@@ -26,13 +26,13 @@
                 android:layout_marginTop="36dp">
 
                 <ImageButton
-                    android:id="@+id/goBackArrow"
+                    android:id="@+id/donateGoBackArrow"
                     android:layout_width="wrap_content"
-                    android:layout_height="18dp"
+                    android:layout_height="48dp"
                     android:background="#00FFFFFF"
                     android:scaleType="fitStart"
                     android:src="@drawable/arrow_left"
-                    android:contentDescription="@string/GeneralContentDescription"
+                    android:contentDescription="@string/backArrow"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
@@ -56,7 +56,7 @@
                 android:textAlignment="center"
                 android:text="@string/dollar1"
                 android:textSize="14sp"
-                android:textColor="@color/greyNote"
+                android:textColor="@color/greyNoteDarker3"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
@@ -70,7 +70,7 @@
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/dollar10"
-                android:textColor="@color/greyNote"
+                android:textColor="@color/greyNoteDarker3"
                 android:textSize="14sp"
                 android:layout_marginTop="8dp"
                 app:backgroundTint="@color/blueOffBack2"
@@ -87,7 +87,7 @@
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/dollar100"
-                android:textColor="@color/greyNote"
+                android:textColor="@color/greyNoteDarker3"
                 android:textSize="14sp"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
@@ -142,14 +142,16 @@
                 android:id="@+id/donateManualText"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:layout_marginHorizontal="56dp"
+                android:layout_marginTop="8dp"
+                android:autofillHints=""
+                android:fontFamily="@font/cabin_regular"
                 android:hint="@string/enterAmount"
                 android:inputType="phone"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="56dp"
                 android:textAlignment="center"
+                android:textColorHint="@color/greyNoteDarker4"
                 android:textSize="14sp"
-                android:fontFamily="@font/cabin_regular"
-                android:autofillHints=""
+                app:backgroundTint="@color/blueOffBack2"
                 tools:ignore="VisualLintTextFieldSize" />
 
             <Button
