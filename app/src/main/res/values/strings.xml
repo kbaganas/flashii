@@ -54,7 +54,7 @@
     <string name="s_continue">CONTINUE</string>
     <string name="enterAmount">Enter your amount</string>
     <string name="donateText">Thank you for donating!</string>
-    <string name="rateText">Give feedback</string>
+    <string name="rateText">Your feedback is appreciated!</string>
     <string name="publishFeedback">PUBLISH FEEDBACK</string>
     <string name="publishNote">Your review will be posted to the Google Play store</string>
     <string name="howDidWeDo">How did we do?</string>
@@ -89,4 +89,7 @@
     <string name="flickerFeature">Flickering on demand</string>
     <string name="flashlightFeature">Flashlight On/Off</string>
     <string name="sosFeature">Send SOS</string>
+    <string name="feature">Feature</string>
+    <string name="attributeDescription">Attribute description</string>
+    <string name="infoFlashlightText">Click and turn On and Off the phone\'s flashlight.\n\nPress+Hold and Release the button to turn the flashlight On and Off as well.</string>
 </resources>

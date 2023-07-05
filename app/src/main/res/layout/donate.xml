@@ -17,7 +17,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="36dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="36dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -44,7 +45,7 @@
                 android:layout_marginTop="36dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:text="@string/donateText"
-                android:textSize="24sp"
+                android:textSize="26sp"
                 android:textStyle="bold"/>
 
             <Button
@@ -55,7 +56,7 @@
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/dollar1"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="@color/greyNoteDarker3"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
@@ -71,7 +72,7 @@
                 android:textAlignment="center"
                 android:text="@string/dollar10"
                 android:textColor="@color/greyNoteDarker3"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:layout_marginTop="8dp"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
@@ -88,7 +89,7 @@
                 android:textAlignment="center"
                 android:text="@string/dollar100"
                 android:textColor="@color/greyNoteDarker3"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
@@ -124,7 +125,7 @@
                     android:text="@string/or"
                     android:layout_marginHorizontal="5dp"
                     android:gravity="center_vertical|center"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <View
                     android:id="@+id/secondDivider"
@@ -150,8 +151,8 @@
                 android:inputType="phone"
                 android:textAlignment="center"
                 android:textColorHint="@color/greyNoteDarker4"
-                android:textSize="14sp"
-                app:backgroundTint="@color/blueOffBack2"
+                android:textSize="16sp"
+                app:backgroundTint="@color/blueOffBack4"
                 tools:ignore="VisualLintTextFieldSize" />
 
             <Button
@@ -161,7 +162,7 @@
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/donate"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:backgroundTint="@color/blueOff"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"

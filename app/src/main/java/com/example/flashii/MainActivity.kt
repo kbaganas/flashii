@@ -21,7 +21,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flashii.databinding.ActivityMainBinding
 import android.Manifest
-import android.app.Dialog
 import androidx.core.content.ContextCompat
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -39,8 +38,6 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.BatteryManager
 import android.provider.Telephony
-import android.view.WindowManager
-import android.widget.Button
 import kotlin.Exception
 import kotlin.time.Duration.Companion.minutes
 
@@ -871,89 +868,32 @@ class MainActivity : AppCompatActivity() {
         // info button
         infoBtn = findViewById(R.id.infoBtnId)
         infoBtn.setOnClickListener {
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.dialog_info)
-
-            dialog.window?.setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
-            )
-
-            // Find the close button in the dialog layout
-            val closeButton = dialog.findViewById<ImageButton>(R.id.infoGoBackArrow)
-
-            // Set click listener for the close button
-            closeButton.setOnClickListener {
-                dialog.dismiss() // Dismiss the dialog when the close button is clicked
-            }
-            dialog.show()
+            val intent = Intent(this, InfoActivity::class.java)
+            startActivity(intent)
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // settings button
         settingsBtn = findViewById(R.id.settingsBtnId)
         settingsBtn.setOnClickListener{
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.settings)
-
-            dialog.window?.setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
-            )
-
-            // Find the close button in the dialog layout
-            val closeButton = dialog.findViewById<ImageButton>(R.id.settingsGoBackArrow)
-
-            // Set click listener for the close button
-            closeButton.setOnClickListener {
-                dialog.dismiss() // Dismiss the dialog when the close button is clicked
-            }
-            dialog.show()
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // rate button
         rateBtn = findViewById(R.id.rateBtnId)
         rateBtn.setOnClickListener{
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.rate)
-
-            dialog.window?.setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
-            )
-
-            // Find the close button in the dialog layout
-            val closeButton = dialog.findViewById<ImageButton>(R.id.rateGoBackArrow)
-
-            // Set click listener for the close button
-            closeButton.setOnClickListener {
-                dialog.dismiss() // Dismiss the dialog when the close button is clicked
-            }
-            dialog.show()
+            val intent = Intent(this, RateActivity::class.java)
+            startActivity(intent)
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // donate button
         donateBtn = findViewById(R.id.donateBtnId)
         donateBtn.setOnClickListener {
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.donate)
-
-            dialog.window?.setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
-            )
-
-            // Find the close button in the dialog layout
-            val closeButton = dialog.findViewById<ImageButton>(R.id.donateGoBackArrow)
-            val continueBtn = dialog.findViewById<Button>(R.id.donateContinueBtn)
-
-            // Set click listener for the close button
-            closeButton.setOnClickListener {
-                dialog.dismiss() // Dismiss the dialog when the close button is clicked
-            }
-            dialog.show()
+            val intent = Intent(this, DonateActivity::class.java)
+            startActivity(intent)
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -1965,3 +1905,46 @@ class MainActivity : AppCompatActivity() {
 
 }
 
+class InfoActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.dialog_info)
+        val closeButton = findViewById<ImageButton>(R.id.infoGoBackArrow)
+        closeButton.setOnClickListener {
+            finish()
+        }
+    }
+}
+
+class SettingsActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.settings)
+        val closeButton = findViewById<ImageButton>(R.id.settingsGoBackArrow)
+        closeButton.setOnClickListener {
+            finish()
+        }
+    }
+}
+
+class RateActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.rate)
+        val closeButton = findViewById<ImageButton>(R.id.rateGoBackArrow)
+        closeButton.setOnClickListener {
+            finish()
+        }
+    }
+}
+
+class DonateActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.donate)
+        val closeButton = findViewById<ImageButton>(R.id.donateGoBackArrow)
+        closeButton.setOnClickListener {
+            finish()
+        }
+    }
+}
