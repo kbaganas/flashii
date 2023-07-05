@@ -17,19 +17,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="36dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="76dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginBottom="6dp">
+                android:layout_marginTop="36dp">
 
                 <ImageButton
                     android:id="@+id/goBackArrow"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
                     android:background="#00FFFFFF"
                     android:scaleType="fitStart"
                     android:src="@drawable/arrow_left"
@@ -43,8 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
-                android:layout_marginBottom="6dp"
-                android:layout_marginHorizontal="76dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:text="@string/donateText"
                 android:textSize="24sp"
@@ -54,9 +51,7 @@
                 android:id="@+id/donate1Btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="76dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="28dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/dollar1"
@@ -72,12 +67,12 @@
                 android:id="@+id/donate10Btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="76dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/dollar10"
                 android:textColor="@color/greyNote"
                 android:textSize="14sp"
+                android:layout_marginTop="8dp"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
@@ -88,9 +83,7 @@
                 android:id="@+id/donate100Btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="76dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/dollar100"
@@ -107,24 +100,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 android:gravity="center_horizontal"
-                android:layout_marginHorizontal="76dp"
                 android:textAlignment="center"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="18dp"
                 android:orientation="horizontal">
 
                 <View
                     android:id="@+id/firstDivider"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
                     android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/or"
-                    android:layout_marginTop="16dp"
                     android:background="@color/blueOff"
                     tools:ignore="ExtraText" />
 
                 <TextView
                     android:id="@+id/textInDividers"
-                    android:layout_width="40dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/or"
@@ -134,10 +128,11 @@
 
                 <View
                     android:id="@+id/secondDivider"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
                     android:layout_height="1dp"
                     android:fontFamily="@font/cabin_semibold"
-                    android:layout_marginTop="16dp"
+                    android:layout_gravity="center_vertical"
                     android:text="@string/or"
                     android:background="@color/blueOff" />
             </LinearLayout>
@@ -149,8 +144,8 @@
                 android:layout_height="48dp"
                 android:hint="@string/enterAmount"
                 android:inputType="phone"
-                android:layout_marginHorizontal="76dp"
-                android:layout_marginBottom="26dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="56dp"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 android:fontFamily="@font/cabin_regular"
@@ -161,7 +156,6 @@
                 android:id="@+id/donateContinueBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="76dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/donate"
@@ -171,6 +165,7 @@
                 app:strokeWidth="1dp"
                 tools:ignore="VisualLintButtonSize"
                 app:cornerRadius="8dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginBottom="36dp"/>
 
         </LinearLayout>

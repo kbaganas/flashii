@@ -46,11 +46,11 @@
     <string name="infoFlickeringOff">Flashlight will be flickering at the frequency (in Hz) you specify. By default frequency ranges from 1 to 10Hz.</string>
     <string name="infoFlickeringOn">Feature is enabled and currently running. Click to disable it.</string>
     <string name="infoHelp">Help info</string>
-    <string name="rate">Rate</string>
+    <string name="rate">RATE</string>
     <string name="donate">DONATE</string>
     <string name="settings">Settings</string>
     <string name="close">CLOSE</string>
-    <string name="reset">Reset</string>
+    <string name="reset">RESET</string>
     <string name="s_continue">CONTINUE</string>
     <string name="enterAmount">Enter your amount</string>
     <string name="donateText">Thank you for donating!</string>
@@ -65,4 +65,10 @@
     <string name="dollar100">$100</string>
     <string name="or">or</string>
     <string name="enterComments">Enter your comments</string>
+    <string name="enterValue">Enter value</string>
+    <string name="applyChanges">APPLY CHANGES</string>
+    <string name="settingsTilt">Change tilt sensitivity angle (degress).\nCan be set from 65 to 80 (default).</string>
+    <string name="settingsTimer">Timer\'s feature maximum time (Hours). Can be set from 4 (default) to 24.</string>
+    <string name="settingsAltitudeMaxTime">Max time of flickering (in seconds), when altitude height is reached. Default is 15\'\'.\nCan be set from 3'' to 180''</string>
+    <string name="settingsBatteryMaxTime">Max time of flickering (in seconds), when battery level is reached. Default is 15\'\'.\nCan be set from 3'' to 180''.</string>
 </resources>

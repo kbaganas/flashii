@@ -15,19 +15,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="36dp"
             android:orientation="vertical">
 
+            <!-- arrow -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="76dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginBottom="6dp">
+                android:layout_marginTop="36dp">
 
                 <ImageButton
                     android:id="@+id/goBackArrow"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
                     android:background="#00FFFFFF"
                     android:scaleType="fitStart"
                     android:contentDescription="@string/GeneralContentDescription"
@@ -40,8 +40,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
-                android:layout_marginBottom="6dp"
-                android:layout_marginHorizontal="76dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:text="@string/rateText"
                 android:textSize="24sp"/>
@@ -50,18 +48,16 @@
                 android:id="@+id/rateText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="28dp"
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/howDidWeDo"
-                android:layout_marginHorizontal="76dp"
                 android:textSize="12sp"/>
 
             <RatingBar
                 android:id="@+id/ratingBar"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="76dp"
-                android:layout_marginVertical="16dp"
+                android:layout_marginTop="8dp"
                 android:numStars="5"
                 android:stepSize="1"
                 android:rating="0.0"/>
@@ -70,8 +66,7 @@
                 android:id="@+id/divider1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginVertical="16dp"
-                android:layout_marginHorizontal="76dp"
+                android:layout_marginTop="18dp"
                 android:background="@color/greyDivider" />
 
             <TextView
@@ -80,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/careToShare"
-                android:layout_marginHorizontal="76dp"
+                android:layout_marginTop="18dp"
                 android:textSize="12sp"/>
 
             <EditText
@@ -92,14 +87,13 @@
                 android:textSize="12sp"
                 android:fontFamily="@font/cabin_regular"
                 android:inputType="textMultiLine"
-                android:layout_marginHorizontal="76dp"
                 android:layout_marginTop="8dp"
                 android:minHeight="120dp"
                 android:gravity="top|start"
                 android:background="@drawable/shape"
                 android:maxLength="230"
                 android:layout_weight="1"
-                android:maxLines="8"
+                android:maxLines="5"
                 android:autofillHints="" />
 
 
@@ -107,8 +101,7 @@
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginVertical="16dp"
-                android:layout_marginHorizontal="76dp"
+                android:layout_marginTop="18dp"
                 android:background="@color/greyDivider" />
 
             <!-- Buttons -->
@@ -116,11 +109,11 @@
                 android:id="@+id/publishFeedbackBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="76dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/publishFeedback"
                 android:textSize="14sp"
+                android:layout_marginTop="28dp"
                 app:backgroundTint="@color/blueOff"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
@@ -133,7 +126,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/publishNote"
-                android:layout_marginHorizontal="76dp"
                 android:textSize="12sp"
                 android:textColor="@color/greyNote"
                 android:layout_marginBottom="36dp">
