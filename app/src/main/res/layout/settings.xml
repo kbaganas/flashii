@@ -75,18 +75,18 @@
                     android:id="@+id/maxHz1"
                     android:layout_width="34dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/flickering_off_m3" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
@@ -94,17 +94,20 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
+                            android:layout_marginEnd="8dp"
+                            android:textSize="12sp"
                             android:layout_gravity="center_vertical"
-                            android:text="Change the max frequency of flickering in Hertz."
+                            android:text="@string/maxHz"
                             tools:ignore="VisualLintLongText" />
 
                         <EditText
                             android:layout_width="80dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center_vertical"
+                            android:padding="3dp"
                             android:hint="@string/enterValue"
                             android:inputType="phone"
                             android:textSize="12sp"
-                            android:textAlignment="center"
                             android:fontFamily="@font/cabin_regular"
                             android:autofillHints=""
                             android:background="@drawable/shape"
@@ -112,8 +115,9 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="0dp"
@@ -121,16 +125,19 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:layout_gravity="center_vertical"
-                            android:text="Change flickering time in seconds after timer expiration."
+                            android:layout_marginEnd="8dp"
+                            android:textSize="12sp"
+                            android:text="@string/maxFlickeringTimer"
                             tools:ignore="VisualLintLongText" />
 
                         <EditText
                             android:layout_width="80dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center_vertical"
+                            android:padding="3dp"
                             android:hint="@string/enterValue"
                             android:inputType="phone"
                             android:textSize="12sp"
-                            android:textAlignment="center"
                             android:fontFamily="@font/cabin_regular"
                             android:autofillHints=""
                             android:background="@drawable/shape"
@@ -162,7 +169,7 @@
                     android:id="@+id/timerSetting1"
                     android:layout_width="34dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/timer_off_m3" />
@@ -173,17 +180,19 @@
                     android:layout_weight="1"
                     android:textSize="12sp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/settingsTimer" />
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
-                    android:textAlignment="center"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
                     android:background="@drawable/shape"
@@ -208,7 +217,7 @@
                 <ImageView
                     android:layout_width="34dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/tilt_off_m3" />
@@ -219,16 +228,18 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textSize="12sp"
+                    android:layout_marginEnd="8dp"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/settingsTilt" />
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
-                    android:textAlignment="center"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
                     android:background="@drawable/shape"
@@ -255,7 +266,7 @@
                     android:id="@+id/soundSetting1"
                     android:layout_width="34dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/sound_off_m3" />
@@ -268,15 +279,17 @@
                     android:fontFamily="@font/cabin_regular"
                     android:textSize="12sp"
                     android:layout_gravity="center_vertical"
-                    android:text="Change sound sensitivity" />
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/settingsSoundSensitivity" />
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
-                    android:textAlignment="center"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
                     android:background="@drawable/shape"
@@ -303,7 +316,7 @@
                     android:id="@+id/callSetting1"
                     android:layout_width="34dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/incoming_call_off_m3" />
@@ -315,16 +328,18 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
                     android:textSize="12sp"
-                    android:text="Change flickering time in seconds, after incoming call" />
+                    android:text="@string/settingsCall" />
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
-                    android:textAlignment="center"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
                     android:background="@drawable/shape"
@@ -350,7 +365,7 @@
                     android:id="@+id/smsSetting1"
                     android:layout_width="34dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/incoming_sms_off_m3" />
@@ -362,16 +377,18 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
                     android:textSize="12sp"
-                    android:text="Change flickering time in seconds, after incoming SMS" />
+                    android:text="@string/settingsSMS" />
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
-                    android:textAlignment="center"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
                     android:background="@drawable/shape"
@@ -397,7 +414,7 @@
                     android:id="@+id/batterySetting1"
                     android:layout_width="34dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/battery_off_m3" />
@@ -409,16 +426,18 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
                     android:textSize="12sp"
                     android:text="@string/settingsBatteryMaxTime" />
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
-                    android:textAlignment="center"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
                     android:background="@drawable/shape"
@@ -444,7 +463,7 @@
                     android:id="@+id/altitudeSetting1"
                     android:layout_width="34dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/altitude_off_m3" />
@@ -456,16 +475,18 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
                     android:textSize="12sp"
                     android:text="@string/settingsAltitudeMaxTime"/>
 
                 <EditText
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:textSize="12sp"
-                    android:textAlignment="center"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
                     android:background="@drawable/shape"

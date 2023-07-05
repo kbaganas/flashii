@@ -67,8 +67,13 @@
     <string name="enterComments">Enter your comments</string>
     <string name="enterValue">Enter value</string>
     <string name="applyChanges">APPLY CHANGES</string>
-    <string name="settingsTilt">Change tilt sensitivity angle (degress).\nCan be set from 65 to 80 (default).</string>
-    <string name="settingsTimer">Timer\'s feature maximum time (Hours). Can be set from 4 (default) to 24.</string>
-    <string name="settingsAltitudeMaxTime">Max time of flickering (in seconds), when altitude height is reached. Default is 15\'\'.\nCan be set from 3'' to 180''</string>
-    <string name="settingsBatteryMaxTime">Max time of flickering (in seconds), when battery level is reached. Default is 15\'\'.\nCan be set from 3'' to 180''.</string>
+    <string name="settingsTilt">Tilt sensitivity angle (in degrees).\nRange from 65 to 80 (default).</string>
+    <string name="settingsTimer">Timer\'s maximum time (in hours).\nRange from 4h (default) to 24h.</string>
+    <string name="settingsAltitudeMaxTime">Max flickering time (in seconds),\nwhen altitude height is reached.\nRange from 3s to 180s (default 15s).</string>
+    <string name="settingsBatteryMaxTime">Max flickering time (in seconds),\nwhen battery level is reached.\nRange from 3s to 180s (default 15s).</string>
+    <string name="settingsSoundSensitivity">Sound sensitivity threshold.\nRange from 4000 to 20000 (default).</string>
+    <string name="settingsSMS">Max flickering time (in seconds) \nafter an incoming SMS.\nRange from 3s to 180s (default 15s)</string>
+    <string name="settingsCall">Max flickering time (in seconds) \nafter an incoming Call.\nRange from 3s to 180s (default 15s)</string>
+    <string name="maxHz">Max flickering frequency (in Hertz).\nRange from 10Hz (default) to 100Hz.</string>
+    <string name="maxFlickeringTimer">Max flickering time (in seconds) \nafter an incoming Call.\nRange from 3s to 180s (default 15s)</string>
 </resources>
