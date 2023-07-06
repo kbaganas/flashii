@@ -46,9 +46,9 @@
 
     <string name="settingsComments">Personalize Features specs below\naccording to the defined Ranges.</string>
     <string name="settingsFlickeringTitle">Max flickering frequency</string>
-    <string name="settingsFlickeringNote">Range from 3 to 180 seconds (default 15)</string>
+    <string name="settingsFlickeringNote">Range from 3 to 180 seconds (default 10)</string>
     <string name="settingsTimerTitle">Timer\'s max time</string>
-    <string name="settingsTimerNote">Range from 4 (default) to 8 hours.</string>
+    <string name="settingsTimerNote">Range from 240 (default) to 640 minutes.</string>
     <string name="settingsTiltTitle">Tilt sensitivity angle</string>
     <string name="settingsTiltNote">Range from 65 to 80 degrees (default)</string>
     <string name="settingsSoundTitle">Sound sensitivity threshold</string>
@@ -84,16 +84,7 @@
     <string name="infoAltitude">Set a specific Altitude height in meters (m) at which you want to get notified by flashlight flickering.\n\nWhen Altitude is reached, the flashlight will flicker for 15 seconds (default) and the button shall change to the checked one.\n\nFeature is only available if you permit Location rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoAltitudeCheck">Altitude specified has been reached. Flashlight will be flickering for 15seconds, unless you deactivate the feature.</string>
 
-
-
-
-
-
-
-
     <string name="infoNetwork">Based on your phone\'s current network connection status, you \'ll get notified by flashlight flickering when\n\na) provider\'s Network signal, Data or WiFi connection are lost, \n\nb) provider\'s Network signal, Data or WiFi are found.\n\n</string>
-
-
 
     <string name="maxHz">Max flickering frequency:\nRange from 10Hz (default) to 100Hz.</string>
     <string name="maxFlickeringTimer">Flickering time after an incoming Call:\nRange from 3s to 180s (default 15s)</string>

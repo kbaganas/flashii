@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/incCallId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -24,38 +25,38 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="36dp">
+                android:layout_marginTop="36dp"
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/settingsGoBackArrow"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@color/backgroundWhite"
-                    android:scaleType="fitCenter"
                     android:layout_gravity="center_vertical"
+                    android:background="@color/backgroundWhite"
                     android:contentDescription="@string/backArrow"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/arrow_left" />
 
                 <View
                     android:id="@+id/firstDivider"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="0dp"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/resetBtn"
+                    android:id="@+id/resetBtnId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/reset"
                     android:textSize="14sp"
                     app:backgroundTint="@color/blueOff"
+                    app:cornerRadius="8dp"
                     app:strokeColor="@color/whiteCollar"
                     app:strokeWidth="1dp"
-                    tools:ignore="VisualLintButtonSize"
-                    app:cornerRadius="8dp"/>
+                    tools:ignore="VisualLintButtonSize" />
             </LinearLayout>
 
             <!-- Title -->
@@ -67,7 +68,7 @@
                 android:fontFamily="@font/cabin_semibold"
                 android:text="@string/settings"
                 android:textAlignment="center"
-                android:textSize="26sp"/>
+                android:textSize="26sp" />
 
             <TextView
                 android:id="@+id/rateText2"
@@ -75,15 +76,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/cabin_regular"
-                android:textAlignment="center"
                 android:text="@string/settingsComments"
-                android:textSize="14sp"/>
+                android:textAlignment="center"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="36dp">
+                android:layout_marginTop="36dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="48dp"
@@ -98,35 +99,36 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/Specification"
-                    android:fontFamily="@font/cabin_semibold" />
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/Specification" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/dividers"
                 android:layout_width="match_parent"
                 android:layout_height="12dp"
-                android:gravity="center_horizontal"
-                android:textAlignment="center"
                 android:layout_marginBottom="18dp"
-                android:orientation="horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:textAlignment="center">
 
                 <View
                     android:layout_width="48dp"
                     android:layout_height="1dp"
-                    android:layout_marginEnd="12dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="12dp"
+                    android:background="@color/blueOff"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/or"
-                    android:background="@color/blueOff"
                     tools:ignore="ExtraText" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:fontFamily="@font/cabin_semibold"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/or"
-                    android:background="@color/blueOff" />
+                    android:background="@color/blueOff"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/or" />
             </LinearLayout>
 
             <!-- row -->
@@ -146,53 +148,58 @@
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/flickering_off_m3" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_height="wrap_content"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="12dp"
+                            android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_vertical"
-                            android:orientation="vertical">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="@font/cabin_semibold"
-                                android:layout_marginEnd="12dp"
-                                android:textSize="16sp"
-                                android:layout_gravity="start"
-                                android:gravity="center_vertical"
-                                android:text="@string/settingsFlickeringTitle"
-                                tools:ignore="VisualLintLongText" />
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="@font/cabin_regular"
-                                android:layout_marginEnd="12dp"
-                                android:textSize="12sp"
-                                android:layout_gravity="start"
-                                android:gravity="center_vertical"
-                                android:text="@string/settingsFlickeringNote"
-                                tools:ignore="VisualLintLongText" />
-                        </LinearLayout>
-                        <EditText
-                            android:layout_width="80dp"
-                            android:layout_height="48dp"
-                            android:autofillHints=""
-                            android:background="@drawable/shape"
+                            android:text="@string/settingsFlickeringTitle"
+                            android:textSize="16sp"
+                            tools:ignore="VisualLintLongText" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="12dp"
                             android:fontFamily="@font/cabin_regular"
-                            android:gravity="center"
-                            android:hint="@string/enterValue"
-                            android:maxLength="3"
-                            android:inputType="phone"
-                            android:padding="3dp"
-                            android:textColorHint="@color/greyNoteDarker4"
-                            android:textSize="14sp"
-                            tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+                            android:gravity="center_vertical"
+                            android:text="@string/settingsFlickeringNote"
+                            android:textSize="12sp"
+                            tools:ignore="VisualLintLongText" />
                     </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/maxFlickerHzId"
+                        android:layout_width="80dp"
+                        android:layout_height="48dp"
+                        android:autofillHints=""
+                        android:background="@drawable/shape"
+                        android:fontFamily="@font/cabin_regular"
+                        android:gravity="center"
+                        android:hint="@string/enterValue"
+                        android:inputType="phone"
+                        android:maxLength="3"
+                        android:padding="3dp"
+                        android:textColorHint="@color/greyNoteDarker4"
+                        android:textSize="14sp"
+                        tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+                </LinearLayout>
             </LinearLayout>
 
             <View
@@ -220,34 +227,37 @@
                     app:srcCompat="@drawable/timer_off_m3" />
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="16sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_semibold"
                         android:gravity="center_vertical"
                         android:text="@string/settingsTimerTitle"
+                        android:textSize="16sp"
                         tools:ignore="VisualLintLongText" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="12sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsTimerNote"
+                        android:textSize="12sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/maxTimerTimeId"
                     android:layout_width="80dp"
                     android:layout_height="48dp"
                     android:autofillHints=""
@@ -256,10 +266,10 @@
                     android:gravity="center"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
+                    android:maxLength="3"
                     android:padding="3dp"
                     android:textColorHint="@color/greyNoteDarker4"
                     android:textSize="14sp"
-                    android:maxLength="1"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
@@ -288,46 +298,49 @@
                     app:srcCompat="@drawable/tilt_off_m3" />
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="16sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_semibold"
                         android:gravity="center_vertical"
                         android:text="@string/settingsTiltTitle"
+                        android:textSize="16sp"
                         tools:ignore="VisualLintLongText" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="12sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsTiltNote"
+                        android:textSize="12sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/tiltAngleId"
                     android:layout_width="80dp"
                     android:layout_height="48dp"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:hint="@string/enterValue"
-                    android:inputType="phone"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
                     android:background="@drawable/shape"
+                    android:fontFamily="@font/cabin_regular"
+                    android:gravity="center"
+                    android:hint="@string/enterValue"
+                    android:inputType="phone"
                     android:maxLength="2"
+                    android:padding="3dp"
                     android:textColorHint="@color/greyNoteDarker4"
+                    android:textSize="14sp"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
@@ -343,8 +356,8 @@
                 android:id="@+id/soundSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
 
@@ -358,46 +371,49 @@
                     app:srcCompat="@drawable/sound_off_m3" />
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="16sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_semibold"
                         android:gravity="center_vertical"
                         android:text="@string/settingsSoundTitle"
+                        android:textSize="16sp"
                         tools:ignore="VisualLintLongText" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="12sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsSoundNote"
+                        android:textSize="12sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/soundThresholdId"
                     android:layout_width="80dp"
                     android:layout_height="48dp"
+                    android:autofillHints=""
+                    android:background="@drawable/shape"
+                    android:fontFamily="@font/cabin_regular"
                     android:gravity="center"
-                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/cabin_regular"
-                    android:autofillHints=""
                     android:maxLength="5"
+                    android:padding="3dp"
                     android:textColorHint="@color/greyNoteDarker4"
-                    android:background="@drawable/shape"
+                    android:textSize="14sp"
                     tools:ignore="VisualLintTextFieldSize" />
 
             </LinearLayout>
@@ -414,8 +430,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:minHeight="34dp"
                 android:gravity="center_vertical"
+                android:minHeight="34dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -428,46 +444,49 @@
                     app:srcCompat="@drawable/incoming_call_off_m3" />
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="16sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_semibold"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringCallTitle"
+                        android:textSize="16sp"
                         tools:ignore="VisualLintLongText" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="12sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringCallNote"
+                        android:textSize="12sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/flickTimeIncCallId"
                     android:layout_width="80dp"
                     android:layout_height="48dp"
-                    android:padding="3dp"
+                    android:autofillHints=""
+                    android:background="@drawable/shape"
+                    android:fontFamily="@font/cabin_regular"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/cabin_regular"
-                    android:textAlignment="center"
-                    android:autofillHints=""
                     android:maxLength="3"
+                    android:padding="3dp"
+                    android:textAlignment="center"
                     android:textColorHint="@color/greyNoteDarker4"
-                    android:background="@drawable/shape"
+                    android:textSize="14sp"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
@@ -482,8 +501,8 @@
                 android:id="@+id/smsSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
 
@@ -497,46 +516,49 @@
                     app:srcCompat="@drawable/incoming_sms_off_m3" />
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="16sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_semibold"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringSMSTitle"
+                        android:textSize="16sp"
                         tools:ignore="VisualLintLongText" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="12sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringSMSNote"
+                        android:textSize="12sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/flickTimeIncSMSId"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:background="@drawable/shape"
+                    android:fontFamily="@font/cabin_regular"
                     android:gravity="center"
-                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/cabin_regular"
-                    android:autofillHints=""
                     android:maxLength="3"
+                    android:padding="3dp"
                     android:textColorHint="@color/greyNoteDarker4"
-                    android:background="@drawable/shape"
+                    android:textSize="14sp"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
@@ -552,8 +574,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:minHeight="34dp"
                 android:gravity="center_vertical"
+                android:minHeight="34dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -566,46 +588,49 @@
                     app:srcCompat="@drawable/battery_off_m3" />
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="16sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_semibold"
                         android:gravity="center_vertical"
                         android:text="@string/settingsBatteryTitle"
+                        android:textSize="16sp"
                         tools:ignore="VisualLintLongText" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="12sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsBatteryNote"
+                        android:textSize="12sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/flickTimeBatteryId"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:background="@drawable/shape"
+                    android:fontFamily="@font/cabin_regular"
                     android:gravity="center"
-                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/cabin_regular"
-                    android:autofillHints=""
                     android:maxLength="3"
+                    android:padding="3dp"
                     android:textColorHint="@color/greyNoteDarker4"
-                    android:background="@drawable/shape"
+                    android:textSize="14sp"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
@@ -635,46 +660,49 @@
                     app:srcCompat="@drawable/altitude_off_m3" />
 
                 <LinearLayout
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="16sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_semibold"
                         android:gravity="center_vertical"
                         android:text="@string/settingsAltitudeTitle"
+                        android:textSize="16sp"
                         tools:ignore="VisualLintLongText" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="12dp"
-                        android:textSize="12sp"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsAltitudeNote"
+                        android:textSize="12sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/flickTimeAltitudeId"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:background="@drawable/shape"
+                    android:fontFamily="@font/cabin_regular"
                     android:gravity="center"
-                    android:padding="3dp"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/cabin_regular"
-                    android:autofillHints=""
                     android:maxLength="3"
+                    android:padding="3dp"
                     android:textColorHint="@color/greyNoteDarker1"
-                    android:background="@drawable/shape"
+                    android:textSize="14sp"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
@@ -689,17 +717,17 @@
                 android:id="@+id/settingsApplyBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="36dp"
                 android:fontFamily="@font/cabin_semibold"
-                android:textAlignment="center"
                 android:text="@string/applyChanges"
+                android:textAlignment="center"
                 android:textSize="14sp"
                 app:backgroundTint="@color/blueOff"
+                app:cornerRadius="8dp"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
-                tools:ignore="VisualLintButtonSize"
-                app:cornerRadius="8dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginBottom="36dp"/>
+                tools:ignore="VisualLintButtonSize" />
 
 
         </LinearLayout>

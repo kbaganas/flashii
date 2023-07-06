@@ -1,34 +1,20 @@
 package com.example.flashii
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.hardware.camera2.CameraAccessException
-import android.hardware.camera2.CameraCharacteristics
-import android.hardware.camera2.CameraManager
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.telephony.TelephonyManager
-import android.util.Log
-import android.view.MotionEvent
-import android.view.View
-import android.widget.ImageButton
-import android.widget.SeekBar
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import com.example.flashii.databinding.ActivityMainBinding
-import android.Manifest
-import androidx.core.content.ContextCompat
 import android.content.pm.PackageManager
 import android.graphics.Color
-import androidx.core.app.ActivityCompat
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.hardware.camera2.CameraAccessException
+import android.hardware.camera2.CameraCharacteristics
+import android.hardware.camera2.CameraManager
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
@@ -37,10 +23,27 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.BatteryManager
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Telephony
-import kotlin.Exception
+import android.telephony.TelephonyManager
+import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.SeekBar
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.example.flashii.databinding.ActivityMainBinding
+import com.google.android.material.button.MaterialButton
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     // constants, variables
     private val minFlickerHz : Int = 1
-    private val maxFlickerHz : Int = 10
+    private var maxFlickerHz : Int = 10
     private var flickerFlashlightHz : Long = 1
     private val minBattery : Int = 1
     private val maxBattery : Int = 100
@@ -64,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     private var altitudeThreshold : Int = minAltitude
     private var initAltitudeLevel : Int = minAltitude
     private val minTimerMinutes = 1.minutes
-    private val maxTimerMinutes = 240.minutes
+    private var maxTimerMinutes = 240.minutes
     private val ditDuration : Long = 250
     private val spaceDuration : Long = ditDuration
     private val dahDuration : Long = 3 * ditDuration
@@ -72,14 +75,20 @@ class MainActivity : AppCompatActivity() {
     private val spaceWordsDuration : Long = 4 * spaceDuration // results to 7*ditDuration, considering that we add spaceCharsDuration after each letter
     private val maxFlickerDuration15 : Long = 15000 // 15 seconds
     private val maxFlickerDuration30 : Long = 30000 // 30 seconds
+    private var maxFlickerDurationIncomingCall : Int = 15000
+    private var maxFlickerDurationIncomingSMS : Int = 15000
+    private var maxFlickerDurationBattery : Int = 15000
+    private var maxFlickerDurationAltitude : Int = 15000
     private val initRotationAngle : Float = -1000f
     private var touchStartTime : Long = 0
     private var thumbInitialPosition = 0
     private var hzInitialPosition = 0
     private var timerSetAfter = 0.minutes
-    private val hideSeekBarAfterDelay35 : Long = 3500
+    private var sensitivityAngle = 80
+    private var sensitivitySoundThreshold = 20000
+    private val hideSeekBarAfterDelay35 : Long = 3500 // 3.5 seconds
     private val hideMessageTextAfter35 : Long = 3500
-    private val hideMessageTextAfter15 : Long = 1500
+    private val hideMessageTextAfter15 : Long = 1500 // 1.5 seconds
     private val checkInterval50 : Long = 5000 // checkStatus after interval
     private lateinit var token : Token // token regarding which key is pressed
     private var tokenMessageText : Token = Token.FLASHLIGHT // token regarding which feature is using the message text
@@ -496,7 +505,7 @@ class MainActivity : AppCompatActivity() {
                                 if (angleInDegrees > -5f && rotationAngle == initRotationAngle) {
                                     // Phone rotated to the left ~ 90 degrees
                                     rotationAngle = angleInDegrees
-                                } else if (angleInDegrees < -80f && rotationAngle > -5f) {
+                                } else if (angleInDegrees < -sensitivityAngle.toFloat() && rotationAngle > -5f) {
                                     // Phone returned to portrait orientation
                                     rotationAngle = initRotationAngle
                                     if (isFlashLightOn) {
@@ -678,7 +687,7 @@ class MainActivity : AppCompatActivity() {
                                     setMessageText("Battery has been charged up to ${batteryPercentage}%", hideMessageTextAfter35, Token.BATTERY)
                                     Log.d("MainActivity", "flickeringBar ON with ${flickerFlashlightHz}Hz")
                                     startFlickering()
-                                    stopFlickeringAfterTimeout(maxFlickerDuration15)
+                                    stopFlickeringAfterTimeout(maxFlickerDurationBattery.toLong())
                                     // Should unregister
                                     unregisterReceiver(batteryReceiver)
                                     // Should changed Btn to SUCCESS
@@ -693,7 +702,7 @@ class MainActivity : AppCompatActivity() {
                                     setMessageText("Battery is discharged ${batteryPercentage}%", hideMessageTextAfter35, Token.BATTERY)
                                     Log.d("MainActivity", "flickeringBar ON with ${flickerFlashlightHz}Hz")
                                     startFlickering()
-                                    stopFlickeringAfterTimeout(maxFlickerDuration15)
+                                    stopFlickeringAfterTimeout(maxFlickerDurationBattery.toLong())
                                     // Should unregister
                                     unregisterReceiver(batteryReceiver)
                                     // Should changed Btn to SUCCESS
@@ -790,7 +799,9 @@ class MainActivity : AppCompatActivity() {
                                                     startFlickering()
                                                     setMessageToken(Token.ALTITUDE)
                                                     setMessageText("Altitude reached: ${altitude.toInt()}m high", hideMessageTextAfter35, Token.ALTITUDE)
-                                                    stopFlickeringAfterTimeout(maxFlickerDuration15)
+                                                    stopFlickeringAfterTimeout(
+                                                        maxFlickerDurationAltitude.toLong()
+                                                    )
                                                     sensorManager.unregisterListener(sensorEventListener)
                                                     setAltitudeBtn(ACTION.SUCCESS)
                                                     setAltitudeLevelDisplayText(ACTION.SET)
@@ -806,7 +817,9 @@ class MainActivity : AppCompatActivity() {
                                                 startFlickering()
                                                 setMessageToken(Token.ALTITUDE)
                                                 setMessageText("Altitude reached: ${altitude.toInt()}m low", hideMessageTextAfter35, Token.ALTITUDE)
-                                                stopFlickeringAfterTimeout(maxFlickerDuration15)
+                                                stopFlickeringAfterTimeout(
+                                                    maxFlickerDurationAltitude.toLong()
+                                                )
                                                 sensorManager.unregisterListener(sensorEventListener)
                                                 setAltitudeBtn(ACTION.SUCCESS)
                                                 setAltitudeLevelDisplayText(ACTION.SET)
@@ -875,9 +888,34 @@ class MainActivity : AppCompatActivity() {
         ////////////////////////////////////////////////////////////////////////////////////////
         // settings button
         settingsBtn = findViewById(R.id.settingsBtnId)
+
+        val intentSettings = Intent(this, SettingsActivity::class.java)
+        intentSettings.putExtra("maxFlickerHz", maxFlickerHz)
+        intentSettings.putExtra("maxTimerMinutes", maxTimerMinutes.inWholeMinutes.toInt())
+        intentSettings.putExtra("sensitivityAngle", sensitivityAngle)
+        intentSettings.putExtra("sensitivitySoundThreshold", sensitivitySoundThreshold)
+        intentSettings.putExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall/1000)
+        intentSettings.putExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS/1000)
+        intentSettings.putExtra("maxFlickerDurationBattery", maxFlickerDurationBattery/1000)
+        intentSettings.putExtra("maxFlickerDurationAltitude", maxFlickerDurationAltitude/1000)
+        var registerSettings = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // Handle the result from the SettingsActivity here
+                val data = result.data
+                maxFlickerHz = data?.getIntExtra("maxFlickerHz", maxFlickerHz) ?: maxFlickerHz
+                maxTimerMinutes = (data?.getIntExtra("maxTimerMinutes", maxTimerMinutes.toString().toInt()) ?: maxTimerMinutes) as Duration
+                sensitivityAngle = data?.getIntExtra("sensitivityAngle", sensitivityAngle) ?: sensitivityAngle
+                sensitivitySoundThreshold = data?.getIntExtra("sensitivitySoundThreshold", sensitivitySoundThreshold) ?: sensitivitySoundThreshold
+                maxFlickerDurationIncomingSMS = data?.getIntExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS) ?: maxFlickerDurationIncomingSMS
+                maxFlickerDurationBattery = data?.getIntExtra("maxFlickerDurationBattery", maxFlickerDurationBattery) ?: maxFlickerDurationBattery
+                maxFlickerDurationAltitude = data?.getIntExtra("maxFlickerDurationAltitude", maxFlickerDurationAltitude) ?: maxFlickerDurationAltitude
+                maxFlickerDurationIncomingCall = data?.getIntExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall) ?: maxFlickerDurationIncomingCall
+                Log.i("MainActivity", "Data set in Settings are $maxFlickerHz,$maxTimerMinutes,$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+            }
+        }
+
         settingsBtn.setOnClickListener{
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
+            registerSettings.launch(intentSettings)
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -1042,6 +1080,7 @@ class MainActivity : AppCompatActivity() {
                                 resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableSOS = true, disableAudioIncoming = true, disableTilt = true)
                                 Log.d("MainActivity", "EXTRA_STATE_RINGING - Flickering ON with ${flickerFlashlightHz}Hz")
                                 startFlickering()
+                                stopFlickeringAfterTimeout(maxFlickerDurationIncomingCall.toLong())
                             }
                             else if (state == TelephonyManager.EXTRA_STATE_IDLE || state == TelephonyManager.EXTRA_STATE_OFFHOOK) {
                                 Log.i("MainActivity", "IDLE/OFF-HOOK - Phone stops flickering")
@@ -1118,7 +1157,7 @@ class MainActivity : AppCompatActivity() {
                             resetAllActivities(disableFlashLight = true, disableFlickeringOnDemand = true, disableSOS = true)
                             Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                             startFlickering()
-                            stopFlickeringAfterTimeout(maxFlickerDuration15)
+                            stopFlickeringAfterTimeout(maxFlickerDurationIncomingSMS.toLong())
                         }
                     }
                 }
@@ -1401,9 +1440,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isAboveThreshold(buffer: ShortArray, bytesRead: Int): Boolean {
-        val threshold = 20000
         for (i in 0 until bytesRead) {
-            if (buffer[i] > threshold || buffer[i] < -threshold) {
+            if (buffer[i] > sensitivitySoundThreshold || buffer[i] < -sensitivitySoundThreshold) {
                 return true
             }
         }
@@ -1917,13 +1955,87 @@ class InfoActivity : AppCompatActivity() {
 }
 
 class SettingsActivity : AppCompatActivity() {
+
+    private var maxFlickerHz : Int = 0
+    private var maxTimerMinutes : Int = 0
+    private var sensitivityAngle : Int = 0
+    private var sensitivitySoundThreshold : Int = 0
+    private var maxFlickerDurationIncomingCall : Int = 0
+    private var maxFlickerDurationIncomingSMS : Int = 0
+    private var maxFlickerDurationBattery : Int = 0
+    private var maxFlickerDurationAltitude : Int = 0
+    private lateinit var maxFlickerHzEditText : EditText
+    private lateinit var maxTimerTimeEditText : EditText
+    private lateinit var tiltAngleEditText : EditText
+    private lateinit var soundThresholdEditText : EditText
+    private lateinit var flickTimeIncCallEditText : EditText
+    private lateinit var flickTimeIncSMSEditText : EditText
+    private lateinit var flickTimeBatteryEditText : EditText
+    private lateinit var flickTimeAltitudeEditText : EditText
+    @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings)
+
+        // Init editTexts
+        maxFlickerHzEditText = findViewById<EditText>(R.id.maxFlickerHzId)
+        maxTimerTimeEditText = findViewById<EditText>(R.id.maxTimerTimeId)
+        tiltAngleEditText = findViewById<EditText>(R.id.tiltAngleId)
+        soundThresholdEditText = findViewById<EditText>(R.id.soundThresholdId)
+        flickTimeIncCallEditText = findViewById<EditText>(R.id.flickTimeIncCallId)
+        flickTimeIncSMSEditText = findViewById<EditText>(R.id.flickTimeIncSMSId)
+        flickTimeBatteryEditText = findViewById<EditText>(R.id.flickTimeBatteryId)
+        flickTimeAltitudeEditText = findViewById<EditText>(R.id.flickTimeAltitudeId)
+
+        // Retrieve the data value from the intent of the MainActivity
+        maxFlickerHz = intent.getIntExtra("maxFlickerHz", 0)
+        maxTimerMinutes = intent.getIntExtra("maxTimerMinutes", 0)
+        sensitivityAngle = intent.getIntExtra("sensitivityAngle", 0)
+        sensitivitySoundThreshold = intent.getIntExtra("sensitivitySoundThreshold", 0)
+        maxFlickerDurationIncomingCall = intent.getIntExtra("maxFlickerDurationIncomingCall", 0)
+        maxFlickerDurationIncomingSMS = intent.getIntExtra("maxFlickerDurationIncomingSMS", 0)
+        maxFlickerDurationBattery = intent.getIntExtra("maxFlickerDurationBattery", 0)
+        maxFlickerDurationAltitude = intent.getIntExtra("maxFlickerDurationAltitude", 0)
+
+        setValues()
+
+        //
+        val settingsApplyBtn = findViewById<Button>(R.id.settingsApplyBtn)
+        settingsApplyBtn.setOnClickListener {
+            // Return the updated maxFlickerHz value back to MainActivity
+            val resultIntent = Intent()
+            resultIntent.putExtra("maxFlickerHz", maxFlickerHz)
+            resultIntent.putExtra("maxTimerMinutes", maxTimerMinutes.toInt())
+            resultIntent.putExtra("sensitivityAngle", sensitivityAngle)
+            resultIntent.putExtra("sensitivitySoundThreshold", sensitivitySoundThreshold)
+            resultIntent.putExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall)
+            resultIntent.putExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS)
+            resultIntent.putExtra("maxFlickerDurationBattery", maxFlickerDurationBattery)
+            resultIntent.putExtra("maxFlickerDurationAltitude", maxFlickerDurationAltitude)
+            setResult(RESULT_OK, resultIntent)
+            finish()
+        }
+
+        val resetButton = findViewById<MaterialButton>(R.id.resetBtnId)
+        resetButton.setOnClickListener {
+            setValues()
+        }
+
         val closeButton = findViewById<ImageButton>(R.id.settingsGoBackArrow)
         closeButton.setOnClickListener {
             finish()
         }
+    }
+
+    private fun setValues() {
+        maxFlickerHzEditText.setText(maxFlickerHz.toString())
+        maxTimerTimeEditText.setText(maxTimerMinutes.toString())
+        tiltAngleEditText.setText(sensitivityAngle.toString())
+        soundThresholdEditText.setText(sensitivitySoundThreshold.toString())
+        flickTimeIncCallEditText.setText(maxFlickerDurationIncomingCall.toString())
+        flickTimeIncSMSEditText.setText(maxFlickerDurationIncomingSMS.toString())
+        flickTimeBatteryEditText.setText(maxFlickerDurationBattery.toString())
+        flickTimeAltitudeEditText.setText(maxFlickerDurationAltitude.toString())
     }
 }
 
