@@ -32,7 +32,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@color/backgroundWhite"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="@string/backArrow"
                     android:src="@drawable/arrow_left" />
@@ -143,7 +143,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/flickering_off_m3" />
 
                     <LinearLayout
@@ -161,7 +161,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/cabin_semibold"
-                                android:layout_marginEnd="8dp"
+                                android:layout_marginEnd="12dp"
                                 android:textSize="16sp"
                                 android:layout_gravity="start"
                                 android:gravity="center_vertical"
@@ -171,7 +171,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/cabin_regular"
-                                android:layout_marginEnd="8dp"
+                                android:layout_marginEnd="12dp"
                                 android:textSize="12sp"
                                 android:layout_gravity="start"
                                 android:gravity="center_vertical"
@@ -214,9 +214,9 @@
                     android:id="@+id/timerSetting1"
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/timer_off_m3" />
 
                 <LinearLayout
@@ -229,7 +229,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="16sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -239,7 +239,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="12sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -282,9 +282,9 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/tilt_off_m3" />
 
                 <LinearLayout
@@ -297,7 +297,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="16sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -307,7 +307,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="12sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -352,9 +352,9 @@
                     android:id="@+id/soundSetting1"
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/sound_off_m3" />
 
                 <LinearLayout
@@ -367,7 +367,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="16sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -377,7 +377,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="12sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -422,9 +422,9 @@
                     android:id="@+id/callSetting1"
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/incoming_call_off_m3" />
 
                 <LinearLayout
@@ -437,7 +437,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="16sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -447,7 +447,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="12sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -491,9 +491,9 @@
                     android:id="@+id/smsSetting1"
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/incoming_sms_off_m3" />
 
                 <LinearLayout
@@ -506,7 +506,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="16sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -516,7 +516,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="12sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -560,9 +560,9 @@
                     android:id="@+id/batterySetting1"
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/battery_off_m3" />
 
                 <LinearLayout
@@ -575,7 +575,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="16sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -585,7 +585,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="12sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -629,9 +629,9 @@
                     android:id="@+id/altitudeSetting1"
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/altitude_off_m3" />
 
                 <LinearLayout
@@ -644,7 +644,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_semibold"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="16sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"
@@ -654,7 +654,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="12dp"
                         android:textSize="12sp"
                         android:layout_gravity="start"
                         android:gravity="center_vertical"

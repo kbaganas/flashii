@@ -87,7 +87,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -102,7 +102,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dividers"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:gravity="center_horizontal"
@@ -136,7 +135,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
@@ -183,7 +182,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -198,7 +197,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dividers"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:gravity="center_horizontal"
@@ -233,7 +231,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
@@ -259,7 +257,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoIncomingCallOff"
+                        android:text="@string/infoIncomingCall"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -287,7 +285,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -302,7 +300,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dividers"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:gravity="center_horizontal"
@@ -336,7 +333,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
@@ -383,7 +380,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -398,7 +395,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dividers"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:gravity="center_horizontal"
@@ -432,7 +428,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
@@ -464,7 +460,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoAltitudeOff"
+                        android:text="@string/infoAltitude"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -492,7 +488,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -507,7 +503,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dividers"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:gravity="center_horizontal"
@@ -541,7 +536,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
@@ -560,12 +555,6 @@
                             android:layout_height="48dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/battery_success" />
-                        <ImageView
-                            android:layout_marginTop="16dp"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/battery_no_permission_m3" />
                     </LinearLayout>
 
                     <TextView
@@ -573,7 +562,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoBatteryOff"
+                        android:text="@string/infoBattery"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -602,7 +591,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -650,7 +639,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
@@ -676,7 +665,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoIncomingSMSOff"
+                        android:text="@string/infoIncomingSMS"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -704,7 +693,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -719,7 +708,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dividers"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:gravity="center_horizontal"
@@ -753,7 +741,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
@@ -779,7 +767,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoTimerOff" />
+                        android:text="@string/infoTimer" />
                 </LinearLayout>
 
                 <View
@@ -806,7 +794,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -821,7 +809,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dividers"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:gravity="center_horizontal"
@@ -855,7 +842,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
@@ -874,7 +861,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoTimerOff" />
+                        android:text="@string/infoS0S" />
                 </LinearLayout>
 
                 <View
@@ -901,7 +888,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -916,7 +903,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dividers"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:gravity="center_horizontal"
@@ -950,7 +936,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
@@ -975,7 +961,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoTimerOff" />
+                        android:text="@string/infoTilt" />
                 </LinearLayout>
 
                 <View
@@ -1003,7 +989,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -1018,7 +1004,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dividers"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:gravity="center_horizontal"
@@ -1052,7 +1037,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
@@ -1077,7 +1062,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoTimerOff" />
+                        android:text="@string/infoSound" />
                 </LinearLayout>
 
                 <View
@@ -1104,7 +1089,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Buttons"
                         android:textSize="12sp"
@@ -1119,7 +1104,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dividers"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:gravity="center_horizontal"
@@ -1154,7 +1138,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <ImageView
                             android:layout_width="48dp"
