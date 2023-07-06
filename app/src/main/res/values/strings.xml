@@ -68,6 +68,7 @@
     <string name="infoFlashlightOn">Feature activated (flashlight is turned On).</string>
     <string name="infoFlashlightOff">Feature deactivated (flashlight is turned Off).</string>
     <string name="infoBattery">Phone\'s battery power shall be monitored and you will get notified by flashlight flickering when the power level you \'ve specified is reached.\n\nWhen that happens, the flashlight will flicker for 15 seconds (default), unless you deactivate the feature.</string>
+    <string name="infoBatteryCheck">Battery power level specified has been reached. Flashlight will be flickering for 15seconds, unless you deactivate the feature.</string>
     <string name="infoNoPermissionByUser">Feature has given no permissions by User.</string>
     <string name="infoTimer">Set exactly after how much time you want to get notified by flashlight flickering.\n\nWhen time is reached, the flashlight will flicker for 15 seconds (default) and the button shall change to the checked one.</string>
     <string name="infoTimerCheck">Time specified has come. Flashlight will be flickering for 15seconds, unless you deactivate the feature.</string>
@@ -90,16 +91,16 @@
 
 
 
-    <string name="infoNetwork">Based on your phone\'s current network connection status, you \'ll get notified by flashlight flickering when\n\na) provider\'s Network signal, Data or WiFi connection are lost, \n\nb) provider's Network signal, Data or WiFi are found.\n\n</string>
+    <string name="infoNetwork">Based on your phone\'s current network connection status, you \'ll get notified by flashlight flickering when\n\na) provider\'s Network signal, Data or WiFi connection are lost, \n\nb) provider\'s Network signal, Data or WiFi are found.\n\n</string>
 
 
 
     <string name="maxHz">Max flickering frequency:\nRange from 10Hz (default) to 100Hz.</string>
     <string name="maxFlickeringTimer">Flickering time after an incoming Call:\nRange from 3s to 180s (default 15s)</string>
-    <string name="ConnectionLost">Connection\nlost!</string>
-    <string name="ConnectionFound">Connection\nfound!</string>
-    <string name="ConnectionToLost">Get notified when\nConnection lost</string>
-    <string name="ConnectionToFound">Get notified when\nConnection found</string>
+    <string name="ConnectionLost">Connection lost!</string>
+    <string name="ConnectionFound">Connection found!</string>
+    <string name="ConnectionToLost">Get notified when Connection lost</string>
+    <string name="ConnectionToFound">Get notified when Connection found</string>
     <string name="backArrow">Back arrow</string>
     <string name="timerFeature">Flickering after Time</string>
     <string name="batteryFeature">Flickering at Battery power level</string>
