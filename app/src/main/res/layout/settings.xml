@@ -73,7 +73,7 @@
                 android:id="@+id/rateText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="12dp"
                 android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
                 android:text="@string/settingsComments"
@@ -91,14 +91,14 @@
                     android:layout_gravity="start"
                     android:layout_marginEnd="12dp"
                     android:fontFamily="@font/cabin_semibold"
-                    android:text="@string/feature"
+                    android:text="@string/Feature"
                     android:textSize="14sp"
                     tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/attribute"
+                    android:text="@string/Specification"
                     android:fontFamily="@font/cabin_semibold" />
             </LinearLayout>
             <LinearLayout
@@ -186,6 +186,7 @@
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center"
                             android:hint="@string/enterValue"
+                            android:maxLength="3"
                             android:inputType="phone"
                             android:padding="3dp"
                             android:textColorHint="@color/greyNoteDarker4"
@@ -258,6 +259,7 @@
                     android:padding="3dp"
                     android:textColorHint="@color/greyNoteDarker4"
                     android:textSize="14sp"
+                    android:maxLength="1"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
@@ -324,6 +326,7 @@
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
                     android:background="@drawable/shape"
+                    android:maxLength="2"
                     android:textColorHint="@color/greyNoteDarker4"
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
@@ -392,6 +395,7 @@
                     android:textSize="14sp"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
+                    android:maxLength="5"
                     android:textColorHint="@color/greyNoteDarker4"
                     android:background="@drawable/shape"
                     tools:ignore="VisualLintTextFieldSize" />
@@ -461,6 +465,7 @@
                     android:fontFamily="@font/cabin_regular"
                     android:textAlignment="center"
                     android:autofillHints=""
+                    android:maxLength="3"
                     android:textColorHint="@color/greyNoteDarker4"
                     android:background="@drawable/shape"
                     tools:ignore="VisualLintTextFieldSize" />
@@ -529,6 +534,7 @@
                     android:textSize="14sp"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
+                    android:maxLength="3"
                     android:textColorHint="@color/greyNoteDarker4"
                     android:background="@drawable/shape"
                     tools:ignore="VisualLintTextFieldSize" />
@@ -597,6 +603,7 @@
                     android:textSize="14sp"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
+                    android:maxLength="3"
                     android:textColorHint="@color/greyNoteDarker4"
                     android:background="@drawable/shape"
                     tools:ignore="VisualLintTextFieldSize" />
@@ -665,6 +672,7 @@
                     android:textSize="14sp"
                     android:fontFamily="@font/cabin_regular"
                     android:autofillHints=""
+                    android:maxLength="3"
                     android:textColorHint="@color/greyNoteDarker1"
                     android:background="@drawable/shape"
                     tools:ignore="VisualLintTextFieldSize" />

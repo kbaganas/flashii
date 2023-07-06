@@ -68,27 +68,31 @@
     <string name="enterValue">Enter value</string>
     <string name="applyChanges">APPLY CHANGES</string>
 
-    <string name="settingsComments">Personalize Feature attributes below\naccording to the defined Ranges.</string>
+    <string name="settingsComments">Personalize Features specs below\naccording to the defined Ranges.</string>
     <string name="settingsFlickeringTitle">Max flickering frequency</string>
-    <string name="settingsFlickeringNote">Range from 3s to 180s (default 15s)</string>
+    <string name="settingsFlickeringNote">Range from 3 to 180 seconds (default 15)</string>
     <string name="settingsTimerTitle">Timer\'s max time</string>
-    <string name="settingsTimerNote">Range from 4h (default) to 8h</string>
+    <string name="settingsTimerNote">Range from 4 (default) to 8 hours.</string>
     <string name="settingsTiltTitle">Tilt sensitivity angle</string>
     <string name="settingsTiltNote">Range from 65 to 80 degrees (default)</string>
     <string name="settingsSoundTitle">Sound sensitivity threshold</string>
     <string name="settingsSoundNote">Range from 4000 to 20000 (default)</string>
     <string name="settingsFlickeringCallTitle">Flickering time on incoming Call</string>
-    <string name="settingsFlickeringCallNote">Range from 3s to 180 (default 15s)</string>
+    <string name="settingsFlickeringCallNote">Range from 3 to 180 seconds (default 15)</string>
     <string name="settingsFlickeringSMSTitle">Flickering time on incoming SMS</string>
-    <string name="settingsFlickeringSMSNote">Range from 3s to 180s (default 15s)</string>
+    <string name="settingsFlickeringSMSNote">Range from 3 to 180 seconds (default 15)</string>
     <string name="settingsBatteryTitle">Flickering time on Battery level reached</string>
-    <string name="settingsBatteryNote">Range from 3s to 180s (default 15s)</string>
+    <string name="settingsBatteryNote">Range from 3 to 180 seconds (default 15)</string>
     <string name="settingsAltitudeTitle">Flickering time on Altitude height reached</string>
-    <string name="settingsAltitudeNote">Range from 3s to 180s (default 15s)</string>
+    <string name="settingsAltitudeNote">Range from 3 to 180 seconds (default 15)</string>
+
+    <string name="infoMoreComments">You may find below full description\nof each button\'s functionality and usage.</string>
+
+
+
     <string name="maxHz">Max flickering frequency:\nRange from 10Hz (default) to 100Hz.</string>
     <string name="maxFlickeringTimer">Flickering time after an incoming Call:\nRange from 3s to 180s (default 15s)</string>
     <string name="backArrow">Back arrow</string>
-    <string name="infoMoreComments">You may find below full description of each button\'s functionality and usage.</string>
     <string name="timerFeature">Flickering after Time</string>
     <string name="batteryFeature">Flickering at Battery level</string>
     <string name="altitudeFeature">Flickering at Altitude height</string>
@@ -100,8 +104,12 @@
     <string name="flickerFeature">Flickering on demand</string>
     <string name="flashlightFeature">Flashlight On/Off</string>
     <string name="sosFeature">Send SOS</string>
-    <string name="feature">Feature</string>
+    <string name="Feature">Feature</string>
     <string name="attributeDescription">Attribute description</string>
     <string name="attribute">Attribute</string>
+    <string name="Specification">Specification</string>
+    <string name="Icons">Icons</string>
+    <string name="Buttons">Buttons</string>
+    <string name="FeatureDescription">Feature description</string>
     <string name="infoFlashlightText">Click to turn On and Off the phone\'s flashlight.\n\nPress+Hold and Release the button to turn the flashlight On and Off as well.</string>
 </resources>

@@ -106,7 +106,7 @@
                 android:maxLength="230"
                 android:maxLines="5"
                 android:minHeight="120dp"
-                android:padding="3dp"
+                android:padding="8dp"
                 android:textColorHint="@color/greyNoteDarker1"
                 android:textSize="16sp"
                 tools:ignore="VisualLintTextFieldSize" />
