@@ -62,29 +62,48 @@
     <string name="settingsAltitudeTitle">Flickering time on Altitude height reached</string>
     <string name="settingsAltitudeNote">Range from 3 to 180 seconds (default 15)</string>
 
-    <string name="infoMoreComments">You may find below full description\nof each button\'s functionality and usage.</string>
-    <string name="infoFlashlightText">Click to turn On and Off the phone\'s flashlight.\n\nYou can also Press+Hold and Release the button to turn the flashlight On and Off as well on demand.</string>
-    <string name="infoAltitude">Set a specific Altitude height in meters (m) at which you want to get notified by flashlight flickering.\n\nWhen Altitude is reached, the flashlight will flicker for 15 seconds (default) and the button shall change to the checked one.\n\nFeature is only available if you permit Location rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
-    <string name="infoTimer">Set exactly after how much time you want to get notified by flashlight flickering.\n\nWhen time is reached, the flashlight will flicker for 15 seconds (default) and the button shall change to the checked one.</string>
-    <string name="infoBattery">Phone\'s battery power shall be monitored and you will be notified by flashlight flickering when the power level you \'ve specified is reached.\n\nWhen that happens, the flashlight will flicker for 15 seconds (default) and the button shall change to the checked one.</string>
-    <string name="infoIncomingCall">By enabling this feature you will get notified by flashlight flickering when an incoming Call reaches your phone.\n\nFlickering and feature will stop (and button will return to it\'s initial view) if you answer or reject the incoming Call, or automatically after 15 seconds.\n\nNote that the default flickering time of 15s can be configured in the Settings view.\n\nWhen Feature is enabled (green bright button) you can click to disable it.\n\nFeature is only available if you permit Call rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
-    <string name="infoIncomingSMS">By enabling this feature you will get notified by flashlight flickering when an incoming SMS reaches your phone.\n\nFlickering and feature will stop (and button will return to it\'s initial view) automatically after 15 seconds.\n\nNote that the default flickering time of 15s can be configured in the Settings view.\n\nWhen Feature is enabled (green bright button) you can click to disable it.\n\nFeature is only available if you permit SMS rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
-    <string name="infoS0S">By enabling this feature, the SOS message in Morse code is transmitted continuously from your flashlight.\n\nClick again to stop the transmission.</string>
-    <string name="infoSound">You can turn On and Off the flashlight by producing short sounds, e.g. by finger snapping.\n\nNote that you can configure the sound sensitivity in the Settings view at the desired level.\n\nFeature is only available if you permit Audio rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
-    <string name="infoTilt">You can turn On and Off the flashlight by tilting the phone at around 90 degrees angles (from its standpoint).\n\nNote that you can configure the angle sensitivity in the Settings view.\n\nFeature is only available if your phone device has a Rotation Sensor available. If otherwise, the deactivated button is displayed instead.</string>
-    <string name="infoNetworkOff">Based on your current phone\'s connection status (i.e. in or out of Network/Data/WiFi), you \'ll get notified by flashlight flickering when a) Network signal, Data or WiFi are found again, b) Network signal, Data or WiFi are lost.</string>
-    <string name="infoNetworkFound">Network signal, Data or WiFi are been found!</string>
-    <string name="infoNetworkLost">Network signal, Data or WiFi has been lost.</string>
-    <string name="infoFlickeringOff">Flashlight will be flickering at the frequency (in Hz) you specify. By default frequency ranges from 1 to 10Hz.</string>
-    <string name="infoFeatureOn">Feature is enabled and currently running. Click to disable it.The same holds for all activated features\' buttons.</string>
     <string name="infoHelp">Help info</string>
+    <string name="infoMoreComments">You may find below full description\nof each Feature, button\'s functionality and usage.</string>
+    <string name="infoFlashlight">Click to turn On and Off the  phone\'s flashlight.\nYou can also Press+Hold and Release the button to turn the flashlight On and Off as well on demand.</string>
+    <string name="infoFlashlightOn">Feature activated (flashlight is turned On).</string>
+    <string name="infoFlashlightOff">Feature deactivated (flashlight is turned Off).</string>
+    <string name="infoBattery">Phone\'s battery power shall be monitored and you will get notified by flashlight flickering when the power level you \'ve specified is reached.\n\nWhen that happens, the flashlight will flicker for 15 seconds (default), unless you deactivate the feature.</string>
+    <string name="infoNoPermissionByUser">Feature has given no permissions by User.</string>
+    <string name="infoTimer">Set exactly after how much time you want to get notified by flashlight flickering.\n\nWhen time is reached, the flashlight will flicker for 15 seconds (default) and the button shall change to the checked one.</string>
+    <string name="infoTimerCheck">Time specified has come. Flashlight will be flickering for 15seconds, unless you deactivate the feature.</string>
+    <string name="infoSOS">By enabling this feature, the SOS message in Morse code is transmitted continuously from your flashlight.\n\nClick again to stop the transmission.</string>
+    <string name="infoSound">You can turn On and Off the flashlight by producing short sounds, e.g. by finger snapping.\n\nNote that you can configure the sound sensitivity in the Settings view at the desired level.\n\nFeature is only available if you permit Audio rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
+    <string name="infoNoPermissionByDevice">Feature cannot function on this Device.</string>
+    <string name="infoIncomingSMS">By enabling this feature you will get notified by flashlight flickering when an incoming SMS reaches your phone.\n\nFlickering and feature will stop (and button will return to it\'s initial view) automatically after 15 seconds.\n\nNote that the default flickering time of 15s can be configured in the Settings view.\n\nWhen Feature is enabled (green bright button) you can click to disable it.\n\nFeature is only available if you permit SMS rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
+    <string name="infoActivated">Feature activated.</string>
+    <string name="infoDeactivated">Feature deactivated.</string>
+    <string name="infoIncomingCall">By enabling this feature you will get notified by flashlight flickering when an incoming Call reaches your phone.\n\nFlickering and feature will stop (and button will return to it\'s initial view) if you answer or reject the incoming Call, or automatically after 15 seconds.\n\nNote that the default flickering time of 15s can be configured in the Settings view.\n\nWhen Feature is enabled (green bright button) you can click to disable it.\n\nFeature is only available if you permit Call rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
+    <string name="infoTilt">You can turn On and Off the flashlight by tilting the phone at around 90 degrees angles (from its standpoint).\n\nNote that you can configure the angle\'s sensitivity in the Settings view.\n\nFeature is only available if your phone device has a Rotation Sensor available. If otherwise, the deactivated button is displayed instead.</string>
+    <string name="infoFlickering">Flashlight will be flickering at the frequency (in Hertz) you specify in the seekbar. By default frequency ranges from 1 to 10Hz.\n\nNote that you can configure the max frequency of 10Hz to the desired value in the Settings view.</string>
+    <string name="infoAltitude">Set a specific Altitude height in meters (m) at which you want to get notified by flashlight flickering.\n\nWhen Altitude is reached, the flashlight will flicker for 15 seconds (default) and the button shall change to the checked one.\n\nFeature is only available if you permit Location rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
+    <string name="infoAltitudeCheck">Altitude specified has been reached. Flashlight will be flickering for 15seconds, unless you deactivate the feature.</string>
+
+
+
+
+
+
+
+
+    <string name="infoNetwork">Based on your phone\'s current network connection status, you \'ll get notified by flashlight flickering when\n\na) provider\'s Network signal, Data or WiFi connection are lost, \n\nb) provider's Network signal, Data or WiFi are found.\n\n</string>
+
 
 
     <string name="maxHz">Max flickering frequency:\nRange from 10Hz (default) to 100Hz.</string>
     <string name="maxFlickeringTimer">Flickering time after an incoming Call:\nRange from 3s to 180s (default 15s)</string>
+    <string name="ConnectionLost">Connection\nlost!</string>
+    <string name="ConnectionFound">Connection\nfound!</string>
+    <string name="ConnectionToLost">Get notified when\nConnection lost</string>
+    <string name="ConnectionToFound">Get notified when\nConnection found</string>
     <string name="backArrow">Back arrow</string>
     <string name="timerFeature">Flickering after Time</string>
     <string name="batteryFeature">Flickering at Battery power level</string>
+
     <string name="altitudeFeature">Flickering at Altitude height</string>
     <string name="callFeature">Flickering on Incoming Calls</string>
     <string name="smsFeature">Flickering on Incoming SMSes</string>
@@ -99,6 +118,6 @@
     <string name="attribute">Attribute</string>
     <string name="Specification">Specification</string>
     <string name="Icons">Icons</string>
-    <string name="Buttons">Buttons</string>
-    <string name="FeatureDescription">Feature description</string>
+    <string name="Button">Button</string>
+    <string name="Description">Description</string>
 </resources>
