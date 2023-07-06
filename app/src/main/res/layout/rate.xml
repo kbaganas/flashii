@@ -44,6 +44,7 @@
                 android:layout_marginTop="36dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:text="@string/rateText"
+                android:textAlignment="center"
                 android:textSize="26sp"/>
 
             <TextView
@@ -52,18 +53,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
                 android:fontFamily="@font/cabin_regular"
+                android:textAlignment="center"
                 android:text="@string/howDidWeDo"
                 android:textSize="16sp"/>
 
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="240dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginTop="8dp"
-                android:numStars="5"
-                android:stepSize="1"
-                android:contentDescription="@string/GeneralContentDescription"
-                android:rating="0.0"/>
+                android:gravity="center">
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="1"
+                    android:contentDescription="@string/GeneralContentDescription"
+                    android:rating="0.0"/>
+            </LinearLayout>
+
 
             <View
                 android:id="@+id/divider1"
@@ -79,6 +88,7 @@
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/careToShare"
                 android:layout_marginTop="18dp"
+                android:textAlignment="center"
                 android:textSize="16sp"/>
 
             <EditText
@@ -134,6 +144,7 @@
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/publishNote"
                 android:textColor="@color/greyNoteDarker4"
+                android:textAlignment="center"
                 android:textSize="14sp"/>
 
         </LinearLayout>
