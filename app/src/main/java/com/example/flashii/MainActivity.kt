@@ -2017,7 +2017,7 @@ class SettingsActivity : AppCompatActivity() {
         maxFlickerDurationAltitude = intent.getIntExtra("maxFlickerDurationAltitude", 0)
 
         // Set data of the intent in local variables
-        setValues()
+        setHintValues()
 
         // apply button
         val settingsApplyBtn = findViewById<Button>(R.id.settingsApplyBtn)
@@ -2037,7 +2037,7 @@ class SettingsActivity : AppCompatActivity() {
         // reset button
         val resetButton = findViewById<MaterialButton>(R.id.resetBtnId)
         resetButton.setOnClickListener {
-            setValues()
+            resetTextValues()
         }
 
         // go-back arrow button
@@ -2047,7 +2047,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setValues() {
+    private fun setHintValues() {
         maxFlickerHzEditText.hint = maxFlickerHz.toString()
         maxFlickerHzEditText.hint = maxFlickerHz.toString()
         maxTimerTimeEditText.hint = maxTimerMinutes.toString()
@@ -2057,6 +2057,18 @@ class SettingsActivity : AppCompatActivity() {
         flickTimeIncSMSEditText.hint = maxFlickerDurationIncomingSMS.toString()
         flickTimeBatteryEditText.hint = maxFlickerDurationBattery.toString()
         flickTimeAltitudeEditText.hint = maxFlickerDurationAltitude.toString()
+    }
+
+    private fun resetTextValues() {
+        maxFlickerHzEditText.text = null
+        maxFlickerHzEditText.text = null
+        maxTimerTimeEditText.text = null
+        tiltAngleEditText.text = null
+        soundThresholdEditText.text = null
+        flickTimeIncCallEditText.text = null
+        flickTimeIncSMSEditText.text = null
+        flickTimeBatteryEditText.text = null
+        flickTimeAltitudeEditText.text = null
     }
 
     private fun getValues(resultIntent : Intent) : Boolean {
