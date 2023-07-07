@@ -24,7 +24,7 @@
 
             <!-- arrow -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp">
 
@@ -36,30 +36,27 @@
                     android:contentDescription="@string/backArrow"
                     android:scaleType="fitStart"
                     android:src="@drawable/arrow_left" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/infoHelp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="48dp"
+                    android:gravity="center"
+                    android:textSize="32sp" />
             </LinearLayout>
-
-
-            <!-- Title -->
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:fontFamily="@font/cabin_semibold"
-                android:text="@string/infoHelp"
-                android:textAlignment="center"
-                android:textSize="26sp"
-                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/rateText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/infoMoreComments"
+                android:layout_marginTop="46dp"
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
 
             <View
                 android:layout_width="match_parent"
