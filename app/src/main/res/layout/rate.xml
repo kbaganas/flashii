@@ -38,11 +38,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_semibold"
-                    android:text="@string/Rate"
                     android:layout_gravity="center_vertical"
-                    android:gravity="center"
                     android:layout_marginEnd="48dp"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:gravity="center"
+                    android:text="@string/Rate"
                     android:textSize="32sp" />
 
             </LinearLayout>
@@ -56,7 +56,7 @@
                 android:fontFamily="@font/cabin_semibold"
                 android:text="@string/rateText"
                 android:textAlignment="center"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/rateText2"
@@ -64,24 +64,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:fontFamily="@font/cabin_regular"
-                android:textAlignment="center"
                 android:text="@string/howDidWeDo"
-                android:textSize="18sp"/>
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="8dp"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
+
                 <RatingBar
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:numStars="5"
-                    android:stepSize="1"
+                    android:background="#00ED0606"
                     android:contentDescription="@string/GeneralContentDescription"
-                    android:rating="0.0"/>
+                    android:numStars="5"
+                    android:progressTint="@color/goldStar"
+                    android:rating="0.0"
+                    android:secondaryProgressTint="@color/blueOffBack2"
+                    android:stepSize="1" />
             </LinearLayout>
 
 
@@ -96,11 +100,11 @@
                 android:id="@+id/rateText3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/careToShare"
-                android:layout_marginTop="18dp"
                 android:textAlignment="center"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/commentsEditText"
@@ -135,15 +139,15 @@
                 android:id="@+id/publishFeedbackBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/cabin_semibold"
-                android:textAlignment="center"
-                android:text="@string/publishFeedback"
-                android:textSize="18sp"
                 android:layout_marginTop="28dp"
+                android:fontFamily="@font/cabin_semibold"
+                android:text="@string/publishFeedback"
+                android:textAlignment="center"
+                android:textSize="18sp"
                 app:backgroundTint="@color/blueOff"
+                app:cornerRadius="8dp"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
-                app:cornerRadius="8dp"
                 tools:ignore="VisualLintButtonSize" />
 
             <!-- Note -->
@@ -154,9 +158,9 @@
                 android:layout_marginBottom="36dp"
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/publishNote"
-                android:textColor="@color/greyNoteDarker4"
                 android:textAlignment="center"
-                android:textSize="18sp"/>
+                android:textColor="@color/greyNoteDarker4"
+                android:textSize="18sp" />
 
         </LinearLayout>
     </ScrollView>
