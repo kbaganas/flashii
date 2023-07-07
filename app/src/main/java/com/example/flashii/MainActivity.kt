@@ -42,6 +42,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.flashii.databinding.ActivityMainBinding
 import com.google.android.material.button.MaterialButton
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 import kotlin.time.Duration.Companion.minutes
 
 class MainActivity : AppCompatActivity() {
@@ -91,6 +94,7 @@ class MainActivity : AppCompatActivity() {
     private val checkInterval50 : Long = 5000 // checkStatus after interval
     private lateinit var token : Token // token regarding which key is pressed
     private var tokenMessageText : Token = Token.FLASHLIGHT // token regarding which feature is using the message text
+    private lateinit var reviewInfo : ReviewInfo
 
     enum class ACTION {
         CREATE,
@@ -166,6 +170,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sensorManager : SensorManager
     private lateinit var sensorEventListener : SensorEventListener
     private lateinit var connectivityCallback: ConnectivityManager.NetworkCallback
+    private lateinit var reviewManager : ReviewManager
     private lateinit var incomingCallReceiver : BroadcastReceiver
     private lateinit var incomingSMSReceiver : BroadcastReceiver
     private lateinit var batteryReceiver : BroadcastReceiver
@@ -922,10 +927,30 @@ class MainActivity : AppCompatActivity() {
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // rate button
+        reviewManager = ReviewManagerFactory.create(this)
+        val request = reviewManager.requestReviewFlow()
+
+        request.addOnCompleteListener { requestInfo ->
+            if (requestInfo.isSuccessful) {
+                reviewInfo = requestInfo.result
+                // Use the reviewInfo to launch the review flow
+                Log.e("RateActivity", "request addOnCompleteListener: reviewInfo is ready}")
+
+            } else {
+                // Handle the error case
+                Log.e("RateActivity", "request addOnCompleteListener: reviewErrorCode = ${requestInfo.exception.toString()}")
+            }
+        }
+
         rateBtn = findViewById(R.id.rateBtnId)
         rateBtn.setOnClickListener{
-            val intent = Intent(this, RateActivity::class.java)
-            startActivity(intent)
+            val flow = reviewManager.launchReviewFlow(this, reviewInfo)
+            flow.addOnCompleteListener { _ ->
+                // The flow has finished. The API does not indicate whether the user
+                // reviewed or not, or even whether the review dialog was shown. Thus, no
+                // matter the result, we continue our app flow.
+                Log.e("RateActivity", "flow addOnCompleteListener: complete")
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -2186,20 +2211,8 @@ class SettingsActivity : AppCompatActivity() {
         }
         return CheckResult.EMPTY
     }
-
-
 }
 
-class RateActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.rate)
-        val closeButton = findViewById<ImageButton>(R.id.rateGoBackArrow)
-        closeButton.setOnClickListener {
-            finish()
-        }
-    }
-}
 
 class DonateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
