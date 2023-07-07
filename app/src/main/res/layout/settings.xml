@@ -179,7 +179,7 @@
                             android:layout_marginEnd="12dp"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
-                            android:text="@string/settingsFlickeringNote"
+                            android:text="@string/settingsHzNote"
                             android:textSize="12sp"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>

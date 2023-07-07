@@ -47,10 +47,11 @@
     <string name="settingsComments">Personalize Features specs below\naccording to the defined Ranges.</string>
     <string name="settingsFlickeringTitle">Max flickering frequency</string>
     <string name="settingsFlickeringNote">Range from 3 to 180 seconds (default 10)</string>
+    <string name="settingsHzNote">Range from 10 to 100 Hz (default 10)</string>
     <string name="settingsTimerTitle">Timer\'s max time</string>
     <string name="settingsTimerNote">Range from 240 (default) to 640 minutes.</string>
     <string name="settingsTiltTitle">Tilt sensitivity angle</string>
-    <string name="settingsTiltNote">Range from 65 to 80 degrees (default)</string>
+    <string name="settingsTiltNote">Range from 45 to 80 degrees (default)</string>
     <string name="settingsSoundTitle">Sound sensitivity threshold</string>
     <string name="settingsSoundNote">Range from 4000 to 20000 (default)</string>
     <string name="settingsFlickeringCallTitle">Flickering time on incoming Call</string>

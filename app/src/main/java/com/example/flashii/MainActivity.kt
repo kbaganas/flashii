@@ -912,7 +912,7 @@ class MainActivity : AppCompatActivity() {
                 maxFlickerDurationIncomingCall = data?.getIntExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall) ?: maxFlickerDurationIncomingCall
                 val maxTimerMinutesFromSettings = data?.getIntExtra("maxTimerMinutes", maxTimerMinutes.inWholeMinutes.toInt()) ?: maxTimerMinutes.inWholeMinutes.toInt()
                 maxTimerMinutes = maxTimerMinutesFromSettings.minutes
-                Log.i("MainActivity", "Data set in Settings are $maxFlickerHz,$maxTimerMinutesFromSettings,${maxTimerMinutes.inWholeMinutes.toInt()},$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+                Log.i("MainActivity", "Data from Settings are: $maxFlickerHz,$maxTimerMinutesFromSettings,${maxTimerMinutes.inWholeMinutes.toInt()},$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
             }
         }
 
@@ -1973,6 +1973,24 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var flickTimeIncSMSEditText : EditText
     private lateinit var flickTimeBatteryEditText : EditText
     private lateinit var flickTimeAltitudeEditText : EditText
+    private val _hzLow = 10
+    private val _hzHigh = 100
+    private val _flickTimeLow = 3
+    private val _flickTimeHigh = 180
+    private val _timerLow = 240
+    private val _timerHigh = 640
+    private val _angleLow = 45
+    private val _angleHigh = 80
+    private val _soundLow = 4000
+    private val _soundHigh = 20000
+
+    enum class CheckResult {
+        SET,
+        EMPTY,
+        FAULT
+    }
+
+
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -2005,19 +2023,15 @@ class SettingsActivity : AppCompatActivity() {
         val settingsApplyBtn = findViewById<Button>(R.id.settingsApplyBtn)
         settingsApplyBtn.setOnClickListener {
             // Return the updated maxFlickerHz value back to MainActivity
-            getValues()
-            Log.i("MainActivity", "In Settings are $maxFlickerHz, $maxTimerMinutes,$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+            Log.i("SettingsActivity", "Input data are: $maxFlickerHz, $maxTimerMinutes,$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
             val resultIntent = Intent()
-            resultIntent.putExtra("maxFlickerHz", maxFlickerHz)
-            resultIntent.putExtra("maxTimerMinutes", maxTimerMinutes)
-            resultIntent.putExtra("sensitivityAngle", sensitivityAngle)
-            resultIntent.putExtra("sensitivitySoundThreshold", sensitivitySoundThreshold)
-            resultIntent.putExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall)
-            resultIntent.putExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS)
-            resultIntent.putExtra("maxFlickerDurationBattery", maxFlickerDurationBattery)
-            resultIntent.putExtra("maxFlickerDurationAltitude", maxFlickerDurationAltitude)
-            setResult(RESULT_OK, resultIntent)
-            finish()
+            if (getValues(resultIntent)) {
+                Log.i("SettingsActivity", "Wrong values inserted by user")
+            }
+            else {
+                setResult(RESULT_OK, resultIntent)
+                finish()
+            }
         }
 
         // reset button
@@ -2034,26 +2048,134 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setValues() {
-        maxFlickerHzEditText.setText(maxFlickerHz.toString())
-        maxTimerTimeEditText.setText(maxTimerMinutes.toString())
-        tiltAngleEditText.setText(sensitivityAngle.toString())
-        soundThresholdEditText.setText(sensitivitySoundThreshold.toString())
-        flickTimeIncCallEditText.setText(maxFlickerDurationIncomingCall.toString())
-        flickTimeIncSMSEditText.setText(maxFlickerDurationIncomingSMS.toString())
-        flickTimeBatteryEditText.setText(maxFlickerDurationBattery.toString())
-        flickTimeAltitudeEditText.setText(maxFlickerDurationAltitude.toString())
+        maxFlickerHzEditText.hint = maxFlickerHz.toString()
+        maxFlickerHzEditText.hint = maxFlickerHz.toString()
+        maxTimerTimeEditText.hint = maxTimerMinutes.toString()
+        tiltAngleEditText.hint = sensitivityAngle.toString()
+        soundThresholdEditText.hint = sensitivitySoundThreshold.toString()
+        flickTimeIncCallEditText.hint = maxFlickerDurationIncomingCall.toString()
+        flickTimeIncSMSEditText.hint = maxFlickerDurationIncomingSMS.toString()
+        flickTimeBatteryEditText.hint = maxFlickerDurationBattery.toString()
+        flickTimeAltitudeEditText.hint = maxFlickerDurationAltitude.toString()
     }
 
-    private fun getValues() {
-        maxFlickerHz = maxFlickerHzEditText.text.toString().toInt()
-        maxTimerMinutes = maxTimerTimeEditText.text.toString().toInt()
-        sensitivityAngle = tiltAngleEditText.text.toString().toInt()
-        sensitivitySoundThreshold = soundThresholdEditText.text.toString().toInt()
-        maxFlickerDurationIncomingCall = flickTimeIncCallEditText.text.toString().toInt()
-        maxFlickerDurationIncomingSMS = flickTimeIncSMSEditText.text.toString().toInt()
-        maxFlickerDurationBattery = flickTimeBatteryEditText.text.toString().toInt()
-        maxFlickerDurationAltitude = flickTimeAltitudeEditText.text.toString().toInt()
+    private fun getValues(resultIntent : Intent) : Boolean {
+
+        var wrongValueInsertedByUser = false
+
+        when (checkTextValue(maxFlickerHzEditText, _hzLow, _hzHigh)) {
+            CheckResult.SET -> {
+                maxFlickerHz = maxFlickerHzEditText.text.toString().toInt()
+                resultIntent.putExtra("maxFlickerHz", maxFlickerHz)
+            }
+            CheckResult.FAULT -> {
+                wrongValueInsertedByUser = true
+            }
+            else -> {}
+        }
+
+        when (checkTextValue(maxTimerTimeEditText, _timerLow, _timerHigh)) {
+            CheckResult.SET -> {
+                maxTimerMinutes = maxTimerTimeEditText.text.toString().toInt()
+                resultIntent.putExtra("maxTimerMinutes", maxTimerMinutes)
+            }
+            CheckResult.FAULT -> {
+                wrongValueInsertedByUser = true
+            }
+            else -> {}
+        }
+
+        when (checkTextValue(tiltAngleEditText, _angleLow, _angleHigh)) {
+            CheckResult.SET -> {
+                sensitivityAngle = tiltAngleEditText.text.toString().toInt()
+                resultIntent.putExtra("sensitivityAngle", sensitivityAngle)
+            }
+            CheckResult.FAULT -> {
+                wrongValueInsertedByUser = true
+            }
+            else -> {}
+        }
+
+        when (checkTextValue(soundThresholdEditText, _soundLow, _soundHigh)) {
+            CheckResult.SET -> {
+                sensitivitySoundThreshold = soundThresholdEditText.text.toString().toInt()
+                resultIntent.putExtra("sensitivitySoundThreshold", sensitivitySoundThreshold)
+            }
+            CheckResult.FAULT -> {
+                wrongValueInsertedByUser = true
+            }
+            else -> {}
+        }
+
+        when (checkTextValue(flickTimeIncCallEditText, _flickTimeLow, _flickTimeHigh)) {
+            CheckResult.SET -> {
+                maxFlickerDurationIncomingCall = flickTimeIncCallEditText.text.toString().toInt()
+                resultIntent.putExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall)
+            }
+            CheckResult.FAULT -> {
+                wrongValueInsertedByUser = true
+            }
+            else -> {}
+        }
+
+        when (checkTextValue(flickTimeIncSMSEditText, _flickTimeLow, _flickTimeHigh)) {
+            CheckResult.SET -> {
+                maxFlickerDurationIncomingSMS = flickTimeIncSMSEditText.text.toString().toInt()
+                resultIntent.putExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS)
+            }
+            CheckResult.FAULT -> {
+                wrongValueInsertedByUser = true
+            }
+            else -> {}
+        }
+
+        when (checkTextValue(flickTimeAltitudeEditText, _flickTimeLow, _flickTimeHigh)) {
+            CheckResult.SET -> {
+                maxFlickerDurationAltitude = flickTimeAltitudeEditText.text.toString().toInt()
+                resultIntent.putExtra("maxFlickerDurationAltitude", maxFlickerDurationAltitude)
+            }
+            CheckResult.FAULT -> {
+                wrongValueInsertedByUser = true
+            }
+            else -> {}
+        }
+
+        when (checkTextValue(flickTimeBatteryEditText, _flickTimeLow, _flickTimeHigh)) {
+            CheckResult.SET -> {
+                maxFlickerDurationBattery = flickTimeBatteryEditText.text.toString().toInt()
+                resultIntent.putExtra("maxFlickerDurationBattery", maxFlickerDurationBattery)
+            }
+            CheckResult.FAULT -> {
+                wrongValueInsertedByUser = true
+            }
+            else -> {}
+        }
+
+        return wrongValueInsertedByUser
     }
+
+    private fun checkTextValue (eText : EditText, boundLow : Int, boundHigh : Int) : CheckResult {
+        try {
+            if (eText.text.toString().isNotEmpty()) {
+                val value = eText.text.toString().toInt()
+                return if (value in boundLow..boundHigh) {
+                    eText.setTextColor(Color.BLACK)
+                    CheckResult.SET
+                } else {
+                    Log.e("SettingsActivity", "checkTextValue(): value $value out of bounds [$boundLow - $boundHigh] for ${resources.getResourceName(eText.id)}")
+                    eText.setTextColor(Color.RED)
+                    CheckResult.FAULT
+                }
+            }
+        }
+        catch (e : java.lang.Exception) {
+            Log.e("SettingsActivity", "checkTextValue(): error $e")
+            return CheckResult.FAULT
+        }
+        return CheckResult.EMPTY
+    }
+
+
 }
 
 class RateActivity : AppCompatActivity() {
