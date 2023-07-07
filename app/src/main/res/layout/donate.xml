@@ -22,7 +22,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp">
 
@@ -35,6 +35,17 @@
                     android:src="@drawable/arrow_left"
                     android:contentDescription="@string/backArrow"
                     tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/Donate"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="48dp"
+                    android:textSize="32sp" />
+
             </LinearLayout>
 
             <!-- Title -->
@@ -42,10 +53,10 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="46dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:text="@string/donateText"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 android:textAlignment="center"
                 android:textStyle="bold"/>
 
@@ -53,11 +64,11 @@
                 android:id="@+id/donate1Btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="36dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/dollar1"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textColor="@color/greyNoteDarker3"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
@@ -73,7 +84,7 @@
                 android:textAlignment="center"
                 android:text="@string/dollar10"
                 android:textColor="@color/greyNoteDarker3"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:layout_marginTop="8dp"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
@@ -90,7 +101,7 @@
                 android:textAlignment="center"
                 android:text="@string/dollar100"
                 android:textColor="@color/greyNoteDarker3"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
@@ -126,7 +137,7 @@
                     android:text="@string/or"
                     android:layout_marginHorizontal="5dp"
                     android:gravity="center_vertical|center"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <View
                     android:id="@+id/secondDivider"
@@ -152,7 +163,7 @@
                 android:inputType="phone"
                 android:textAlignment="center"
                 android:textColorHint="@color/greyNoteDarker4"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:backgroundTint="@color/blueOffBack4"
                 tools:ignore="VisualLintTextFieldSize" />
 
@@ -163,7 +174,7 @@
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/donate"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:backgroundTint="@color/blueOff"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"

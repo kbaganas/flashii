@@ -32,7 +32,7 @@
     <string name="donateText">Thank you for donating!</string>
     <string name="rateText">Your feedback is appreciated!</string>
     <string name="publishFeedback">PUBLISH FEEDBACK</string>
-    <string name="publishNote">Your review will be posted to the Google Play store</string>
+    <string name="publishNote">Your review will be posted to\nthe Google Play store</string>
     <string name="howDidWeDo">How did we do?</string>
     <string name="careToShare">Care to share more about it?</string>
     <string name="dollar1">$1</string>
@@ -44,7 +44,7 @@
     <string name="enterValue">Enter value</string>
     <string name="applyChanges">APPLY CHANGES</string>
 
-    <string name="settingsComments">Personalize Features specs below\naccording to the defined Ranges.</string>
+    <string name="settingsComments">Personalize Feature specs\naccording to ranges.</string>
     <string name="settingsFlickeringTitle">Max flickering frequency</string>
     <string name="settingsFlickeringNote">Range from 3 to 180 seconds (default 10)</string>
     <string name="settingsHzNote">Range from 10 to 100 Hz (default 10)</string>
@@ -84,7 +84,6 @@
     <string name="infoFlickering">Flashlight will be flickering at the frequency (in Hertz) you specify in the seekbar. By default frequency ranges from 1 to 10Hz.\n\nNote that you can configure the max frequency of 10Hz to the desired value in the Settings view.</string>
     <string name="infoAltitude">Set a specific Altitude height in meters (m) at which you want to get notified by flashlight flickering.\n\nWhen Altitude is reached, the flashlight will flicker for 15 seconds (default) and the button shall change to the checked one.\n\nFeature is only available if you permit Location rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoAltitudeCheck">Altitude specified has been reached. Flashlight will be flickering for 15seconds, unless you deactivate the feature.</string>
-
     <string name="infoNetwork">Based on your phone\'s current network connection status, you \'ll get notified by flashlight flickering when\n\na) provider\'s Network signal, Data or WiFi connection are lost, \n\nb) provider\'s Network signal, Data or WiFi are found.\n\n</string>
 
     <string name="maxHz">Max flickering frequency:\nRange from 10Hz (default) to 100Hz.</string>
@@ -107,6 +106,8 @@
     <string name="flashlightFeature">Flashlight On/Off</string>
     <string name="sosFeature">Send SOS</string>
     <string name="Feature">Feature</string>
+    <string name="Rate">Rate</string>
+    <string name="Donate">Donate</string>
     <string name="attributeDescription">Attribute description</string>
     <string name="attribute">Attribute</string>
     <string name="Specification">Specification</string>

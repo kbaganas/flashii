@@ -38,12 +38,15 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/arrow_left" />
 
-                <View
-                    android:id="@+id/firstDivider"
+                <TextView
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/settings"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1" />
+                    android:gravity="center"
+                    android:textSize="32sp" />
 
                 <Button
                     android:id="@+id/resetBtnId"
@@ -51,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/reset"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     app:backgroundTint="@color/blueOff"
                     app:cornerRadius="8dp"
                     app:strokeColor="@color/whiteCollar"
@@ -64,21 +67,11 @@
                 android:id="@+id/rateText1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="46dp"
                 android:fontFamily="@font/cabin_semibold"
-                android:text="@string/settings"
-                android:textAlignment="center"
-                android:textSize="26sp" />
-
-            <TextView
-                android:id="@+id/rateText2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/cabin_regular"
                 android:text="@string/settingsComments"
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -722,7 +715,7 @@
                 android:fontFamily="@font/cabin_semibold"
                 android:text="@string/applyChanges"
                 android:textAlignment="center"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 app:backgroundTint="@color/blueOff"
                 app:cornerRadius="8dp"
                 app:strokeColor="@color/whiteCollar"

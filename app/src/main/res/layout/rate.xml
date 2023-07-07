@@ -22,7 +22,7 @@
 
             <!-- arrow -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp">
 
@@ -34,6 +34,17 @@
                     android:contentDescription="@string/backArrow"
                     android:scaleType="fitStart"
                     android:src="@drawable/arrow_left" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/Rate"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="48dp"
+                    android:textSize="32sp" />
+
             </LinearLayout>
 
             <!-- Title -->
@@ -41,21 +52,21 @@
                 android:id="@+id/rateText1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="46dp"
                 android:fontFamily="@font/cabin_semibold"
                 android:text="@string/rateText"
                 android:textAlignment="center"
-                android:textSize="26sp"/>
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/rateText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="36dp"
                 android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
                 android:text="@string/howDidWeDo"
-                android:textSize="16sp"/>
+                android:textSize="18sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,7 +100,7 @@
                 android:text="@string/careToShare"
                 android:layout_marginTop="18dp"
                 android:textAlignment="center"
-                android:textSize="16sp"/>
+                android:textSize="18sp"/>
 
             <EditText
                 android:id="@+id/commentsEditText"
@@ -108,7 +119,7 @@
                 android:minHeight="120dp"
                 android:padding="8dp"
                 android:textColorHint="@color/greyNoteDarker1"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 tools:ignore="VisualLintTextFieldSize" />
 
 
@@ -127,7 +138,7 @@
                 android:fontFamily="@font/cabin_semibold"
                 android:textAlignment="center"
                 android:text="@string/publishFeedback"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 android:layout_marginTop="28dp"
                 app:backgroundTint="@color/blueOff"
                 app:strokeColor="@color/whiteCollar"
@@ -145,7 +156,7 @@
                 android:text="@string/publishNote"
                 android:textColor="@color/greyNoteDarker4"
                 android:textAlignment="center"
-                android:textSize="14sp"/>
+                android:textSize="18sp"/>
 
         </LinearLayout>
     </ScrollView>
