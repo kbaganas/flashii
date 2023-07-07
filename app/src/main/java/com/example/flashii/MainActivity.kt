@@ -929,6 +929,7 @@ class MainActivity : AppCompatActivity() {
         // rate button
         reviewManager = ReviewManagerFactory.create(this)
         val request = reviewManager.requestReviewFlow()
+        rateBtn = findViewById(R.id.rateBtnId)
 
         request.addOnCompleteListener { requestInfo ->
             if (requestInfo.isSuccessful) {
@@ -938,18 +939,23 @@ class MainActivity : AppCompatActivity() {
 
             } else {
                 // Handle the error case
+                setBtnImage(rateBtn, R.drawable.rate_no_bind)
                 Log.e("RateActivity", "request addOnCompleteListener: reviewErrorCode = ${requestInfo.exception.toString()}")
             }
         }
 
-        rateBtn = findViewById(R.id.rateBtnId)
         rateBtn.setOnClickListener{
-            val flow = reviewManager.launchReviewFlow(this, reviewInfo)
-            flow.addOnCompleteListener { _ ->
-                // The flow has finished. The API does not indicate whether the user
-                // reviewed or not, or even whether the review dialog was shown. Thus, no
-                // matter the result, we continue our app flow.
-                Log.e("RateActivity", "flow addOnCompleteListener: complete")
+            try {
+                val flow = reviewManager.launchReviewFlow(this, reviewInfo)
+                flow.addOnCompleteListener { _ ->
+                    // The flow has finished. The API does not indicate whether the user
+                    // reviewed or not, or even whether the review dialog was shown. Thus, no
+                    // matter the result, we continue our app flow.
+                    Log.e("RateActivity", "flow addOnCompleteListener: complete")
+                }
+            }
+            catch (e : java.lang.Exception) {
+                Log.e("RateActivity", "Probably no service bind with Google Play")
             }
         }
 
