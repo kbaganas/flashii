@@ -406,7 +406,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 setMessageToken(Token.INCOMING_CALL)
-                setMessageText("To use the feature, manually provide\nCALL permissions to $applicationName in your phone's Settings", hideMessageTextAfter35, Token.INCOMING_CALL)
+                setMessageText("To use the feature, manually provide\nCall access rights to $applicationName", hideMessageTextAfter35, Token.INCOMING_CALL)
             }
         }
 
@@ -477,7 +477,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 setMessageToken(Token.SOUND)
-                setMessageText("To use the feature, manually provide\nAUDIO permissions to $applicationName in your phone's Settings", hideMessageTextAfter35, Token.SOUND)
+                setMessageText("To use the feature, manually provide Audio access rights to $applicationName", hideMessageTextAfter35, Token.SOUND)
             }
         }
 
@@ -570,7 +570,7 @@ class MainActivity : AppCompatActivity() {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for SMS")
                 setMessageToken(Token.INCOMING_SMS)
-                setMessageText("To use the feature, manually provide\nSMS permissions to $applicationName in your phone's Settings", hideMessageTextAfter35, Token.INCOMING_SMS)
+                setMessageText("To use the feature, manually provide\nSMS access rights to $applicationName", hideMessageTextAfter35, Token.INCOMING_SMS)
             }
         }
 
@@ -861,7 +861,7 @@ class MainActivity : AppCompatActivity() {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for ALTITUDE")
                 setMessageToken(Token.ALTITUDE)
-                setMessageText("To use the feature, manually provide LOCATION\npermissions to $applicationName in your phone's Settings", hideMessageTextAfter35, Token.ALTITUDE)
+                setMessageText("To use the feature, manually provide\nLOCATION access rights to $applicationName", hideMessageTextAfter35, Token.ALTITUDE)
             }
         }
 

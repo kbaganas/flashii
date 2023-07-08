@@ -118,4 +118,5 @@
     <!-- Dimensions -->
     <dimen name="MainImageSize">76dp</dimen>
     <dimen name="MainBottomRowImageSize">56dp</dimen>
+    <dimen name="MainTextHeight">86dp</dimen>
 </resources>
