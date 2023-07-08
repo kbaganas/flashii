@@ -7,299 +7,297 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_r1"
     android:backgroundTint="#00FFFFFF"
-    tools:context=".MainActivity"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="-57dp">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/messageId"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/MainImageSize"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/button_selector"
+                android:fontFamily="@font/cabin_semibold"
+                android:gravity="center|center_vertical"
+                android:textColor="#3F64A1"
+                android:maxLines="2"
+                android:autoSizeMinTextSize = "16sp"
+                android:autoSizeMaxTextSize="20sp"
+                android:autoSizeTextType="uniform"
+                android:textStyle="bold"/>
+
+            <SeekBar
+                android:id="@+id/flickeringBarId"
+                android:layout_width="250dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_selector"
+                android:elevation="10dp"
+                android:progressTint="#47C4EE"
+                android:rotation="0"
+                android:scaleX="1.25"
+                android:scaleY="1.25"/>
+
+            <!-- 1st row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <CheckedTextView
+                        android:id="@+id/timerThresholdId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"/>
+                    <ImageButton
+                        android:id="@+id/timerBtnId"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/MainImageSize"
+                        android:background="@drawable/button_selector"
+                        android:contentDescription="@string/TimerContentDescription"
+                        android:elevation="10dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/timer_off_m3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="26dp"
+                    android:orientation="vertical">
+                    <CheckedTextView
+                        android:id="@+id/targetAltitudeLevelId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:visibility="invisible"/>
+                    <ImageButton
+                        android:id="@+id/altitudeBtnId"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/MainImageSize"
+                        android:background="@drawable/button_selector"
+                        android:contentDescription="@string/AltitudeContentDescription"
+                        android:elevation="10dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/altitude_off_m3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <CheckedTextView
+                        android:id="@+id/powerLevelId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"/>
+                    <ImageButton
+                        android:id="@+id/batteryBtnId"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/MainImageSize"
+                        android:background="@drawable/button_selector"
+                        android:contentDescription="@string/BatteryContentDescription"
+                        android:elevation="10dp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/battery_off_m3" />
+                </LinearLayout>
+
+            </LinearLayout>
 
 
-    <SeekBar
-        android:id="@+id/flickeringBarId"
-        android:layout_width="250dp"
-        android:layout_height="28dp"
-        android:layout_marginBottom="10dp"
-        android:progressTint="#47C4EE"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:rotation="0"
-        android:scaleX="1.25"
-        android:scaleY="1.25"
-        app:layout_constraintBottom_toTopOf="@+id/timerThresholdId"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messageId" />
+            <!-- 2nd row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:gravity="center">
 
-    <ImageButton
-        android:id="@+id/switchFlickerIncomingCallsId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:contentDescription="@string/IncomingCallContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/smsBtnId"
-        app:layout_constraintEnd_toStartOf="@+id/flickerFlashLightId"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerBtnId"
-        app:srcCompat="@drawable/incoming_call_off_m3" />
+                <ImageButton
+                    android:id="@+id/switchFlickerIncomingCallsId"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="@drawable/button_selector"
+                    android:contentDescription="@string/IncomingCallContentDescription"
+                    android:elevation="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/incoming_call_off_m3" />
 
-    <ImageButton
-        android:id="@+id/incomingSoundBtnId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:contentDescription="@string/IncomingSoundContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/sosBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/sosBtn"
-        app:layout_constraintTop_toTopOf="@+id/sosBtn"
-        app:srcCompat="@drawable/sound_off_m3" />
+                <ImageButton
+                    android:id="@+id/smsBtnId"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="@drawable/button_selector"
+                    android:contentDescription="@string/IncomingSMSContentDescription"
+                    android:elevation="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/incoming_sms_off_m3"/>
 
-    <CheckedTextView
-        android:id="@+id/powerLevelId"
-        android:layout_width="82dp"
-        android:layout_height="21dp"
-        android:layout_marginBottom="83dp"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/batteryBtnId"
-        app:layout_constraintEnd_toStartOf="@+id/batteryBtnId"
-        app:layout_constraintStart_toEndOf="@+id/batteryBtnId" />
+                <ImageButton
+                    android:id="@+id/incomingSoundBtnId"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="@drawable/button_selector"
+                    android:contentDescription="@string/IncomingSoundContentDescription"
+                    android:elevation="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/sound_off_m3"/>
 
-    <ImageButton
-        android:id="@+id/networkConnectionBtn"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/flickerFlashLightId"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/flickerFlashLightId"
-        app:layout_constraintTop_toTopOf="@+id/flickerFlashLightId"
-        app:srcCompat="@drawable/network_off_m3" />
+            </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/batteryBtnId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:contentDescription="@string/BatteryContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/altitudeBtnId"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/altitudeBtnId"
-        app:layout_constraintTop_toTopOf="@+id/altitudeBtnId"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/battery_off_m3" />
 
-    <ImageButton
-        android:id="@+id/timerBtnId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:contentDescription="@string/TimerContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/switchFlickerIncomingCallsId"
-        app:layout_constraintEnd_toStartOf="@+id/altitudeBtnId"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flickeringBarId"
-        app:layout_constraintVertical_bias="0.5"
-        app:srcCompat="@drawable/timer_off_m3" />
+            <!-- 3rd row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/altitudeBtnId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:contentDescription="@string/AltitudeContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/timerBtnId"
-        app:layout_constraintEnd_toStartOf="@+id/batteryBtnId"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/timerBtnId"
-        app:layout_constraintTop_toTopOf="@+id/timerBtnId"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/altitude_off_m3" />
+                <ImageButton
+                    android:id="@+id/sosBtn"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="@drawable/button_selector"
+                    android:contentDescription="@string/SOSBtnContentDescription"
+                    android:elevation="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/sos_off_m3" />
 
-    <ImageButton
-        android:id="@+id/sosBtn"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:contentDescription="@string/SOSBtnContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/smsBtnId"
-        app:layout_constraintEnd_toStartOf="@+id/incomingSoundBtnId"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/smsBtnId"
-        app:layout_constraintTop_toTopOf="@+id/smsBtnId"
-        app:srcCompat="@drawable/sos_off_m3" />
+                <ImageButton
+                    android:id="@+id/incomingShakeBtnId"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="@drawable/button_selector"
+                    android:contentDescription="@string/ShakenBtnContentDescription"
+                    android:elevation="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/tilt_off_m3"/>
 
-    <CheckedTextView
-        android:id="@+id/targetAltitudeLevelId"
-        android:layout_width="82dp"
-        android:layout_height="21dp"
-        android:layout_marginBottom="83dp"
-        android:textAlignment="center"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/altitudeBtnId"
-        app:layout_constraintEnd_toEndOf="@+id/altitudeBtnId"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/altitudeBtnId" />
+                <ImageButton
+                    android:id="@+id/networkConnectionBtn"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="@drawable/button_selector"
+                    android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
+                    android:elevation="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/network_off_m3" />
 
-    <ImageButton
-        android:id="@+id/flickerFlashLightId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:contentDescription="@string/FlashlightFlickeringContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/switchFlickerIncomingCallsId"
-        app:layout_constraintEnd_toStartOf="@+id/networkConnectionBtn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/switchFlickerIncomingCallsId"
-        app:layout_constraintTop_toTopOf="@+id/switchFlickerIncomingCallsId"
-        app:srcCompat="@drawable/flickering_off_m3" />
 
-    <ImageButton
-        android:id="@+id/smsBtnId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:contentDescription="@string/IncomingSMSContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toStartOf="@+id/sosBtn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchFlickerIncomingCallsId"
-        app:srcCompat="@drawable/incoming_sms_off_m3" />
+            </LinearLayout>
 
-    <CheckedTextView
-        android:id="@+id/timerThresholdId"
-        android:layout_width="82dp"
-        android:layout_height="20dp"
-        android:layout_marginBottom="83dp"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/timerBtnId"
-        app:layout_constraintEnd_toEndOf="@+id/timerBtnId"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="@+id/timerBtnId" />
+            <!-- 4th row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/flashLightBtnId"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/FlashlightBtnContentDescription"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@+id/infoBtnId"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/incomingShakeBtnId"
-        app:layout_constraintVertical_bias="0.5"
-        app:srcCompat="@drawable/flashlight_off_m3" />
+                <ImageButton
+                    android:id="@+id/flickerFlashLightId"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="@drawable/button_selector"
+                    android:contentDescription="@string/FlashlightFlickeringContentDescription"
+                    android:elevation="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/flickering_off_m3"/>
 
-    <ImageButton
-        android:id="@+id/incomingShakeBtnId"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/button_selector"
-        android:elevation="10dp"
-        android:contentDescription="@string/ShakenBtnContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/smsBtnId"
-        app:srcCompat="@drawable/tilt_off_m3" />
+            </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/infoBtnId"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="16dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/GeneralContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/settingsBtnId"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/info" />
+            <ImageButton
+                android:id="@+id/flashLightBtnId"
+                android:layout_width="250dp"
+                android:layout_height="60dp"
+                android:background="#00FFFFFF"
+                android:contentDescription="@string/FlashlightBtnContentDescription"
+                android:scaleType="centerInside"
+                android:layout_marginTop="16dp"
+                app:srcCompat="@drawable/flashlight_off_m3" />
 
-    <ImageButton
-        android:id="@+id/rateBtnId"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/GeneralContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/settingsBtnId"
-        app:layout_constraintEnd_toStartOf="@+id/donateBtnId"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/settingsBtnId"
-        app:layout_constraintTop_toTopOf="@+id/settingsBtnId"
-        app:srcCompat="@drawable/rate" />
+        </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/donateBtnId"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/GeneralContentDescription"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/rateBtnId"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/rateBtnId"
-        app:layout_constraintTop_toTopOf="@+id/rateBtnId"
-        app:srcCompat="@drawable/donate" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="160dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/button_selector"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/messageId"
-        android:layout_width="312dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/cabin_semibold"
-        android:textAlignment="center"
-        android:textColor="#3F64A1"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/flickeringBarId"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageButton
+                android:id="@+id/infoBtnId"
+                android:layout_width="@dimen/MainBottomRowImageSize"
+                android:layout_height="@dimen/MainBottomRowImageSize"
+                android:background="#00FFFFFF"
+                android:contentDescription="@string/GeneralContentDescription"
+                android:scaleType="fitCenter"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/info"
+                tools:ignore="DuplicateSpeakableTextCheck,NestedWeights" />
 
-    <ImageButton
-        android:id="@+id/settingsBtnId"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="#00FFFFFF"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/infoBtnId"
-        app:layout_constraintEnd_toStartOf="@+id/rateBtnId"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/infoBtnId"
-        app:layout_constraintTop_toTopOf="@+id/infoBtnId"
-        app:srcCompat="@drawable/settings" />
+            <ImageButton
+                android:id="@+id/rateBtnId"
+                android:layout_width="@dimen/MainBottomRowImageSize"
+                android:layout_height="@dimen/MainBottomRowImageSize"
+                android:background="#00FFFFFF"
+                android:contentDescription="@string/GeneralContentDescription"
+                android:scaleType="fitCenter"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/rate" />
+
+            <ImageButton
+                android:id="@+id/donateBtnId"
+                android:layout_width="@dimen/MainBottomRowImageSize"
+                android:layout_height="@dimen/MainBottomRowImageSize"
+                android:background="#00FFFFFF"
+                android:contentDescription="@string/GeneralContentDescription"
+                android:scaleType="fitCenter"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/donate" />
+
+            <ImageButton
+                android:id="@+id/settingsBtnId"
+                android:layout_width="@dimen/MainBottomRowImageSize"
+                android:layout_height="@dimen/MainBottomRowImageSize"
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                android:layout_weight="1"
+                android:contentDescription="@string/GeneralContentDescription"
+                app:srcCompat="@drawable/settings" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

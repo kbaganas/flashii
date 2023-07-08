@@ -112,42 +112,43 @@
                 android:id="@+id/dividers"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:gravity="center_horizontal"
-                android:textAlignment="center"
                 android:layout_marginTop="18dp"
-                android:orientation="horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:textAlignment="center"
+                tools:ignore="TextSizeCheck">
 
                 <View
                     android:id="@+id/firstDivider"
                     android:layout_width="0dp"
-                    android:layout_weight="3"
                     android:layout_height="1dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:background="@color/blueOff"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/or"
-                    android:background="@color/blueOff"
                     tools:ignore="ExtraText" />
 
                 <TextView
                     android:id="@+id/textInDividers"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/cabin_regular"
-                    android:text="@string/or"
                     android:layout_marginHorizontal="5dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/cabin_regular"
                     android:gravity="center_vertical|center"
+                    android:text="@string/or"
                     android:textSize="18sp" />
 
                 <View
                     android:id="@+id/secondDivider"
                     android:layout_width="0dp"
-                    android:layout_weight="3"
                     android:layout_height="1dp"
-                    android:fontFamily="@font/cabin_semibold"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/or"
-                    android:background="@color/blueOff" />
+                    android:layout_weight="3"
+                    android:background="@color/blueOff"
+                    android:fontFamily="@font/cabin_semibold"
+                    android:text="@string/or" />
             </LinearLayout>
 
 
