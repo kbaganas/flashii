@@ -990,33 +990,41 @@ class MainActivity : AppCompatActivity() {
             ACTION.CREATE -> {
                 // CALL
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "requestPermissions for CALL")
                     ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), RequestKey.CALL.value)
                 }
                 else {
+                    Log.i("MainActivity", "requestPermissions CALL = TRUE")
                     permissionsKeys["CALL"] = true
                 }
 
                 // SMS
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "requestPermissions for SMS")
                     ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), RequestKey.SMS.value)
                 }
                 else {
+                    Log.i("MainActivity", "requestPermissions SMS = TRUE")
                     permissionsKeys["SMS"] = true
                 }
 
                 // AUDIO
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "requestPermissions for AUDIO")
                     ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), RequestKey.AUDIO.value)
                 }
                 else {
+                    Log.i("MainActivity", "requestPermissions AUDIO = TRUE")
                     permissionsKeys["AUDIO"] = true
                 }
 
                 // ALTITUDE
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "requestPermissions for ALTITUDE")
                     ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), RequestKey.ALTITUDE.value)
                 }
                 else {
+                    Log.i("MainActivity", "requestPermissions ALTITUDE = TRUE")
                     permissionsKeys["ALTITUDE"] = true
                 }
             }
@@ -1034,6 +1042,7 @@ class MainActivity : AppCompatActivity() {
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                         setBtnImage(incomingCallBtn, R.drawable.incoming_call_no_permission_m3)
+                        Log.i("MainActivity", "CALL permissions RESUME: CALL = FALSE ")
                         permissionsKeys["CALL"] = false
                     }
                 }
@@ -1048,6 +1057,7 @@ class MainActivity : AppCompatActivity() {
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
                         setBtnImage(incomingSMSBtn, R.drawable.incoming_sms_no_permission_m3)
+                        Log.i("MainActivity", "CALL permissions RESUME: SMS = FALSE ")
                         permissionsKeys["SMS"] = false
                     }
                 }
@@ -1062,6 +1072,7 @@ class MainActivity : AppCompatActivity() {
                 else {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                         setBtnImage(incomingSoundBtn, R.drawable.sound_no_permission_m3)
+                        Log.i("MainActivity", "CALL permissions RESUME: AUDIO = FALSE ")
                         permissionsKeys["AUDIO"] = false
                     }
                 }
@@ -1077,6 +1088,7 @@ class MainActivity : AppCompatActivity() {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         setAltitudeBtn(ACTION.NO_PERMISSION)
                         setAltitudeLevelDisplayText(ACTION.NO_PERMISSION)
+                        Log.i("MainActivity", "CALL permissions RESUME: ALTITUDE = FALSE ")
                         permissionsKeys["ALTITUDE"] = false
                     }
                 }
