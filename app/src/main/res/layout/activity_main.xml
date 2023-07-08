@@ -252,6 +252,16 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/settingsBtnId"
+                android:layout_width="@dimen/MainBottomRowImageSize"
+                android:layout_height="@dimen/MainBottomRowImageSize"
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                android:layout_weight="1"
+                android:contentDescription="@string/GeneralContentDescription"
+                app:srcCompat="@drawable/settings" />
+
+            <ImageButton
                 android:id="@+id/infoBtnId"
                 android:layout_width="@dimen/MainBottomRowImageSize"
                 android:layout_height="@dimen/MainBottomRowImageSize"
@@ -281,16 +291,6 @@
                 android:scaleType="fitCenter"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/donate" />
-
-            <ImageButton
-                android:id="@+id/settingsBtnId"
-                android:layout_width="@dimen/MainBottomRowImageSize"
-                android:layout_height="@dimen/MainBottomRowImageSize"
-                android:background="#00FFFFFF"
-                android:scaleType="fitCenter"
-                android:layout_weight="1"
-                android:contentDescription="@string/GeneralContentDescription"
-                app:srcCompat="@drawable/settings" />
 
         </LinearLayout>
     </LinearLayout>
