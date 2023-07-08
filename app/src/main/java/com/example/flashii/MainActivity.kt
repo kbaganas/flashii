@@ -1363,20 +1363,20 @@ class MainActivity : AppCompatActivity() {
                 when (action) {
                     ACTION.INIT -> {
                         Log.i("INIT", "INIT ALTITUDE")
-                        displayText = "Phone will be flickering at\nthe altitude of: ${displayValue.toInt()}m"
+                        displayText = "Current Altitude level is ${initAltitudeLevel}m\nGet notified at the Altitude:"
                         setMessageText(displayText, token = Token.ALTITUDE)
                     }
                     ACTION.PROGRESS -> {
                         Log.i("PROGRESS", "PROGRESS ALTITUDE")
-                        displayText = "Phone will be flickering at\nthe altitude of: ${displayValue.toInt()}m"
+                        displayText = "Current Altitude level is ${initAltitudeLevel}m\nGet notified at the Altitude: ${displayValue.toInt()}m"
                         setMessageText(displayText, hideMessageTextAfter35, Token.ALTITUDE)
                     }
                     ACTION.STOP -> {
-                        displayText = "Phone will be flickering at\nthe altitude of: ${displayValue.toInt()}m"
+                        displayText = "Current Altitude level is ${initAltitudeLevel}m\nGet notified at the Altitude: ${displayValue.toInt()}m"
                         setMessageText(displayText, hideMessageTextAfter35, Token.ALTITUDE)
                     }
                     else -> {
-                        displayText = "Phone will be flickering at\nthe altitude of: ${displayValue.toInt()}m"
+                        displayText = "Current Altitude level is ${initAltitudeLevel}m\nGet notified at the Altitude: ${displayValue.toInt()}m"
                         setMessageText(displayText, hideMessageTextAfter35, Token.ALTITUDE)
                     }
                 }
@@ -1385,23 +1385,19 @@ class MainActivity : AppCompatActivity() {
                 setMessageToken(Token.BATTERY)
                 when (action) {
                     ACTION.INIT -> {
-                        displayText = if (initBatteryLevel != minBattery) {
-                            "Phone will be flickering at\nbattery level: "
-                        } else {
-                            "Phone will be flickering at\nbattery level: "
-                        }
+                        displayText = "Current Battery power level is $initBatteryLevel%\nGet notified at Battery power:"
                         setMessageText(displayText, token = Token.BATTERY)
                     }
                     ACTION.PROGRESS -> {
-                        displayText = "Phone will be flickering at\nbattery level: ${displayValue.toInt()}%"
+                        displayText = "Current Battery power level is $initBatteryLevel%\nGet notified at Battery power: ${displayValue.toInt()}%"
                         setMessageText(displayText, hideMessageTextAfter35, Token.BATTERY)
                     }
                     ACTION.STOP -> {
-                        displayText = "Phone will be flickering at\nbattery level: ${displayValue.toInt()}%"
+                        displayText = "Current Battery power level is $initBatteryLevel%\nGet notified at Battery power: ${displayValue.toInt()}%"
                         setMessageText(displayText, hideMessageTextAfter35, Token.BATTERY)
                     }
                     else -> {
-                        displayText = "Phone will be flickering at\nbattery level: ${displayValue.toInt()}%"
+                        displayText = "Current Battery power level is $initBatteryLevel%\nGet notified at Battery power: ${displayValue.toInt()}%"
                         setMessageText(displayText, hideMessageTextAfter35, Token.BATTERY)
                     }
                 }
@@ -1906,59 +1902,96 @@ class MainActivity : AppCompatActivity() {
 //            setBtnImage(outInNetworkBtn, R.drawable.network_off_m3)
 //        }
 
-        if (featureToken != Token.BATTERY && isBatteryOn && !isBatteryThresholdSet) {
-            Log.i("MainActivity", "RAA - TURN OFF isBatteryOn")
-            turnOffFlashlight()
-            try {
-                unregisterReceiver(batteryReceiver)
-            }
-            catch (e : Exception) {
-                // We are OK, receiver is already unregistered
-            }
-            setBatteryBtn(ACTION.RESET)
-            isBatteryOn = false
-            resetSeekBar()
-            batteryThreshold = minBattery
-            initBatteryLevel = minBattery
-            setPowerLevelDisplayText(ACTION.RESET)
-            try {
-                timerLoopHandler.removeCallbacksAndMessages(null)
-            }
-            catch (e: java.lang.Exception) {
-                // DO nothing here
-            }
-        }
-
-        if (featureToken != Token.ALTITUDE && isAltitudeOn && !isAltitudeThresholdSet) {
-            Log.i("MainActivity", "RAA - TURN OFF isAltitudeOn")
-            turnOffFlashlight()
-            resetSeekBar()
-            sensorManager.unregisterListener(sensorEventListener)
-            setAltitudeBtn(ACTION.RESET)
-            isAltitudeOn = false
-            altitudeThreshold = minAltitude
-            setAltitudeLevelDisplayText(ACTION.RESET)
-            try {
-                timerLoopHandler.removeCallbacksAndMessages(null)
-            }
-            catch (e: java.lang.Exception) {
-                // DO nothing here
+        if (isBatteryOn) {
+            if (featureToken != Token.BATTERY) {
+                if (!isBatteryThresholdSet) {
+                    Log.i("MainActivity", "RAA - TURN OFF isBatteryOn")
+                    isBatteryOn = false
+                    batteryThreshold = minBattery
+                    initBatteryLevel = minBattery
+                    turnOffFlashlight()
+                    resetSeekBar()
+                    setBatteryBtn(ACTION.RESET)
+                    setPowerLevelDisplayText(ACTION.RESET)
+                    try {
+                        unregisterReceiver(batteryReceiver)
+                        timerLoopHandler.removeCallbacksAndMessages(null)
+                    }
+                    catch (e : Exception) {
+                        // We are OK, receiver is already unregistered
+                    }
+                }
+                else {
+                    Log.i("MainActivity", "RAA - TURN OFF callbacks (BATTERY)")
+                    try {
+                        loopHandler.removeCallbacksAndMessages(null)
+                        messageLoopHandler.removeCallbacksAndMessages(null)
+                    }
+                    catch (e: java.lang.Exception) {
+                        // Do nothing
+                    }
+                }
             }
         }
 
-        if (featureToken != Token.TIMER && isTimerOn && !isTimerThresholdSet) {
-            Log.i("MainActivity", "RAA - TURN OFF isTimerOn")
-            isTimerOn = false
-            isTimerThresholdSet = false
-            timerSetAfter = minTimerMinutes
-            resetSeekBar()
-            setTimerBtn(ACTION.RESET)
-            setTimerThresholdDisplayText(ACTION.RESET)
-            try {
-                timerLoopHandler.removeCallbacksAndMessages(null)
+        if (isAltitudeOn) {
+            if (featureToken != Token.ALTITUDE) {
+                if (!isAltitudeThresholdSet) {
+                    Log.i("MainActivity", "RAA - TURN OFF isAltitudeOn")
+                    isAltitudeOn = false
+                    altitudeThreshold = minAltitude
+                    turnOffFlashlight()
+                    resetSeekBar()
+                    sensorManager.unregisterListener(sensorEventListener)
+                    setAltitudeBtn(ACTION.RESET)
+                    setAltitudeLevelDisplayText(ACTION.RESET)
+                    try {
+                        timerLoopHandler.removeCallbacksAndMessages(null)
+                    }
+                    catch (e: java.lang.Exception) {
+                        // DO nothing here
+                    }
+                }
+                else {
+                    Log.i("MainActivity", "RAA - TURN OFF callbacks (ALTITUDE)")
+                    try {
+                        loopHandler.removeCallbacksAndMessages(null)
+                        messageLoopHandler.removeCallbacksAndMessages(null)
+                    }
+                    catch (e: java.lang.Exception) {
+                        // Do nothing
+                    }
+                }
             }
-            catch (e: java.lang.Exception) {
-                // DO nothing here
+        }
+
+        if (isTimerOn) {
+            if (featureToken != Token.TIMER) {
+                if (!isTimerThresholdSet) {
+                    Log.i("MainActivity", "RAA - TURN OFF isTimerOn")
+                    isTimerOn = false
+                    isTimerThresholdSet = false
+                    timerSetAfter = minTimerMinutes
+                    resetSeekBar()
+                    setTimerBtn(ACTION.RESET)
+                    setTimerThresholdDisplayText(ACTION.RESET)
+                    try {
+                        timerLoopHandler.removeCallbacksAndMessages(null)
+                    }
+                    catch (e: java.lang.Exception) {
+                        // DO nothing here
+                    }
+                }
+                else {
+                    Log.i("MainActivity", "RAA - TURN OFF callbacks (ALTITUDE)")
+                    try {
+                        loopHandler.removeCallbacksAndMessages(null)
+                        messageLoopHandler.removeCallbacksAndMessages(null)
+                    }
+                    catch (e: java.lang.Exception) {
+                        // Do nothing
+                    }
+                }
             }
         }
     }
