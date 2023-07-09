@@ -43,6 +43,7 @@
     <string name="enterComments">Enter your comments</string>
     <string name="enterValue">Enter value</string>
     <string name="applyChanges">APPLY CHANGES</string>
+    <string name="resetDefault">RESET\nDEFAULT</string>
 
     <string name="settingsComments">Personalize Feature specs\naccording to ranges.</string>
     <string name="settingsFlickeringTitle">Max flickering frequency</string>
