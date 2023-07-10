@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -38,212 +38,354 @@
                 android:autoSizeTextType="uniform"
                 android:textStyle="bold"/>
 
-            <SeekBar
-                android:id="@+id/flickeringBarId"
-                android:layout_width="250dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/button_selector"
-                android:elevation="10dp"
-                android:progressTint="#47C4EE"
-                android:rotation="0"
-                android:scaleX="1.25"
-                android:scaleY="1.25"/>
-
-            <!-- 1st row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
+                <!-- 1st Column -->
                 <LinearLayout
-                    android:layout_width="@dimen/MainImageSize"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="24dp"
+                    android:gravity="start"
                     android:orientation="vertical">
-                    <CheckedTextView
-                        android:id="@+id/timerThresholdId"
+
+                    <!-- Incoming SOS -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"/>
-                    <ImageButton
-                        android:id="@+id/timerBtnId"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/MainImageSize"
                         android:background="@drawable/button_selector"
-                        android:contentDescription="@string/TimerContentDescription"
-                        android:elevation="10dp"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/timer_off_m3" />
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+
+                        <ImageButton
+                            android:id="@+id/sosBtn"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/SOSBtnContentDescription"
+                            android:elevation="10dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/sos_off_m3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Send SOS message"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+
+                    </LinearLayout>
+
+                    <!-- Sound -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/incomingSoundBtnId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/IncomingSoundContentDescription"
+                            android:elevation="10dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/sound_off_m3"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Short Sounds"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/incomingShakeBtnId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/ShakenBtnContentDescription"
+                            android:elevation="10dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/tilt_off_m3"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Phone Tilt"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+
+
+                    <!-- Battery -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/batteryBtnId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/BatteryContentDescription"
+                            android:elevation="10dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/battery_off_m3" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Battery Power"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
+                <!-- 2nd Column -->
                 <LinearLayout
-                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="26dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:gravity="start"
                     android:orientation="vertical">
-                    <CheckedTextView
-                        android:id="@+id/targetAltitudeLevelId"
+
+                    <!-- Flicker -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:visibility="invisible"/>
-                    <ImageButton
-                        android:id="@+id/altitudeBtnId"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/MainImageSize"
                         android:background="@drawable/button_selector"
-                        android:contentDescription="@string/AltitudeContentDescription"
-                        android:elevation="10dp"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/altitude_off_m3" />
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/flickerFlashLightId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/FlashlightFlickeringContentDescription"
+                            android:elevation="10dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/flickering_off_m3"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Flickering"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/flashLightBtnId"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="#00FFFFFF"
+                        android:contentDescription="@string/FlashlightBtnContentDescription"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/flashlight_off_m3" />
+
+                    <!-- Altitude -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="end"
+                        android:background="@drawable/button_selector"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/altitudeBtnId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/AltitudeContentDescription"
+                            android:elevation="10dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/altitude_off_m3" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Altitude Height"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
+                <!-- 3rd Column -->
                 <LinearLayout
-                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:layout_marginEnd="24dp"
                     android:orientation="vertical">
-                    <CheckedTextView
-                        android:id="@+id/powerLevelId"
+
+                    <!-- Incoming SMS -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"/>
-                    <ImageButton
-                        android:id="@+id/batteryBtnId"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/MainImageSize"
                         android:background="@drawable/button_selector"
-                        android:contentDescription="@string/BatteryContentDescription"
-                        android:elevation="10dp"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/battery_off_m3" />
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/smsBtnId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/IncomingSMSContentDescription"
+                            android:elevation="10dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/incoming_sms_off_m3"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Incoming SMS"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <!-- Network -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/networkConnectionBtn"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
+                            android:elevation="10dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/network_off_m3" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Network Changes"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <!-- Incoming Call -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/switchFlickerIncomingCallsId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/IncomingCallContentDescription"
+                            android:elevation="10dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/incoming_call_off_m3" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Incoming Call"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+
+                    </LinearLayout>
+
+
+
+                    <!-- Timer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/timerBtnId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/TimerContentDescription"
+                            android:elevation="10dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/timer_off_m3" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Flicker on Time"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
 
-
-            <!-- 2nd row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="16dp"
                 android:gravity="center">
-
-                <ImageButton
-                    android:id="@+id/switchFlickerIncomingCallsId"
-                    android:layout_width="@dimen/MainImageSize"
-                    android:layout_height="@dimen/MainImageSize"
+                <SeekBar
+                    android:id="@+id/flickeringBarId"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="250dp"
+                    android:layout_height="28dp"
                     android:background="@drawable/button_selector"
-                    android:contentDescription="@string/IncomingCallContentDescription"
                     android:elevation="10dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/incoming_call_off_m3" />
-
-                <ImageButton
-                    android:id="@+id/smsBtnId"
-                    android:layout_marginHorizontal="26dp"
-                    android:layout_width="@dimen/MainImageSize"
-                    android:layout_height="@dimen/MainImageSize"
-                    android:background="@drawable/button_selector"
-                    android:contentDescription="@string/IncomingSMSContentDescription"
-                    android:elevation="10dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/incoming_sms_off_m3"/>
-
-                <ImageButton
-                    android:id="@+id/incomingSoundBtnId"
-                    android:layout_width="@dimen/MainImageSize"
-                    android:layout_height="@dimen/MainImageSize"
-                    android:background="@drawable/button_selector"
-                    android:contentDescription="@string/IncomingSoundContentDescription"
-                    android:elevation="10dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/sound_off_m3"/>
-
+                    android:progressTint="#47C4EE"
+                    android:rotation="0"
+                    android:scaleX="1.25"
+                    android:scaleY="1.25"/>
             </LinearLayout>
-
-
-            <!-- 3rd row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/sosBtn"
-                    android:layout_width="@dimen/MainImageSize"
-                    android:layout_height="@dimen/MainImageSize"
-                    android:background="@drawable/button_selector"
-                    android:contentDescription="@string/SOSBtnContentDescription"
-                    android:elevation="10dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/sos_off_m3" />
-
-                <ImageButton
-                    android:id="@+id/incomingShakeBtnId"
-                    android:layout_marginHorizontal="26dp"
-                    android:layout_width="@dimen/MainImageSize"
-                    android:layout_height="@dimen/MainImageSize"
-                    android:background="@drawable/button_selector"
-                    android:contentDescription="@string/ShakenBtnContentDescription"
-                    android:elevation="10dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/tilt_off_m3"/>
-
-                <ImageButton
-                    android:id="@+id/networkConnectionBtn"
-                    android:layout_width="@dimen/MainImageSize"
-                    android:layout_height="@dimen/MainImageSize"
-                    android:background="@drawable/button_selector"
-                    android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
-                    android:elevation="10dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/network_off_m3" />
-
-
-            </LinearLayout>
-
-            <!-- 4th row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/flickerFlashLightId"
-                    android:layout_width="@dimen/MainImageSize"
-                    android:layout_height="@dimen/MainImageSize"
-                    android:background="@drawable/button_selector"
-                    android:contentDescription="@string/FlashlightFlickeringContentDescription"
-                    android:elevation="10dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/flickering_off_m3"/>
-
-            </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/flashLightBtnId"
-                android:layout_width="250dp"
-                android:layout_height="60dp"
-                android:background="#00FFFFFF"
-                android:contentDescription="@string/FlashlightBtnContentDescription"
-                android:scaleType="centerInside"
-                android:layout_marginTop="16dp"
-                app:srcCompat="@drawable/flashlight_off_m3" />
 
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_weight="1"
-            android:minHeight="160dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:layout_marginBottom="8dp"

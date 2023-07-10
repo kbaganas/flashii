@@ -116,5 +116,15 @@
     <string name="Button">Button</string>
     <string name="Description">Description</string>
 
+    <string name="titleAltitude">Altitude</string>
+    <string name="titleCalls">Incoming Call</string>
+    <string name="titleSMS">Incoming SMS</string>
+    <string name="titleNetwork">Network</string>
+    <string name="titleTilt">Phone Tilts</string>
+    <string name="titleSound">Sounds</string>
+    <string name="titleFlicker">Flicker</string>
+    <string name="titleFlashlight">Flashlight</string>
+    <string name="titleSOS">SOS</string>
+    <string name="titleBattery">Battery</string>
 
 </resources>
