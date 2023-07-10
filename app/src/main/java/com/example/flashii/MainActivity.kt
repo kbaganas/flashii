@@ -1320,66 +1320,66 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setPowerLevelDisplayText (action : ACTION) {
-        val textView = findViewById<TextView>(R.id.powerLevelId)
-        var text = "$batteryThreshold%"
-        when (action) {
-            ACTION.SET -> {
-                textView.setTextColor(Color.parseColor("#4ECAF6"))
-                textView.text = text
-            }
-            ACTION.RESET -> {
-                textView.setTextColor(Color.parseColor("#5a85a0"))
-                text = "Power -"
-                textView.text = text
-            }
-            ACTION.NO_PERMISSION -> {
-                textView.setTextColor(Color.parseColor("#383838"))
-                text = "Power -"
-                textView.text = text
-            }
-            else -> {}
-        }
+//        val textView = findViewById<TextView>(R.id.powerLevelId)
+//        var text = "$batteryThreshold%"
+//        when (action) {
+//            ACTION.SET -> {
+//                textView.setTextColor(Color.parseColor("#4ECAF6"))
+//                textView.text = text
+//            }
+//            ACTION.RESET -> {
+//                textView.setTextColor(Color.parseColor("#5a85a0"))
+//                text = "Power -"
+//                textView.text = text
+//            }
+//            ACTION.NO_PERMISSION -> {
+//                textView.setTextColor(Color.parseColor("#383838"))
+//                text = "Power -"
+//                textView.text = text
+//            }
+//            else -> {}
+//        }
     }
 
     private fun setTimerThresholdDisplayText (action : ACTION) {
-        val textView = findViewById<TextView>(R.id.timerThresholdId)
-        var text = timerSetAfter.toString()
-        when (action) {
-            ACTION.SET -> {
-                textView.text = text
-                textView.setTextColor(Color.parseColor("#4ECAF6"))
-            }
-            ACTION.RESET -> {
-                text = "Timer -"
-                textView.text = text
-                textView.setTextColor(Color.parseColor("#5a85a0"))
-            }
-            else -> {}
-        }
+//        val textView = findViewById<TextView>(R.id.timerThresholdId)
+//        var text = timerSetAfter.toString()
+//        when (action) {
+//            ACTION.SET -> {
+//                textView.text = text
+//                textView.setTextColor(Color.parseColor("#4ECAF6"))
+//            }
+//            ACTION.RESET -> {
+//                text = "Timer -"
+//                textView.text = text
+//                textView.setTextColor(Color.parseColor("#5a85a0"))
+//            }
+//            else -> {}
+//        }
     }
 
     private fun setAltitudeLevelDisplayText(action : ACTION) {
         // target textView
-        val textView = findViewById<TextView>(R.id.targetAltitudeLevelId)
-        var text = "${altitudeThreshold}m"
-        textView.visibility = TextView.VISIBLE
-        when (action) {
-            ACTION.SET -> {
-                textView.text = text
-                textView.setTextColor(Color.parseColor("#4ECAF6"))
-            }
-            ACTION.RESET -> {
-                text = "Height -"
-                textView.text = text
-                textView.setTextColor(Color.parseColor("#5a85a0"))
-            }
-            ACTION.NO_PERMISSION -> {
-                text = "Height -"
-                textView.text = text
-                textView.setTextColor(Color.parseColor("#383838"))
-            }
-            else -> {}
-        }
+//        val textView = findViewById<TextView>(R.id.targetAltitudeLevelId)
+//        var text = "${altitudeThreshold}m"
+//        textView.visibility = TextView.VISIBLE
+//        when (action) {
+//            ACTION.SET -> {
+//                textView.text = text
+//                textView.setTextColor(Color.parseColor("#4ECAF6"))
+//            }
+//            ACTION.RESET -> {
+//                text = "Height -"
+//                textView.text = text
+//                textView.setTextColor(Color.parseColor("#5a85a0"))
+//            }
+//            ACTION.NO_PERMISSION -> {
+//                text = "Height -"
+//                textView.text = text
+//                textView.setTextColor(Color.parseColor("#383838"))
+//            }
+//            else -> {}
+//        }
     }
 
     private fun setMessageDisplayTextEnhanced (displayValue: String, mode: SeekBarMode, action : ACTION) {

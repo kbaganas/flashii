@@ -7,4 +7,7 @@
     <dimen name="MainTextHeight">86dp</dimen>
     <dimen name="margin16">16dp</dimen>
     <dimen name="margin24">24dp</dimen>
+    <dimen name="mainImageHeight">116dp</dimen>
+    <dimen name="mainFlashlightHeight">248dp</dimen>
+    <dimen name="mainSeekbarHeight">66dp</dimen>
 </resources>
