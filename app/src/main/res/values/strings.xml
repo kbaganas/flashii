@@ -21,15 +21,16 @@
     <string name="BatteryContentDescription">Flashlight flickers on reaching battery power threshold</string>
     <string name="TimerContentDescription">Flashlight flickers on reaching timer threshold</string>
     <string name="GeneralContentDescription">Application general info</string>
+    <string name="SettingsContentDescription">Settings button</string>
 
     <string name="rate">RATE</string>
-    <string name="donate">DONATE</string>
+    <string name="contribute">CONTRIBUTE</string>
     <string name="settings">Settings</string>
     <string name="close">CLOSE</string>
     <string name="reset">RESET</string>
     <string name="s_continue">CONTINUE</string>
     <string name="enterAmount">Enter your amount</string>
-    <string name="donateText">Thank you for donating!</string>
+    <string name="supportText">Thank you for supporting Flashii!\nYou contribution helps us\nimplementing more for you.</string>
     <string name="rateText">Your feedback is appreciated!</string>
     <string name="publishFeedback">PUBLISH FEEDBACK</string>
     <string name="publishNote">Your review will be posted to\nthe Google Play store</string>
@@ -108,7 +109,7 @@
     <string name="sosFeature">Send SOS</string>
     <string name="Feature">Feature</string>
     <string name="Rate">Rate</string>
-    <string name="Donate">Donate</string>
+    <string name="Donate">Support us</string>
     <string name="attributeDescription">Attribute description</string>
     <string name="attribute">Attribute</string>
     <string name="Specification">Specification</string>
@@ -126,5 +127,18 @@
     <string name="titleFlashlight">Flashlight</string>
     <string name="titleSOS">SOS</string>
     <string name="titleBattery">Battery</string>
+
+    <string name="mainFeatureTextAltitude">Altitude\nHeight</string>
+    <string name="mainFeatureTextCall">Incoming\nCall</string>
+    <string name="mainFeatureTextSMS">Incoming\nSMS</string>
+    <string name="mainFeatureTextNetwork">Network\nChanges</string>
+    <string name="mainFeatureTextTilt">Phone\nTilt</string>
+    <string name="mainFeatureTextSound">Short\nSounds</string>
+    <string name="mainFeatureTextFlicker">Flickering\non demand</string>
+    <string name="mainFeatureTextFlashlight">Flashlight</string>
+    <string name="mainFeatureTextSOS">Send SOS message</string>
+    <string name="mainFeatureTextBattery">Battery\nPower %</string>
+    <string name="mainFeatureTextTimer">Flickering\non Time</string>
+
 
 </resources>

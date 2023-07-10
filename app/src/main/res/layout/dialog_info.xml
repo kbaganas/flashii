@@ -56,7 +56,7 @@
                 android:text="@string/infoMoreComments"
                 android:layout_marginTop="46dp"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="@dimen/infoText" />
 
             <View
                 android:layout_width="match_parent"
@@ -75,21 +75,21 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/flashlightFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoFlashlight"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -98,7 +98,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -121,7 +121,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText" />
@@ -130,7 +130,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -139,6 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginVertical="8dp"
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
@@ -146,7 +147,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/flashlight_off_m3" />
+                        app:srcCompat="@drawable/flashlight_off4" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -154,7 +155,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -169,7 +170,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/flashlight_on2" />
+                        app:srcCompat="@drawable/flashlight_on4" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -177,7 +178,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>
@@ -199,21 +200,21 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/flickerFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoFlickering"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -222,7 +223,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -230,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -245,7 +246,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText" />
@@ -254,7 +255,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -279,7 +280,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -302,7 +303,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>
@@ -324,21 +325,21 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/callFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoIncomingCall"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -347,7 +348,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -355,7 +356,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -370,7 +371,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText" />
@@ -379,7 +380,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -404,7 +405,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -427,7 +428,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>
@@ -449,21 +450,21 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/smsFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoIncomingSMS"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -472,7 +473,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -480,7 +481,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -495,7 +496,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText" />
@@ -504,7 +505,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -529,7 +530,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -552,7 +553,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>
@@ -574,21 +575,21 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/soundFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoSound"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -597,7 +598,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -605,7 +606,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -620,7 +621,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText,TooManyViews" />
@@ -629,7 +630,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -654,7 +655,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -677,7 +678,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -701,7 +702,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoNoPermissionByUser"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>
@@ -723,21 +724,21 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/tiltFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoTilt"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -746,7 +747,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -754,7 +755,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -769,7 +770,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText" />
@@ -778,7 +779,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -803,7 +804,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -826,7 +827,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>
@@ -848,21 +849,21 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/timerFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoTimer"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -871,7 +872,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -879,7 +880,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -894,7 +895,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText" />
@@ -903,7 +904,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -928,7 +929,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -951,7 +952,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -975,7 +976,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoTimerCheck"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>
@@ -997,21 +998,21 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/batteryFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoBattery"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -1020,7 +1021,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -1028,7 +1029,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1043,7 +1044,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText" />
@@ -1052,7 +1053,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -1077,7 +1078,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -1100,7 +1101,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -1124,7 +1125,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoBatteryCheck"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>
@@ -1146,21 +1147,21 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/altitudeFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoAltitude"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -1169,7 +1170,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -1177,7 +1178,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1192,7 +1193,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText" />
@@ -1201,7 +1202,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -1226,7 +1227,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -1249,7 +1250,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
                 <LinearLayout
@@ -1270,7 +1271,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoAltitudeCheck"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
                 <LinearLayout
@@ -1290,7 +1291,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoNoPermissionByUser"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>
@@ -1312,19 +1313,19 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/networkFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoNetwork"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -1333,7 +1334,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -1341,7 +1342,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1355,7 +1356,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText" />
@@ -1364,7 +1365,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -1388,7 +1389,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
                 <LinearLayout
@@ -1409,7 +1410,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/ConnectionToFound"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
                 <LinearLayout
@@ -1431,7 +1432,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/ConnectionToLost"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
                 <LinearLayout
@@ -1451,7 +1452,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/ConnectionFound"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
                 <LinearLayout
@@ -1473,7 +1474,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/ConnectionLost"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
                 <LinearLayout
@@ -1494,7 +1495,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoNoPermissionByUser"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>
@@ -1516,21 +1517,21 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_semibold"
                     android:text="@string/sosFeature"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/infoFeatureTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoSOS"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/infoText">
 
                     <TextView
                         android:layout_width="48dp"
@@ -1539,7 +1540,7 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
@@ -1547,7 +1548,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/infoText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1562,7 +1563,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or"
                         tools:ignore="ExtraText" />
@@ -1571,7 +1572,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider"
+                        android:background="@color/greyDivider2"
                         android:fontFamily="@font/cabin_semibold"
                         android:text="@string/or" />
                 </LinearLayout>
@@ -1596,7 +1597,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -1619,7 +1620,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
             </LinearLayout>

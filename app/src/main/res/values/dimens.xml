@@ -2,7 +2,7 @@
 <resources>
     <dimen name="text_margin">16dp</dimen>
     <!-- Dimensions -->
-    <dimen name="MainImageSize">56dp</dimen>
+    <dimen name="MainImageSize">52dp</dimen>
     <dimen name="MainBottomRowImageSize">48dp</dimen>
     <dimen name="MainTextHeight">86dp</dimen>
     <dimen name="margin16">16dp</dimen>
@@ -10,4 +10,7 @@
     <dimen name="mainImageHeight">116dp</dimen>
     <dimen name="mainFlashlightHeight">248dp</dimen>
     <dimen name="mainSeekbarHeight">66dp</dimen>
+    <dimen name="infoFeatureTitle">20sp</dimen>
+    <dimen name="infoFeatureText">18sp</dimen>
+    <dimen name="infoText">16sp</dimen>
 </resources>

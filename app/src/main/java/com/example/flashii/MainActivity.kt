@@ -1674,7 +1674,7 @@ class MainActivity : AppCompatActivity() {
                 isFlashLightOn = true
                 atomicFlashLightOn()
                 if (setFlashlightBtn) {
-                    setBtnImage(flashlightBtn, R.drawable.flashlight_on2)
+                    setBtnImage(flashlightBtn, R.drawable.flashlight_on4)
                 }
                 Log.d("MainActivity", "FlashLight ON")
             } catch (e: CameraAccessException) {
@@ -1689,7 +1689,7 @@ class MainActivity : AppCompatActivity() {
                 isFlashLightOn = false
                 atomicFlashLightOff()
                 if (resetFlashlightBtn) {
-                    setBtnImage(flashlightBtn, R.drawable.flashlight_off_m3)
+                    setBtnImage(flashlightBtn, R.drawable.flashlight_off4)
                 }
                 Log.d("MainActivity", "FlashLight OFF")
             } catch (e: CameraAccessException) {

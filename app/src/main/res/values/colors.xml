@@ -18,7 +18,14 @@
     <color name="greyNoteDarker5">#545351</color>
     <color name="greyNoteDarker6">#434241</color>
     <color name="greyDivider">#ededec</color>
+    <color name="greyDivider1">#d5d5d4</color>
+    <color name="greyDivider2">#bdbdbc</color>
+    <color name="greyDivider3">#a5a5a5</color>
+    <color name="greyDivider4">#8e8e8d</color>
     <color name="backgroundWhite">#00FFFFFF</color>
     <color name="goldStar">#ffd700 </color>
+    <color name="mainTextMessage">#173c49</color>
+    <color name="seekbarProgressTint">#a6e4fa</color>
+    <color name="mainActivateText">#a6e4fa</color>
 </resources>
 

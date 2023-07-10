@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center_horizontal"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -31,7 +31,7 @@
                 android:background="@drawable/button_selector"
                 android:fontFamily="@font/cabin_semibold"
                 android:gravity="center|center_vertical"
-                android:textColor="#3F64A1"
+                android:textColor="@color/mainTextMessage"
                 android:maxLines="3"
                 android:autoSizeMinTextSize = "18sp"
                 android:autoSizeMaxTextSize="24sp"
@@ -50,7 +50,7 @@
                     android:layout_width="250dp"
                     android:layout_height="26dp"
                     android:background="@drawable/button_selector"
-                    android:progressTint="@color/goldStar"
+                    android:progressTint="@color/seekbarProgressTint"
                     android:rotation="0"/>
             </LinearLayout>
 
@@ -88,10 +88,11 @@
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/timer_off_m3" />
                         <TextView
+                            android:id="@+id/timerBtnText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Flicker on Time"
+                            android:text="@string/mainFeatureTextTimer"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -119,7 +120,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Send SOS message"
+                            android:text="@string/mainFeatureTextSOS"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
 
@@ -128,7 +129,7 @@
                     <!-- Sound -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/mainImageHeight"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/button_selector"
                         android:layout_marginBottom="@dimen/margin16"
                         android:gravity="center_horizontal"
@@ -146,17 +147,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Short\nSounds"
+                            android:text="@string/mainFeatureTextSound"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/mainImageHeight"
+                        android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:background="@drawable/button_selector"
-                        android:layout_marginBottom="@dimen/margin16"
                         android:orientation="vertical">
                         <ImageButton
                             android:id="@+id/incomingShakeBtnId"
@@ -171,7 +171,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Phone\nTilt"
+                            android:text="@string/mainFeatureTextTilt"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -209,10 +209,11 @@
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/altitude_off_m3" />
                         <TextView
+                            android:id="@+id/altitudeBtnText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Altitude Height"
+                            android:text="@string/mainFeatureTextAltitude"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -237,10 +238,11 @@
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/flickering_off_m3"/>
                         <TextView
+                            android:id="@+id/flickeringBtnText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Flickering"
+                            android:text="@string/mainFeatureTextFlicker"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -249,11 +251,11 @@
                         android:id="@+id/flashLightBtnId"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/mainFlashlightHeight"
+                        android:layout_marginBottom="@dimen/margin16"
                         android:background="#00FFFFFF"
                         android:contentDescription="@string/FlashlightBtnContentDescription"
-                        android:layout_marginBottom="@dimen/margin16"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/flashlight_off_m3" />
+                        app:srcCompat="@drawable/flashlight_off4" />
 
 
 
@@ -287,10 +289,11 @@
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/battery_off_m3" />
                         <TextView
+                            android:id="@+id/batteryBtnText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Battery\nPower %"
+                            android:text="@string/mainFeatureTextBattery"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -318,7 +321,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Incoming SMS"
+                            android:text="@string/mainFeatureTextSMS"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -330,7 +333,7 @@
                     <!-- Incoming Call -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/mainImageHeight"
+                        android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:background="@drawable/button_selector"
                         android:layout_marginBottom="@dimen/margin16"
@@ -349,7 +352,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Incoming\nCall"
+                            android:text="@string/mainFeatureTextCall"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
 
@@ -358,10 +361,10 @@
                     <!-- Network -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/mainImageHeight"
+                        android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:background="@drawable/button_selector"
-                        android:layout_marginBottom="@dimen/margin16"
+
                         android:orientation="vertical">
                         <ImageButton
                             android:id="@+id/networkConnectionBtn"
@@ -376,7 +379,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Network Changes"
+                            android:text="@string/mainFeatureTextNetwork"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -411,7 +414,7 @@
                 android:scaleType="fitCenter"
                 android:layout_weight="1"
                 android:layout_marginEnd="36dp"
-                android:contentDescription="@string/GeneralContentDescription"
+                android:contentDescription="@string/SettingsContentDescription"
                 app:srcCompat="@drawable/settings" />
 
             <ImageButton
