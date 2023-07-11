@@ -20,39 +20,8 @@
             android:layout_height="0dp"
             android:gravity="center_horizontal"
             android:layout_weight="1"
+            android:layout_marginTop="12dp"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:orientation="horizontal"
-                android:layout_marginVertical="8dp"
-                android:layout_marginHorizontal="16dp"
-                android:gravity="center">
-                <TextView
-                    android:id="@+id/seekBarTitleId"
-                    android:textSize="@dimen/mainImageInfoText"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_regular"
-                    android:text="Set Altitude"
-                    android:gravity="start"
-                    android:maxLines="2"
-                    android:autoSizeMinTextSize = "12sp"
-                    android:autoSizeMaxTextSize="13sp"
-                    android:autoSizeTextType="uniform"
-                    tools:ignore="VisualLintLongText" />
-                <SeekBar
-                    android:id="@+id/flickeringBarId"
-                    android:gravity="center_horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="26dp"
-                    android:background="@drawable/button_selector"
-                    android:progressTint="@color/seekbarProgressTint"
-                    android:rotation="0"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,9 +35,126 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="20dp"
                     android:gravity="start"
                     android:orientation="vertical">
+
+                    <!-- Incoming SOS -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+                        <ImageButton
+                            android:id="@+id/sosBtn"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/SOSBtnContentDescription"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/sos_off_m3" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/mainFeatureTextSOS"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <!-- Phone Tilt -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:background="@drawable/button_selector"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/incomingShakeBtnId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/ShakenBtnContentDescription"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/tilt_off_m3"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/mainFeatureTextTilt"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                        <TextView
+                            android:id="@+id/tiltBtnSetId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeMinTextSize="12sp"
+                            android:autoSizeTextType="uniform"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_horizontal"
+                            android:maxLines="2"
+                            android:text="@string/pavla"
+                            android:textSize="@dimen/mainImageInfoText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+
+
+                    <!-- Flicker -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/mainImageHeight"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/flickerFlashLightId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/FlashlightFlickeringContentDescription"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/flickering_off_m3"/>
+                        <TextView
+                            android:id="@+id/flickeringBtnText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/mainFeatureTextFlicker"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                        <TextView
+                            android:id="@+id/flickerBtnSetId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeMinTextSize="12sp"
+                            android:autoSizeTextType="uniform"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_horizontal"
+                            android:maxLines="2"
+                            android:text="@string/pavlaHz"
+                            android:textSize="@dimen/mainImageInfoText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
 
                     <!-- Timer -->
                     <LinearLayout
@@ -76,7 +162,6 @@
                         android:layout_height="140dp"
                         android:gravity="center_horizontal"
                         android:background="@drawable/button_selector"
-                        android:layout_marginBottom="@dimen/margin16"
                         android:orientation="vertical">
                         <ImageButton
                             android:id="@+id/timerBtnId"
@@ -128,106 +213,6 @@
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
                     </LinearLayout>
-
-                    <!-- Phone Tilt -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/margin16"
-                        android:background="@drawable/button_selector"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:id="@+id/incomingShakeBtnId"
-                            android:layout_width="@dimen/MainImageSize"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/ShakenBtnContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/tilt_off_m3"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/mainFeatureTextTilt"
-                            android:maxLines="2"
-                            android:autoSizeMinTextSize = "12sp"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeTextType="uniform"
-                            android:gravity="center_horizontal"
-                            tools:ignore="VisualLintLongText" />
-                        <TextView
-                            android:id="@+id/tiltBtnSetId"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeMinTextSize="12sp"
-                            android:autoSizeTextType="uniform"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_horizontal"
-                            android:maxLines="2"
-                            android:text="@string/pavla"
-                            android:textSize="@dimen/mainImageInfoText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <!-- Incoming SOS -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/button_selector"
-                        android:layout_marginBottom="@dimen/margin16"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
-                        <ImageButton
-                            android:id="@+id/sosBtn"
-                            android:layout_width="@dimen/MainImageSize"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/SOSBtnContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/sos_off_m3" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/mainFeatureTextSOS"
-                            android:maxLines="2"
-                            android:autoSizeMinTextSize = "12sp"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeTextType="uniform"
-                            android:gravity="center_horizontal"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <!-- Sound -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/button_selector"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:id="@+id/incomingSoundBtnId"
-                            android:layout_width="@dimen/MainImageSize"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/IncomingSoundContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/sound_off_m3"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/mainFeatureTextSound"
-                            android:maxLines="2"
-                            android:autoSizeMinTextSize = "12sp"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeTextType="uniform"
-                            android:gravity="center_horizontal"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
                 </LinearLayout>
 
                 <!-- 2nd Column -->
@@ -235,9 +220,50 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_gravity="start"
                     android:orientation="vertical">
+
+                    <!-- Incoming SMS -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/smsBtnId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/IncomingSMSContentDescription"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/incoming_sms_off_m3"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/mainFeatureTextSMS"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <!-- Flashlight -->
+                    <ImageButton
+                        android:id="@+id/flashLightBtnId"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/mainFlashlightHeight"
+                        android:layout_marginTop="@dimen/margin32"
+                        android:layout_marginBottom="@dimen/margin34"
+                        android:background="#00FFFFFF"
+                        android:contentDescription="@string/FlashlightBtnContentDescription"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/flashlight_off4" />
 
                     <!-- Altitude -->
                     <LinearLayout
@@ -245,7 +271,6 @@
                         android:layout_height="@dimen/mainImageHeight"
                         android:gravity="center_horizontal"
                         android:background="@drawable/button_selector"
-                        android:layout_marginBottom="@dimen/margin16"
                         android:orientation="vertical">
                         <ImageButton
                             android:id="@+id/altitudeBtnId"
@@ -295,61 +320,6 @@
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
                     </LinearLayout>
-
-                    <!-- Flicker -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/mainImageHeight"
-                        android:background="@drawable/button_selector"
-                        android:layout_marginBottom="@dimen/margin16"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:id="@+id/flickerFlashLightId"
-                            android:layout_width="@dimen/MainImageSize"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/FlashlightFlickeringContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/flickering_off_m3"/>
-                        <TextView
-                            android:id="@+id/flickeringBtnText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/mainFeatureTextFlicker"
-                            android:maxLines="2"
-                            android:autoSizeMinTextSize = "12sp"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeTextType="uniform"
-                            android:gravity="center_horizontal"
-                            tools:ignore="VisualLintLongText" />
-                        <TextView
-                            android:id="@+id/flickerBtnSetId"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeMinTextSize="12sp"
-                            android:autoSizeTextType="uniform"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_horizontal"
-                            android:maxLines="2"
-                            android:text="@string/pavlaHz"
-                            android:textSize="@dimen/mainImageInfoText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <!-- Flashlight -->
-                    <ImageButton
-                        android:id="@+id/flashLightBtnId"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/mainFlashlightHeight"
-                        android:layout_marginBottom="@dimen/margin16"
-                        android:background="#00FFFFFF"
-                        android:contentDescription="@string/FlashlightBtnContentDescription"
-                        android:scaleType="centerInside"
-                        app:srcCompat="@drawable/flashlight_off4" />
-
                 </LinearLayout>
 
                 <!-- 3rd Column -->
@@ -358,15 +328,127 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:gravity="start"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical">
+
+                    <!-- Incoming Call -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/switchFlickerIncomingCallsId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/IncomingCallContentDescription"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/incoming_call_off_m3" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/mainFeatureTextCall"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <!-- Sound -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/incomingSoundBtnId"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/IncomingSoundContentDescription"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/sound_off_m3"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/mainFeatureTextSound"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                        <TextView
+                            android:id="@+id/soundBtnSetId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeMinTextSize="12sp"
+                            android:autoSizeTextType="uniform"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_horizontal"
+                            android:maxLines="2"
+                            android:text="@string/pavla"
+                            android:textSize="@dimen/mainImageInfoText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <!-- Network -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:background="@drawable/button_selector"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/networkConnectionBtn"
+                            android:layout_width="@dimen/MainImageSize"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/network_off_m3" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/mainFeatureTextNetwork"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center_horizontal"
+                            tools:ignore="VisualLintLongText" />
+                        <TextView
+                            android:id="@+id/networkBtnSetId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeMinTextSize="12sp"
+                            android:autoSizeTextType="uniform"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_horizontal"
+                            android:maxLines="2"
+                            android:text="@string/pavla"
+                            android:textSize="@dimen/mainImageInfoText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
 
                     <!-- Battery -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/mainImageHeight"
                         android:background="@drawable/button_selector"
-                        android:layout_marginBottom="@dimen/margin16"
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
                         <ImageButton
@@ -418,107 +500,39 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!-- Network -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/margin16"
-                        android:background="@drawable/button_selector"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:id="@+id/networkConnectionBtn"
-                            android:layout_width="@dimen/MainImageSize"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/network_off_m3" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/mainFeatureTextNetwork"
-                            android:maxLines="2"
-                            android:autoSizeMinTextSize = "12sp"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeTextType="uniform"
-                            android:gravity="center_horizontal"
-                            tools:ignore="VisualLintLongText" />
-                        <TextView
-                            android:id="@+id/networkBtnSetId"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeMinTextSize="12sp"
-                            android:autoSizeTextType="uniform"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_horizontal"
-                            android:maxLines="2"
-                            android:text="@string/pavla"
-                            android:textSize="@dimen/mainImageInfoText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <!-- Incoming Call -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:background="@drawable/button_selector"
-                        android:layout_marginBottom="@dimen/margin16"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:id="@+id/switchFlickerIncomingCallsId"
-                            android:layout_width="@dimen/MainImageSize"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/IncomingCallContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/incoming_call_off_m3" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/mainFeatureTextCall"
-                            android:maxLines="2"
-                            android:autoSizeMinTextSize = "12sp"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeTextType="uniform"
-                            android:gravity="center_horizontal"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <!-- Incoming SMS -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/button_selector"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:id="@+id/smsBtnId"
-                            android:layout_width="@dimen/MainImageSize"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/IncomingSMSContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/incoming_sms_off_m3"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/mainFeatureTextSMS"
-                            android:maxLines="2"
-                            android:autoSizeMinTextSize = "12sp"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeTextType="uniform"
-                            android:gravity="center_horizontal"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
                 </LinearLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_marginVertical="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/seekBarTitleId"
+                    android:textSize="@dimen/mainImageInfoText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:gravity="start"
+                    android:maxLines="2"
+                    android:autoSizeMinTextSize = "12sp"
+                    android:autoSizeMaxTextSize="13sp"
+                    android:autoSizeTextType="uniform"
+                    tools:ignore="VisualLintLongText" />
+                <SeekBar
+                    android:id="@+id/flickeringBarId"
+                    android:gravity="center_horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="26dp"
+                    android:background="@drawable/button_selector"
+                    android:progressTint="@color/seekbarProgressTint"
+                    android:rotation="0"/>
             </LinearLayout>
 
         </LinearLayout>
