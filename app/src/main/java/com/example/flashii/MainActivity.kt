@@ -697,7 +697,7 @@ class MainActivity : AppCompatActivity() {
                 isBatteryOn = true
                 setBatteryBtn(ACTION.SET)
                 setSeekBar(SeekBarMode.PERCENTAGE)
-                batteryBtnSetId.text = "Flicker on Battery $batteryThreshold%"
+                batteryBtnSetId.text = "Flicker on\nBattery power $batteryThreshold%"
                 batteryReceiver = object : BroadcastReceiver() {
                     override fun onReceive(context: Context, intent: Intent) {
                         if (initBatteryLevel == minBattery) {
@@ -789,7 +789,7 @@ class MainActivity : AppCompatActivity() {
                 setSeekBar(SeekBarMode.HOURS)
                 setTimerBtn(ACTION.SET)
                 loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.TIMER) }, checkInterval50)
-                timerBtnTimeSetId.text = "Flicker after $timerSetAfter"
+                timerBtnTimeSetId.text = "Flicker after\n$timerSetAfter"
             }
             else {
                 Log.i("MainActivity","timerBtn is OFF")
@@ -886,7 +886,7 @@ class MainActivity : AppCompatActivity() {
                         setAltitudeBtn(ACTION.SET)
                         sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
                         loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.ALTITUDE) }, checkInterval50)
-                        altitudeBtnSetId.text = "Height set to ${altitudeThreshold}m"
+                        altitudeBtnSetId.text = "Flicker at\nHeight of ${altitudeThreshold}m"
                         altitudeBtnSuccessId.visibility = View.INVISIBLE
                     }
                     else {
@@ -2006,6 +2006,7 @@ class MainActivity : AppCompatActivity() {
             setBtnImage(flickerFlashlightBtn, R.drawable.flickering_off_m3)
             resetSeekBarAndTitle()
             setFlickeringHz(minFlickerHz.toLong())
+            flickerBtnSetId.text = getString(R.string.pavlaHz)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.TILT)
@@ -2037,6 +2038,7 @@ class MainActivity : AppCompatActivity() {
             sensorManager.unregisterListener(sensorEventListener)
             setBtnImage(incomingTiltBtn, R.drawable.tilt_off_m3)
             isPhoneTilt = false
+            tiltBtnSet.text = getString(R.string.pavla)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS)
@@ -2056,6 +2058,7 @@ class MainActivity : AppCompatActivity() {
             recordingThread?.join()
             recordingThread = null
             loopHandlerFlickering.removeCallbacksAndMessages(null)
+            soundBtnSetId.text = getString(R.string.pavla)
         }
 
 //        if ((token in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet) {
@@ -2086,6 +2089,8 @@ class MainActivity : AppCompatActivity() {
                     catch (e : Exception) {
                         // We are OK, receiver is already unregistered
                     }
+                    batteryBtnSetId.text = getString(R.string.pavlaPerc)
+                    batteryBtnSuccessId.visibility = View.INVISIBLE
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (BATTERY)")
@@ -2120,6 +2125,8 @@ class MainActivity : AppCompatActivity() {
                     catch (e: java.lang.Exception) {
                         // DO nothing here
                     }
+                    altitudeBtnSetId.text = getString(R.string.pavlaMeter)
+                    altitudeBtnSuccessId.visibility = View.INVISIBLE
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (ALTITUDE)")
@@ -2154,6 +2161,8 @@ class MainActivity : AppCompatActivity() {
                     catch (e: java.lang.Exception) {
                         // DO nothing here
                     }
+                    timerBtnTimeSetId.text = getString(R.string.mainFeatureTextTimerSet)
+                    timerBtnSuccessId.visibility = View.INVISIBLE
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (ALTITUDE)")
