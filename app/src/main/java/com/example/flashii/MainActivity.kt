@@ -422,7 +422,7 @@ class MainActivity : AppCompatActivity() {
                 setBtnImage(flickerFlashlightBtn, R.drawable.flickering_off_m3)
                 resetSeekBarAndTitle()
                 setFlickeringHz(minFlickerHz.toLong())
-                flickerBtnSetId.text = getString(R.string.pavlaHz)
+                resetMainBtnSetText(Token.FLICKER)
             }
         }
 
@@ -473,7 +473,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     recordingThread?.join()
                     recordingThread = null
-                    soundBtnSetId.text = getString(R.string.pavla)
+                    resetMainBtnSetText(Token.SOUND)
                 }
                 else {
                     Log.i("MainActivity","incomingSoundBtn is ON")
@@ -513,7 +513,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 setBtnImage(incomingSoundBtn, R.drawable.sound_no_permission_m3)
-                soundBtnSetId.text = getString(R.string.pavla)
+                resetMainBtnSetText(Token.SOUND)
                 Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
@@ -570,14 +570,14 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity","Accelerometer not available")
                     Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
                     setBtnImage(incomingTiltBtn, R.drawable.tilt_no_permission_m3)
-                    tiltBtnSet.text = getString(R.string.pavla)
+                    resetMainBtnSetText(Token.TILT)
                 }
             } else {
                 Log.i("MainActivity","incomingTiltBtn is OFF ($sensorEventListener)")
                 turnOffFlashlight()
                 sensorManager.unregisterListener(sensorEventListener)
                 setBtnImage(incomingTiltBtn, R.drawable.tilt_off_m3)
-                tiltBtnSet.text = getString(R.string.pavla)
+                resetMainBtnSetText(Token.TILT)
                 isPhoneTilt = false
             }
         }
@@ -622,7 +622,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "Unregister running CB $connectivityCallback")
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                 setBtnImage(outInNetworkBtn, R.drawable.network_off_m3)
-                networkBtnSetId.text = getString(R.string.pavla)
+                resetMainBtnSetText(Token.NETWORK)
             }
             else {
                 val networkRequest = NetworkRequest.Builder().build()
@@ -697,7 +697,7 @@ class MainActivity : AppCompatActivity() {
                 isBatteryOn = true
                 setBatteryBtn(ACTION.SET)
                 setSeekBar(SeekBarMode.PERCENTAGE)
-                batteryBtnSetId.text = "Flicker on\nBattery power $batteryThreshold%"
+                batteryBtnSetId.text = "Flicker on\nBattery $batteryThreshold%"
                 batteryReceiver = object : BroadcastReceiver() {
                     override fun onReceive(context: Context, intent: Intent) {
                         if (initBatteryLevel == minBattery) {
@@ -769,7 +769,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 initBatteryLevel = minBattery
                 loopHandlerForInactivity.removeCallbacksAndMessages(null)
-                batteryBtnSetId.text = getString(R.string.pavlaPerc)
+                resetMainBtnSetText(Token.BATTERY)
                 batteryBtnSuccessId.visibility = View.INVISIBLE
             }
         }
@@ -803,7 +803,7 @@ class MainActivity : AppCompatActivity() {
                     stopFlickering()
                 }
                 loopHandlerForInactivity.removeCallbacksAndMessages(null)
-                timerBtnTimeSetId.text = getString(R.string.mainFeatureTextTimerSet)
+                resetMainBtnSetText(Token.TIMER)
             }
         }
 
@@ -895,7 +895,7 @@ class MainActivity : AppCompatActivity() {
                         Snackbar.make(rootView, "Device's barometer sensor\nis not available", Snackbar.LENGTH_LONG).show()
                         setAltitudeBtn(ACTION.NO_PERMISSION)
                         setAltitudeLevelDisplayText(ACTION.NO_PERMISSION)
-                        altitudeBtnSetId.text = getString(R.string.pavlaMeter)
+                        resetMainBtnSetText(Token.ALTITUDE)
                         altitudeBtnSuccessId.visibility = View.INVISIBLE
                     }
                 } else {
@@ -910,14 +910,14 @@ class MainActivity : AppCompatActivity() {
                         stopFlickering()
                     }
                     loopHandlerForInactivity.removeCallbacksAndMessages(null)
-                    altitudeBtnSetId.text = getString(R.string.pavlaMeter)
+                    resetMainBtnSetText(Token.ALTITUDE)
                     altitudeBtnSuccessId.visibility = View.INVISIBLE
                 }
             }
             else {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for ALTITUDE")
-                altitudeBtnSetId.text = getString(R.string.pavlaMeter)
+                resetMainBtnSetText(Token.ALTITUDE)
                 altitudeBtnSuccessId.visibility = View.INVISIBLE
                 Snackbar.make(rootView, "To use the feature, manually provide\nLocation access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
@@ -1275,6 +1275,33 @@ class MainActivity : AppCompatActivity() {
 
     ///////////////////////////////////////////////////////////////////////////
 
+    private fun resetMainBtnSetText (token : Token) {
+        when (token) {
+            Token.TILT -> {
+                tiltBtnSet.text = getString(R.string.pavla)
+            }
+            Token.FLICKER -> {
+                flickerBtnSetId.text = getString(R.string.pavlaHz)
+            }
+            Token.BATTERY -> {
+                batteryBtnSetId.text = getString(R.string.pavlaPerc)
+            }
+            Token.TIMER -> {
+                timerBtnTimeSetId.text = getString(R.string.mainFeatureTextTimerSet)
+            }
+            Token.ALTITUDE -> {
+                altitudeBtnSetId.text = getString(R.string.pavlaMeter)
+            }
+            Token.SOUND -> {
+                soundBtnSetId.text = getString(R.string.pavla)
+            }
+            Token.NETWORK -> {
+                networkBtnSetId.text = getString(R.string.pavla)
+            }
+            else -> {}
+        }
+
+    }
 
     private fun checkForInactivity (token : Token) {
         when (token) {
@@ -1286,6 +1313,7 @@ class MainActivity : AppCompatActivity() {
                     timerSetAfter = minTimerMinutes
                     setTimerBtn(ACTION.RESET)
                     setTimerThresholdDisplayText(ACTION.RESET)
+                    resetMainBtnSetText(Token.TIMER)
 
                     // make sure to restore MessageText and keep the Seekbar if needed
                     if (isSendSOS || isFlickeringOnDemand || isAudioIncoming || isPhoneTilt) {
@@ -1317,6 +1345,7 @@ class MainActivity : AppCompatActivity() {
                     batteryThreshold = minBattery
                     initBatteryLevel = minBattery
                     setPowerLevelDisplayText(ACTION.RESET)
+                    resetMainBtnSetText(Token.BATTERY)
 
                     // make sure to restore MessageText and keep the Seekbar if needed
                     if (isSendSOS || isFlickeringOnDemand || isAudioIncoming || isPhoneTilt) {
@@ -1340,6 +1369,7 @@ class MainActivity : AppCompatActivity() {
                         isAltitudeOn = false
                         altitudeThreshold = minAltitude
                         setAltitudeLevelDisplayText(ACTION.RESET)
+                        resetMainBtnSetText(Token.ALTITUDE)
 
                         // make sure to restore MessageText and keep the Seekbar if needed
                         if (isSendSOS || isFlickeringOnDemand || isAudioIncoming || isPhoneTilt) {
