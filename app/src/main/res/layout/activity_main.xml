@@ -41,13 +41,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_marginVertical="8dp"
-                android:gravity="start">
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/seekBarTitleId"
+                    android:textSize="@dimen/mainImageInfoText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="Set Altitude"
+                    android:gravity="start"
+                    android:maxLines="2"
+                    android:autoSizeMinTextSize = "12sp"
+                    android:autoSizeMaxTextSize="13sp"
+                    android:autoSizeTextType="uniform"
+                    tools:ignore="VisualLintLongText" />
                 <SeekBar
                     android:id="@+id/flickeringBarId"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="250dp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
                     android:layout_height="26dp"
                     android:background="@drawable/button_selector"
                     android:progressTint="@color/seekbarProgressTint"
@@ -66,7 +82,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="24dp"
+                    android:layout_marginStart="16dp"
                     android:gravity="start"
                     android:orientation="vertical">
 
@@ -84,16 +100,20 @@
                             android:layout_height="@dimen/MainImageSize"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/TimerContentDescription"
-                            android:elevation="10dp"
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/timer_off_m3" />
                         <TextView
                             android:id="@+id/timerBtnText"
+                            android:textSize="@dimen/mainImageInfoText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/mainFeatureTextTimer"
                             android:gravity="center_horizontal"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
 
@@ -112,7 +132,6 @@
                             android:layout_height="@dimen/MainImageSize"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/SOSBtnContentDescription"
-                            android:elevation="10dp"
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/sos_off_m3" />
 
@@ -121,6 +140,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/mainFeatureTextSOS"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
 
@@ -140,7 +163,6 @@
                             android:layout_height="@dimen/MainImageSize"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/IncomingSoundContentDescription"
-                            android:elevation="10dp"
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/sound_off_m3"/>
                         <TextView
@@ -148,6 +170,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/mainFeatureTextSound"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -164,7 +190,6 @@
                             android:layout_height="@dimen/MainImageSize"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/ShakenBtnContentDescription"
-                            android:elevation="10dp"
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/tilt_off_m3"/>
                         <TextView
@@ -172,6 +197,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/mainFeatureTextTilt"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -187,7 +216,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_gravity="start"
                     android:orientation="vertical">
 
@@ -205,7 +234,6 @@
                             android:layout_height="@dimen/MainImageSize"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/AltitudeContentDescription"
-                            android:elevation="10dp"
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/altitude_off_m3" />
                         <TextView
@@ -214,6 +242,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/mainFeatureTextAltitude"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -234,7 +266,6 @@
                             android:layout_height="@dimen/MainImageSize"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/FlashlightFlickeringContentDescription"
-                            android:elevation="10dp"
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/flickering_off_m3"/>
                         <TextView
@@ -243,6 +274,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/mainFeatureTextFlicker"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -257,9 +292,6 @@
                         android:scaleType="centerInside"
                         app:srcCompat="@drawable/flashlight_off4" />
 
-
-
-
                 </LinearLayout>
 
                 <!-- 3rd Column -->
@@ -268,7 +300,7 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:gravity="start"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="16dp"
                     android:orientation="vertical">
 
                     <!-- Battery -->
@@ -285,7 +317,6 @@
                             android:layout_height="@dimen/MainImageSize"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/BatteryContentDescription"
-                            android:elevation="10dp"
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/battery_off_m3" />
                         <TextView
@@ -294,6 +325,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/mainFeatureTextBattery"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -313,7 +348,6 @@
                             android:layout_height="@dimen/MainImageSize"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/IncomingSMSContentDescription"
-                            android:elevation="10dp"
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/incoming_sms_off_m3"/>
 
@@ -322,6 +356,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/mainFeatureTextSMS"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -345,7 +383,6 @@
                             android:layout_height="@dimen/MainImageSize"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/IncomingCallContentDescription"
-                            android:elevation="10dp"
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/incoming_call_off_m3" />
                         <TextView
@@ -353,6 +390,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/mainFeatureTextCall"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
 
@@ -364,7 +405,6 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:background="@drawable/button_selector"
-
                         android:orientation="vertical">
                         <ImageButton
                             android:id="@+id/networkConnectionBtn"
@@ -372,7 +412,6 @@
                             android:layout_height="@dimen/MainImageSize"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
-                            android:elevation="10dp"
                             android:scaleType="fitCenter"
                             app:srcCompat="@drawable/network_off_m3" />
                         <TextView
@@ -380,6 +419,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/mainFeatureTextNetwork"
+                            android:maxLines="2"
+                            android:autoSizeMinTextSize = "12sp"
+                            android:autoSizeMaxTextSize="13sp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="center_horizontal"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
