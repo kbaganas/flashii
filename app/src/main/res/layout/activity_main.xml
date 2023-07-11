@@ -101,7 +101,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="8dp"
+                            android:layout_margin="4dp"
                             android:background="@color/blueOffBack4"
                             tools:ignore="ExtraText" />
                         <TextView
@@ -153,7 +153,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="8dp"
+                            android:layout_margin="4dp"
                             android:background="@color/blueOffBack4"
                             tools:ignore="ExtraText" />
                         <TextView
@@ -204,7 +204,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="8dp"
+                            android:layout_margin="4dp"
                             android:background="@color/blueOffBack4"
                             tools:ignore="ExtraText" />
                         <LinearLayout
@@ -321,7 +321,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="8dp"
+                            android:layout_margin="4dp"
                             android:background="@color/blueOffBack4"
                             tools:ignore="ExtraText" />
                         <LinearLayout
@@ -418,7 +418,7 @@
                             android:text="@string/mainFeatureTextSound"
                             android:maxLines="1"
                             android:autoSizeMaxTextSize="18sp"
-                            android:autoSizeMinTextSize="15sp"
+                            android:autoSizeMinTextSize="12sp"
                             android:layout_marginTop="4dp"
                             android:autoSizeTextType="uniform"
                             android:gravity="center_horizontal"
@@ -426,7 +426,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="8dp"
+                            android:layout_margin="4dp"
                             android:background="@color/blueOffBack4"
                             tools:ignore="ExtraText" />
                         <TextView
@@ -475,7 +475,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="8dp"
+                            android:layout_margin="4dp"
                             android:background="@color/blueOffBack4"
                             tools:ignore="ExtraText" />
                         <TextView
@@ -524,7 +524,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="8dp"
+                            android:layout_margin="4dp"
                             android:background="@color/blueOffBack4"
                             tools:ignore="ExtraText" />
                         <LinearLayout
