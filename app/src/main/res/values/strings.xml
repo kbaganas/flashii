@@ -128,17 +128,17 @@
     <string name="titleSOS">SOS</string>
     <string name="titleBattery">Battery</string>
 
-    <string name="mainFeatureTextAltitude">Altitude\nHeight</string>
-    <string name="mainFeatureTextCall">Incoming\nCall</string>
-    <string name="mainFeatureTextSMS">Incoming\nSMS</string>
-    <string name="mainFeatureTextNetwork">Network\nChanges</string>
-    <string name="mainFeatureTextTilt">Phone\nTilt</string>
-    <string name="mainFeatureTextSound">Short\nSounds</string>
-    <string name="mainFeatureTextFlicker">Flickering\non demand</string>
+    <string name="mainFeatureTextAltitude">Altitude Height</string>
+    <string name="mainFeatureTextCall">Incoming Call</string>
+    <string name="mainFeatureTextSMS">Incoming SMS</string>
+    <string name="mainFeatureTextNetwork">Network Changes</string>
+    <string name="mainFeatureTextTilt">Phone Tilt</string>
+    <string name="mainFeatureTextSound">Short Sounds</string>
+    <string name="mainFeatureTextFlicker">Flicker on demand</string>
     <string name="mainFeatureTextFlashlight">Flashlight</string>
-    <string name="mainFeatureTextSOS">Send SOS message</string>
-    <string name="mainFeatureTextBattery">Battery\nPower</string>
-    <string name="mainFeatureTextTimer">Flickering\non Time</string>
+    <string name="mainFeatureTextSOS">Send SOS</string>
+    <string name="mainFeatureTextBattery">Battery Power</string>
+    <string name="mainFeatureTextTimer">Flicker on Time</string>
     <string name="mainFeatureTextTimerSet">-- : --</string>
     <string name="pavla">-</string>
     <string name="pavlaPerc">- %</string>
