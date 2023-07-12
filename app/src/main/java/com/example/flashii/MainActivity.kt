@@ -330,18 +330,22 @@ class MainActivity : AppCompatActivity() {
                 if (token == Token.FLICKER && isFlickeringOnDemand) {
                     setFlickeringHz(progress.toLong())
                     setMainBtnSetText(Token.FLICKER)
+                    setSeekBarTitle(SeekBarMode.HZ, ACTION.SET)
                 }
                 else if (token == Token.BATTERY && isBatteryOn && !isBatteryThresholdSet) {
                     batteryThreshold = progress
                     setMainBtnSetText(Token.BATTERY)
+                    setSeekBarTitle(SeekBarMode.PERCENTAGE, ACTION.SET)
                 }
                 else if (token == Token.ALTITUDE && isAltitudeOn && !isAltitudeThresholdSet) {
                     altitudeThreshold = progress
                     setMainBtnSetText(Token.ALTITUDE)
+                    setSeekBarTitle(SeekBarMode.METERS, ACTION.SET)
                 }
                 else if (token == Token.TIMER && isTimerOn && !isTimerThresholdSet) {
                     timerSetAfter = progress.minutes
                     setMainBtnSetText(Token.TIMER)
+                    setSeekBarTitle(SeekBarMode.HOURS, ACTION.SET)
                 }
             }
 
@@ -353,14 +357,17 @@ class MainActivity : AppCompatActivity() {
                 if (token == Token.BATTERY && isBatteryOn && isBatteryThresholdSet) {
                     isBatteryThresholdSet = false
                     setMainBtnSetText(Token.BATTERY)
+                    setSeekBarTitle(SeekBarMode.PERCENTAGE, ACTION.SET)
                 }
                 else if (token == Token.ALTITUDE && isAltitudeOn && isAltitudeThresholdSet) {
                     isAltitudeThresholdSet = false
                     setMainBtnSetText(Token.ALTITUDE)
+                    setSeekBarTitle(SeekBarMode.METERS, ACTION.SET)
                 }
                 else if (token == Token.TIMER && isTimerOn && isTimerThresholdSet) {
                     isTimerThresholdSet = false
                     setMainBtnSetText(Token.TIMER)
+                    setSeekBarTitle(SeekBarMode.HOURS, ACTION.SET)
                 }
             }
 
@@ -1271,7 +1278,7 @@ class MainActivity : AppCompatActivity() {
                 batteryBtnSetId.text = getString(R.string.pavlaPerc)
             }
             Token.TIMER -> {
-                timerBtnTimeSetId.text = getString(R.string.mainFeatureTextTimerSet)
+                timerBtnTimeSetId.text = getString(R.string.pavlaTime)
             }
             Token.ALTITUDE -> {
                 altitudeBtnSetId.text = getString(R.string.pavlaMeter)
@@ -1306,11 +1313,11 @@ class MainActivity : AppCompatActivity() {
                 timerBtnTimeSetId.text = tempText
             }
             Token.ALTITUDE -> {
-                tempText = "Height reached ${altitudeThreshold}m"
+                tempText = "Height set ${altitudeThreshold}m"
                 altitudeBtnSetId.text = tempText
             }
             Token.SOUND -> {
-                tempText = "Sensitivity: $sensitivitySoundThreshold"
+                tempText = "Sensitivity $sensitivitySoundThreshold"
                 soundBtnSetId.text = tempText
             }
             else -> {}
@@ -1402,24 +1409,60 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setMessageTextEnhanced (mode: SeekBarMode) {
+    private fun setSeekBarTitle (mode: SeekBarMode, action : ACTION) {
         val displayText : String
         when (mode) {
             SeekBarMode.HOURS -> {
-                displayText = "Set Time"
-                seekBarTitle.text = displayText
+                when (action) {
+                    ACTION.SET -> {
+                        displayText = "Time set\n$timerSetAfter"
+                        seekBarTitle.text = displayText
+                    }
+                    ACTION.RESET -> {
+                        displayText = "Time set\n${getString(R.string.pavla)}"
+                        seekBarTitle.text = displayText
+                    }
+                    else -> {}
+                }
             }
             SeekBarMode.HZ -> {
-                displayText = "Set Frequency"
-                seekBarTitle.text = displayText
+                when (action) {
+                    ACTION.SET -> {
+                        displayText = "Frequency set\n${flickerFlashlightHz}Hz"
+                        seekBarTitle.text = displayText
+                    }
+                    ACTION.RESET -> {
+                        displayText = "Frequency set\n${getString(R.string.pavlaHz)}"
+                        seekBarTitle.text = displayText
+                    }
+                    else -> {}
+                }
             }
             SeekBarMode.METERS -> {
-                displayText = "Set Height"
-                seekBarTitle.text = displayText
+                when (action) {
+                    ACTION.SET -> {
+                        displayText = "Height set\n${altitudeThreshold}Hz"
+                        seekBarTitle.text = displayText
+                    }
+                    ACTION.RESET -> {
+                        displayText = "Height set\n${getString(R.string.pavlaMeter)}"
+                        seekBarTitle.text = displayText
+                    }
+                    else -> {}
+                }
             }
             SeekBarMode.PERCENTAGE -> {
-                displayText = "Set Power %"
-                seekBarTitle.text = displayText
+                when (action) {
+                    ACTION.SET -> {
+                        displayText = "Power set\n${batteryThreshold}Hz"
+                        seekBarTitle.text = displayText
+                    }
+                    ACTION.RESET -> {
+                        displayText = "Power set\n${getString(R.string.pavlaPerc)}"
+                        seekBarTitle.text = displayText
+                    }
+                    else -> {}
+                }
             }
         }
     }
@@ -1433,7 +1476,7 @@ class MainActivity : AppCompatActivity() {
                 flickeringBar.min = minTimerMinutes.inWholeMinutes.toInt()
                 flickeringBar.max = maxTimerMinutes.inWholeMinutes.toInt()
                 flickeringBar.progress = minTimerMinutes.inWholeMinutes.toInt()
-                setMessageTextEnhanced(SeekBarMode.HOURS)
+                setSeekBarTitle(SeekBarMode.HOURS, ACTION.SET)
             }
             SeekBarMode.HZ -> {
                 flickeringBar.min = minFlickerHz
@@ -1444,7 +1487,7 @@ class MainActivity : AppCompatActivity() {
                 else {
                     flickeringBar.progress = minFlickerHz
                 }
-                setMessageTextEnhanced(SeekBarMode.HZ)
+                setSeekBarTitle(SeekBarMode.HZ, ACTION.SET)
             }
             SeekBarMode.METERS -> {
                 flickeringBar.min = minAltitude
@@ -1452,7 +1495,7 @@ class MainActivity : AppCompatActivity() {
                 if (initAltitudeLevel != minAltitude) {
                     flickeringBar.progress = initAltitudeLevel
                 }
-                setMessageTextEnhanced(SeekBarMode.METERS)
+                setSeekBarTitle(SeekBarMode.METERS, ACTION.SET)
             }
             SeekBarMode.PERCENTAGE -> {
                 flickeringBar.min = minBattery
@@ -1460,7 +1503,7 @@ class MainActivity : AppCompatActivity() {
                 if (initBatteryLevel != minBattery) {
                     flickeringBar.progress = initBatteryLevel
                 }
-                setMessageTextEnhanced(SeekBarMode.PERCENTAGE)
+                setSeekBarTitle(SeekBarMode.PERCENTAGE, ACTION.SET)
             }
         }
     }
@@ -1471,26 +1514,21 @@ class MainActivity : AppCompatActivity() {
         if (!hideBarOnly) {
             flickeringBar.progress = flickeringBar.min
         }
-        val displayText : String
         flickeringBar.min = when (token) {
             Token.FLICKER -> {
-                displayText = "Set Frequency"
-                seekBarTitle.text = displayText
+                setSeekBarTitle(SeekBarMode.HZ, ACTION.RESET)
                 minFlickerHz
             }
             Token.TIMER -> {
-                displayText = "Set Time"
-                seekBarTitle.text = displayText
+                setSeekBarTitle(SeekBarMode.HOURS, ACTION.RESET)
                 minTimerMinutes.inWholeMinutes.toInt()
             }
             Token.BATTERY -> {
-                displayText = "Set Power %"
-                seekBarTitle.text = displayText
+                setSeekBarTitle(SeekBarMode.PERCENTAGE, ACTION.RESET)
                 minBattery
             }
             Token.ALTITUDE -> {
-                displayText = "Set Height"
-                seekBarTitle.text = displayText
+                setSeekBarTitle(SeekBarMode.METERS, ACTION.RESET)
                 minAltitude
             }
             else -> {minFlickerHz}

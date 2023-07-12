@@ -139,7 +139,7 @@
     <string name="mainFeatureTextSOS">Send SOS</string>
     <string name="mainFeatureTextBattery">Battery Power</string>
     <string name="mainFeatureTextTimer">Flicker on Time</string>
-    <string name="mainFeatureTextTimerSet">-- : --</string>
+    <string name="pavlaTime">-- : --</string>
     <string name="pavla">-</string>
     <string name="pavlaPerc">- %</string>
     <string name="pavlaMeter">- m</string>

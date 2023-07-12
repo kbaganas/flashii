@@ -229,7 +229,7 @@
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:maxLines="2"
-                                android:text="@string/mainFeatureTextTimerSet"
+                                android:text="@string/pavlaTime"
                                 android:textSize="@dimen/mainImageInfoText"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
@@ -559,11 +559,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="48dp"
                 android:orientation="horizontal"
                 android:layout_marginVertical="8dp"
-                android:layout_marginHorizontal="16dp"
-                android:gravity="center">
+                android:layout_marginHorizontal="12dp"
+                android:gravity="center_horizontal">
                 <TextView
                     android:id="@+id/seekBarTitleId"
                     android:textSize="@dimen/mainImageInfoText"
@@ -571,8 +571,9 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
-                    android:gravity="start"
+                    android:gravity="center_horizontal"
                     android:maxLines="2"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginEnd="6dp"
                     android:autoSizeMinTextSize = "12sp"
                     android:autoSizeMaxTextSize="13sp"
@@ -580,10 +581,9 @@
                     tools:ignore="VisualLintLongText" />
                 <SeekBar
                     android:id="@+id/flickeringBarId"
-                    android:gravity="center_horizontal"
                     android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="26dp"
+                    android:layout_weight="6"
+                    android:layout_height="match_parent"
                     android:background="@drawable/button_selector"
                     android:progressTint="@color/seekbarProgressTint"
                     android:rotation="0"/>
