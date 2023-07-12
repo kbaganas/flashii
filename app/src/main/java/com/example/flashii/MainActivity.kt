@@ -407,7 +407,7 @@ class MainActivity : AppCompatActivity() {
                 setSeekBar(SeekBarMode.HZ)
                 startFlickering()
                 setBtnImage(flickerFlashlightBtn, R.drawable.flickering_on_m3)
-                flickerBtnSetId.text = "Frequency ${flickerFlashlightHz}Hz"
+                setMainBtnSetText(Token.FLICKER)
             }
             else {
                 Log.i("MainActivity","flickerFlashlightBtn is OFF")
@@ -501,7 +501,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     recordingThread?.start()
-                    soundBtnSetId.text = "Sensitivity: $sensitivitySoundThreshold"
+                    setMainBtnSetText(Token.SOUND)
                 }
             }
             else {
@@ -557,7 +557,7 @@ class MainActivity : AppCompatActivity() {
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
                     setBtnImage(incomingTiltBtn, R.drawable.tilt_on_m3)
                     isPhoneTilt = true
-                    tiltBtnSet.text = "Tilt by $sensitivityAngle degrees"
+                    setMainBtnSetText(Token.TILT)
                 }
                 else {
                     // we have to disable the btn now since rotation sensor is not available on the device
@@ -690,7 +690,7 @@ class MainActivity : AppCompatActivity() {
                 isBatteryOn = true
                 setBatteryBtn(ACTION.SET)
                 setSeekBar(SeekBarMode.PERCENTAGE)
-                batteryBtnSetId.text = "Flicker on\nBattery $batteryThreshold%"
+                setMainBtnSetText(Token.BATTERY)
                 batteryReceiver = object : BroadcastReceiver() {
                     override fun onReceive(context: Context, intent: Intent) {
                         if (initBatteryLevel == minBattery) {
@@ -780,7 +780,7 @@ class MainActivity : AppCompatActivity() {
                 setSeekBar(SeekBarMode.HOURS)
                 setTimerBtn(ACTION.SET)
                 loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.TIMER) }, checkInterval50)
-                timerBtnTimeSetId.text = "Flicker after\n$timerSetAfter"
+                setMainBtnSetText(Token.TIMER)
             }
             else {
                 Log.i("MainActivity","timerBtn is OFF")
@@ -834,7 +834,7 @@ class MainActivity : AppCompatActivity() {
                                                     )
                                                     sensorManager.unregisterListener(sensorEventListener)
                                                     setAltitudeBtn(ACTION.SUCCESS)
-                                                    altitudeBtnSetId.text = "Height reached ${altitude.toInt()}m"
+                                                    setMainBtnSetText(Token.ALTITUDE)
                                                     altitudeBtnSuccessId.visibility = View.VISIBLE
                                                 }
                                             }
@@ -853,7 +853,7 @@ class MainActivity : AppCompatActivity() {
                                                     )
                                                     sensorManager.unregisterListener(sensorEventListener)
                                                     setAltitudeBtn(ACTION.SUCCESS)
-                                                    altitudeBtnSetId.text = "Descended to ${altitude.toInt()}m"
+                                                    setMainBtnSetText(Token.ALTITUDE)
                                                     altitudeBtnSuccessId.visibility = View.VISIBLE
                                                 }
                                             }
@@ -1908,7 +1908,7 @@ class MainActivity : AppCompatActivity() {
             setBtnImage(flickerFlashlightBtn, R.drawable.flickering_off_m3)
             resetSeekBarAndTitle()
             setFlickeringHz(minFlickerHz.toLong())
-            flickerBtnSetId.text = getString(R.string.pavlaHz)
+            resetMainBtnSetText(Token.FLICKER)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.TILT)
@@ -1940,7 +1940,7 @@ class MainActivity : AppCompatActivity() {
             sensorManager.unregisterListener(sensorEventListener)
             setBtnImage(incomingTiltBtn, R.drawable.tilt_off_m3)
             isPhoneTilt = false
-            tiltBtnSet.text = getString(R.string.pavla)
+            resetMainBtnSetText(Token.TILT)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS)
@@ -1990,7 +1990,7 @@ class MainActivity : AppCompatActivity() {
                     catch (e : Exception) {
                         // We are OK, receiver is already unregistered
                     }
-                    batteryBtnSetId.text = getString(R.string.pavlaPerc)
+                    resetMainBtnSetText(Token.BATTERY)
                     batteryBtnSuccessId.visibility = View.INVISIBLE
                 }
                 else {
@@ -2025,7 +2025,7 @@ class MainActivity : AppCompatActivity() {
                     catch (e: java.lang.Exception) {
                         // DO nothing here
                     }
-                    altitudeBtnSetId.text = getString(R.string.pavlaMeter)
+                    resetMainBtnSetText(Token.ALTITUDE)
                     altitudeBtnSuccessId.visibility = View.INVISIBLE
                 }
                 else {
@@ -2060,7 +2060,7 @@ class MainActivity : AppCompatActivity() {
                     catch (e: java.lang.Exception) {
                         // DO nothing here
                     }
-                    timerBtnTimeSetId.text = getString(R.string.mainFeatureTextTimerSet)
+                    resetMainBtnSetText(Token.TIMER)
                     timerBtnSuccessId.visibility = View.INVISIBLE
                 }
                 else {
