@@ -436,7 +436,7 @@
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_horizontal"
                             android:maxLines="2"
-                            android:text="@string/altitudeFeature"
+                            android:text="@string/pavla"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
 
