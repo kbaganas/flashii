@@ -413,7 +413,7 @@ class MainActivity : AppCompatActivity() {
                 isFlickeringOnDemand = true
                 setSeekBar(SeekBarMode.HZ)
                 startFlickering()
-                setBtnImage(flickerFlashlightBtn, R.drawable.flickering_on_m3)
+                setBtnImage(flickerFlashlightBtn, R.drawable.flickering_on_n1)
                 setMainBtnSetText(Token.FLICKER)
             }
             else {
@@ -436,7 +436,7 @@ class MainActivity : AppCompatActivity() {
                 if (!isIncomingCall) {
                     Log.i("MainActivity","incomingCallBtn is ON")
                     registerIncomingEvents(TypeOfEvent.INCOMING_CALL)
-                    setBtnImage(incomingCallBtn, R.drawable.incoming_call_on_m3)
+                    setBtnImage(incomingCallBtn, R.drawable.incoming_call_on_n1)
                 } else {
                     Log.i("MainActivity", "incomingCallBtn is OFF")
                     disableIncomingCallFlickering()
@@ -480,7 +480,7 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity","incomingSoundBtn is ON")
                     resetAllActivities(Token.SOUND)
                     isAudioIncoming = true
-                    setBtnImage(incomingSoundBtn, R.drawable.sound_on_m3)
+                    setBtnImage(incomingSoundBtn, R.drawable.sound_on_n1)
                     audioRecordHandler = AudioRecord(
                         MediaRecorder.AudioSource.MIC,
                         sampleRate,
@@ -562,7 +562,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     Log.i("MainActivity","incomingTiltBtn is ON ($sensorEventListener)")
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
-                    setBtnImage(incomingTiltBtn, R.drawable.tilt_on_m3)
+                    setBtnImage(incomingTiltBtn, R.drawable.tilt_on_n1)
                     isPhoneTilt = true
                     setMainBtnSetText(Token.TILT)
                 }
@@ -592,7 +592,7 @@ class MainActivity : AppCompatActivity() {
                 if (!isIncomingSMS) {
                     Log.i("MainActivity","incomingSMSBtn is ON")
                     registerIncomingEvents(TypeOfEvent.SMS)
-                    setBtnImage(incomingSMSBtn, R.drawable.incoming_sms_on_m3)
+                    setBtnImage(incomingSMSBtn, R.drawable.incoming_sms_on_n1)
                 } else {
                     Log.i("MainActivity", "incomingSMSBtn is OFF")
                     disableIncomingSMSFlickering()
@@ -1547,7 +1547,7 @@ class MainActivity : AppCompatActivity() {
     private fun setTimerBtn (action : ACTION) {
         when (action) {
             ACTION.SET -> {
-                timerBtn.setImageResource(R.drawable.timer_on_m3)
+                timerBtn.setImageResource(R.drawable.timer_on_n1)
             }
             ACTION.RESET -> {
                 timerBtn.setImageResource(R.drawable.timer_off_m3)
@@ -1565,7 +1565,7 @@ class MainActivity : AppCompatActivity() {
     private fun setBatteryBtn (action : ACTION) {
         when (action) {
             ACTION.SET -> {
-                batteryBtn.setImageResource(R.drawable.battery_on_m3)
+                batteryBtn.setImageResource(R.drawable.battery_on_n1)
             }
             ACTION.RESET -> {
                 batteryBtn.setImageResource(R.drawable.battery_off_m3)
@@ -1582,7 +1582,7 @@ class MainActivity : AppCompatActivity() {
     private fun setAltitudeBtn (action : ACTION) {
         when (action) {
             ACTION.SET -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_on_m3)
+                altitudeBtn.setImageResource(R.drawable.altitude_on_n1)
             }
             ACTION.RESET -> {
                 altitudeBtn.setImageResource(R.drawable.altitude_off_m3)
@@ -1609,7 +1609,7 @@ class MainActivity : AppCompatActivity() {
                     outInNetworkBtn.setImageResource(R.drawable.network_lost_m3) // wifi_lost_r1
                 }
                 NetworkState.ASIS -> {
-                    outInNetworkBtn.setImageResource(R.drawable.network_on_to_lost_m3) //wifi_off_enabled_r1
+                    outInNetworkBtn.setImageResource(R.drawable.network_on_to_off_n1) //wifi_off_enabled_r1
                 }
                 else -> {}
             }
@@ -1620,7 +1620,7 @@ class MainActivity : AppCompatActivity() {
                     outInNetworkBtn.setImageResource(R.drawable.network_success) //wifi_on_found_r1
                 }
                 NetworkState.ASIS -> {
-                    outInNetworkBtn.setImageResource(R.drawable.network_on_m3) //wifi_on_enabled_r1
+                    outInNetworkBtn.setImageResource(R.drawable.network_off_to_on_n1) //wifi_on_enabled_r1
                 }
                 else -> {}
             }
@@ -1763,7 +1763,7 @@ class MainActivity : AppCompatActivity() {
             val durationOfWord = s(o(s()))
             loopHandlerFlickering.postDelayed({ repeatSOS() }, durationOfWord + spaceWordsDuration)
             if (setSOSBtn) {
-                setBtnImage(sosBtn, R.drawable.sos_on_m3)
+                setBtnImage(sosBtn, R.drawable.sos_on_n1)
             }
             isSendSOS = true
         }

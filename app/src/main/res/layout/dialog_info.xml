@@ -295,7 +295,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/flickering_on_m3" />
+                        app:srcCompat="@drawable/flickering_on_n1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -420,7 +420,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/incoming_call_on_m3" />
+                        app:srcCompat="@drawable/incoming_call_on_n1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -545,7 +545,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/incoming_sms_on_m3" />
+                        app:srcCompat="@drawable/incoming_sms_on_n1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -670,7 +670,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/sound_on_m3" />
+                        app:srcCompat="@drawable/sound_on_n1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -713,7 +713,7 @@
                 android:layout_marginVertical="28dp"
                 android:background="@color/blueOff" />
 
-            <!-- Titl -->
+            <!-- Tilt -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -819,7 +819,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/tilt_on_m3" />
+                        app:srcCompat="@drawable/tilt_on_n1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -944,7 +944,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/timer_on_m3" />
+                        app:srcCompat="@drawable/timer_on_n1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1093,7 +1093,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/battery_on_m3" />
+                        app:srcCompat="@drawable/battery_on_n1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1242,7 +1242,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/altitude_on_m3" />
+                        app:srcCompat="@drawable/altitude_on_n1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1402,7 +1402,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/network_off_to_on_m3" />
+                        app:srcCompat="@drawable/network_off_to_on_n1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1612,7 +1612,7 @@
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/sos_on_m3" />
+                        app:srcCompat="@drawable/sos_on_n1" />
 
                     <TextView
                         android:layout_width="match_parent"

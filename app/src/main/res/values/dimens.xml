@@ -10,7 +10,7 @@
     <dimen name="margin30">30dp</dimen>
     <dimen name="margin32">32dp</dimen>
     <dimen name="margin34">34dp</dimen>
-    <dimen name="mainImageHeight">150dp</dimen>
+    <dimen name="mainImageHeight">140dp</dimen>
     <dimen name="mainFlashlightHeight">248dp</dimen>
     <dimen name="mainSeekbarHeight">66dp</dimen>
     <dimen name="infoFeatureTitle">20sp</dimen>
