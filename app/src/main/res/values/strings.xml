@@ -128,7 +128,7 @@
     <string name="titleSOS">SOS</string>
     <string name="titleBattery">Battery</string>
 
-    <string name="mainFeatureTextAltitude">Altitude Height</string>
+    <string name="mainFeatureTextAltitude">Flicker on Height</string>
     <string name="mainFeatureTextCall">Flicker on Call</string>
     <string name="mainFeatureTextSMS">Flicker on SMS</string>
     <string name="mainFeatureTextNetwork">Network Changes</string>

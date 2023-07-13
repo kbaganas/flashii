@@ -594,7 +594,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="5"
                     android:layout_height="match_parent"
-                    android:background="@drawable/button_selector"
+                    android:background="@drawable/button_selector_activated"
                     android:progressTint="@color/seekbarProgressTint"
                     android:rotation="0"/>
             </LinearLayout>
