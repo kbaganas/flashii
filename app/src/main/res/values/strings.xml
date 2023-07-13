@@ -137,12 +137,12 @@
     <string name="mainFeatureTextFlicker">Flicker on demand</string>
     <string name="mainFeatureTextFlashlight">Flashlight</string>
     <string name="mainFeatureTextSOS">Send SOS</string>
-    <string name="mainFeatureTextBattery">Battery Power</string>
+    <string name="mainFeatureTextBattery">Flicker on Power</string>
     <string name="mainFeatureTextTimer">Flicker on Time</string>
-    <string name="pavlaTime">-- : --</string>
+    <string name="pavlaTime">Time set to\n-- : --</string>
     <string name="pavla">-</string>
-    <string name="pavlaPerc">- %</string>
-    <string name="pavlaMeter">- m</string>
+    <string name="pavlaPerc">Power set to\n- %</string>
+    <string name="pavlaMeter">Height set to\n- m</string>
     <string name="pavlaHz">- Hz</string>
 
 

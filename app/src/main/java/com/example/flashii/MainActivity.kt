@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     private var sensitivitySoundThreshold = defaultSoundSenseLevel
 
     private val hideSeekBarAfterDelay35 : Long = 3500 // 3.5 seconds
-    private val checkInterval50 : Long = 5000 // checkForInactivity after interval
+    private val checkInterval40 : Long = 4000 // checkForInactivity after interval
     private lateinit var token : Token // token regarding which key is pressed
     private lateinit var reviewInfo : ReviewInfo
     private lateinit var sharedPref : SharedPreferences // shared with Settings view
@@ -362,17 +362,17 @@ class MainActivity : AppCompatActivity() {
                     setMainBtnSetText(Token.FLICKER)
                     setSeekBarTitle(SeekBarMode.HZ, ACTION.SET)
                 }
-                else if (token == Token.BATTERY && isBatteryOn && !isBatteryThresholdSet) {
+                else if (token == Token.BATTERY && isBatteryOn && isStartTrackingTouched && !isBatteryThresholdSet) {
                     batteryThreshold = progress
                     setMainBtnSetText(Token.BATTERY)
                     setSeekBarTitle(SeekBarMode.PERCENTAGE, ACTION.SET)
                 }
-                else if (token == Token.ALTITUDE && isAltitudeOn && !isAltitudeThresholdSet) {
+                else if (token == Token.ALTITUDE && isAltitudeOn && isStartTrackingTouched && !isAltitudeThresholdSet) {
                     altitudeThreshold = progress
                     setMainBtnSetText(Token.ALTITUDE)
                     setSeekBarTitle(SeekBarMode.METERS, ACTION.SET)
                 }
-                else if (token == Token.TIMER && isTimerOn && !isTimerThresholdSet) {
+                else if (token == Token.TIMER && isTimerOn && isStartTrackingTouched && !isTimerThresholdSet) {
                     timerSetAfter = progress.minutes
                     setMainBtnSetText(Token.TIMER)
                     setSeekBarTitle(SeekBarMode.HOURS, ACTION.SET)
@@ -745,9 +745,7 @@ class MainActivity : AppCompatActivity() {
                 resetAllActivities(Token.BATTERY)
                 isBatteryOn = true
                 setBatteryBtn(ACTION.SET)
-                setBtnSelector(layoutBattery, ACTION.SET)
                 setSeekBar(SeekBarMode.PERCENTAGE)
-                setMainBtnSetText(Token.BATTERY)
                 batteryReceiver = object : BroadcastReceiver() {
                     override fun onReceive(context: Context, intent: Intent) {
                         if (initBatteryLevel == minBattery) {
@@ -804,7 +802,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-                loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.BATTERY) }, checkInterval50)
+                loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.BATTERY) }, checkInterval40)
             }
             else {
                 Log.i("MainActivity","batteryBtn is OFF")
@@ -843,9 +841,7 @@ class MainActivity : AppCompatActivity() {
                 isTimerOn = true
                 setSeekBar(SeekBarMode.HOURS)
                 setTimerBtn(ACTION.SET)
-                setBtnSelector(layoutTimer, ACTION.SET)
-                loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.TIMER) }, checkInterval50)
-                setMainBtnSetText(Token.TIMER)
+                loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.TIMER) }, checkInterval40)
             }
             else {
                 Log.i("MainActivity","timerBtn is OFF")
@@ -938,10 +934,8 @@ class MainActivity : AppCompatActivity() {
                         isAltitudeOn = true
                         setSeekBar(SeekBarMode.METERS)
                         setAltitudeBtn(ACTION.SET)
-                        setBtnSelector(layoutAltitude, ACTION.SET)
                         sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
-                        loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.ALTITUDE) }, checkInterval50)
-                        altitudeBtnSetId.text = "Flicker at\nHeight of ${altitudeThreshold}m"
+                        loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.ALTITUDE) }, checkInterval40)
                         altitudeBtnSuccessId.visibility = View.INVISIBLE
                     }
                     else {
@@ -1378,11 +1372,11 @@ class MainActivity : AppCompatActivity() {
                 tiltBtnSet.text = tempText
             }
             Token.FLICKER -> {
-                tempText = "Frequency ${flickerFlashlightHz}Hz"
+                tempText = "Frequency set to\n${flickerFlashlightHz}Hz"
                 flickerBtnSetId.text = tempText
             }
             Token.BATTERY -> {
-                tempText = "Flicker on\nBattery $batteryThreshold%"
+                tempText = "Power set to\n$batteryThreshold%"
                 batteryBtnSetId.text = tempText
             }
             Token.TIMER -> {
@@ -1390,7 +1384,7 @@ class MainActivity : AppCompatActivity() {
                 timerBtnTimeSetId.text = tempText
             }
             Token.ALTITUDE -> {
-                tempText = "Height set to \n${altitudeThreshold}m"
+                tempText = "Height set to\n${altitudeThreshold}m"
                 altitudeBtnSetId.text = tempText
             }
             Token.SOUND -> {
@@ -1495,11 +1489,11 @@ class MainActivity : AppCompatActivity() {
             SeekBarMode.HOURS -> {
                 when (action) {
                     ACTION.SET -> {
-                        displayText = "Time set\n$timerSetAfter"
+                        displayText = "Set time\n(up to $maxTimerMinutes)"
                         seekBarTitle.text = displayText
                     }
                     ACTION.RESET -> {
-                        displayText = "Time set\n${getString(R.string.pavla)}"
+                        displayText = "Set time\n(up to $maxTimerMinutes)"
                         seekBarTitle.text = displayText
                     }
                     else -> {}
@@ -1508,11 +1502,11 @@ class MainActivity : AppCompatActivity() {
             SeekBarMode.HZ -> {
                 when (action) {
                     ACTION.SET -> {
-                        displayText = "Frequency set\n${flickerFlashlightHz}Hz"
+                        displayText = "Set Frequency\n(up to ${maxFlickerHz}Hz)"
                         seekBarTitle.text = displayText
                     }
                     ACTION.RESET -> {
-                        displayText = "Frequency set\n${getString(R.string.pavlaHz)}"
+                        displayText = "Set Frequency\n(up to ${maxFlickerHz}Hz)"
                         seekBarTitle.text = displayText
                     }
                     else -> {}
@@ -1521,11 +1515,11 @@ class MainActivity : AppCompatActivity() {
             SeekBarMode.METERS -> {
                 when (action) {
                     ACTION.SET -> {
-                        displayText = "Height set\n${altitudeThreshold}m"
+                        displayText = "Set Height\n(up to ${maxAltitude}m)"
                         seekBarTitle.text = displayText
                     }
                     ACTION.RESET -> {
-                        displayText = "Height set\n${getString(R.string.pavlaMeter)}"
+                        displayText = "Set Height\n(up to ${maxAltitude}m)"
                         seekBarTitle.text = displayText
                     }
                     else -> {}
@@ -1534,11 +1528,11 @@ class MainActivity : AppCompatActivity() {
             SeekBarMode.PERCENTAGE -> {
                 when (action) {
                     ACTION.SET -> {
-                        displayText = "Power set\n${batteryThreshold}%"
+                        displayText = "Set Power\n(up to ${maxBattery}%)"
                         seekBarTitle.text = displayText
                     }
                     ACTION.RESET -> {
-                        displayText = "Power set\n${getString(R.string.pavlaPerc)}"
+                        displayText = "Set Power\n(up to ${maxBattery}%)"
                         seekBarTitle.text = displayText
                     }
                     else -> {}
