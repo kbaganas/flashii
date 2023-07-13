@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Flashii</string>
     <string name="flashLightBtn">Flashlight</string>
     <string name="holdFlashLightBtn">Flashlight (Hold)</string>
@@ -139,11 +139,9 @@
     <string name="mainFeatureTextSOS">Send SOS</string>
     <string name="mainFeatureTextBattery">Flicker on Power</string>
     <string name="mainFeatureTextTimer">Flicker on Time</string>
-    <string name="pavlaTime">Time set to\n-- : --</string>
+    <string name="pavlaTime" tools:ignore="TypographyDashes">Time set to\n-- : --</string>
     <string name="pavla">-</string>
     <string name="pavlaPerc">Power set to\n- %</string>
     <string name="pavlaMeter">Height set to\n- m</string>
     <string name="pavlaHz">- Hz</string>
-
-
 </resources>

@@ -114,8 +114,8 @@ class MainActivity : AppCompatActivity() {
     private var sensitivityAngle = defaultMaxTiltAngle
     private var sensitivitySoundThreshold = defaultSoundSenseLevel
 
-    private val hideSeekBarAfterDelay35 : Long = 3500 // 3.5 seconds
-    private val checkInterval40 : Long = 4000 // checkForInactivity after interval
+    private val hideSeekBarAfterDelay25 : Long = 2000 // 3.5 seconds
+    private val checkInterval35 : Long = 3500 // checkForInactivity after interval
     private lateinit var token : Token // token regarding which key is pressed
     private lateinit var reviewInfo : ReviewInfo
     private lateinit var sharedPref : SharedPreferences // shared with Settings view
@@ -409,14 +409,14 @@ class MainActivity : AppCompatActivity() {
                     isBatteryThresholdSet = true
                     Log.d("MainActivity", "Battery power level \nset to ${batteryThreshold}%")
                     setMainBtnSetText(Token.BATTERY)
-                    loopHandlerSeekBar.postDelayed({ resetSeekBarAndTitle() }, hideSeekBarAfterDelay35)
+                    loopHandlerSeekBar.postDelayed({ resetSeekBarAndTitle() }, hideSeekBarAfterDelay25)
                     setBtnSelector(layoutBattery, ACTION.SET)
                 }
                 else if (token == Token.ALTITUDE && isAltitudeOn && !isAltitudeThresholdSet) {
                     isAltitudeThresholdSet = true
                     Log.d("MainActivity", "Altitude point set to ${altitudeThreshold}m")
                     setMainBtnSetText(Token.ALTITUDE)
-                    loopHandlerSeekBar.postDelayed({ resetSeekBarAndTitle() }, hideSeekBarAfterDelay35)
+                    loopHandlerSeekBar.postDelayed({ resetSeekBarAndTitle() }, hideSeekBarAfterDelay25)
                     setBtnSelector(layoutAltitude, ACTION.SET)
                 }
                 else if (token == Token.TIMER && isTimerOn && !isTimerThresholdSet) {
@@ -431,7 +431,7 @@ class MainActivity : AppCompatActivity() {
                     loopHandlerTimer.postDelayed({ stopFlickering() }, timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
                     loopHandlerBtnSelector.postDelayed({ flickerBtnSelector(layoutTimer, ACTION.RESET) }, timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
                     loopHandlerTimer.postDelayed({ setBtnImage(timerBtn, R.drawable.timer_off_m3) }, timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
-                    loopHandlerSeekBar.postDelayed({ resetSeekBarAndTitle() }, hideSeekBarAfterDelay35)
+                    loopHandlerSeekBar.postDelayed({ resetSeekBarAndTitle() }, hideSeekBarAfterDelay25)
                 }
                 isStartTrackingTouched = false
             }
@@ -802,7 +802,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-                loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.BATTERY) }, checkInterval40)
+                loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.BATTERY) }, checkInterval35)
             }
             else {
                 Log.i("MainActivity","batteryBtn is OFF")
@@ -841,7 +841,7 @@ class MainActivity : AppCompatActivity() {
                 isTimerOn = true
                 setSeekBar(SeekBarMode.HOURS)
                 setTimerBtn(ACTION.SET)
-                loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.TIMER) }, checkInterval40)
+                loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.TIMER) }, checkInterval35)
             }
             else {
                 Log.i("MainActivity","timerBtn is OFF")
@@ -935,7 +935,7 @@ class MainActivity : AppCompatActivity() {
                         setSeekBar(SeekBarMode.METERS)
                         setAltitudeBtn(ACTION.SET)
                         sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
-                        loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.ALTITUDE) }, checkInterval40)
+                        loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.ALTITUDE) }, checkInterval35)
                         altitudeBtnSuccessId.visibility = View.INVISIBLE
                     }
                     else {

@@ -593,8 +593,10 @@
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="match_parent"
+                    android:thumbOffset="8dp"
                     android:background="@drawable/button_selector_activated"
                     android:progressTint="@color/seekbarProgressTint"
+                    android:thumb="@drawable/seekbar_thumb"
                     android:rotation="0"/>
             </LinearLayout>
 
