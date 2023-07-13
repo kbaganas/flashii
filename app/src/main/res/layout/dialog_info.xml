@@ -955,30 +955,6 @@
                         android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/timer_success" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/infoTimerCheck"
-                        android:textSize="@dimen/infoText"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
             </LinearLayout>
 
             <View
@@ -1104,30 +1080,6 @@
                         android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/battery_success" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/infoBatteryCheck"
-                        android:textSize="@dimen/infoText"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
             </LinearLayout>
 
             <View
@@ -1250,27 +1202,6 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
-                        android:textSize="@dimen/infoText"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/altitude_success" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/infoAltitudeCheck"
                         android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
@@ -1432,26 +1363,6 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/ConnectionToLost"
-                        android:textSize="@dimen/infoText"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/network_success" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/ConnectionFound"
                         android:textSize="@dimen/infoText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>

@@ -37,6 +37,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -134,6 +135,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var timerBtnSuccessId : ImageView
     private lateinit var altitudeBtnSuccessId : ImageView
     private lateinit var batteryBtnSuccessId : ImageView
+
+    // layouts
+    private lateinit var layoutSOS : LinearLayout
+    private lateinit var layoutSMS : LinearLayout
+    private lateinit var layoutCall : LinearLayout
+    private lateinit var layoutSound : LinearLayout
+    private lateinit var layoutTilt : LinearLayout
+    private lateinit var layoutFlicker : LinearLayout
+    private lateinit var layoutNetwork : LinearLayout
+    private lateinit var layoutTimer : LinearLayout
+    private lateinit var layoutAltitude : LinearLayout
+    private lateinit var layoutBattery : LinearLayout
 
     enum class ACTION {
         CREATE,
@@ -269,6 +282,18 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // layout init
+        layoutAltitude = findViewById(R.id.layoutAltitudeBtn)
+        layoutBattery = findViewById(R.id.layoutBatteryBtn)
+        layoutNetwork = findViewById(R.id.layoutNetworkBtn)
+        layoutTimer = findViewById(R.id.layoutTimerBtn)
+        layoutSound = findViewById(R.id.layoutSoundBtn)
+        layoutSOS = findViewById(R.id.layoutSOSBtn)
+        layoutSMS = findViewById(R.id.layoutSMSBtn)
+        layoutCall = findViewById(R.id.layoutCallBtn)
+        layoutTilt = findViewById(R.id.layoutTiltBtn)
+        layoutFlicker = findViewById(R.id.layoutFlickerBtn)
+
         ///////////////////////////////////////////////////////////////////////////////////////
         // flashLightBtn handler
         setFlashlightId()
@@ -391,9 +416,12 @@ class MainActivity : AppCompatActivity() {
                     isTimerThresholdSet = true
                     setMainBtnSetText(Token.TIMER)
                     Log.d("MainActivity", "Timer set to $timerSetAfter")
+                    // set success
                     loopHandlerTimer.postDelayed({ startFlickering() }, timerSetAfter.inWholeMilliseconds)
-                    loopHandlerTimer.postDelayed({ setBtnImage(timerBtn, R.drawable.timer_success) }, timerSetAfter.inWholeMilliseconds)
+                    loopHandlerTimer.postDelayed({ setBtnSelector(layoutTimer, ACTION.SET) }, timerSetAfter.inWholeMilliseconds)
+                    // reset
                     loopHandlerTimer.postDelayed({ stopFlickering() }, timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
+                    loopHandlerTimer.postDelayed({ setBtnSelector(layoutTimer, ACTION.RESET) }, timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
                     loopHandlerTimer.postDelayed({ setBtnImage(timerBtn, R.drawable.timer_off_m3) }, timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
                     loopHandlerSeekBar.postDelayed({ resetSeekBarAndTitle() }, hideSeekBarAfterDelay35)
                 }
@@ -623,6 +651,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "Unregister running CB $connectivityCallback")
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                 setBtnImage(outInNetworkBtn, R.drawable.network_off_m3)
+                setBtnSelector(layoutNetwork, ACTION.RESET)
                 resetMainBtnSetText(Token.NETWORK)
             }
             else {
@@ -724,7 +753,7 @@ class MainActivity : AppCompatActivity() {
                                     // Should unregister
                                     unregisterReceiver(batteryReceiver)
                                     // Should changed Btn to SUCCESS
-                                    setBatteryBtn(ACTION.SUCCESS)
+                                    setBtnSelector(layoutBattery, ACTION.SET)
                                     batteryBtnSetId.text = "Battery charged up to $batteryThreshold%"
                                     batteryBtnSuccessId.visibility = View.VISIBLE
                                 }
@@ -740,7 +769,7 @@ class MainActivity : AppCompatActivity() {
                                     // Should unregister
                                     unregisterReceiver(batteryReceiver)
                                     // Should changed Btn to SUCCESS
-                                    setBatteryBtn(ACTION.SUCCESS)
+                                    setBtnSelector(layoutBattery, ACTION.SET)
                                     batteryBtnSetId.text = "Battery discharged to $batteryThreshold%"
                                     batteryBtnSuccessId.visibility = View.VISIBLE
                                 }
@@ -762,6 +791,7 @@ class MainActivity : AppCompatActivity() {
                 isBatteryOn = false
                 batteryThreshold = minBattery
                 setBatteryBtn(ACTION.RESET)
+                setBtnSelector(layoutBattery, ACTION.RESET)
                 resetSeekBarAndTitle()
                 if (!isFlickeringOnDemand) {
                     stopFlickering()
@@ -1441,7 +1471,7 @@ class MainActivity : AppCompatActivity() {
             SeekBarMode.METERS -> {
                 when (action) {
                     ACTION.SET -> {
-                        displayText = "Height set\n${altitudeThreshold}Hz"
+                        displayText = "Height set\n${altitudeThreshold}m"
                         seekBarTitle.text = displayText
                     }
                     ACTION.RESET -> {
@@ -1454,7 +1484,7 @@ class MainActivity : AppCompatActivity() {
             SeekBarMode.PERCENTAGE -> {
                 when (action) {
                     ACTION.SET -> {
-                        displayText = "Power set\n${batteryThreshold}Hz"
+                        displayText = "Power set\n${batteryThreshold}%"
                         seekBarTitle.text = displayText
                     }
                     ACTION.RESET -> {
@@ -1552,9 +1582,6 @@ class MainActivity : AppCompatActivity() {
             ACTION.RESET -> {
                 timerBtn.setImageResource(R.drawable.timer_off_m3)
             }
-            ACTION.SUCCESS -> {
-                timerBtn.setImageResource(R.drawable.timer_success)
-            }
             else -> {
                 timerBtn.setImageResource(R.drawable.timer_off_m3)
             }
@@ -1570,9 +1597,6 @@ class MainActivity : AppCompatActivity() {
             ACTION.RESET -> {
                 batteryBtn.setImageResource(R.drawable.battery_off_m3)
             }
-            ACTION.SUCCESS -> {
-                batteryBtn.setImageResource(R.drawable.battery_success)
-            }
             else -> {
                 batteryBtn.setImageResource(R.drawable.battery_off_m3)
             }
@@ -1586,9 +1610,6 @@ class MainActivity : AppCompatActivity() {
             }
             ACTION.RESET -> {
                 altitudeBtn.setImageResource(R.drawable.altitude_off_m3)
-            }
-            ACTION.SUCCESS -> {
-                altitudeBtn.setImageResource(R.drawable.altitude_success)
             }
             ACTION.NO_PERMISSION -> {
                 altitudeBtn.setImageResource(R.drawable.altitude_no_permission_m3)
@@ -1617,7 +1638,7 @@ class MainActivity : AppCompatActivity() {
         else if (isPhoneOutOfNetwork) {
             when (networkState) {
                 NetworkState.AVAILABLE -> {
-                    outInNetworkBtn.setImageResource(R.drawable.network_success) //wifi_on_found_r1
+                    setBtnSelector(layoutNetwork, ACTION.SET)
                 }
                 NetworkState.ASIS -> {
                     outInNetworkBtn.setImageResource(R.drawable.network_off_to_on_n1) //wifi_on_enabled_r1
@@ -1709,6 +1730,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun setBtnImage (btn : ImageButton, icon : Int) {
         btn.setImageResource(icon)
+    }
+
+    private fun setBtnSelector (layout : LinearLayout, action : ACTION) {
+        layout.background = when (action) {
+            ACTION.SET -> {
+                getDrawable(R.drawable.button_selector_activated)
+            }
+            ACTION.RESET -> {
+                getDrawable(R.drawable.button_selector)
+            }
+            else -> {
+                getDrawable(R.drawable.button_selector)
+            }
+        }
     }
 
     private fun setFlashlightId () {

@@ -41,6 +41,7 @@
 
                     <!-- Incoming SOS -->
                     <LinearLayout
+                        android:id="@+id/layoutSOSBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_selector"
@@ -71,6 +72,7 @@
 
                     <!-- Phone Tilt -->
                     <LinearLayout
+                        android:id="@+id/layoutTiltBtn"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/mainImageHeight"
                         android:gravity="center_horizontal"
@@ -121,6 +123,7 @@
 
                     <!-- Flicker -->
                     <LinearLayout
+                        android:id="@+id/layoutFlickerBtn"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/mainImageHeight"
                         android:background="@drawable/button_selector"
@@ -170,6 +173,7 @@
 
                     <!-- Timer -->
                     <LinearLayout
+                        android:id="@+id/layoutTimerBtn"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/mainImageHeight"
                         android:gravity="center_horizontal"
@@ -247,6 +251,7 @@
 
                     <!-- Incoming SMS -->
                     <LinearLayout
+                        android:id="@+id/layoutSMSBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_selector"
@@ -289,6 +294,7 @@
 
                     <!-- Altitude -->
                     <LinearLayout
+                        android:id="@+id/layoutAltitudeBtn"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/mainImageHeight"
                         android:gravity="center_horizontal"
@@ -364,6 +370,7 @@
 
                     <!-- Incoming Call -->
                     <LinearLayout
+                        android:id="@+id/layoutCallBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
@@ -394,6 +401,7 @@
 
                     <!-- Sound -->
                     <LinearLayout
+                        android:id="@+id/layoutSoundBtn"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/mainImageHeight"
                         android:background="@drawable/button_selector"
@@ -442,6 +450,7 @@
 
                     <!-- Network -->
                     <LinearLayout
+                        android:id="@+id/layoutNetworkBtn"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/mainImageHeight"
                         android:gravity="center_horizontal"
@@ -490,6 +499,7 @@
 
                     <!-- Battery -->
                     <LinearLayout
+                        android:id="@+id/layoutBatteryBtn"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/mainImageHeight"
                         android:background="@drawable/button_selector"
@@ -582,7 +592,7 @@
                 <SeekBar
                     android:id="@+id/flickeringBarId"
                     android:layout_width="0dp"
-                    android:layout_weight="6"
+                    android:layout_weight="5"
                     android:layout_height="match_parent"
                     android:background="@drawable/button_selector"
                     android:progressTint="@color/seekbarProgressTint"
