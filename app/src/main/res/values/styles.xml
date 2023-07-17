@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="timePicker">
+        <item name="android:textColorPrimary">#4f49b2</item> <!-- color for digits -->
+        <item name="android:textColor">#4f49b2</item> <!-- color for colon -->
+        <item name="android:colorControlNormal">#ca827d</item> <!-- color for (horizontal) delimiters -->
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>

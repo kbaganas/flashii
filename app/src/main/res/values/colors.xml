@@ -41,5 +41,6 @@
     <color name="mainFlicker">#F9E3EF</color>
     <color name="switch_off">#A24C3F</color>
     <color name="switch_on">#40B344</color>
+    <color name="blueText">#A5B3F7</color>
 </resources>
 

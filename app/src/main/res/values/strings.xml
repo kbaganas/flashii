@@ -158,7 +158,7 @@
     <string name="pavla">-</string>
     <string name="pavlaLevel">Level -</string>
     <string name="pavlaDegrees">- degrees</string>
-    <string name="pavlaPerc">Power set to\n- %</string>
-    <string name="pavlaMeter">Height set to\n- m</string>
+    <string name="pavlaPerc">- %</string>
+    <string name="pavlaMeter">- m</string>
     <string name="pavlaHz">- Hz</string>
 </resources>
