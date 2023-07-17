@@ -111,7 +111,7 @@
                         <!-- Image & Switch -->
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:orientation="vertical">
                             <ImageView
@@ -202,7 +202,7 @@
                         <!-- Image & Switch -->
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:orientation="vertical">
                             <ImageView
@@ -229,47 +229,158 @@
                     android:gravity="center"
                     android:baselineAligned="true"
                     android:orientation="horizontal">
+
                     <!-- Sound -->
                     <LinearLayout
-                        android:id="@+id/layoutSoundBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/mainImageHeight"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/button_selector"
                         android:layout_marginBottom="@dimen/margin16"
                         android:gravity="center_horizontal"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:id="@+id/incomingSoundBtnId"
-                            android:layout_width="@dimen/MainImageSize"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/IncomingSoundContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/sound_off_m3"/>
-                        <TextView
-                            android:layout_width="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Bar -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <SeekBar
+                                android:id="@+id/seekBar"
+                                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:max="10"
+                                android:progress="3"
+                                android:rotation="90" />
+                        </LinearLayout>
+
+                        <!-- Text -->
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/mainFeatureTextSound"
-                            android:maxLines="1"
-                            android:autoSizeMaxTextSize="18sp"
-                            android:autoSizeMinTextSize="12sp"
-                            android:layout_marginTop="4dp"
-                            android:autoSizeTextType="uniform"
-                            android:gravity="center_horizontal"
-                            tools:ignore="VisualLintLongText" />
-                        <TextView
-                            android:id="@+id/soundBtnSetId"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeMinTextSize="12sp"
-                            android:autoSizeTextType="uniform"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_horizontal"
-                            android:maxLines="2"
-                            android:text="@string/pavla"
-                            tools:ignore="VisualLintLongText" />
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextFlashlight"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextTurnOnOff"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextOn"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextShorts"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextSOUNDs"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/cabin_regular"
+                                android:text="@string/mainTextSensitivity"
+                                android:maxLines="1"
+                                android:autoSizeMaxTextSize="18sp"
+                                android:autoSizeMinTextSize="12sp"
+                                android:layout_marginTop="4dp"
+                                android:autoSizeTextType="uniform"
+                                android:gravity="center_horizontal"
+                                tools:ignore="VisualLintLongText" />
+                            <TextView
+                                android:id="@+id/mainTextSoundLevel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/cabin_regular"
+                                android:text="@string/pavlaLevel"
+                                android:maxLines="1"
+                                android:autoSizeMaxTextSize="18sp"
+                                android:autoSizeMinTextSize="12sp"
+                                android:layout_marginTop="4dp"
+                                android:autoSizeTextType="uniform"
+                                android:gravity="center_horizontal"
+                                tools:ignore="VisualLintLongText" />
+                        </LinearLayout>
+
+                        <!-- Image & Switch -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <ImageView
+                                android:layout_width="@dimen/MainImageSize"
+                                android:layout_height="@dimen/MainImageSize"
+                                android:background="#00FFFFFF"
+                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/sound_off_m3"/>
+                            <Switch
+                                android:id="@+id/switchSound"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+                        </LinearLayout>
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -321,46 +432,140 @@
                     android:orientation="horizontal">
                     <!-- Phone Tilt -->
                     <LinearLayout
-                        android:id="@+id/layoutTiltBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/mainImageHeight"
-                        android:gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/margin16"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/button_selector"
-                        android:orientation="vertical">
-                        <ImageButton
-                            android:id="@+id/incomingShakeBtnId"
-                            android:layout_width="@dimen/MainImageSize"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/ShakenBtnContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/tilt_off_m3"/>
-                        <TextView
-                            android:layout_width="match_parent"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <!-- Bar -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <SeekBar
+                                android:id="@+id/seekBar"
+                                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:max="10"
+                                android:progress="3"
+                                android:rotation="90" />
+                        </LinearLayout>
+
+                        <!-- Text -->
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/mainFeatureTextTilt"
-                            android:maxLines="1"
-                            android:autoSizeMaxTextSize="18sp"
-                            android:autoSizeMinTextSize="15sp"
-                            android:layout_marginTop="4dp"
-                            android:autoSizeTextType="uniform"
-                            android:gravity="center_horizontal"
-                            tools:ignore="VisualLintLongText" />
-                        <TextView
-                            android:id="@+id/tiltBtnSetId"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeMinTextSize="12sp"
-                            android:autoSizeTextType="uniform"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_horizontal"
-                            android:maxLines="2"
-                            android:text="@string/pavla"
-                            tools:ignore="VisualLintLongText" />
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextFlashlight"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextTurnOnOff"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextOn"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/cabin_regular"
+                                android:text="@string/mainTextPHONETILTs"
+                                android:maxLines="1"
+                                android:autoSizeMaxTextSize="18sp"
+                                android:autoSizeMinTextSize="12sp"
+                                android:layout_marginTop="4dp"
+                                android:autoSizeTextType="uniform"
+                                android:gravity="center_horizontal"
+                                tools:ignore="VisualLintLongText" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/cabin_regular"
+                                android:text="@string/mainTextAngleSensitivity"
+                                android:maxLines="1"
+                                android:autoSizeMaxTextSize="18sp"
+                                android:autoSizeMinTextSize="12sp"
+                                android:layout_marginTop="4dp"
+                                android:autoSizeTextType="uniform"
+                                android:gravity="center_horizontal"
+                                tools:ignore="VisualLintLongText" />
+                            <TextView
+                                android:id="@+id/mainTextAngleSensitivity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/cabin_regular"
+                                android:text="@string/pavlaDegrees"
+                                android:maxLines="1"
+                                android:autoSizeMaxTextSize="18sp"
+                                android:autoSizeMinTextSize="12sp"
+                                android:layout_marginTop="4dp"
+                                android:autoSizeTextType="uniform"
+                                android:gravity="center_horizontal"
+                                tools:ignore="VisualLintLongText" />
+                        </LinearLayout>
+
+                        <!-- Image & Switch -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <ImageView
+                                android:layout_width="@dimen/MainImageSize"
+                                android:layout_height="@dimen/MainImageSize"
+                                android:background="#00FFFFFF"
+                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/tilt_off_m3"/>
+                            <Switch
+                                android:id="@+id/switchTilt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+                        </LinearLayout>
+
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <!-- 5th ROW -->
@@ -569,61 +774,150 @@
 
                 <!-- 6th ROW - Altitude -->
                 <LinearLayout
-                    android:id="@+id/layoutAltitudeBtn"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/mainImageHeight"
-                    android:gravity="center_horizontal"
-                    android:background="@drawable/button_selector"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:baselineAligned="true"
                     android:orientation="horizontal">
-                    <ImageButton
-                        android:id="@+id/altitudeBtnId"
-                        android:layout_width="@dimen/MainImageSize"
-                        android:layout_height="@dimen/MainImageSize"
-                        android:background="#00FFFFFF"
-                        android:contentDescription="@string/AltitudeContentDescription"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/altitude_off_m3" />
-                    <TextView
-                        android:id="@+id/altitudeBtnText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/mainFeatureTextAltitude"
-                        android:maxLines="1"
-                        android:autoSizeMaxTextSize="18sp"
-                        android:autoSizeMinTextSize="12sp"
-                        android:layout_marginTop="4dp"
-                        android:autoSizeTextType="uniform"
-                        android:gravity="center_horizontal"
-                        tools:ignore="VisualLintLongText" />
+
+                    <!-- Altitude -->
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_horizontal">
-                        <ImageView
-                            android:id="@+id/altitudeBtnSuccessId"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:layout_marginStart="-16dp"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/AltitudeContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/success5" />
-                        <TextView
-                            android:id="@+id/altitudeBtnSetId"
-                            android:layout_width="wrap_content"
+                        android:background="@drawable/button_selector"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <!-- Bar -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <SeekBar
+                                android:id="@+id/seekBar"
+                                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:max="10"
+                                android:progress="3"
+                                android:rotation="90" />
+                        </LinearLayout>
+
+                        <!-- Text -->
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:autoSizeMaxTextSize="13sp"
-                            android:autoSizeMinTextSize="12sp"
-                            android:autoSizeTextType="uniform"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_horizontal"
-                            android:maxLines="2"
-                            android:text="@string/pavlaMeter"
-                            android:textSize="@dimen/mainImageInfoText"
-                            tools:ignore="VisualLintLongText" />
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextFlashlight"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextFLICKERon"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextALTITUDE"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextHEIGHT"
+                                    android:maxLines="1"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:layout_marginTop="4dp"
+                                    android:autoSizeTextType="uniform"
+                                    android:gravity="center_horizontal"
+                                    tools:ignore="VisualLintLongText" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/cabin_regular"
+                                android:text="@string/mainTextHeight"
+                                android:maxLines="1"
+                                android:autoSizeMaxTextSize="18sp"
+                                android:autoSizeMinTextSize="12sp"
+                                android:layout_marginTop="4dp"
+                                android:autoSizeTextType="uniform"
+                                android:gravity="center_horizontal"
+                                tools:ignore="VisualLintLongText" />
+                            <TextView
+                                android:id="@+id/mainTextHeight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/cabin_regular"
+                                android:text="@string/pavlaMeter"
+                                android:maxLines="1"
+                                android:autoSizeMaxTextSize="18sp"
+                                android:autoSizeMinTextSize="12sp"
+                                android:layout_marginTop="4dp"
+                                android:autoSizeTextType="uniform"
+                                android:gravity="center_horizontal"
+                                tools:ignore="VisualLintLongText" />
+                        </LinearLayout>
+
+                        <!-- Image & Switch -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <ImageView
+                                android:layout_width="@dimen/MainImageSize"
+                                android:layout_height="@dimen/MainImageSize"
+                                android:background="#00FFFFFF"
+                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/altitude_off_m3"/>
+                            <Switch
+                                android:id="@+id/switchAltitude"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 

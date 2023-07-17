@@ -136,7 +136,7 @@
     <string name="mainTextTurnOnOff">TURN ON &amp; OFF</string>
     <string name="mainTextShorts">shorts</string>
     <string name="mainTextSOUNDs">SOUNDs</string>
-    <string name="mainTexSensitivity">Sound sensitivity</string>
+    <string name="mainTextSensitivity">Sound sensitivity</string>
     <string name="mainTextActivatedFeatures">Activated features</string>
     <string name="mainTextPhoneFlickering">Phone will flicker on</string>
     <string name="mainTextPHONETILTs">PHONE TILTs</string>
@@ -156,6 +156,8 @@
     <string name="mainTextFLICKERING">FLICKERING</string>
     <string name="mainTextFrequency">Frequency</string>
     <string name="pavla">-</string>
+    <string name="pavlaLevel">Level -</string>
+    <string name="pavlaDegrees">- degrees</string>
     <string name="pavlaPerc">Power set to\n- %</string>
     <string name="pavlaMeter">Height set to\n- m</string>
     <string name="pavlaHz">- Hz</string>
