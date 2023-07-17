@@ -1784,10 +1784,10 @@ class MainActivity : AppCompatActivity() {
                 getDrawable(R.drawable.button_selector_activated)
             }
             ACTION.RESET -> {
-                getDrawable(R.drawable.button_selector)
+                getDrawable(R.drawable.feature_selector_sms)
             }
             else -> {
-                getDrawable(R.drawable.button_selector)
+                getDrawable(R.drawable.feature_selector_sms)
             }
         }
     }

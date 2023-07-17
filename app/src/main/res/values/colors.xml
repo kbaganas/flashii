@@ -32,6 +32,13 @@
     <color name="mainSMS">#E3F5FE</color>
     <color name="mainCALL">#FCF5ED</color>
     <color name="mainSound">#F4FCEB</color>
+    <color name="mainTilt">#E5FDED</color>
+    <color name="mainTime">#EAE9F6</color>
+    <color name="mainSOS">#F5F6E9</color>
+    <color name="mainNetwork">#E9F6EA</color>
+    <color name="mainBattery">#F6EAE9</color>
+    <color name="mainAltitude">#DDF2EF</color>
+    <color name="mainFlicker">#F9E3EF</color>
     <color name="switch_off">#A24C3F</color>
     <color name="switch_on">#40B344</color>
 </resources>
