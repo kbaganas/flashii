@@ -28,5 +28,8 @@
     <color name="seekbarProgressTint">#a6e4fa</color>
     <color name="mainActivateText">#a6e4fa</color>
     <color name="green">#2afa2a</color>
+
+    <color name="mainSMS">#E3F5FE</color>
+    <color name="mainCALL">#FCF5ED</color>
 </resources>
 
