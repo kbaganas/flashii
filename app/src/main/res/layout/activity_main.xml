@@ -33,6 +33,163 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
+                <!-- 5th ROW Network & Battery-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="true"
+                    android:gravity="center"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="horizontal">
+
+                    <!-- Network -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:padding="6dp"
+                        android:background="@drawable/feature_selector_network"
+                        android:orientation="vertical">
+
+                        <!-- Image & Text -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:id="@+id/layoutNetworkBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/networkConnectionBtn"
+                                    android:layout_width="@dimen/MainImageSize"
+                                    android:layout_height="@dimen/MainImageSize"
+                                    android:background="#00FFFFFF"
+                                    android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
+                                    android:scaleType="fitCenter"
+                                    app:srcCompat="@drawable/network_off_m3" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextFlashlight"
+                                    tools:ignore="VisualLintLongText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="@string/mainTextFLICKERon"
+                                    tools:ignore="VisualLintLongText" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:layout_marginBottom="12dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="24sp"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:text="@string/mainTextNETWORK"
+                                tools:ignore="VisualLintLongText" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/cabin_regular"
+                                android:text="@string/mainTextCHANGES"
+                                tools:ignore="VisualLintLongText" />
+                        </LinearLayout>
+
+                        <!-- Switch -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center_vertical"
+                            android:orientation="horizontal">
+
+                            <Switch
+                                android:id="@+id/switchNetwork"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:gravity="bottom"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Battery -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5"
+                        android:orientation="vertical">
+
+                        <!-- Battery -->
+                        <LinearLayout
+                            android:id="@+id/layoutBatteryBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/mainImageHeight"
+                            android:background="@drawable/feature_selector_battery"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/batteryBtnId"
+                                android:layout_width="@dimen/MainImageSize"
+                                android:layout_height="@dimen/MainImageSize"
+                                android:background="#00FFFFFF"
+                                android:contentDescription="@string/BatteryContentDescription"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/battery_off_m3" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/batteryBtnSetId"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:autoSizeMaxTextSize="13sp"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:autoSizeTextType="uniform"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:gravity="center_horizontal"
+                                    android:maxLines="2"
+                                    android:text="@string/pavlaPerc"
+                                    android:textSize="@dimen/mainImageInfoText"
+                                    tools:ignore="VisualLintLongText" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
                 <!-- 1st ROW -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -788,113 +945,7 @@
 
                 </LinearLayout>
 
-                <!-- 5th ROW -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="true"
-                    android:gravity="center"
-                    android:orientation="horizontal">
 
-                    <!-- 1st COLUMN -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
-
-
-
-                        <!-- Network -->
-                        <LinearLayout
-                            android:id="@+id/layoutNetworkBtn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/margin16"
-                            android:background="@drawable/feature_selector_network"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/networkConnectionBtn"
-                                android:layout_width="@dimen/MainImageSize"
-                                android:layout_height="@dimen/MainImageSize"
-                                android:background="#00FFFFFF"
-                                android:contentDescription="@string/FlashlightFlickeringOnOffNetworkContentDescription"
-                                android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/network_off_m3" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <!-- 2nd COLUMN -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-
-
-                        <!-- Battery -->
-                        <LinearLayout
-                            android:id="@+id/layoutBatteryBtn"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/mainImageHeight"
-                            android:background="@drawable/feature_selector_battery"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical">
-
-                            <ImageButton
-                                android:id="@+id/batteryBtnId"
-                                android:layout_width="@dimen/MainImageSize"
-                                android:layout_height="@dimen/MainImageSize"
-                                android:background="#00FFFFFF"
-                                android:contentDescription="@string/BatteryContentDescription"
-                                android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/battery_off_m3" />
-
-                            <TextView
-                                android:id="@+id/batteryBtnText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:autoSizeMaxTextSize="18sp"
-                                android:autoSizeMinTextSize="12sp"
-                                android:autoSizeTextType="uniform"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
-                                android:maxLines="1"
-                                android:text="@string/mainFeatureTextBattery"
-                                tools:ignore="VisualLintLongText" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/batteryBtnSetId"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:autoSizeMaxTextSize="13sp"
-                                    android:autoSizeMinTextSize="12sp"
-                                    android:autoSizeTextType="uniform"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center_horizontal"
-                                    android:maxLines="2"
-                                    android:text="@string/pavlaPerc"
-                                    android:textSize="@dimen/mainImageInfoText"
-                                    tools:ignore="VisualLintLongText" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
 
 
                 <!-- 6th ROW - Altitude -->
