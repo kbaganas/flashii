@@ -48,6 +48,7 @@ import androidx.core.content.ContextCompat
 import com.example.flashii.databinding.ActivityMainBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -136,18 +137,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var timerBtnSuccessId : ImageView
     private lateinit var altitudeBtnSuccessId : ImageView
     private lateinit var batteryBtnSuccessId : ImageView
-
-    // layouts
-    private lateinit var layoutSOS : LinearLayout
-    private lateinit var layoutSMS : LinearLayout
-    private lateinit var layoutCall : LinearLayout
-    private lateinit var layoutSound : LinearLayout
-    private lateinit var layoutTilt : LinearLayout
-    private lateinit var layoutFlicker : LinearLayout
-    private lateinit var layoutNetwork : LinearLayout
-    private lateinit var layoutTimer : LinearLayout
-    private lateinit var layoutAltitude : LinearLayout
-    private lateinit var layoutBattery : LinearLayout
 
     enum class ACTION {
         CREATE,
@@ -258,17 +247,26 @@ class MainActivity : AppCompatActivity() {
     private lateinit var settingsBtn : ImageButton
     private lateinit var rateBtn : ImageButton
     private lateinit var supportBtn : ImageButton
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var sosBtnSwitch : Switch
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var flickerFlashlightBtn : Switch
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var incomingCallSwitch : Switch
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var outInNetworkSwitch : Switch
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var incomingSMSSwitch : Switch
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var incomingTiltSwitch : Switch
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var incomingSoundSwitch : Switch
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var altitudeSwitch : Switch
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var batterySwitch : Switch
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var timerSwitch : Switch
-
 
     @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -435,7 +433,7 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // incoming call handler
-        incomingCallSwitch = findViewById(R.id.switchFlicker)
+        incomingCallSwitch = findViewById(R.id.switchCALL)
         incomingCallSwitch.setOnCheckedChangeListener {_, isChecked ->
             // Check first if permissions are granted
             if (permissionsKeys["CALL"] == true) {
@@ -1307,64 +1305,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setSeekBarTitle (mode: SeekBarMode, action : ACTION) {
-        val displayText : String
-        when (mode) {
-            SeekBarMode.HOURS -> {
-                when (action) {
-                    ACTION.SET -> {
-                        displayText = "Set time\n(up to $maxTimerMinutes)"
-                        //seekBarTitle.text = displayText
-                    }
-                    ACTION.RESET -> {
-                        displayText = "Set time\n(up to $maxTimerMinutes)"
-                        //seekBarTitle.text = displayText
-                    }
-                    else -> {}
-                }
-            }
-            SeekBarMode.HZ -> {
-                when (action) {
-                    ACTION.SET -> {
-                        displayText = "Set Frequency\n(up to ${maxFlickerHz}Hz)"
-                        //seekBarTitle.text = displayText
-                    }
-                    ACTION.RESET -> {
-                        displayText = "Set Frequency\n(up to ${maxFlickerHz}Hz)"
-                        //seekBarTitle.text = displayText
-                    }
-                    else -> {}
-                }
-            }
-            SeekBarMode.METERS -> {
-                when (action) {
-                    ACTION.SET -> {
-                        displayText = "Set Height\n(up to ${maxAltitude}m)"
-                        //seekBarTitle.text = displayText
-                    }
-                    ACTION.RESET -> {
-                        displayText = "Set Height\n(up to ${maxAltitude}m)"
-                        //seekBarTitle.text = displayText
-                    }
-                    else -> {}
-                }
-            }
-            SeekBarMode.PERCENTAGE -> {
-                when (action) {
-                    ACTION.SET -> {
-                        displayText = "Set Power\n(up to ${maxBattery}%)"
-                        //seekBarTitle.text = displayText
-                    }
-                    ACTION.RESET -> {
-                        displayText = "Set Power\n(up to ${maxBattery}%)"
-                        //seekBarTitle.text = displayText
-                    }
-                    else -> {}
-                }
-            }
-        }
-    }
-
     private fun setSeekBar(mode : SeekBarMode, resetToCurrentState : Boolean = false) {
         flickeringBar.visibility = View.VISIBLE
         thumbInitialPosition = flickeringBar.thumb.bounds.right
@@ -1374,7 +1314,6 @@ class MainActivity : AppCompatActivity() {
                 flickeringBar.min = minTimerMinutes.inWholeMinutes.toInt()
                 flickeringBar.max = maxTimerMinutes.inWholeMinutes.toInt()
                 flickeringBar.progress = minTimerMinutes.inWholeMinutes.toInt()
-                setSeekBarTitle(SeekBarMode.HOURS, ACTION.SET)
             }
             SeekBarMode.HZ -> {
                 flickeringBar.min = minFlickerHz
@@ -1385,7 +1324,6 @@ class MainActivity : AppCompatActivity() {
                 else {
                     flickeringBar.progress = minFlickerHz
                 }
-                setSeekBarTitle(SeekBarMode.HZ, ACTION.SET)
             }
             SeekBarMode.METERS -> {
                 flickeringBar.min = minAltitude
@@ -1393,7 +1331,6 @@ class MainActivity : AppCompatActivity() {
                 if (initAltitudeLevel != minAltitude) {
                     flickeringBar.progress = initAltitudeLevel
                 }
-                setSeekBarTitle(SeekBarMode.METERS, ACTION.SET)
             }
             SeekBarMode.PERCENTAGE -> {
                 flickeringBar.min = minBattery
@@ -1401,7 +1338,6 @@ class MainActivity : AppCompatActivity() {
                 if (initBatteryLevel != minBattery) {
                     flickeringBar.progress = initBatteryLevel
                 }
-                setSeekBarTitle(SeekBarMode.PERCENTAGE, ACTION.SET)
             }
         }
     }
@@ -1414,19 +1350,15 @@ class MainActivity : AppCompatActivity() {
         }
         flickeringBar.min = when (token) {
             Token.FLICKER -> {
-                setSeekBarTitle(SeekBarMode.HZ, ACTION.RESET)
                 minFlickerHz
             }
             Token.TIMER -> {
-                setSeekBarTitle(SeekBarMode.HOURS, ACTION.RESET)
                 minTimerMinutes.inWholeMinutes.toInt()
             }
             Token.BATTERY -> {
-                setSeekBarTitle(SeekBarMode.PERCENTAGE, ACTION.RESET)
                 minBattery
             }
             Token.ALTITUDE -> {
-                setSeekBarTitle(SeekBarMode.METERS, ACTION.RESET)
                 minAltitude
             }
             else -> {minFlickerHz}
@@ -1600,20 +1532,6 @@ class MainActivity : AppCompatActivity() {
         btn.setImageResource(icon)
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun setBtnSelector (layout : LinearLayout, action : ACTION) {
-        layout.background = when (action) {
-            ACTION.SET -> {
-                getDrawable(R.drawable.button_selector_activated)
-            }
-            ACTION.RESET -> {
-                getDrawable(R.drawable.feature_selector_sms)
-            }
-            else -> {
-                getDrawable(R.drawable.feature_selector_sms)
-            }
-        }
-    }
 
     private fun setFlashlightId () {
         // Iterate over the available camera devices
