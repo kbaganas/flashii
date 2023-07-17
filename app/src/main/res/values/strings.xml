@@ -147,7 +147,7 @@
     <string name="mainTextSMS">SMS</string>
     <string name="mainTextCALL">CALL</string>
     <string name="mainTextNETWORK">NETWORK</string>
-    <string name="mainTextBatteryPower">BATTERY POWER</string>
+    <string name="mainTextBatteryPower">BATTERY\nPOWER</string>
     <string name="mainTextPower">Power</string>
     <string name="mainTextCHANGES">CHANGES</string>
     <string name="mainTextHEIGHT">HEIGHT</string>
