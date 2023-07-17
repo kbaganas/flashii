@@ -115,7 +115,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:gravity="end|center_vertical">
 
                             <ImageView
                                 android:id="@+id/smsBtnId"
@@ -128,9 +129,13 @@
 
                             <Switch
                                 android:id="@+id/switchSMS"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:checked="false"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"/>
                         </LinearLayout>
 
 
@@ -208,7 +213,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:gravity="end|center_vertical">
 
                             <ImageView
                                 android:id="@+id/switchFlickerIncomingCallsId"
@@ -221,9 +227,13 @@
 
                             <Switch
                                 android:id="@+id/switchCALL"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:checked="true"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -235,13 +245,13 @@
                     android:baselineAligned="true"
                     android:gravity="center"
                     android:layout_marginBottom="12dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="@color/mainSound">
 
                     <!-- Sound -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:padding="6dp"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal">
@@ -250,8 +260,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_weight="1">
 
                             <SeekBar
                                 android:id="@+id/seekBarSound"
@@ -267,7 +276,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
+                            android:layout_weight="5"
                             android:orientation="vertical">
 
                             <LinearLayout
@@ -373,7 +382,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:gravity="end|center_vertical">
 
                             <ImageView
                                 android:layout_width="@dimen/MainImageSize"
@@ -385,9 +395,13 @@
 
                             <Switch
                                 android:id="@+id/switchSound"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:checked="false"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -575,9 +589,13 @@
 
                             <Switch
                                 android:id="@+id/switchTilt"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:checked="false"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -951,9 +969,13 @@
 
                             <Switch
                                 android:id="@+id/switchAltitude"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:checked="false"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
