@@ -299,7 +299,7 @@ class MainActivity : AppCompatActivity() {
                         turnOffFlashlight(true)
                     } else {
                         Log.i("MainActivity","flashlightBtn is ON")
-                        resetAllActivities(Token.FLASHLIGHT)
+                        //resetAllActivities(Token.FLASHLIGHT)
                         turnOnFlashlight(true)
                     }
                     true
@@ -322,8 +322,7 @@ class MainActivity : AppCompatActivity() {
         sosBtnSwitch = findViewById(R.id.switchSOS)
         sosBtnSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
-                isSendSOS = true
-                resetAllActivities(Token.SOS)
+                //resetAllActivities(Token.SOS)
                 Log.i("MainActivity","sosBtnSwitch is ON")
                 repeatSOS(true)
             }
@@ -417,7 +416,7 @@ class MainActivity : AppCompatActivity() {
         flickerFlashlightBtn.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
                 token = Token.FLICKER
-                resetAllActivities(Token.FLICKER)
+                //resetAllActivities(Token.FLICKER)
                 setFlickeringHz(minFlickerHz.toLong())
                 Log.i("MainActivity","flickerFlashlightBtn is ON with ${flickerFlashlightHz}Hz")
                 isFlickeringOnDemand = true
@@ -476,7 +475,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     Log.i("MainActivity","incomingSoundSwitch is ON")
-                    resetAllActivities(Token.SOUND)
+                    //resetAllActivities(Token.SOUND)
                     isAudioIncoming = true
                     audioRecordHandler = AudioRecord(
                         MediaRecorder.AudioSource.MIC,
@@ -522,7 +521,7 @@ class MainActivity : AppCompatActivity() {
                 sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
                 val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
                 if (accelerometerSensor != null) {
-                    resetAllActivities(Token.TILT)
+                    //resetAllActivities(Token.TILT)
                     var rotationAngle = initRotationAngle
                     sensorEventListener = object : SensorEventListener {
                         override fun onSensorChanged(event: SensorEvent) {
@@ -667,7 +666,7 @@ class MainActivity : AppCompatActivity() {
             if (isChecked) {
                 Log.i("MainActivity","batterySwitch is ON")
                 token = Token.BATTERY
-                resetAllActivities(Token.BATTERY)
+                //resetAllActivities(Token.BATTERY)
                 isBatteryOn = true
                 batteryReceiver = object : BroadcastReceiver() {
                     override fun onReceive(context: Context, intent: Intent) {
@@ -740,7 +739,7 @@ class MainActivity : AppCompatActivity() {
             if (isChecked) {
                 Log.i("MainActivity","timerSwitch is ON")
                 token = Token.TIMER
-                resetAllActivities(Token.TIMER)
+                //resetAllActivities(Token.TIMER)
                 isTimerOn = true
             }
             else {
@@ -808,7 +807,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         Log.i("MainActivity","altitudeSwitch is ON ($sensorEventListener)")
                         token = Token.ALTITUDE
-                        resetAllActivities(Token.ALTITUDE)
+                        //resetAllActivities(Token.ALTITUDE)
                         isAltitudeOn = true
                         sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
                     }
@@ -1092,7 +1091,7 @@ class MainActivity : AppCompatActivity() {
                             Log.i("MainActivity", "ACTION_PHONE_STATE_CHANGED EVENT")
                             when (intent.getStringExtra(TelephonyManager.EXTRA_STATE)) {
                                 TelephonyManager.EXTRA_STATE_RINGING -> {
-                                    resetAllActivities(Token.INCOMING_CALL)
+                                    //resetAllActivities(Token.INCOMING_CALL)
                                     Log.d("MainActivity", "EXTRA_STATE_RINGING - Flickering ON with ${flickerFlashlightHz}Hz")
                                     startFlickering()
                                 }
@@ -1119,7 +1118,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onLost(network: Network) {
                         super.onLost(network)
                         Log.i("MainActivity", "NETWORK is LOST")
-                        resetAllActivities(Token.NETWORK)
+                        //resetAllActivities(Token.NETWORK)
                         Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
                         setNetworkBtn(NetworkState.LOST)
@@ -1130,7 +1129,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onUnavailable() {
                         super.onUnavailable()
                         Log.i("MainActivity", "NETWORK is UNAVAILABLE")
-                        resetAllActivities(Token.NETWORK)
+                        //resetAllActivities(Token.NETWORK)
                         setNetworkBtn(NetworkState.UNAVAILABLE)
                         Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
@@ -1148,7 +1147,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onAvailable(network: Network) {
                         super.onAvailable(network)
                         Log.i("MainActivity", "NETWORK is AVAILABLE")
-                        resetAllActivities(Token.NETWORK)
+                        //resetAllActivities(Token.NETWORK)
                         setNetworkBtn(NetworkState.AVAILABLE)
                         Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
@@ -1174,7 +1173,7 @@ class MainActivity : AppCompatActivity() {
                         Log.i("MainActivity", "EVENT INCOMING")
                         if (intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
                             Log.i("MainActivity", "SMS_RECEIVED_ACTION EVENT")
-                            resetAllActivities(Token.INCOMING_SMS)
+                            //resetAllActivities(Token.INCOMING_SMS)
                             Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                             startFlickering()
                             stopFlickeringAfterTimeout(maxFlickerDurationIncomingSMS.toLong())
@@ -1759,10 +1758,7 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", "RAA - STOP FLICKERING on demand")
             isFlickeringOnDemand = false
             stopFlickering()
-           // setBtnImage(flickerFlashlightBtn, R.drawable.flickering_off_m3)
-            resetSeekBarAndTitle()
             setFlickeringHz(minFlickerHz.toLong())
-            resetMainBtnSetText(Token.FLICKER)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT)
@@ -1792,9 +1788,7 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", "RAA - TURN OFF isPhoneTilt")
             turnOffFlashlight()
             sensorManager.unregisterListener(sensorEventListener)
-            //setBtnImage(incomingTiltSwitch, R.drawable.tilt_off_m3)
             isPhoneTilt = false
-            resetMainBtnSetText(Token.TILT)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS)
@@ -1802,7 +1796,6 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", "RAA - TURN OFF isAudioIncoming")
             isAudioIncoming = false
             turnOffFlashlight()
-           // setBtnImage(incomingSoundSwitch, R.drawable.sound_off_m3)
             audioRecordHandler.stop()
             audioRecordHandler.release()
             try {
@@ -1814,16 +1807,14 @@ class MainActivity : AppCompatActivity() {
             recordingThread?.join()
             recordingThread = null
             loopHandlerFlickering.removeCallbacksAndMessages(null)
-            soundBtnSetId.text = getString(R.string.pavla)
         }
 
-//        if ((token in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet) {
-//            Log.i("MainActivity", "RAA - TURN OFF isNetworkConnectivityCbIsSet")
-//            isNetworkConnectivityCbIsSet = false
-//            stopFlickering()
-//            connectivityManager.unregisterNetworkCallback(connectivityCallback)
-//            setBtnImage(outInNetworkSwitch, R.drawable.network_off_m3)
-//        }
+        if ((token in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet) {
+            Log.i("MainActivity", "RAA - TURN OFF isNetworkConnectivityCbIsSet")
+            isNetworkConnectivityCbIsSet = false
+            stopFlickering()
+            connectivityManager.unregisterNetworkCallback(connectivityCallback)
+        }
 
         if (isBatteryOn) {
             if (featureToken != Token.BATTERY) {
@@ -1833,8 +1824,6 @@ class MainActivity : AppCompatActivity() {
                     batteryThreshold = minBattery
                     initBatteryLevel = minBattery
                     turnOffFlashlight()
-                    resetSeekBarAndTitle()
-                    setBatteryBtn(ACTION.RESET)
                     try {
                         unregisterReceiver(batteryReceiver)
                         loopHandlerSeekBar.removeCallbacksAndMessages(null)
@@ -1844,8 +1833,6 @@ class MainActivity : AppCompatActivity() {
                     catch (e : Exception) {
                         // We are OK, receiver is already unregistered
                     }
-                    resetMainBtnSetText(Token.BATTERY)
-                    batteryBtnSuccessId.visibility = View.INVISIBLE
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (BATTERY)")
@@ -1868,9 +1855,7 @@ class MainActivity : AppCompatActivity() {
                     isAltitudeOn = false
                     altitudeThreshold = minAltitude
                     turnOffFlashlight()
-                    resetSeekBarAndTitle()
                     sensorManager.unregisterListener(sensorEventListener)
-                    setAltitudeBtn(ACTION.RESET)
                     try {
                         loopHandlerSeekBar.removeCallbacksAndMessages(null)
                         loopHandlerForInactivity.removeCallbacksAndMessages(null)
@@ -1879,8 +1864,6 @@ class MainActivity : AppCompatActivity() {
                     catch (e: java.lang.Exception) {
                         // DO nothing here
                     }
-                    resetMainBtnSetText(Token.ALTITUDE)
-                    altitudeBtnSuccessId.visibility = View.INVISIBLE
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (ALTITUDE)")
@@ -1903,8 +1886,6 @@ class MainActivity : AppCompatActivity() {
                     isTimerOn = false
                     isTimerThresholdSet = false
                     timerSetAfter = minTimerMinutes
-                    resetSeekBarAndTitle()
-                    setTimerBtn(ACTION.RESET)
                     try {
                         loopHandlerSeekBar.removeCallbacksAndMessages(null)
                         loopHandlerForInactivity.removeCallbacksAndMessages(null)
@@ -1914,8 +1895,6 @@ class MainActivity : AppCompatActivity() {
                     catch (e: java.lang.Exception) {
                         // DO nothing here
                     }
-                    resetMainBtnSetText(Token.TIMER)
-                    timerBtnSuccessId.visibility = View.INVISIBLE
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (ALTITUDE)")
