@@ -227,10 +227,10 @@
                                 android:id="@+id/switchCALL"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="false"
+                                android:gravity="bottom"
                                 android:minWidth="48dp"
                                 android:minHeight="48dp"
-                                android:checked="true"
-                                android:gravity="bottom"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track" />
@@ -428,6 +428,7 @@
                         android:orientation="vertical">
 
                         <ImageButton
+                            android:id="@+id/flashLightBtnId"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/mainFlashlightHeight"
                             android:layout_marginTop="30dp"
@@ -898,10 +899,10 @@
                                 android:id="@+id/switchNetwork"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:checked="true"
+                                android:checked="false"
+                                android:gravity="bottom"
                                 android:minWidth="48dp"
                                 android:minHeight="48dp"
-                                android:gravity="bottom"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track" />
