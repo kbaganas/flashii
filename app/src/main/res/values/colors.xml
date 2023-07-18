@@ -8,7 +8,6 @@
     <color name="blueOffBack3">#c5dfe3</color>
     <color name="blueOffBack4">#b2d4d9</color>
     <color name="yellowOff">#f1f7db</color>
-    <color name="no_permission">#97b0b4</color>
     <color name="whiteCollar">#ecf8f9</color>
     <color name="greyNote">#a8a7a3</color>
     <color name="greyNoteDarker1">#9c9a96</color>
@@ -28,6 +27,7 @@
     <color name="seekbarProgressTint">#a6e4fa</color>
     <color name="mainActivateText">#a6e4fa</color>
     <color name="green">#2afa2a</color>
+    <color name="no_permission">#434241</color>
 
     <color name="mainSMS">#E3F5FE</color>
     <color name="mainCALL">#FCF5ED</color>

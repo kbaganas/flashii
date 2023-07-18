@@ -494,12 +494,13 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 // user should be asked for permissions again
+                callImageIcon.setImageResource(R.drawable.call_no_permission)
                 Snackbar.make(rootView, "To use the feature, manually provide\nCall access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
-//        // incoming sound handler
+        // incoming sound handler
         incomingSoundSwitch = findViewById(R.id.switchSound)
         incomingSoundSwitch.setOnCheckedChangeListener {_, isChecked ->
             Log.i("MainActivity","isAudioIncoming CLICKED")
@@ -660,12 +661,32 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for SMS")
+                smsImageIcon.setImageResource(R.drawable.sms_no_permission)
                 Snackbar.make(rootView, "To use the feature, manually provide\nSMS access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // phone out/in network handler
+
+        // Get references to views
+        val networkExpandArrow: ImageButton = findViewById(R.id.networkExpandArrow)
+        val networkHiddenView: LinearLayout = findViewById(R.id.networkHiddenView)
+        val networkImageIcon: ImageView = findViewById(R.id.networkImageIcon)
+        val networkSwitchText: TextView = findViewById(R.id.networkSwitchText)
+
+        // Expand or hide the main content
+        networkExpandArrow.setOnClickListener {
+            // Toggle the visibility of the content view
+            if (networkHiddenView.visibility == View.VISIBLE) {
+                networkHiddenView.visibility = View.GONE
+                networkExpandArrow.setImageResource(R.drawable.arrow_down)
+            } else {
+                networkHiddenView.visibility = View.VISIBLE
+                networkExpandArrow.setImageResource(R.drawable.arrow_up)
+            }
+        }
+
         outInNetworkSwitch = findViewById(R.id.switchNetwork)
         outInNetworkSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (!isChecked) {
@@ -677,6 +698,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 Log.i("MainActivity", "Unregister running CB $connectivityCallback")
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                networkImageIcon.setImageResource(R.drawable.network_off)
+                networkSwitchText.text = "Disabled"
             }
             else {
                 val networkRequest = NetworkRequest.Builder().build()
@@ -690,7 +713,7 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "NETWORK is right now UNAVAILABLE")
                     isPhoneOutOfNetwork = true
                     registerIncomingEvents(TypeOfEvent.IN_SERVICE)
-                    networkBtnSetId.text = "Flicker on NW available"
+                    networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
                 }
                 else {
                     Log.i("MainActivity", "NETWORK is right now AVAILABLE")
@@ -702,7 +725,7 @@ class MainActivity : AppCompatActivity() {
                             Log.i("MainActivity", "Unregister status CB $connectivityCallback")
                             connectivityManager.unregisterNetworkCallback(connectivityCallback)
                             registerIncomingEvents(TypeOfEvent.IN_SERVICE)
-                            //"Flicker on NW available"
+                            networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
                         }
                         override fun onLost(network: Network) {
                             super.onLost(network)
@@ -711,7 +734,7 @@ class MainActivity : AppCompatActivity() {
                             Log.i("MainActivity", "Unregister status CB $connectivityCallback")
                             connectivityManager.unregisterNetworkCallback(connectivityCallback)
                             registerIncomingEvents(TypeOfEvent.IN_SERVICE)
-                            //"Flicker on NW available"
+                            networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
                         }
                         override fun onAvailable(network: Network) {
                             super.onAvailable(network)
@@ -720,14 +743,15 @@ class MainActivity : AppCompatActivity() {
                             Log.i("MainActivity", "Unregister status CB $connectivityCallback")
                             connectivityManager.unregisterNetworkCallback(connectivityCallback)
                             registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE)
-                            //"Flicker on NW unavailable"
+                            networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
                         }
                     }
                     Log.i("MainActivity", "Register CB $connectivityCallback")
                     connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
-                    //"Flicker on NW unavailable"
+                    networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
                 }
                 Log.i("MainActivity","outInNetworkSwitch is ON")
+                networkSwitchText.text = "Enabled"
             }
         }
 
