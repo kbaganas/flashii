@@ -2,7 +2,7 @@
 <resources>
     <dimen name="text_margin">16dp</dimen>
     <!-- Dimensions -->
-    <dimen name="MainImageSize">48dp</dimen>
+    <dimen name="MainImageSize">56dp</dimen>
     <dimen name="MainBottomRowImageSize">48dp</dimen>
     <dimen name="MainTextHeight">86dp</dimen>
     <dimen name="margin16">15dp</dimen>

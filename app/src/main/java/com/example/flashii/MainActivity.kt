@@ -268,7 +268,9 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var timerSwitch : Switch
 
-    @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility")
+    @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility",
+        "MissingInflatedId"
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -573,6 +575,26 @@ class MainActivity : AppCompatActivity() {
 
         //////////////////////////////////////////////////////////////////////////////////////
         // incoming SMS handler
+
+        // Get references to views
+        val smsExpandArrow: ImageButton = findViewById(R.id.smsExpandArrow)
+        val smsHiddenView: LinearLayout = findViewById(R.id.smsHiddenView)
+        val smsImageIcon: ImageView = findViewById(R.id.smsImageIcon)
+        val smsSwitchText: TextView = findViewById(R.id.smsSwitchText)
+
+        // Expand or hide the main content
+        smsExpandArrow.setOnClickListener {
+            // Toggle the visibility of the content view
+            if (smsHiddenView.visibility == View.VISIBLE) {
+                smsHiddenView.visibility = View.GONE
+                smsExpandArrow.setImageResource(R.drawable.arrow_down)
+            } else {
+                smsHiddenView.visibility = View.VISIBLE
+                smsExpandArrow.setImageResource(R.drawable.arrow_up)
+            }
+        }
+
+        // Switch listener
         incomingSMSSwitch = findViewById(R.id.switchSMS)
         incomingSMSSwitch.setOnCheckedChangeListener {_, isChecked ->
             // Check first if permissions are granted
@@ -580,9 +602,13 @@ class MainActivity : AppCompatActivity() {
                 if (isChecked) {
                     Log.i("MainActivity","incomingSMSSwitch is ON")
                     registerIncomingEvents(TypeOfEvent.SMS)
+                    smsImageIcon.setImageResource(R.drawable.sms_on)
+                    smsSwitchText.text = "Enabled"
                 } else {
                     Log.i("MainActivity", "incomingSMSSwitch is OFF")
                     disableIncomingSMSFlickering()
+                    smsImageIcon.setImageResource(R.drawable.sms_off)
+                    smsSwitchText.text = "Disabled"
                 }
             }
             else {
