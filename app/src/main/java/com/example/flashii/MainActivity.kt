@@ -31,8 +31,10 @@ import android.provider.Telephony
 import android.telephony.TelephonyManager
 import android.text.Editable
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -45,6 +47,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.flashii.databinding.ActivityMainBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
@@ -287,11 +291,22 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        // activated features list
+        var itemList = mutableListOf<String>()
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = ItemAdapter(itemList)
+
+
         ///////////////////////////////////////////////////////////////////////////////////////
         // flashLightBtn handler
         setFlashlightId()
         flashlightBtn = findViewById(R.id.flashLightBtnId)
         turnOnFlashlight(true)
+        itemList.add("Flashlight")
+        recyclerView.adapter?.notifyItemInserted(itemList.size - 1)
         flashlightBtn.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -299,10 +314,14 @@ class MainActivity : AppCompatActivity() {
                     if (isFlashLightOn) {
                         Log.i("MainActivity","flashlightBtn is OFF")
                         turnOffFlashlight(true)
+                        itemList.removeIf { item -> item == "Flashlight" }
+                        recyclerView.adapter?.notifyDataSetChanged()
                     } else {
                         Log.i("MainActivity","flashlightBtn is ON")
                         //resetAllActivities(Token.FLASHLIGHT)
                         turnOnFlashlight(true)
+                        itemList.add("Flashlight")
+                        recyclerView.adapter?.notifyItemInserted(itemList.size - 1)
                     }
                     true
                 }
@@ -348,12 +367,18 @@ class MainActivity : AppCompatActivity() {
                 repeatSOS(true)
                 sosImageIcon.setImageResource(R.drawable.sos_on)
                 sosSwitchText.text = "Enabled"
+
+                itemList.add("SOS")
+                recyclerView.adapter?.notifyItemInserted(itemList.size - 1)
             }
             else {
                 Log.i("MainActivity","sosBtnSwitch is OFF")
                 stopSOS(true)
                 sosImageIcon.setImageResource(R.drawable.sos_off)
                 sosSwitchText.text = "Disabled"
+
+                itemList.removeIf { item -> item == "SOS" }
+                recyclerView.adapter?.notifyDataSetChanged()
             }
         }
 
@@ -830,13 +855,34 @@ class MainActivity : AppCompatActivity() {
         }
         ///////////////////////////////////////////////////////////////////////////////////////
         // timer handler
-        timerSwitch = findViewById(R.id.switchTIME)
+
+        // Get references to views
+        val timerExpandArrow: ImageButton = findViewById(R.id.timerExpandArrow)
+        val timerHiddenView: LinearLayout = findViewById(R.id.timerHiddenView)
+        val timerImageIcon: ImageView = findViewById(R.id.timerImageIcon)
+        val timerSwitchText: TextView = findViewById(R.id.timerSwitchText)
+
+        // Expand or hide the main content
+        timerExpandArrow.setOnClickListener {
+            // Toggle the visibility of the content view
+            if (timerHiddenView.visibility == View.VISIBLE) {
+                timerHiddenView.visibility = View.GONE
+                timerExpandArrow.setImageResource(R.drawable.arrow_down)
+            } else {
+                timerHiddenView.visibility = View.VISIBLE
+                timerExpandArrow.setImageResource(R.drawable.arrow_up)
+            }
+        }
+
+        timerSwitch = findViewById(R.id.switchTimer)
         timerSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
                 Log.i("MainActivity","timerSwitch is ON")
                 token = Token.TIMER
                 //resetAllActivities(Token.TIMER)
                 isTimerOn = true
+                timerImageIcon.setImageResource(R.drawable.timer_on)
+                timerSwitchText.text = "Enabled"
             }
             else {
                 Log.i("MainActivity","timerSwitch is OFF")
@@ -847,6 +893,8 @@ class MainActivity : AppCompatActivity() {
                     stopFlickering()
                 }
                 loopHandlerForInactivity.removeCallbacksAndMessages(null)
+                timerImageIcon.setImageResource(R.drawable.timer_off)
+                timerSwitchText.text = "Disabled"
             }
         }
 
@@ -2323,6 +2371,36 @@ class DonateActivity : AppCompatActivity() {
         val closeButton = findViewById<ImageButton>(R.id.donateGoBackArrow)
         closeButton.setOnClickListener {
             finish()
+        }
+    }
+}
+
+// Create a custom RecyclerView adapter to handle the list of items
+class ItemAdapter(private val itemList: List<String>) :
+    RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        // Bind data to the ViewHolder
+        holder.bind(itemList[position])
+    }
+
+    override fun getItemCount(): Int {
+        return itemList.size
+    }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val itemImageView: ImageView = itemView.findViewById(R.id.itemImageView)
+        private val itemTextView: TextView = itemView.findViewById(R.id.itemTextView)
+
+        fun bind(item: String) {
+            // Set data to the views
+            itemImageView.setImageResource(R.drawable.success5)
+            itemTextView.text = item
         }
     }
 }

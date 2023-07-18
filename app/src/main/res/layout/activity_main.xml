@@ -66,13 +66,12 @@
                                 android:layout_weight="1">
                                 <ImageView
                                     android:id="@+id/smsImageIcon"
-                                    android:layout_width="@dimen/MainImageSize"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="66dp"
+                                    android:layout_height="@dimen/MainImageSize"
                                     android:background="#00FFFFFF"
                                     android:layout_gravity="start"
                                     android:contentDescription="@string/IncomingSMSContentDescription"
                                     android:scaleType="fitCenter"
-                                    android:scaleY="1.125"
                                     app:srcCompat="@drawable/sms_off" />
                             </LinearLayout>
                             <ImageButton
@@ -417,34 +416,49 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:baselineAligned="true"
-                    android:gravity="center"
+                    android:layout_marginVertical="32dp"
                     android:orientation="horizontal">
 
                     <!-- Activated Features -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical"></LinearLayout>
+                        android:layout_weight="1.35"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="Activated features"
+                            tools:ignore="VisualLintLongText" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <!-- Flashlight -->
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="12dp"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="12dp">
 
                         <ImageButton
                             android:id="@+id/flashLightBtnId"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/mainFlashlightHeight"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginBottom="32dp"
                             android:background="#00FFFFFF"
+                            android:layout_gravity="center_vertical"
                             android:contentDescription="@string/FlashlightBtnContentDescription"
                             android:scaleType="centerInside"
                             app:srcCompat="@drawable/flashlight_off4" />
@@ -605,7 +619,7 @@
                                 android:layout_weight="1">
                                 <ImageView
                                     android:id="@+id/sosImageIcon"
-                                    android:layout_width="@dimen/MainImageSize"
+                                    android:layout_width="96dp"
                                     android:layout_height="@dimen/MainImageSize"
                                     android:background="#00FFFFFF"
                                     android:contentDescription="@string/IncomingSMSContentDescription"
@@ -864,7 +878,7 @@
                                 android:layout_weight="1">
                                 <ImageView
                                     android:id="@+id/networkImageIcon"
-                                    android:layout_width="@dimen/MainImageSize"
+                                    android:layout_width="76dp"
                                     android:layout_height="@dimen/MainImageSize"
                                     android:background="#00FFFFFF"
                                     android:contentDescription="@string/IncomingSMSContentDescription"
