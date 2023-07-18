@@ -696,17 +696,20 @@ class MainActivity : AppCompatActivity() {
                     registerIncomingEvents(TypeOfEvent.SMS)
                     smsImageIcon.setImageResource(R.drawable.sms_on)
                     smsSwitchText.text = "Enabled"
+                    addActivatedFeature(recyclerView, FEATURE.SMS)
                 } else {
                     Log.i("MainActivity", "incomingSMSSwitch is OFF")
                     disableIncomingSMSFlickering()
                     smsImageIcon.setImageResource(R.drawable.sms_off)
                     smsSwitchText.text = "Disabled"
+                    removeActivatedFeature(recyclerView, FEATURE.SMS)
                 }
             }
             else {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for SMS")
                 smsImageIcon.setImageResource(R.drawable.sms_no_permission)
+                removeActivatedFeature(recyclerView, FEATURE.SMS)
                 Snackbar.make(rootView, "To use the feature, manually provide\nSMS access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
@@ -745,6 +748,8 @@ class MainActivity : AppCompatActivity() {
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                 networkImageIcon.setImageResource(R.drawable.network_off)
                 networkSwitchText.text = "Disabled"
+                removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
+                removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
             }
             else {
                 val networkRequest = NetworkRequest.Builder().build()
@@ -759,6 +764,7 @@ class MainActivity : AppCompatActivity() {
                     isPhoneOutOfNetwork = true
                     registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                     networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
+                    addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                 }
                 else {
                     Log.i("MainActivity", "NETWORK is right now AVAILABLE")
@@ -771,6 +777,7 @@ class MainActivity : AppCompatActivity() {
                             connectivityManager.unregisterNetworkCallback(connectivityCallback)
                             registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                             networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
+                            addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                         }
                         override fun onLost(network: Network) {
                             super.onLost(network)
@@ -780,6 +787,7 @@ class MainActivity : AppCompatActivity() {
                             connectivityManager.unregisterNetworkCallback(connectivityCallback)
                             registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                             networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
+                            addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                         }
                         override fun onAvailable(network: Network) {
                             super.onAvailable(network)
@@ -789,11 +797,13 @@ class MainActivity : AppCompatActivity() {
                             connectivityManager.unregisterNetworkCallback(connectivityCallback)
                             registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE)
                             networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
+                            addActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                         }
                     }
                     Log.i("MainActivity", "Register CB $connectivityCallback")
                     connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
                     networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
+                    addActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 }
                 Log.i("MainActivity","outInNetworkSwitch is ON")
                 networkSwitchText.text = "Enabled"
@@ -855,6 +865,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
                 loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.BATTERY) }, checkInterval35)
+                addActivatedFeature(recyclerView, FEATURE.BATTERY)
             }
             else {
                 Log.i("MainActivity","batterySwitch is OFF")
@@ -871,6 +882,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 initBatteryLevel = minBattery
                 loopHandlerForInactivity.removeCallbacksAndMessages(null)
+                removeActivatedFeature(recyclerView, FEATURE.BATTERY)
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -903,6 +915,7 @@ class MainActivity : AppCompatActivity() {
                 isTimerOn = true
                 timerImageIcon.setImageResource(R.drawable.timer_on)
                 timerSwitchText.text = "Enabled"
+                addActivatedFeature(recyclerView, FEATURE.TIMER)
             }
             else {
                 Log.i("MainActivity","timerSwitch is OFF")
@@ -915,6 +928,7 @@ class MainActivity : AppCompatActivity() {
                 loopHandlerForInactivity.removeCallbacksAndMessages(null)
                 timerImageIcon.setImageResource(R.drawable.timer_off)
                 timerSwitchText.text = "Disabled"
+                removeActivatedFeature(recyclerView, FEATURE.TIMER)
             }
         }
 
@@ -974,12 +988,14 @@ class MainActivity : AppCompatActivity() {
                         //resetAllActivities(Token.ALTITUDE)
                         isAltitudeOn = true
                         sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
+                        addActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                     }
                     else {
                         // we have to disable the btn now since sensor is not available on the device
                         Log.i("MainActivity","Barometer not available")
                         Snackbar.make(rootView, "Device's barometer sensor\nis not available", Snackbar.LENGTH_LONG).show()
                         setAltitudeBtn(ACTION.NO_PERMISSION)
+                        removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                     }
                 } else {
                     Log.i("MainActivity","altitudeSwitch is OFF ($sensorEventListener)")
@@ -990,12 +1006,14 @@ class MainActivity : AppCompatActivity() {
                         stopFlickering()
                     }
                     loopHandlerForInactivity.removeCallbacksAndMessages(null)
+                    removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                 }
             }
             else {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for ALTITUDE")
                 Snackbar.make(rootView, "To use the feature, manually provide\nLocation access rights to $applicationName", Snackbar.LENGTH_LONG).show()
+                removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
             }
         }
 

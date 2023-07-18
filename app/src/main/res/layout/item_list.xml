@@ -9,14 +9,14 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:padding="16dp"
+    android:paddingHorizontal="8dp"
     tools:ignore="MissingConstraints">
 
     <!-- ImageView to display an image -->
     <ImageView
         android:id="@+id/itemImageView"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
         android:src="@drawable/success5" />
 
     <!-- Other content for the list item -->
@@ -25,10 +25,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="List Item"
-        android:fontFamily="@font/cabin_semibold"
+        android:fontFamily="@font/cabin_regular"
         android:textColor="@color/blueText"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="8dp" />
 </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

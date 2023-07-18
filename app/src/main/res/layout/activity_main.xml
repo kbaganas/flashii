@@ -34,8 +34,6 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-
-
                 <!-- 1st ROW -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,7 +64,7 @@
                                 android:layout_weight="1">
                                 <ImageView
                                     android:id="@+id/smsImageIcon"
-                                    android:layout_width="66dp"
+                                    android:layout_width="56dp"
                                     android:layout_height="@dimen/MainImageSize"
                                     android:background="#00FFFFFF"
                                     android:layout_gravity="start"
@@ -246,170 +244,217 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- 2nd ROW -->
+                <!-- 2th ROW - Network & SOS-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:background="@drawable/feature_selector_sound"
-                    android:baselineAligned="true"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
 
-                    <!-- Sound -->
+                    <!-- Network -->
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:padding="6dp"
-                        android:baselineAligned="false">
+                        android:layout_weight="1"
+                        android:background="@drawable/feature_selector_network"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="12dp"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="18dp">
 
-                        <!-- Bar -->
+                        <!-- Header -->
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <SeekBar
-                                android:id="@+id/seekBarSound"
-                                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:max="10"
-                                android:progress="3"
-                                android:rotation="90" />
-                        </LinearLayout>
-
-                        <!-- Text -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:orientation="vertical">
-
+                            android:orientation="horizontal">
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="15sp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center_horizontal"
-                                    android:layout_marginEnd="4dp"
-                                    android:text="@string/mainTextFlashlight"
-                                    tools:ignore="VisualLintLongText" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="15sp"
-                                    android:layout_marginEnd="4dp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center_horizontal"
-                                    android:maxLines="1"
-                                    android:text="@string/mainTextTurnOnOff"
-                                    tools:ignore="VisualLintLongText" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="15sp"
-                                    android:layout_marginEnd="4dp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center_horizontal"
-                                    android:text="@string/mainTextOn"
-                                    tools:ignore="VisualLintLongText" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:textSize="15sp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center"
-                                    android:text="@string/mainTextShorts"
-                                    android:layout_marginEnd="4dp"
-                                    tools:ignore="VisualLintLongText" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="24sp"
-                                    android:layout_marginEnd="4dp"
-                                    android:fontFamily="@font/cabin_semibold"
-                                    android:gravity="center_horizontal"
-                                    android:text="@string/mainTextSOUNDs"
-                                    tools:ignore="VisualLintLongText" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
-                                android:text="@string/mainTextSensitivity"
-                                tools:ignore="VisualLintLongText" />
-
-                            <TextView
-                                android:id="@+id/mainTextSoundLevel"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
-                                android:text="@string/pavlaLevel"
-                                tools:ignore="VisualLintLongText" />
-                        </LinearLayout>
-
-                        <!-- Image & Switch -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="end|center_vertical"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="top">
-
+                                android:layout_weight="1">
                                 <ImageView
-                                    android:layout_width="@dimen/MainImageSize"
+                                    android:id="@+id/networkImageIcon"
+                                    android:layout_width="60dp"
                                     android:layout_height="@dimen/MainImageSize"
                                     android:background="#00FFFFFF"
                                     android:contentDescription="@string/IncomingSMSContentDescription"
                                     android:scaleType="fitCenter"
-                                    app:srcCompat="@drawable/sound_off_m3" />
+                                    app:srcCompat="@drawable/network_off" />
                             </LinearLayout>
-
-                            <Switch
-                                android:id="@+id/switchSound"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:checked="false"
-                                android:gravity="bottom"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                            <ImageButton
+                                android:id="@+id/networkExpandArrow"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:background="@color/backgroundWhite"
+                                android:contentDescription="@string/backArrow"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/arrow_down" />
                         </LinearLayout>
 
+                        <!-- Expandable -->
+                        <LinearLayout
+                            android:id="@+id/networkHiddenView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/networkTextMessage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_horizontal"
+                                android:text="Flashlight flicker\non changes of"
+                                tools:ignore="VisualLintLongText" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="24sp"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="NETWORK Connection"
+                                tools:ignore="VisualLintLongText" />
+
+                            <!-- Image & Switch -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="18dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:id="@+id/networkSwitchText"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15sp"
+                                    android:layout_marginEnd="10dp"
+                                    android:gravity="end"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="Disabled"
+                                    tools:ignore="VisualLintLongText" />
+                                <Switch
+                                    android:id="@+id/switchNetwork"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:minWidth="48dp"
+                                    android:minHeight="48dp"
+                                    android:checked="false"
+                                    android:gravity="center"
+                                    android:progressTint="@color/seekbarProgressTint"
+                                    android:thumb="@drawable/switch_thumb"
+                                    android:track="@drawable/switch_track"
+                                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+                            </LinearLayout>
+                        </LinearLayout>
                     </LinearLayout>
+
+                    <!-- SOS -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/feature_selector_sos"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="18dp">
+
+                        <!-- Header -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+                                <ImageView
+                                    android:id="@+id/sosImageIcon"
+                                    android:layout_width="66dp"
+                                    android:layout_height="@dimen/MainImageSize"
+                                    android:background="#00FFFFFF"
+                                    android:contentDescription="@string/IncomingSMSContentDescription"
+                                    android:scaleType="fitCenter"
+                                    app:srcCompat="@drawable/sos_off" />
+                            </LinearLayout>
+                            <ImageButton
+                                android:id="@+id/sosExpandArrow"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:background="@color/backgroundWhite"
+                                android:contentDescription="@string/backArrow"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/arrow_down" />
+                        </LinearLayout>
+
+                        <!-- Expandable -->
+                        <LinearLayout
+                            android:id="@+id/sosHiddenView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_horizontal"
+                                android:text="Flashlight transmits"
+                                tools:ignore="VisualLintLongText" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="24sp"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="SOS"
+                                tools:ignore="VisualLintLongText" />
+
+                            <!-- Image & Switch -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="18dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:id="@+id/sosSwitchText"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15sp"
+                                    android:layout_marginEnd="10dp"
+                                    android:gravity="end"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:text="Disabled"
+                                    tools:ignore="VisualLintLongText" />
+                                <Switch
+                                    android:id="@+id/switchSOS"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:minWidth="48dp"
+                                    android:minHeight="48dp"
+                                    android:checked="false"
+                                    android:gravity="center"
+                                    android:progressTint="@color/seekbarProgressTint"
+                                    android:thumb="@drawable/switch_thumb"
+                                    android:track="@drawable/switch_track"
+                                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
+
+
 
                 <!-- 3rd ROW -->
                 <LinearLayout
@@ -428,7 +473,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="18sp"
                             android:textColor="@color/white"
                             android:fontFamily="@font/cabin_regular"
                             android:text="Activated features"
@@ -465,8 +510,144 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <!-- 8th ROW - TIMER -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin16"
+                    android:gravity="center_horizontal">
 
-                <!-- 7th ROW - Flicker & SOS-->
+                    <!-- Timer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/feature_selector_time"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="18dp">
+
+                        <!-- Header -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/timerImageIcon"
+                                    android:layout_width="@dimen/MainImageSize"
+                                    android:layout_height="@dimen/MainImageSize"
+                                    android:background="#00FFFFFF"
+                                    android:contentDescription="@string/IncomingSMSContentDescription"
+                                    android:scaleType="fitCenter"
+                                    app:srcCompat="@drawable/timer_off" />
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="24sp"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="Flicker on Time"
+                                tools:ignore="VisualLintLongText" />
+                            <ImageButton
+                                android:id="@+id/timerExpandArrow"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:background="@color/backgroundWhite"
+                                android:contentDescription="@string/backArrow"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/arrow_down" />
+                        </LinearLayout>
+
+                        <!-- Expandable -->
+                        <LinearLayout
+                            android:id="@+id/timerHiddenView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/timerTextMessage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_horizontal"
+                                android:text="Flashlight flicker on"
+                                tools:ignore="VisualLintLongText" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="24sp"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="TIME specified"
+                                tools:ignore="VisualLintLongText" />
+
+                            <!-- Image & Switch -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="18dp"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+                                <!-- Input & TIME -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+                                        <TimePicker
+                                            android:id="@+id/timePicker1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:theme="@style/timePicker"
+                                            android:timePickerMode="spinner" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                                <!-- Image & Switch -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/timerSwitchText"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="15sp"
+                                        android:layout_marginEnd="10dp"
+                                        android:gravity="end"
+                                        android:fontFamily="@font/cabin_regular"
+                                        android:text="Disabled"
+                                        tools:ignore="VisualLintLongText" />
+                                    <Switch
+                                        android:id="@+id/switchTimer"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:minWidth="48dp"
+                                        android:minHeight="48dp"
+                                        android:checked="false"
+                                        android:gravity="center"
+                                        android:progressTint="@color/seekbarProgressTint"
+                                        android:thumb="@drawable/switch_thumb"
+                                        android:track="@drawable/switch_track"
+                                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 7th ROW - Flicker-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -598,104 +779,6 @@
 
                     </LinearLayout>
 
-                    <!-- SOS -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/feature_selector_sos"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="18dp">
-
-                        <!-- Header -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1">
-                                <ImageView
-                                    android:id="@+id/sosImageIcon"
-                                    android:layout_width="96dp"
-                                    android:layout_height="@dimen/MainImageSize"
-                                    android:background="#00FFFFFF"
-                                    android:contentDescription="@string/IncomingSMSContentDescription"
-                                    android:scaleType="fitCenter"
-                                    app:srcCompat="@drawable/sos_off" />
-                            </LinearLayout>
-                            <ImageButton
-                                android:id="@+id/sosExpandArrow"
-                                android:layout_width="48dp"
-                                android:layout_height="56dp"
-                                android:background="@color/backgroundWhite"
-                                android:contentDescription="@string/backArrow"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/arrow_down" />
-                        </LinearLayout>
-
-                        <!-- Expandable -->
-                        <LinearLayout
-                            android:id="@+id/sosHiddenView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
-                            android:visibility="gone"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="18sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
-                                android:text="Flashlight transmits"
-                                tools:ignore="VisualLintLongText" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="24sp"
-                                android:fontFamily="@font/cabin_semibold"
-                                android:gravity="center_horizontal"
-                                android:text="SOS"
-                                tools:ignore="VisualLintLongText" />
-
-                            <!-- Image & Switch -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="18dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:id="@+id/sosSwitchText"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="15sp"
-                                    android:layout_marginEnd="10dp"
-                                    android:gravity="end"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:text="Disabled"
-                                    tools:ignore="VisualLintLongText" />
-                                <Switch
-                                    android:id="@+id/switchSOS"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:minWidth="48dp"
-                                    android:minHeight="48dp"
-                                    android:checked="false"
-                                    android:gravity="center"
-                                    android:progressTint="@color/seekbarProgressTint"
-                                    android:thumb="@drawable/switch_thumb"
-                                    android:track="@drawable/switch_track"
-                                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -856,106 +939,7 @@
                     android:layout_marginBottom="12dp"
                     android:orientation="horizontal">
 
-                    <!-- Network -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/feature_selector_network"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="12dp"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="18dp">
 
-                        <!-- Header -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1">
-                                <ImageView
-                                    android:id="@+id/networkImageIcon"
-                                    android:layout_width="76dp"
-                                    android:layout_height="@dimen/MainImageSize"
-                                    android:background="#00FFFFFF"
-                                    android:contentDescription="@string/IncomingSMSContentDescription"
-                                    android:scaleType="fitCenter"
-                                    app:srcCompat="@drawable/network_off" />
-                            </LinearLayout>
-                            <ImageButton
-                                android:id="@+id/networkExpandArrow"
-                                android:layout_width="48dp"
-                                android:layout_height="56dp"
-                                android:background="@color/backgroundWhite"
-                                android:contentDescription="@string/backArrow"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/arrow_down" />
-                        </LinearLayout>
-
-                        <!-- Expandable -->
-                        <LinearLayout
-                            android:id="@+id/networkHiddenView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
-                            android:visibility="gone"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/networkTextMessage"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="18sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
-                                android:text="Flashlight flicker\non changes of"
-                                tools:ignore="VisualLintLongText" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="24sp"
-                                android:fontFamily="@font/cabin_semibold"
-                                android:gravity="center_horizontal"
-                                android:text="NETWORK Connection"
-                                tools:ignore="VisualLintLongText" />
-
-                            <!-- Image & Switch -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="18dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:id="@+id/networkSwitchText"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="15sp"
-                                    android:layout_marginEnd="10dp"
-                                    android:gravity="end"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:text="Disabled"
-                                    tools:ignore="VisualLintLongText" />
-                                <Switch
-                                    android:id="@+id/switchNetwork"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:minWidth="48dp"
-                                    android:minHeight="48dp"
-                                    android:checked="false"
-                                    android:gravity="center"
-                                    android:progressTint="@color/seekbarProgressTint"
-                                    android:thumb="@drawable/switch_thumb"
-                                    android:track="@drawable/switch_track"
-                                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
 
                     <!-- Battery -->
                     <LinearLayout
@@ -1235,133 +1219,172 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- 8th ROW - TIMER -->
+                <!-- 2nd ROW -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin16"
-                    android:gravity="center_horizontal">
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/feature_selector_sound"
+                    android:baselineAligned="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <!-- Timer -->
+                    <!-- Sound -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/feature_selector_time"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="18dp">
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:padding="6dp"
+                        android:baselineAligned="false">
 
-                        <!-- Header -->
+                        <!-- Bar -->
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:layout_weight="1">
+
+                            <SeekBar
+                                android:id="@+id/seekBarSound"
+                                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:max="10"
+                                android:progress="3"
+                                android:rotation="90" />
+                        </LinearLayout>
+
+                        <!-- Text -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:orientation="vertical">
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1">
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:gravity="center_horizontal"
+                                    android:layout_marginEnd="4dp"
+                                    android:text="@string/mainTextFlashlight"
+                                    tools:ignore="VisualLintLongText" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15sp"
+                                    android:layout_marginEnd="4dp"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:gravity="center_horizontal"
+                                    android:maxLines="1"
+                                    android:text="@string/mainTextTurnOnOff"
+                                    tools:ignore="VisualLintLongText" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15sp"
+                                    android:layout_marginEnd="4dp"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:gravity="center_horizontal"
+                                    android:text="@string/mainTextOn"
+                                    tools:ignore="VisualLintLongText" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/cabin_regular"
+                                    android:gravity="center"
+                                    android:text="@string/mainTextShorts"
+                                    android:layout_marginEnd="4dp"
+                                    tools:ignore="VisualLintLongText" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="24sp"
+                                    android:layout_marginEnd="4dp"
+                                    android:fontFamily="@font/cabin_semibold"
+                                    android:gravity="center_horizontal"
+                                    android:text="@string/mainTextSOUNDs"
+                                    tools:ignore="VisualLintLongText" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/mainTextSensitivity"
+                                tools:ignore="VisualLintLongText" />
+
+                            <TextView
+                                android:id="@+id/mainTextSoundLevel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/pavlaLevel"
+                                tools:ignore="VisualLintLongText" />
+                        </LinearLayout>
+
+                        <!-- Image & Switch -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="end|center_vertical"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="top">
+
                                 <ImageView
-                                    android:id="@+id/timerImageIcon"
                                     android:layout_width="@dimen/MainImageSize"
                                     android:layout_height="@dimen/MainImageSize"
                                     android:background="#00FFFFFF"
                                     android:contentDescription="@string/IncomingSMSContentDescription"
                                     android:scaleType="fitCenter"
-                                    app:srcCompat="@drawable/timer_off" />
+                                    app:srcCompat="@drawable/sound_off_m3" />
                             </LinearLayout>
-                            <ImageButton
-                                android:id="@+id/timerExpandArrow"
-                                android:layout_width="48dp"
-                                android:layout_height="56dp"
-                                android:background="@color/backgroundWhite"
-                                android:contentDescription="@string/backArrow"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/arrow_down" />
+
+                            <Switch
+                                android:id="@+id/switchSound"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:checked="false"
+                                android:gravity="bottom"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"
+                                tools:ignore="UseSwitchCompatOrMaterialXml" />
                         </LinearLayout>
 
-                        <!-- Expandable -->
-                        <LinearLayout
-                            android:id="@+id/timerHiddenView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="visible"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/timerTextMessage"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="18sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
-                                android:text="Flashlight flicker on"
-                                tools:ignore="VisualLintLongText" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="24sp"
-                                android:fontFamily="@font/cabin_semibold"
-                                android:gravity="center_horizontal"
-                                android:text="TIME specified"
-                                tools:ignore="VisualLintLongText" />
-
-                            <!-- Image & Switch -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="18dp"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical">
-                                <!-- Input & TIME -->
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
-                                        <TimePicker
-                                            android:id="@+id/timePicker1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:theme="@style/timePicker"
-                                            android:timePickerMode="spinner" />
-                                    </LinearLayout>
-                                </LinearLayout>
-                                <!-- Image & Switch -->
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-                                    <TextView
-                                        android:id="@+id/timerSwitchText"
-                                        android:layout_width="0dp"
-                                        android:layout_weight="1"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="15sp"
-                                        android:layout_marginEnd="10dp"
-                                        android:gravity="end"
-                                        android:fontFamily="@font/cabin_regular"
-                                        android:text="Disabled"
-                                        tools:ignore="VisualLintLongText" />
-                                    <Switch
-                                        android:id="@+id/switchTimer"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:minWidth="48dp"
-                                        android:minHeight="48dp"
-                                        android:checked="false"
-                                        android:gravity="center"
-                                        android:progressTint="@color/seekbarProgressTint"
-                                        android:thumb="@drawable/switch_thumb"
-                                        android:track="@drawable/switch_track"
-                                        tools:ignore="UseSwitchCompatOrMaterialXml" />
-                                </LinearLayout>
-                            </LinearLayout>
-                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
+
 
 
 
