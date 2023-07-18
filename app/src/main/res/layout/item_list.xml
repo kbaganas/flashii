@@ -8,13 +8,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:gravity="center_vertical"
+    android:padding="16dp"
+    tools:ignore="MissingConstraints">
 
     <!-- ImageView to display an image -->
     <ImageView
         android:id="@+id/itemImageView"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:src="@drawable/success5" />
 
     <!-- Other content for the list item -->
@@ -23,7 +25,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="List Item"
-        android:textSize="16sp"
+        android:fontFamily="@font/cabin_semibold"
+        android:textColor="@color/blueText"
+        android:textSize="18sp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp" />
 </LinearLayout>

@@ -183,6 +183,21 @@ class MainActivity : AppCompatActivity() {
         ALTITUDE(4)
     }
 
+    enum class FEATURE (val value: String) {
+        FLASHLIGHT("Flashlight is On"),
+        CALL("Incoming Calls"),
+        SMS("Incoming SMSes"),
+        AUDIO("Short Sounds"),
+        ALTITUDE("Altitude Height reached"),
+        BATTERY("Battery Power reached"),
+        SOS("SOS is transmitted"),
+        FLICKERING("Flickering is On"),
+        TIMER("Time specified"),
+        NETWORK_FOUND("Network Connection is found"),
+        NETWORK_LOST("Network Connection is lost"),
+        TILT("Phone Tilts")
+    }
+
     enum class Token {
         FLICKER,
         TIMER,
@@ -243,6 +258,8 @@ class MainActivity : AppCompatActivity() {
     private var isTimerOn : Boolean = false
     private var isTimerThresholdSet : Boolean = false
     private var isStartTrackingTouched : Boolean = false
+    private var itemList = mutableListOf<String>()
+    private lateinit var recyclerView: RecyclerView
 
     // Buttons & Ids
     private var flashlightId : String = "0"
@@ -294,8 +311,7 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // activated features list
-        var itemList = mutableListOf<String>()
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = ItemAdapter(itemList)
 
@@ -305,8 +321,7 @@ class MainActivity : AppCompatActivity() {
         setFlashlightId()
         flashlightBtn = findViewById(R.id.flashLightBtnId)
         turnOnFlashlight(true)
-        itemList.add("Flashlight")
-        recyclerView.adapter?.notifyItemInserted(itemList.size - 1)
+        addActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
         flashlightBtn.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -314,14 +329,12 @@ class MainActivity : AppCompatActivity() {
                     if (isFlashLightOn) {
                         Log.i("MainActivity","flashlightBtn is OFF")
                         turnOffFlashlight(true)
-                        itemList.removeIf { item -> item == "Flashlight" }
-                        recyclerView.adapter?.notifyDataSetChanged()
+                        removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                     } else {
                         Log.i("MainActivity","flashlightBtn is ON")
                         //resetAllActivities(Token.FLASHLIGHT)
                         turnOnFlashlight(true)
-                        itemList.add("Flashlight")
-                        recyclerView.adapter?.notifyItemInserted(itemList.size - 1)
+                        addActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                     }
                     true
                 }
@@ -367,18 +380,14 @@ class MainActivity : AppCompatActivity() {
                 repeatSOS(true)
                 sosImageIcon.setImageResource(R.drawable.sos_on)
                 sosSwitchText.text = "Enabled"
-
-                itemList.add("SOS")
-                recyclerView.adapter?.notifyItemInserted(itemList.size - 1)
+                addActivatedFeature(recyclerView, FEATURE.SOS)
             }
             else {
                 Log.i("MainActivity","sosBtnSwitch is OFF")
                 stopSOS(true)
                 sosImageIcon.setImageResource(R.drawable.sos_off)
                 sosSwitchText.text = "Disabled"
-
-                itemList.removeIf { item -> item == "SOS" }
-                recyclerView.adapter?.notifyDataSetChanged()
+                removeActivatedFeature(recyclerView, FEATURE.SOS)
             }
         }
 
@@ -471,12 +480,14 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity","flickerFlashlightBtn is ON with ${flickerFlashlightHz}Hz")
                 isFlickeringOnDemand = true
                 startFlickering()
+                addActivatedFeature(recyclerView, FEATURE.FLICKERING)
             }
             else {
                 Log.i("MainActivity","flickerFlashlightBtn is OFF")
                 isFlickeringOnDemand = false
                 stopFlickering()
                 setFlickeringHz(minFlickerHz.toLong())
+                removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
             }
         }
 
@@ -510,16 +521,19 @@ class MainActivity : AppCompatActivity() {
                     registerIncomingEvents(TypeOfEvent.INCOMING_CALL)
                     callImageIcon.setImageResource(R.drawable.call_on2)
                     callSwitchText.text = "Enabled"
+                    addActivatedFeature(recyclerView, FEATURE.CALL)
                 } else {
                     Log.i("MainActivity", "incomingCallSwitch is OFF")
                     disableIncomingCallFlickering()
                     callImageIcon.setImageResource(R.drawable.call_off2)
                     callSwitchText.text = "Disabled"
+                    removeActivatedFeature(recyclerView, FEATURE.CALL)
                 }
             }
             else {
                 // user should be asked for permissions again
                 callImageIcon.setImageResource(R.drawable.call_no_permission)
+                removeActivatedFeature(recyclerView, FEATURE.CALL)
                 Snackbar.make(rootView, "To use the feature, manually provide\nCall access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
@@ -546,6 +560,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     recordingThread?.join()
                     recordingThread = null
+                    removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                 }
                 else {
                     Log.i("MainActivity","incomingSoundSwitch is ON")
@@ -578,10 +593,12 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     recordingThread?.start()
+                    addActivatedFeature(recyclerView, FEATURE.AUDIO)
                 }
             }
             else {
                 // user should be asked for permissions again
+                removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                 Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
@@ -630,18 +647,21 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity","incomingTiltSwitch is ON ($sensorEventListener)")
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
                     isPhoneTilt = true
+                    addActivatedFeature(recyclerView, FEATURE.TILT)
                 }
                 else {
                     // we have to disable the btn now since rotation sensor is not available on the device
                     Log.i("MainActivity","Accelerometer not available")
                     Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
                     resetMainBtnSetText(Token.TILT)
+                    removeActivatedFeature(recyclerView, FEATURE.TILT)
                 }
             } else {
                 Log.i("MainActivity","incomingTiltSwitch is OFF ($sensorEventListener)")
                 turnOffFlashlight()
                 sensorManager.unregisterListener(sensorEventListener)
                 isPhoneTilt = false
+                removeActivatedFeature(recyclerView, FEATURE.TILT)
             }
         }
 
@@ -1069,6 +1089,17 @@ class MainActivity : AppCompatActivity() {
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private fun addActivatedFeature (recyclerView : RecyclerView, feature: FEATURE) {
+        itemList.add(feature.value)
+        recyclerView.adapter?.notifyItemInserted(itemList.size - 1)
+    }
+
+    private fun removeActivatedFeature (recyclerView: RecyclerView, feature: FEATURE) {
+        itemList.removeIf { item -> item == feature.value }
+        recyclerView.adapter?.notifyDataSetChanged()
+    }
 
     private fun setSettingsIntent () {
         // set intent for Settings activity
