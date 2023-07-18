@@ -21,7 +21,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginHorizontal="8dp"
             android:orientation="vertical">
@@ -59,7 +59,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1">
                                 <ImageView
@@ -97,7 +97,7 @@
                                 android:textSize="18sp"
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
-                                android:text="Flashlight flicker\non incoming"
+                                android:text="@string/flashlight_flicker_non_incoming"
                                 tools:ignore="VisualLintLongText" />
 
                             <TextView
@@ -106,7 +106,7 @@
                                 android:textSize="24sp"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="SMS"
+                                android:text="@string/mainTextSMS"
                                 tools:ignore="VisualLintLongText" />
 
                             <!-- Image & Switch -->
@@ -125,7 +125,7 @@
                                     android:layout_marginEnd="10dp"
                                     android:gravity="end"
                                     android:fontFamily="@font/cabin_regular"
-                                    android:text="Disabled"
+                                    android:text="@string/disabled"
                                     tools:ignore="VisualLintLongText" />
                                 <Switch
                                     android:id="@+id/switchSMS"
@@ -160,7 +160,7 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1">
                                 <ImageView
@@ -197,7 +197,7 @@
                                 android:textSize="18sp"
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
-                                android:text="Flashlight flicker\non incoming"
+                                android:text="@string/flashlight_flicker_non_incoming"
                                 tools:ignore="VisualLintLongText" />
 
                             <TextView
@@ -206,7 +206,7 @@
                                 android:textSize="24sp"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="CALL"
+                                android:text="@string/call"
                                 tools:ignore="VisualLintLongText" />
 
                             <!-- Image & Switch -->
@@ -225,7 +225,7 @@
                                     android:layout_marginEnd="10dp"
                                     android:gravity="end"
                                     android:fontFamily="@font/cabin_regular"
-                                    android:text="Disabled"
+                                    android:text="@string/disabled"
                                     tools:ignore="VisualLintLongText" />
                                 <Switch
                                     android:id="@+id/switchCALL"
@@ -269,7 +269,7 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1">
                                 <ImageView
@@ -307,7 +307,7 @@
                                 android:textSize="18sp"
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
-                                android:text="Flashlight flicker\non changes of"
+                                android:text="@string/flashlight_flicker_non_changes_of"
                                 tools:ignore="VisualLintLongText" />
 
                             <TextView
@@ -316,7 +316,7 @@
                                 android:textSize="24sp"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="NETWORK Connection"
+                                android:text="@string/network_connection"
                                 tools:ignore="VisualLintLongText" />
 
                             <!-- Image & Switch -->
@@ -335,7 +335,7 @@
                                     android:layout_marginEnd="10dp"
                                     android:gravity="end"
                                     android:fontFamily="@font/cabin_regular"
-                                    android:text="Disabled"
+                                    android:text="@string/disabled"
                                     tools:ignore="VisualLintLongText" />
                                 <Switch
                                     android:id="@+id/switchNetwork"
@@ -369,7 +369,7 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1">
                                 <ImageView
@@ -406,7 +406,7 @@
                                 android:textSize="18sp"
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
-                                android:text="Flashlight transmits"
+                                android:text="@string/flashlight_transmits"
                                 tools:ignore="VisualLintLongText" />
 
                             <TextView
@@ -415,7 +415,7 @@
                                 android:textSize="24sp"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="SOS"
+                                android:text="@string/sos"
                                 tools:ignore="VisualLintLongText" />
 
                             <!-- Image & Switch -->
@@ -434,7 +434,7 @@
                                     android:layout_marginEnd="10dp"
                                     android:gravity="end"
                                     android:fontFamily="@font/cabin_regular"
-                                    android:text="Disabled"
+                                    android:text="@string/disabled"
                                     tools:ignore="VisualLintLongText" />
                                 <Switch
                                     android:id="@+id/switchSOS"
@@ -474,7 +474,7 @@
                             android:textSize="24sp"
                             android:textColor="@color/white"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="Activated features"
+                            android:text="@string/activated_features"
                             tools:ignore="VisualLintLongText" />
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -542,14 +542,14 @@
                                     app:srcCompat="@drawable/timer_off" />
                             </LinearLayout>
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:textSize="24sp"
                                 android:layout_weight="1"
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="Flicker on Time"
+                                android:text="@string/flicker_on_time"
                                 tools:ignore="VisualLintLongText" />
                             <ImageButton
                                 android:id="@+id/timerExpandArrow"
@@ -605,7 +605,7 @@
                                         android:layout_marginEnd="10dp"
                                         android:gravity="end"
                                         android:fontFamily="@font/cabin_regular"
-                                        android:text="Disabled"
+                                        android:text="@string/disabled"
                                         tools:ignore="VisualLintLongText" />
                                     <Switch
                                         android:id="@+id/switchTimer"
@@ -728,7 +728,7 @@
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="top">
 
@@ -876,7 +876,7 @@
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="top">
 
@@ -947,7 +947,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_height="wrap_content">
+                                android:layout_height="0dp">
                                 <SeekBar
                                     android:id="@+id/seekBarBattery"
                                     style="@style/Widget.AppCompat.SeekBar.Discrete"
@@ -1168,7 +1168,7 @@
                             android:orientation="vertical">
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="top">
 
@@ -1332,7 +1332,7 @@
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="top">
 

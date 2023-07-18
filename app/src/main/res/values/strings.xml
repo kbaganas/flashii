@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Flashii</string>
     <string name="flashLightBtn">Flashlight</string>
     <string name="holdFlashLightBtn">Flashlight (Hold)</string>
@@ -161,4 +161,13 @@
     <string name="pavlaPerc">- %</string>
     <string name="pavlaMeter">- m</string>
     <string name="pavlaHz">- Hz</string>
+    <string name="disabled">Disabled</string>
+    <string name="flashlight_flicker_non_incoming">Flashlight flicker\non incoming</string>
+    <string name="call">CALL</string>
+    <string name="flashlight_transmits">Flashlight transmits</string>
+    <string name="network_connection">NETWORK Connection</string>
+    <string name="sos">SOS</string>
+    <string name="activated_features">Activated features</string>
+    <string name="flicker_on_time">Flicker on Time</string>
+    <string name="flashlight_flicker_non_changes_of">Flashlight flicker\non changes of</string>
 </resources>
