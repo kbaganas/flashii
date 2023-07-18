@@ -106,7 +106,7 @@
                                 android:textSize="24sp"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="SMSes"
+                                android:text="SMS"
                                 tools:ignore="VisualLintLongText" />
 
                             <!-- Image & Switch -->
@@ -121,7 +121,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:textSize="15sp"
+                                    android:textSize="18sp"
                                     android:layout_marginEnd="10dp"
                                     android:gravity="end"
                                     android:fontFamily="@font/cabin_regular"
@@ -206,7 +206,7 @@
                                 android:textSize="24sp"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="CALLs"
+                                android:text="CALL"
                                 tools:ignore="VisualLintLongText" />
 
                             <!-- Image & Switch -->
@@ -221,7 +221,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:textSize="15sp"
+                                    android:textSize="18sp"
                                     android:layout_marginEnd="10dp"
                                     android:gravity="end"
                                     android:fontFamily="@font/cabin_regular"
@@ -331,7 +331,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:textSize="15sp"
+                                    android:textSize="18sp"
                                     android:layout_marginEnd="10dp"
                                     android:gravity="end"
                                     android:fontFamily="@font/cabin_regular"
@@ -430,7 +430,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:textSize="15sp"
+                                    android:textSize="18sp"
                                     android:layout_marginEnd="10dp"
                                     android:gravity="end"
                                     android:fontFamily="@font/cabin_regular"
@@ -454,8 +454,6 @@
 
                 </LinearLayout>
 
-
-
                 <!-- 3rd ROW -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -473,7 +471,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
+                            android:textSize="24sp"
                             android:textColor="@color/white"
                             android:fontFamily="@font/cabin_regular"
                             android:text="Activated features"
@@ -571,30 +569,10 @@
                             android:visibility="gone"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/timerTextMessage"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="18sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
-                                android:text="Flashlight flicker on"
-                                tools:ignore="VisualLintLongText" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="24sp"
-                                android:fontFamily="@font/cabin_semibold"
-                                android:gravity="center_horizontal"
-                                android:text="TIME specified"
-                                tools:ignore="VisualLintLongText" />
-
                             <!-- Image & Switch -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="18dp"
                                 android:gravity="center_vertical"
                                 android:orientation="vertical">
                                 <!-- Input & TIME -->
@@ -623,7 +601,7 @@
                                         android:layout_width="0dp"
                                         android:layout_weight="1"
                                         android:layout_height="wrap_content"
-                                        android:textSize="15sp"
+                                        android:textSize="18sp"
                                         android:layout_marginEnd="10dp"
                                         android:gravity="end"
                                         android:fontFamily="@font/cabin_regular"

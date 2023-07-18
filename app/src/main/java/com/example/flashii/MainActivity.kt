@@ -185,17 +185,17 @@ class MainActivity : AppCompatActivity() {
 
     enum class FEATURE (val value: String) {
         FLASHLIGHT("Flashlight is On"),
-        CALL("Incoming Calls"),
-        SMS("Incoming SMSes"),
-        AUDIO("Short Sounds"),
-        ALTITUDE("Altitude Height reached"),
-        BATTERY("Battery Power reached"),
+        CALL("Flicker on incoming Call"),
+        SMS("Flicker on incoming SMS"),
+        AUDIO("Flicker on short Sounds"),
+        ALTITUDE("Flicker on Altitude Height reached"),
+        BATTERY("Flicker on Battery Power reached"),
         SOS("SOS is transmitted"),
         FLICKERING("Flickering is On"),
-        TIMER("Time specified"),
-        NETWORK_FOUND("Network Connection is found"),
-        NETWORK_LOST("Network Connection is lost"),
-        TILT("Phone Tilts")
+        TIMER("Flicker at Time specified"),
+        NETWORK_FOUND("Flicker when Network Connection is found"),
+        NETWORK_LOST("Flicker when Network Connection is lost"),
+        TILT("Flashlight toggles on Phone Tilts")
     }
 
     enum class Token {
@@ -777,7 +777,6 @@ class MainActivity : AppCompatActivity() {
                             connectivityManager.unregisterNetworkCallback(connectivityCallback)
                             registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                             networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
-                            addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                         }
                         override fun onLost(network: Network) {
                             super.onLost(network)
@@ -787,7 +786,6 @@ class MainActivity : AppCompatActivity() {
                             connectivityManager.unregisterNetworkCallback(connectivityCallback)
                             registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                             networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
-                            addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                         }
                         override fun onAvailable(network: Network) {
                             super.onAvailable(network)
@@ -797,16 +795,19 @@ class MainActivity : AppCompatActivity() {
                             connectivityManager.unregisterNetworkCallback(connectivityCallback)
                             registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE)
                             networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
-                            addActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                         }
                     }
                     Log.i("MainActivity", "Register CB $connectivityCallback")
                     connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
-                    networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
-                    addActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 }
                 Log.i("MainActivity","outInNetworkSwitch is ON")
                 networkSwitchText.text = "Enabled"
+                if (isPhoneInNetwork) {
+                    addActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
+                }
+                else if (isPhoneOutOfNetwork) {
+                    addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
+                }
             }
         }
 
