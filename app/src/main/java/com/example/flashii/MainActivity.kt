@@ -321,16 +321,39 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // sosBtnSwitch handler
+
+        // Get references to views
+        val sosExpandArrow: ImageButton = findViewById(R.id.sosExpandArrow)
+        val sosHiddenView: LinearLayout = findViewById(R.id.sosHiddenView)
+        val sosImageIcon: ImageView = findViewById(R.id.sosImageIcon)
+        val sosSwitchText: TextView = findViewById(R.id.sosSwitchText)
+
+        // Expand or hide the main content
+        sosExpandArrow.setOnClickListener {
+            // Toggle the visibility of the content view
+            if (sosHiddenView.visibility == View.VISIBLE) {
+                sosHiddenView.visibility = View.GONE
+                sosExpandArrow.setImageResource(R.drawable.arrow_down)
+            } else {
+                sosHiddenView.visibility = View.VISIBLE
+                sosExpandArrow.setImageResource(R.drawable.arrow_up)
+            }
+        }
+
         sosBtnSwitch = findViewById(R.id.switchSOS)
         sosBtnSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
                 //resetAllActivities(Token.SOS)
                 Log.i("MainActivity","sosBtnSwitch is ON")
                 repeatSOS(true)
+                sosImageIcon.setImageResource(R.drawable.sos_on)
+                sosSwitchText.text = "Enabled"
             }
             else {
                 Log.i("MainActivity","sosBtnSwitch is OFF")
                 stopSOS(true)
+                sosImageIcon.setImageResource(R.drawable.sos_off)
+                sosSwitchText.text = "Disabled"
             }
         }
 
@@ -466,7 +489,7 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "incomingCallSwitch is OFF")
                     disableIncomingCallFlickering()
                     callImageIcon.setImageResource(R.drawable.call_off2)
-                    callSwitchText.text = "Enabled"
+                    callSwitchText.text = "Disabled"
                 }
             }
             else {
