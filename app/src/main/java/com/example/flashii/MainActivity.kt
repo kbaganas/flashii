@@ -434,6 +434,25 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // incoming call handler
+
+        // Get references to views
+        val callExpandArrow: ImageButton = findViewById(R.id.callExpandArrow)
+        val callHiddenView: LinearLayout = findViewById(R.id.callHiddenView)
+        val callImageIcon: ImageView = findViewById(R.id.callImageIcon)
+        val callSwitchText: TextView = findViewById(R.id.callSwitchText)
+
+        // Expand or hide the main content
+        callExpandArrow.setOnClickListener {
+            // Toggle the visibility of the content view
+            if (callHiddenView.visibility == View.VISIBLE) {
+                callHiddenView.visibility = View.GONE
+                callExpandArrow.setImageResource(R.drawable.arrow_down)
+            } else {
+                callHiddenView.visibility = View.VISIBLE
+                callExpandArrow.setImageResource(R.drawable.arrow_up)
+            }
+        }
+
         incomingCallSwitch = findViewById(R.id.switchCALL)
         incomingCallSwitch.setOnCheckedChangeListener {_, isChecked ->
             // Check first if permissions are granted
@@ -441,9 +460,13 @@ class MainActivity : AppCompatActivity() {
                 if (isChecked) {
                     Log.i("MainActivity","incomingCallSwitch is ON")
                     registerIncomingEvents(TypeOfEvent.INCOMING_CALL)
+                    callImageIcon.setImageResource(R.drawable.call_on2)
+                    callSwitchText.text = "Enabled"
                 } else {
                     Log.i("MainActivity", "incomingCallSwitch is OFF")
                     disableIncomingCallFlickering()
+                    callImageIcon.setImageResource(R.drawable.call_off2)
+                    callSwitchText.text = "Enabled"
                 }
             }
             else {
