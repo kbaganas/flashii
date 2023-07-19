@@ -308,13 +308,11 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-
         ///////////////////////////////////////////////////////////////////////////////////////
         // activated features list
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = ItemAdapter(itemList)
-
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // flashLightBtn handler
@@ -470,6 +468,24 @@ class MainActivity : AppCompatActivity() {
 ////            }
 //        })
 
+        // Get references to views
+        val flickerExpandArrow: ImageButton = findViewById(R.id.flickerExpandArrow)
+        val flickerHiddenView: LinearLayout = findViewById(R.id.flickerHiddenView)
+        val flickerImageIcon: ImageView = findViewById(R.id.flickerImageIcon)
+        val flickerSwitchText: TextView = findViewById(R.id.flickerSwitchText)
+
+        // Expand or hide the main content
+        flickerExpandArrow.setOnClickListener {
+            // Toggle the visibility of the content view
+            if (flickerHiddenView.visibility == View.VISIBLE) {
+                flickerHiddenView.visibility = View.GONE
+                flickerExpandArrow.setImageResource(R.drawable.arrow_down)
+            } else {
+                flickerHiddenView.visibility = View.VISIBLE
+                flickerExpandArrow.setImageResource(R.drawable.arrow_up)
+            }
+        }
+
         // flicker flashlight button handler
         flickerFlashlightBtn = findViewById(R.id.switchFlicker)
         flickerFlashlightBtn.setOnCheckedChangeListener {_, isChecked ->
@@ -480,6 +496,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity","flickerFlashlightBtn is ON with ${flickerFlashlightHz}Hz")
                 isFlickeringOnDemand = true
                 startFlickering()
+                flickerImageIcon.setImageResource(R.drawable.flicker_on)
                 addActivatedFeature(recyclerView, FEATURE.FLICKERING)
             }
             else {
@@ -487,6 +504,7 @@ class MainActivity : AppCompatActivity() {
                 isFlickeringOnDemand = false
                 stopFlickering()
                 setFlickeringHz(minFlickerHz.toLong())
+                flickerImageIcon.setImageResource(R.drawable.flicker_off)
                 removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
             }
         }
@@ -540,6 +558,25 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // incoming sound handler
+
+        // Get references to views
+        val soundExpandArrow: ImageButton = findViewById(R.id.soundExpandArrow)
+        val soundHiddenView: LinearLayout = findViewById(R.id.soundHiddenView)
+        val soundImageIcon: ImageView = findViewById(R.id.soundImageIcon)
+        val soundSwitchText: TextView = findViewById(R.id.soundSwitchText)
+
+        // Expand or hide the main content
+        soundExpandArrow.setOnClickListener {
+            // Toggle the visibility of the content view
+            if (soundHiddenView.visibility == View.VISIBLE) {
+                soundHiddenView.visibility = View.GONE
+                soundExpandArrow.setImageResource(R.drawable.arrow_down)
+            } else {
+                soundHiddenView.visibility = View.VISIBLE
+                soundExpandArrow.setImageResource(R.drawable.arrow_up)
+            }
+        }
+
         incomingSoundSwitch = findViewById(R.id.switchSound)
         incomingSoundSwitch.setOnCheckedChangeListener {_, isChecked ->
             Log.i("MainActivity","isAudioIncoming CLICKED")
@@ -560,6 +597,8 @@ class MainActivity : AppCompatActivity() {
                     }
                     recordingThread?.join()
                     recordingThread = null
+                    soundImageIcon.setImageResource(R.drawable.sos_off)
+                    soundSwitchText.text = "Disabled"
                     removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                 }
                 else {
@@ -594,17 +633,40 @@ class MainActivity : AppCompatActivity() {
                     }
                     recordingThread?.start()
                     addActivatedFeature(recyclerView, FEATURE.AUDIO)
+                    soundImageIcon.setImageResource(R.drawable.sound_on)
+                    soundSwitchText.text = "Enabled"
                 }
             }
             else {
                 // user should be asked for permissions again
                 removeActivatedFeature(recyclerView, FEATURE.AUDIO)
+                soundImageIcon.setImageResource(R.drawable.sos_off)
+                soundSwitchText.text = "Disabled"
                 Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // tilt phone handler
+
+        // Get references to views
+        val tiltExpandArrow: ImageButton = findViewById(R.id.tiltExpandArrow)
+        val tiltHiddenView: LinearLayout = findViewById(R.id.tiltHiddenView)
+        val tiltImageIcon: ImageView = findViewById(R.id.tiltImageIcon)
+        val tiltSwitchText: TextView = findViewById(R.id.tiltSwitchText)
+
+        // Expand or hide the main content
+        tiltExpandArrow.setOnClickListener {
+            // Toggle the visibility of the content view
+            if (tiltHiddenView.visibility == View.VISIBLE) {
+                tiltHiddenView.visibility = View.GONE
+                tiltExpandArrow.setImageResource(R.drawable.arrow_down)
+            } else {
+                tiltHiddenView.visibility = View.VISIBLE
+                tiltExpandArrow.setImageResource(R.drawable.arrow_up)
+            }
+        }
+
         // TODO: 45 degrees don't work well
         incomingTiltSwitch = findViewById(R.id.switchTilt)
         incomingTiltSwitch.setOnCheckedChangeListener {_, isChecked ->
@@ -647,6 +709,8 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity","incomingTiltSwitch is ON ($sensorEventListener)")
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
                     isPhoneTilt = true
+                    tiltSwitchText.text = "Enabled"
+                    tiltImageIcon.setImageResource(R.drawable.tilt_on)
                     addActivatedFeature(recyclerView, FEATURE.TILT)
                 }
                 else {
@@ -654,6 +718,8 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity","Accelerometer not available")
                     Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
                     resetMainBtnSetText(Token.TILT)
+                    tiltSwitchText.text = "Disabled"
+                    tiltImageIcon.setImageResource(R.drawable.tilt_off)
                     removeActivatedFeature(recyclerView, FEATURE.TILT)
                 }
             } else {
@@ -661,6 +727,8 @@ class MainActivity : AppCompatActivity() {
                 turnOffFlashlight()
                 sensorManager.unregisterListener(sensorEventListener)
                 isPhoneTilt = false
+                tiltSwitchText.text = "Disabled"
+                tiltImageIcon.setImageResource(R.drawable.tilt_off)
                 removeActivatedFeature(recyclerView, FEATURE.TILT)
             }
         }
@@ -813,6 +881,25 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // battery handler
+
+        // Get references to views
+        val batteryExpandArrow: ImageButton = findViewById(R.id.batteryExpandArrow)
+        val batteryHiddenView: LinearLayout = findViewById(R.id.batteryHiddenView)
+        val batteryImageIcon: ImageView = findViewById(R.id.batteryImageIcon)
+        val batterySwitchText: TextView = findViewById(R.id.batterySwitchText)
+
+        // Expand or hide the main content
+        batteryExpandArrow.setOnClickListener {
+            // Toggle the visibility of the content view
+            if (batteryHiddenView.visibility == View.VISIBLE) {
+                batteryHiddenView.visibility = View.GONE
+                batteryExpandArrow.setImageResource(R.drawable.arrow_down)
+            } else {
+                batteryHiddenView.visibility = View.VISIBLE
+                batteryExpandArrow.setImageResource(R.drawable.arrow_up)
+            }
+        }
+
         batterySwitch = findViewById(R.id.switchBattery)
         batterySwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
@@ -867,6 +954,8 @@ class MainActivity : AppCompatActivity() {
                 registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
                 loopHandlerForInactivity.postDelayed({ checkForInactivity(Token.BATTERY) }, checkInterval35)
                 addActivatedFeature(recyclerView, FEATURE.BATTERY)
+                batteryImageIcon.setImageResource(R.drawable.battery_on)
+                batterySwitchText.text = "Enabled"
             }
             else {
                 Log.i("MainActivity","batterySwitch is OFF")
@@ -884,6 +973,8 @@ class MainActivity : AppCompatActivity() {
                 initBatteryLevel = minBattery
                 loopHandlerForInactivity.removeCallbacksAndMessages(null)
                 removeActivatedFeature(recyclerView, FEATURE.BATTERY)
+                batteryImageIcon.setImageResource(R.drawable.battery_off)
+                batterySwitchText.text = "Disabled"
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -935,6 +1026,25 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // altitude handler
+
+        // Get references to views
+        val altitudeExpandArrow: ImageButton = findViewById(R.id.altitudeExpandArrow)
+        val altitudeHiddenView: LinearLayout = findViewById(R.id.altitudeHiddenView)
+        val altitudeImageIcon: ImageView = findViewById(R.id.altitudeImageIcon)
+        val altitudeSwitchText: TextView = findViewById(R.id.altitudeSwitchText)
+
+        // Expand or hide the main content
+        altitudeExpandArrow.setOnClickListener {
+            // Toggle the visibility of the content view
+            if (altitudeHiddenView.visibility == View.VISIBLE) {
+                altitudeHiddenView.visibility = View.GONE
+                altitudeExpandArrow.setImageResource(R.drawable.arrow_down)
+            } else {
+                altitudeHiddenView.visibility = View.VISIBLE
+                altitudeExpandArrow.setImageResource(R.drawable.arrow_up)
+            }
+        }
+
         altitudeSwitch = findViewById(R.id.switchAltitude)
         altitudeSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (permissionsKeys["ALTITUDE"] == true) {
@@ -990,13 +1100,16 @@ class MainActivity : AppCompatActivity() {
                         isAltitudeOn = true
                         sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
                         addActivatedFeature(recyclerView, FEATURE.ALTITUDE)
+                        altitudeImageIcon.setImageResource(R.drawable.altitude_on)
+                        altitudeSwitchText.text = "Enabled"
                     }
                     else {
                         // we have to disable the btn now since sensor is not available on the device
                         Log.i("MainActivity","Barometer not available")
                         Snackbar.make(rootView, "Device's barometer sensor\nis not available", Snackbar.LENGTH_LONG).show()
-                        setAltitudeBtn(ACTION.NO_PERMISSION)
                         removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
+                        altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
+                        altitudeSwitchText.text = "Disabled"
                     }
                 } else {
                     Log.i("MainActivity","altitudeSwitch is OFF ($sensorEventListener)")
@@ -1008,6 +1121,8 @@ class MainActivity : AppCompatActivity() {
                     }
                     loopHandlerForInactivity.removeCallbacksAndMessages(null)
                     removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
+                    altitudeImageIcon.setImageResource(R.drawable.altitude_off)
+                    altitudeSwitchText.text = "Disabled"
                 }
             }
             else {
@@ -1015,6 +1130,8 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "request permission for ALTITUDE")
                 Snackbar.make(rootView, "To use the feature, manually provide\nLocation access rights to $applicationName", Snackbar.LENGTH_LONG).show()
                 removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
+                altitudeImageIcon.setImageResource(R.drawable.altitude_off)
+                altitudeSwitchText.text = "Disabled"
             }
         }
 
