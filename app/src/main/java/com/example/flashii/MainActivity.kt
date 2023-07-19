@@ -150,6 +150,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var flickerImageIcon : ImageView
     private lateinit var networkImageIcon : ImageView
 
+    // Switch texts
+    private lateinit var smsSwitchText : TextView
+    private lateinit var sosSwitchText : TextView
+    private lateinit var callSwitchText : TextView
+    private lateinit var tiltSwitchText : TextView
+    private lateinit var batterySwitchText : TextView
+    private lateinit var altitudeSwitchText : TextView
+    private lateinit var soundSwitchText : TextView
+    private lateinit var timerSwitchText : TextView
+    private lateinit var flickerSwitchText : TextView
+    private lateinit var networkSwitchText : TextView
 
     enum class ACTION {
         CREATE,
@@ -361,7 +372,7 @@ class MainActivity : AppCompatActivity() {
         val sosExpandArrow: ImageButton = findViewById(R.id.sosExpandArrow)
         val sosHiddenView: LinearLayout = findViewById(R.id.sosHiddenView)
         sosImageIcon = findViewById(R.id.sosImageIcon)
-        val sosSwitchText: TextView = findViewById(R.id.sosSwitchText)
+        sosSwitchText = findViewById(R.id.sosSwitchText)
 
         // Expand or hide the main content
         sosExpandArrow.setOnClickListener {
@@ -475,7 +486,7 @@ class MainActivity : AppCompatActivity() {
         val flickerExpandArrow: ImageButton = findViewById(R.id.flickerExpandArrow)
         val flickerHiddenView: LinearLayout = findViewById(R.id.flickerHiddenView)
         flickerImageIcon = findViewById(R.id.flickerImageIcon)
-        val flickerSwitchText: TextView = findViewById(R.id.flickerSwitchText)
+        flickerSwitchText = findViewById(R.id.flickerSwitchText)
 
         // Expand or hide the main content
         flickerExpandArrow.setOnClickListener {
@@ -521,7 +532,7 @@ class MainActivity : AppCompatActivity() {
         val callExpandArrow: ImageButton = findViewById(R.id.callExpandArrow)
         val callHiddenView: LinearLayout = findViewById(R.id.callHiddenView)
         callImageIcon = findViewById(R.id.callImageIcon)
-        val callSwitchText: TextView = findViewById(R.id.callSwitchText)
+        callSwitchText = findViewById(R.id.callSwitchText)
 
         // Expand or hide the main content
         callExpandArrow.setOnClickListener {
@@ -568,7 +579,7 @@ class MainActivity : AppCompatActivity() {
         val soundExpandArrow: ImageButton = findViewById(R.id.soundExpandArrow)
         val soundHiddenView: LinearLayout = findViewById(R.id.soundHiddenView)
         soundImageIcon = findViewById(R.id.soundImageIcon)
-        val soundSwitchText: TextView = findViewById(R.id.soundSwitchText)
+        soundSwitchText = findViewById(R.id.soundSwitchText)
 
         // Expand or hide the main content
         soundExpandArrow.setOnClickListener {
@@ -658,7 +669,7 @@ class MainActivity : AppCompatActivity() {
         val tiltExpandArrow: ImageButton = findViewById(R.id.tiltExpandArrow)
         val tiltHiddenView: LinearLayout = findViewById(R.id.tiltHiddenView)
         tiltImageIcon = findViewById(R.id.tiltImageIcon)
-        val tiltSwitchText: TextView = findViewById(R.id.tiltSwitchText)
+        tiltSwitchText = findViewById(R.id.tiltSwitchText)
 
         // Expand or hide the main content
         tiltExpandArrow.setOnClickListener {
@@ -744,7 +755,7 @@ class MainActivity : AppCompatActivity() {
         val smsExpandArrow: ImageButton = findViewById(R.id.smsExpandArrow)
         val smsHiddenView: LinearLayout = findViewById(R.id.smsHiddenView)
         smsImageIcon = findViewById(R.id.smsImageIcon)
-        val smsSwitchText: TextView = findViewById(R.id.smsSwitchText)
+        smsSwitchText = findViewById(R.id.smsSwitchText)
 
         // Expand or hide the main content
         smsExpandArrow.setOnClickListener {
@@ -793,7 +804,7 @@ class MainActivity : AppCompatActivity() {
         val networkExpandArrow: ImageButton = findViewById(R.id.networkExpandArrow)
         val networkHiddenView: LinearLayout = findViewById(R.id.networkHiddenView)
         networkImageIcon = findViewById(R.id.networkImageIcon)
-        val networkSwitchText: TextView = findViewById(R.id.networkSwitchText)
+        networkSwitchText = findViewById(R.id.networkSwitchText)
 
         // Expand or hide the main content
         networkExpandArrow.setOnClickListener {
@@ -890,7 +901,7 @@ class MainActivity : AppCompatActivity() {
         val batteryExpandArrow: ImageButton = findViewById(R.id.batteryExpandArrow)
         val batteryHiddenView: LinearLayout = findViewById(R.id.batteryHiddenView)
         batteryImageIcon = findViewById(R.id.batteryImageIcon)
-        val batterySwitchText: TextView = findViewById(R.id.batterySwitchText)
+        batterySwitchText = findViewById(R.id.batterySwitchText)
 
         // Expand or hide the main content
         batteryExpandArrow.setOnClickListener {
@@ -983,7 +994,7 @@ class MainActivity : AppCompatActivity() {
         val timerExpandArrow: ImageButton = findViewById(R.id.timerExpandArrow)
         val timerHiddenView: LinearLayout = findViewById(R.id.timerHiddenView)
         timerImageIcon = findViewById(R.id.timerImageIcon)
-        val timerSwitchText: TextView = findViewById(R.id.timerSwitchText)
+        timerSwitchText = findViewById(R.id.timerSwitchText)
 
         // Expand or hide the main content
         timerExpandArrow.setOnClickListener {
@@ -1029,7 +1040,7 @@ class MainActivity : AppCompatActivity() {
         val altitudeExpandArrow: ImageButton = findViewById(R.id.altitudeExpandArrow)
         val altitudeHiddenView: LinearLayout = findViewById(R.id.altitudeHiddenView)
         altitudeImageIcon = findViewById(R.id.altitudeImageIcon)
-        val altitudeSwitchText: TextView = findViewById(R.id.altitudeSwitchText)
+        altitudeSwitchText = findViewById(R.id.altitudeSwitchText)
 
         // Expand or hide the main content
         altitudeExpandArrow.setOnClickListener {
@@ -1866,7 +1877,9 @@ class MainActivity : AppCompatActivity() {
             // So, Phone Tilt must be deactivated.
             Log.i("MainActivity", "RAA - TURN OFF Flashlight")
             turnOffFlashlight(true)
+            removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
         }
+
 
         tokenValuesToCheckAgainst = listOf(Token.FLASHLIGHT, Token.SOS, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT)
         if ((featureToken in tokenValuesToCheckAgainst) && isFlickering && isFlickeringOnDemand) {
@@ -1874,12 +1887,18 @@ class MainActivity : AppCompatActivity() {
             isFlickeringOnDemand = false
             stopFlickering()
             setFlickeringHz(minFlickerHz.toLong())
+            flickerSwitchText.text = "Disabled"
+            flickerImageIcon.setImageResource(R.drawable.flicker_off)
+            removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT)
         if ((featureToken in tokenValuesToCheckAgainst) && isSendSOS) {
             Log.i("MainActivity", "RAA - DISABLE SOS")
             stopSOS()
+            sosImageIcon.setImageResource(R.drawable.sos_off)
+            sosSwitchText.text = "Disabled"
+            removeActivatedFeature(recyclerView, FEATURE.SOS)
         }
 
 //        if ((featureToken in tokenValuesToCheckAgainst) && isIncomingCall) {
@@ -1904,6 +1923,9 @@ class MainActivity : AppCompatActivity() {
             turnOffFlashlight()
             sensorManager.unregisterListener(sensorEventListener)
             isPhoneTilt = false
+            tiltSwitchText.text = "Disabled"
+            tiltImageIcon.setImageResource(R.drawable.tilt_off)
+            removeActivatedFeature(recyclerView, FEATURE.TILT)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS)
@@ -1922,13 +1944,20 @@ class MainActivity : AppCompatActivity() {
             recordingThread?.join()
             recordingThread = null
             loopHandlerFlickering.removeCallbacksAndMessages(null)
+            soundImageIcon.setImageResource(R.drawable.sos_off)
+            soundSwitchText.text = "Disabled"
+            removeActivatedFeature(recyclerView, FEATURE.AUDIO)
         }
 
-        if ((token in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet) {
+        if ((featureToken in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet) {
             Log.i("MainActivity", "RAA - TURN OFF isNetworkConnectivityCbIsSet")
             isNetworkConnectivityCbIsSet = false
             stopFlickering()
             connectivityManager.unregisterNetworkCallback(connectivityCallback)
+            networkImageIcon.setImageResource(R.drawable.network_off)
+            networkSwitchText.text = "Disabled"
+            removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
+            removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
         }
 
         if (isBatteryOn) {
@@ -1948,6 +1977,9 @@ class MainActivity : AppCompatActivity() {
                     catch (e : Exception) {
                         // We are OK, receiver is already unregistered
                     }
+                    removeActivatedFeature(recyclerView, FEATURE.BATTERY)
+                    batteryImageIcon.setImageResource(R.drawable.battery_off)
+                    batterySwitchText.text = "Disabled"
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (BATTERY)")
@@ -1979,6 +2011,9 @@ class MainActivity : AppCompatActivity() {
                     catch (e: java.lang.Exception) {
                         // DO nothing here
                     }
+                    removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
+                    altitudeImageIcon.setImageResource(R.drawable.altitude_off)
+                    altitudeSwitchText.text = "Disabled"
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (ALTITUDE)")
@@ -2010,9 +2045,12 @@ class MainActivity : AppCompatActivity() {
                     catch (e: java.lang.Exception) {
                         // DO nothing here
                     }
+                    timerImageIcon.setImageResource(R.drawable.timer_off)
+                    timerSwitchText.text = "Disabled"
+                    removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 }
                 else {
-                    Log.i("MainActivity", "RAA - TURN OFF callbacks (ALTITUDE)")
+                    Log.i("MainActivity", "RAA - TURN OFF callbacks (TIMER)")
                     try {
                         loopHandlerSeekBar.removeCallbacksAndMessages(null)
                         loopHandlerForInactivity.removeCallbacksAndMessages(null)
