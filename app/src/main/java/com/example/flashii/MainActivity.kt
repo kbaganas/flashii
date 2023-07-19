@@ -375,14 +375,14 @@ class MainActivity : AppCompatActivity() {
             if (isChecked) {
                 //resetAllActivities(Token.SOS)
                 Log.i("MainActivity","sosBtnSwitch is ON")
-                repeatSOS(true)
+                repeatSOS()
                 sosImageIcon.setImageResource(R.drawable.sos_on)
                 sosSwitchText.text = "Enabled"
                 addActivatedFeature(recyclerView, FEATURE.SOS)
             }
             else {
                 Log.i("MainActivity","sosBtnSwitch is OFF")
-                stopSOS(true)
+                stopSOS()
                 sosImageIcon.setImageResource(R.drawable.sos_off)
                 sosSwitchText.text = "Disabled"
                 removeActivatedFeature(recyclerView, FEATURE.SOS)
@@ -1890,7 +1890,7 @@ class MainActivity : AppCompatActivity() {
         return initialPauseByMilliseconds + 3 * dahDuration + 2 * spaceDuration + spaceCharsDuration
     }
 
-    private fun repeatSOS(setSOSBtn : Boolean = false) {
+    private fun repeatSOS() {
         if (!isSendSOS) {
             val durationOfWord = s(o(s()))
             loopHandlerFlickering.postDelayed({ repeatSOS() }, durationOfWord + spaceWordsDuration)
@@ -1898,7 +1898,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun stopSOS (resetSOSBtn : Boolean = false) {
+    private fun stopSOS () {
         if (isSendSOS) {
             Log.i("MainActivity", "STOP SOS")
             loopHandlerFlickering.removeCallbacksAndMessages(null)
@@ -2075,7 +2075,7 @@ class MainActivity : AppCompatActivity() {
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT)
         if ((featureToken in tokenValuesToCheckAgainst) && isSendSOS) {
             Log.i("MainActivity", "RAA - DISABLE SOS")
-            stopSOS(true)
+            stopSOS()
         }
 
 //        if ((featureToken in tokenValuesToCheckAgainst) && isIncomingCall) {
