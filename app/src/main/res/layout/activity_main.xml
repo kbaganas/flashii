@@ -615,10 +615,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+                        android:orientation="vertical"
                         android:layout_marginEnd="12dp">
 
-                        <ImageButton
-                            android:id="@+id/flashLightBtnId"
+                        <ImageView
+                            android:id="@+id/flashLightImageId"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/mainFlashlightHeight"
                             android:background="#00FFFFFF"
@@ -626,6 +627,16 @@
                             android:contentDescription="@string/FlashlightBtnContentDescription"
                             android:scaleType="centerInside"
                             app:srcCompat="@drawable/flashlight_off4" />
+                        <ImageButton
+                            android:id="@+id/flashLightBtnId"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="#00FFFFFF"
+                            android:layout_marginTop="-148dp"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/FlashlightBtnContentDescription"
+                            android:scaleType="centerInside" />
+
                     </LinearLayout>
                 </LinearLayout>
 

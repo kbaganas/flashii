@@ -149,6 +149,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var timerImageIcon : ImageView
     private lateinit var flickerImageIcon : ImageView
     private lateinit var networkImageIcon : ImageView
+    private lateinit var flashlightImageIcon : ImageView
 
     // Switch texts
     private lateinit var smsSwitchText : TextView
@@ -324,6 +325,7 @@ class MainActivity : AppCompatActivity() {
         // flashLightBtn handler
         setFlashlightId()
         flashlightBtn = findViewById(R.id.flashLightBtnId)
+        flashlightImageIcon = findViewById(R.id.flashLightImageId)
         turnOnFlashlight(true)
         addActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
         flashlightBtn.setOnTouchListener { _, event ->
@@ -1617,7 +1619,7 @@ class MainActivity : AppCompatActivity() {
                 isFlashLightOn = true
                 atomicFlashLightOn()
                 if (setFlashlightBtn) {
-                    setBtnImage(flashlightBtn, R.drawable.flashlight_on6)
+                    setBtnImage(flashlightImageIcon, R.drawable.flashlight_on6)
                 }
                 Log.d("MainActivity", "FlashLight ON")
             } catch (e: CameraAccessException) {
@@ -1632,7 +1634,7 @@ class MainActivity : AppCompatActivity() {
                 isFlashLightOn = false
                 atomicFlashLightOff()
                 if (resetFlashlightBtn) {
-                   setBtnImage(flashlightBtn, R.drawable.flashlight_off4)
+                   setBtnImage(flashlightImageIcon, R.drawable.flashlight_off4)
                 }
                 Log.d("MainActivity", "FlashLight OFF")
             } catch (e: CameraAccessException) {
