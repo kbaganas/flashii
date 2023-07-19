@@ -21,6 +21,7 @@
     <string name="BatteryContentDescription">Flashlight flickers on reaching battery power threshold</string>
     <string name="TimerContentDescription">Flashlight flickers on reaching timer threshold</string>
     <string name="GeneralContentDescription">Application general info</string>
+    <string name="GeneralContentDescription2">Application general info</string>
     <string name="SettingsContentDescription">Settings button</string>
 
     <string name="rate">RATE</string>
