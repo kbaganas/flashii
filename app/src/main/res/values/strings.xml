@@ -173,4 +173,11 @@
     <string name="flickering">Flickering</string>
     <string name="phone_tilt">Phone Tilt</string>
     <string name="set_sensitivity_angle_degrees">Set sensitivity Angle (Degrees)</string>
+    <string name="flicker_on_battery_power">Flicker on Battery Power</string>
+    <string name="flicker_on_altitude">Flicker on Altitude</string>
+    <string name="set_altitude_height_m">Set Altitude Height (m)</string>
+    <string name="flicker_on_short_sounds">Flicker on short Sounds</string>
+    <string name="set_sound_sensitivity_level">Set Sound sensitivity level</string>
+    <string name="set_battery_power_threshold">Set Battery Power threshold (%)</string>
+    <string name="set_frequency_hz">Set Frequency (Hz)</string>
 </resources>

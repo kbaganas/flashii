@@ -34,7 +34,7 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <!-- Flicker -->
+                <!-- FLICKERING -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                                         android:layout_height="wrap_content"
                                         android:textSize="18sp"
                                         android:fontFamily="@font/cabin_regular"
-                                        android:text="Set Frequency (Hz)"
+                                        android:text="@string/set_frequency_hz"
                                         tools:ignore="VisualLintLongText" />
                                 </LinearLayout>
 
@@ -165,7 +165,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- 1st ROW -->
+                <!-- SMS & CALL -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -375,7 +375,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- 2th ROW - Network & SOS-->
+                <!-- NETWORK & SOS-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -585,7 +585,7 @@
 
                 </LinearLayout>
 
-                <!-- 3rd ROW -->
+                <!-- FEATURES & FLASHLIGHT -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -640,7 +640,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- 8th ROW - TIMER -->
+                <!-- TIMER -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -757,7 +757,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Phone Tilt -->
+                <!-- PHONE TILT -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -887,466 +887,399 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- 5th ROW Network & Battery-->
+                <!-- BATTERY -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:baselineAligned="true"
-                    android:gravity="center"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="horizontal">
+                    android:layout_marginBottom="@dimen/margin16"
+                    android:gravity="center_horizontal">
 
-
-
-                    <!-- Battery -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:padding="6dp"
-                        android:background="@drawable/feature_selector_battery"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <!-- Image & Seekbar -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/batteryBtnId"
-                                android:layout_width="@dimen/MainImageSize"
-                                android:layout_height="@dimen/MainImageSize"
-                                android:background="#00FFFFFF"
-                                android:contentDescription="@string/BatteryContentDescription"
-                                android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/battery_off_m3" />
-
-                            <!-- Bar -->
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_height="0dp">
-                                <SeekBar
-                                    android:id="@+id/seekBarBattery"
-                                    style="@style/Widget.AppCompat.SeekBar.Discrete"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:max="10"
-                                    android:progress="3"
-                                    android:rotation="90" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <!-- Text & Switch -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:textSize="15sp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:text="@string/mainTextFlashlight"
-                                    android:layout_marginEnd="4dp"
-                                    tools:ignore="VisualLintLongText" />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:textSize="15sp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center_horizontal"
-                                    android:text="@string/mainTextFLICKERon"
-                                    tools:ignore="VisualLintLongText" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:textSize="24sp"
-                                android:fontFamily="@font/cabin_semibold"
-                                android:gravity="center_horizontal"
-                                android:text="@string/mainTextBatteryPower"
-                                tools:ignore="VisualLintLongText" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="12sp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:text="@string/mainTextPower"
-                                    tools:ignore="VisualLintLongText" />
-
-                                <TextView
-                                    android:id="@+id/mainTextPower"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="12sp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:text="@string/pavlaMeter"
-                                    tools:ignore="VisualLintLongText" />
-                            </LinearLayout>
-
-                            <!-- Image & Switch -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="end|center_vertical"
-                                android:orientation="vertical">
-                                <Switch
-                                    android:id="@+id/switchBattery"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:checked="false"
-                                    android:minWidth="48dp"
-                                    android:minHeight="48dp"
-                                    android:gravity="bottom"
-                                    android:progressTint="@color/seekbarProgressTint"
-                                    android:thumb="@drawable/switch_thumb"
-                                    android:track="@drawable/switch_track"
-                                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!-- 6th ROW - Altitude -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="true"
-                    android:gravity="center"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="horizontal">
-
-                    <!-- Altitude -->
-                    <LinearLayout
-                        android:padding="6dp"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/feature_selector_altitude"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false">
-
-                        <!-- Bar -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <SeekBar
-                                android:id="@+id/seekBar"
-                                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:max="10"
-                                android:progress="3"
-                                android:rotation="90" />
-                        </LinearLayout>
-
-                        <!-- Text -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_gravity="center_vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:textSize="15sp"
-                                    android:layout_marginEnd="4dp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:text="@string/mainTextFlashlight"
-                                    tools:ignore="VisualLintLongText" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:textSize="15sp"
-                                    android:layout_marginEnd="4dp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center_horizontal"
-                                    android:text="@string/mainTextFLICKERon"
-                                    tools:ignore="VisualLintLongText" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:textSize="24sp"
-                                    android:layout_marginEnd="4dp"
-                                    android:fontFamily="@font/cabin_semibold"
-                                    android:text="@string/mainTextALTITUDE"
-                                    tools:ignore="VisualLintLongText" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:textSize="15sp"
-                                    android:gravity="center"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:text="@string/mainTextHEIGHT"
-                                    tools:ignore="VisualLintLongText" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:text="@string/mainTextHeight"
-                                tools:ignore="VisualLintLongText" />
-
-                            <TextView
-                                android:id="@+id/mainTextHeight"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:text="@string/pavlaMeter"
-                                tools:ignore="VisualLintLongText" />
-                        </LinearLayout>
-
-                        <!-- Image & Switch -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="end|center_vertical"
-                            android:orientation="vertical">
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:gravity="top">
-
-                                <ImageView
-                                    android:layout_width="@dimen/MainImageSize"
-                                    android:layout_height="@dimen/MainImageSize"
-                                    android:background="#00FFFFFF"
-                                    android:contentDescription="@string/IncomingSMSContentDescription"
-                                    android:scaleType="fitCenter"
-                                    app:srcCompat="@drawable/altitude_off_m3" />
-                            </LinearLayout>
-
-                            <Switch
-                                android:id="@+id/switchAltitude"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="false"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:gravity="bottom"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- 2nd ROW -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/feature_selector_sound"
-                    android:baselineAligned="true"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <!-- Sound -->
+                    <!-- Timer -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:padding="6dp"
-                        android:baselineAligned="false">
+                        android:background="@drawable/feature_selector_battery"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="18dp">
 
-                        <!-- Bar -->
+                        <!-- Header -->
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <SeekBar
-                                android:id="@+id/seekBarSound"
-                                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:max="10"
-                                android:progress="3"
-                                android:rotation="90" />
-                        </LinearLayout>
-
-                        <!-- Text -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:orientation="vertical">
-
+                            android:orientation="horizontal">
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="15sp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center_horizontal"
-                                    android:layout_marginEnd="4dp"
-                                    android:text="@string/mainTextFlashlight"
-                                    tools:ignore="VisualLintLongText" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="15sp"
-                                    android:layout_marginEnd="4dp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center_horizontal"
-                                    android:maxLines="1"
-                                    android:text="@string/mainTextTurnOnOff"
-                                    tools:ignore="VisualLintLongText" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="15sp"
-                                    android:layout_marginEnd="4dp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center_horizontal"
-                                    android:text="@string/mainTextOn"
-                                    tools:ignore="VisualLintLongText" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:textSize="15sp"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:gravity="center"
-                                    android:text="@string/mainTextShorts"
-                                    android:layout_marginEnd="4dp"
-                                    tools:ignore="VisualLintLongText" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="24sp"
-                                    android:layout_marginEnd="4dp"
-                                    android:fontFamily="@font/cabin_semibold"
-                                    android:gravity="center_horizontal"
-                                    android:text="@string/mainTextSOUNDs"
-                                    tools:ignore="VisualLintLongText" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
-                                android:text="@string/mainTextSensitivity"
-                                tools:ignore="VisualLintLongText" />
-
-                            <TextView
-                                android:id="@+id/mainTextSoundLevel"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
-                                android:text="@string/pavlaLevel"
-                                tools:ignore="VisualLintLongText" />
-                        </LinearLayout>
-
-                        <!-- Image & Switch -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="end|center_vertical"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:gravity="top">
-
+                                android:layout_height="wrap_content">
                                 <ImageView
+                                    android:id="@+id/batteryImageIcon"
                                     android:layout_width="@dimen/MainImageSize"
                                     android:layout_height="@dimen/MainImageSize"
                                     android:background="#00FFFFFF"
                                     android:contentDescription="@string/IncomingSMSContentDescription"
                                     android:scaleType="fitCenter"
-                                    app:srcCompat="@drawable/sound_off_m3" />
+                                    app:srcCompat="@drawable/battery_off" />
                             </LinearLayout>
-
-                            <Switch
-                                android:id="@+id/switchSound"
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:checked="false"
-                                android:gravity="bottom"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                                android:textSize="24sp"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="@string/flicker_on_battery_power"
+                                tools:ignore="VisualLintLongText" />
+                            <ImageButton
+                                android:id="@+id/batteryExpandArrow"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:background="@color/backgroundWhite"
+                                android:contentDescription="@string/backArrow"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/arrow_down" />
                         </LinearLayout>
 
+                        <!-- Expandable -->
+                        <LinearLayout
+                            android:id="@+id/batteryHiddenView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <!-- Text, Bar & Switch -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <!-- Text -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        android:fontFamily="@font/cabin_regular"
+                                        android:text="@string/set_battery_power_threshold"
+                                        tools:ignore="VisualLintLongText" />
+                                </LinearLayout>
+
+                                <!-- Bar -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="34dp">
+                                    <SeekBar
+                                        android:id="@+id/seekBarBattery"
+                                        style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:max="10"
+                                        android:progress="3" />
+                                </LinearLayout>
+
+                                <!-- Switch -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/batterySwitchText"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        android:layout_marginEnd="10dp"
+                                        android:gravity="end"
+                                        android:fontFamily="@font/cabin_regular"
+                                        android:text="@string/disabled"
+                                        tools:ignore="VisualLintLongText" />
+                                    <Switch
+                                        android:id="@+id/switchBattery"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:minWidth="48dp"
+                                        android:minHeight="48dp"
+                                        android:checked="false"
+                                        android:gravity="center"
+                                        android:progressTint="@color/seekbarProgressTint"
+                                        android:thumb="@drawable/switch_thumb"
+                                        android:track="@drawable/switch_track"
+                                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
+                <!-- SOUND -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin16"
+                    android:gravity="center_horizontal">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/feature_selector_sound"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="18dp">
 
+                        <!-- Header -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/soundImageIcon"
+                                    android:layout_width="@dimen/MainImageSize"
+                                    android:layout_height="@dimen/MainImageSize"
+                                    android:background="#00FFFFFF"
+                                    android:contentDescription="@string/IncomingSMSContentDescription"
+                                    android:scaleType="fitCenter"
+                                    app:srcCompat="@drawable/sound_off" />
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="24sp"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="@string/flicker_on_short_sounds"
+                                tools:ignore="VisualLintLongText" />
+                            <ImageButton
+                                android:id="@+id/soundExpandArrow"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:background="@color/backgroundWhite"
+                                android:contentDescription="@string/backArrow"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/arrow_down" />
+                        </LinearLayout>
 
+                        <!-- Expandable -->
+                        <LinearLayout
+                            android:id="@+id/soundHiddenView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <!-- Text, Bar & Switch -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <!-- Text -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        android:fontFamily="@font/cabin_regular"
+                                        android:text="@string/set_sound_sensitivity_level"
+                                        tools:ignore="VisualLintLongText" />
+                                </LinearLayout>
+
+                                <!-- Bar -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="34dp">
+                                    <SeekBar
+                                        android:id="@+id/seekBarSound"
+                                        style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:max="10"
+                                        android:progress="3" />
+                                </LinearLayout>
+
+                                <!-- Switch -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/soundSwitchText"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        android:layout_marginEnd="10dp"
+                                        android:gravity="end"
+                                        android:fontFamily="@font/cabin_regular"
+                                        android:text="@string/disabled"
+                                        tools:ignore="VisualLintLongText" />
+                                    <Switch
+                                        android:id="@+id/switchSound"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:minWidth="48dp"
+                                        android:minHeight="48dp"
+                                        android:checked="false"
+                                        android:gravity="center"
+                                        android:progressTint="@color/seekbarProgressTint"
+                                        android:thumb="@drawable/switch_thumb"
+                                        android:track="@drawable/switch_track"
+                                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- ALTITUDE -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin16"
+                    android:gravity="center_horizontal">
+
+                    <!-- Timer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/feature_selector_altitude"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="18dp">
+
+                        <!-- Header -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/altitudeImageIcon"
+                                    android:layout_width="@dimen/MainImageSize"
+                                    android:layout_height="@dimen/MainImageSize"
+                                    android:background="#00FFFFFF"
+                                    android:contentDescription="@string/IncomingSMSContentDescription"
+                                    android:scaleType="fitCenter"
+                                    app:srcCompat="@drawable/altitude_off" />
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="24sp"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="@string/flicker_on_altitude"
+                                tools:ignore="VisualLintLongText" />
+                            <ImageButton
+                                android:id="@+id/altitudeExpandArrow"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:background="@color/backgroundWhite"
+                                android:contentDescription="@string/backArrow"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/arrow_down" />
+                        </LinearLayout>
+
+                        <!-- Expandable -->
+                        <LinearLayout
+                            android:id="@+id/altitudeHiddenView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <!-- Text, Bar & Switch -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <!-- Text -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        android:fontFamily="@font/cabin_regular"
+                                        android:text="@string/set_altitude_height_m"
+                                        tools:ignore="VisualLintLongText" />
+                                </LinearLayout>
+
+                                <!-- Bar -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="34dp">
+                                    <SeekBar
+                                        android:id="@+id/seekBarAltitude"
+                                        style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:max="10"
+                                        android:progress="3" />
+                                </LinearLayout>
+
+                                <!-- Switch -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/altitudeSwitchText"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        android:layout_marginEnd="10dp"
+                                        android:gravity="end"
+                                        android:fontFamily="@font/cabin_regular"
+                                        android:text="@string/disabled"
+                                        tools:ignore="VisualLintLongText" />
+                                    <Switch
+                                        android:id="@+id/switchAltitude"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:minWidth="48dp"
+                                        android:minHeight="48dp"
+                                        android:checked="false"
+                                        android:gravity="center"
+                                        android:progressTint="@color/seekbarProgressTint"
+                                        android:thumb="@drawable/switch_thumb"
+                                        android:track="@drawable/switch_track"
+                                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
-
 
             <!-- Bottom Tools -->
             <LinearLayout
