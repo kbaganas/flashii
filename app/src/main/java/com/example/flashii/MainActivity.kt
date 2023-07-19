@@ -276,9 +276,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rateBtn : ImageButton
     private lateinit var supportBtn : ImageButton
     @SuppressLint("UseSwitchCompatOrMaterialCode")
-    private lateinit var sosBtnSwitch : Switch
+    private lateinit var sosSwitch : Switch
     @SuppressLint("UseSwitchCompatOrMaterialCode")
-    private lateinit var flickerFlashlightBtn : Switch
+    private lateinit var flickerSwitch : Switch
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var incomingCallSwitch : Switch
     @SuppressLint("UseSwitchCompatOrMaterialCode")
@@ -358,7 +358,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        // sosBtnSwitch handler
+        // sosSwitch handler
 
         // Get references to views
         val sosExpandArrow: ImageButton = findViewById(R.id.sosExpandArrow)
@@ -378,18 +378,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        sosBtnSwitch = findViewById(R.id.switchSOS)
-        sosBtnSwitch.setOnCheckedChangeListener {_, isChecked ->
+        sosSwitch = findViewById(R.id.switchSOS)
+        sosSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
                 resetAllActivities(Token.SOS)
-                Log.i("MainActivity","sosBtnSwitch is ON")
+                Log.i("MainActivity","sosSwitch is ON")
                 repeatSOS()
                 sosImageIcon.setImageResource(R.drawable.sos_on)
                 sosSwitchText.text = "Enabled"
                 addActivatedFeature(recyclerView, FEATURE.SOS)
             }
             else {
-                Log.i("MainActivity","sosBtnSwitch is OFF")
+                Log.i("MainActivity","sosSwitch is OFF")
                 stopSOS()
                 sosImageIcon.setImageResource(R.drawable.sos_off)
                 sosSwitchText.text = "Disabled"
@@ -493,13 +493,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         // flicker flashlight button handler
-        flickerFlashlightBtn = findViewById(R.id.switchFlicker)
-        flickerFlashlightBtn.setOnCheckedChangeListener {_, isChecked ->
+        flickerSwitch = findViewById(R.id.switchFlicker)
+        flickerSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
                 token = Token.FLICKER
                 resetAllActivities(Token.FLICKER)
                 setFlickeringHz(minFlickerHz.toLong())
-                Log.i("MainActivity","flickerFlashlightBtn is ON with ${flickerFlashlightHz}Hz")
+                Log.i("MainActivity","flickerSwitch is ON with ${flickerFlashlightHz}Hz")
                 isFlickeringOnDemand = true
                 startFlickering()
                 flickerSwitchText.text = "Enabled"
@@ -507,7 +507,7 @@ class MainActivity : AppCompatActivity() {
                 addActivatedFeature(recyclerView, FEATURE.FLICKERING)
             }
             else {
-                Log.i("MainActivity","flickerFlashlightBtn is OFF")
+                Log.i("MainActivity","flickerSwitch is OFF")
                 isFlickeringOnDemand = false
                 stopFlickering()
                 setFlickeringHz(minFlickerHz.toLong())
@@ -559,6 +559,8 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 callImageIcon.setImageResource(R.drawable.call_no_permission)
+                callSwitchText.text = "Disabled"
+                incomingCallSwitch.isChecked = false
                 removeActivatedFeature(recyclerView, FEATURE.CALL)
                 Snackbar.make(rootView, "To use the feature, manually provide\nCall access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
@@ -650,6 +652,7 @@ class MainActivity : AppCompatActivity() {
                 removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                 soundImageIcon.setImageResource(R.drawable.sos_off)
                 soundSwitchText.text = "Disabled"
+                incomingSoundSwitch.isChecked = false
                 Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
@@ -785,6 +788,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "request permission for SMS")
                 smsImageIcon.setImageResource(R.drawable.sms_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SMS)
+                incomingSMSSwitch.isChecked = false
                 Snackbar.make(rootView, "To use the feature, manually provide\nSMS access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
@@ -1111,6 +1115,7 @@ class MainActivity : AppCompatActivity() {
                         removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                         altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                         altitudeSwitchText.text = "Disabled"
+                        altitudeSwitch.isChecked = false
                     }
                 } else {
                     Log.i("MainActivity","altitudeSwitch is OFF ($sensorEventListener)")
@@ -1132,6 +1137,7 @@ class MainActivity : AppCompatActivity() {
                 removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_off)
                 altitudeSwitchText.text = "Disabled"
+                altitudeSwitch.isChecked = false
             }
         }
 
@@ -1742,18 +1748,26 @@ class MainActivity : AppCompatActivity() {
                 RequestKey.CALL.value -> {
                     Log.i("MainActivity", "Request NOT granted for CALL")
                     setBtnImage(callImageIcon, R.drawable.call_no_permission)
+                    incomingCallSwitch.isChecked = false
+                    callSwitchText.text = getString(R.string.disabled)
                 }
                 RequestKey.SMS.value -> {
                     Log.i("MainActivity", "Request NOT granted for SMS")
                     setBtnImage(smsImageIcon, R.drawable.sms_no_permission)
+                    incomingSMSSwitch.isChecked = false
+                    smsSwitchText.text = getString(R.string.disabled)
                 }
                 RequestKey.AUDIO.value -> {
                     Log.i("MainActivity", "Request NOT granted for AUDIO")
                     setBtnImage(soundImageIcon, R.drawable.sound_no_permission)
+                    incomingSoundSwitch.isChecked = false
+                    soundSwitchText.text = getString(R.string.disabled)
                 }
                 RequestKey.ALTITUDE.value -> {
                     Log.i("MainActivity", "Request NOT granted for LOCATION")
                     setBtnImage(altitudeImageIcon, R.drawable.altitude_no_permission)
+                    altitudeSwitch.isChecked = false
+                    altitudeSwitchText.text = getString(R.string.disabled)
                 }
             }
         }
@@ -1880,6 +1894,7 @@ class MainActivity : AppCompatActivity() {
             flickerSwitchText.text = getString(R.string.disabled)
             flickerImageIcon.setImageResource(R.drawable.flicker_off)
             removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
+            flickerSwitch.isChecked = false
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT)
@@ -1889,6 +1904,7 @@ class MainActivity : AppCompatActivity() {
             sosImageIcon.setImageResource(R.drawable.sos_off)
             sosSwitchText.text = getString(R.string.disabled)
             removeActivatedFeature(recyclerView, FEATURE.SOS)
+            sosSwitch.isChecked = false
         }
 
 //        if ((featureToken in tokenValuesToCheckAgainst) && isIncomingCall) {
@@ -1916,6 +1932,7 @@ class MainActivity : AppCompatActivity() {
             tiltSwitchText.text = getString(R.string.disabled)
             tiltImageIcon.setImageResource(R.drawable.tilt_off)
             removeActivatedFeature(recyclerView, FEATURE.TILT)
+            incomingTiltSwitch.isChecked = false
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS)
@@ -1937,6 +1954,7 @@ class MainActivity : AppCompatActivity() {
             soundImageIcon.setImageResource(R.drawable.sos_off)
             soundSwitchText.text = getString(R.string.disabled)
             removeActivatedFeature(recyclerView, FEATURE.AUDIO)
+            incomingSoundSwitch.isChecked = false
         }
 
         if ((featureToken in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet) {
@@ -1948,6 +1966,7 @@ class MainActivity : AppCompatActivity() {
             networkSwitchText.text = getString(R.string.disabled)
             removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
             removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
+            outInNetworkSwitch.isChecked = false
         }
 
         if (isBatteryOn) {
@@ -1970,6 +1989,7 @@ class MainActivity : AppCompatActivity() {
                     removeActivatedFeature(recyclerView, FEATURE.BATTERY)
                     batteryImageIcon.setImageResource(R.drawable.battery_off)
                     batterySwitchText.text = getString(R.string.disabled)
+                    batterySwitch.isChecked = false
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (BATTERY)")
@@ -2004,6 +2024,7 @@ class MainActivity : AppCompatActivity() {
                     removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                     altitudeImageIcon.setImageResource(R.drawable.altitude_off)
                     altitudeSwitchText.text = getString(R.string.disabled)
+                    altitudeSwitch.isChecked = false
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (ALTITUDE)")
@@ -2038,6 +2059,7 @@ class MainActivity : AppCompatActivity() {
                     timerImageIcon.setImageResource(R.drawable.timer_off)
                     timerSwitchText.text = getString(R.string.disabled)
                     removeActivatedFeature(recyclerView, FEATURE.TIMER)
+                    timerSwitch.isChecked = false
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (TIMER)")
