@@ -164,10 +164,7 @@ class MainActivity : AppCompatActivity() {
 
     enum class ACTION {
         CREATE,
-        RESUME,
-        SET,
-        RESET,
-        NO_PERMISSION
+        RESUME
     }
 
     enum class TypeOfEvent {
@@ -177,13 +174,6 @@ class MainActivity : AppCompatActivity() {
         AUDIO,
         OUT_OF_SERVICE,
         IN_SERVICE
-    }
-
-    enum class NetworkState {
-        LOST,
-        AVAILABLE,
-        UNAVAILABLE,
-        ASIS
     }
 
     enum class SeekBarMode {
@@ -346,7 +336,7 @@ class MainActivity : AppCompatActivity() {
                         removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                     } else {
                         Log.i("MainActivity","flashlightBtn is ON")
-                        //resetAllActivities(Token.FLASHLIGHT)
+                        resetAllActivities(Token.FLASHLIGHT)
                         turnOnFlashlight(true)
                         addActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                     }
@@ -619,7 +609,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     Log.i("MainActivity","incomingSoundSwitch is ON")
-                    //resetAllActivities(Token.SOUND)
+                    resetAllActivities(Token.SOUND)
                     isAudioIncoming = true
                     audioRecordHandler = AudioRecord(
                         MediaRecorder.AudioSource.MIC,
@@ -1234,7 +1224,6 @@ class MainActivity : AppCompatActivity() {
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
 
-
     private fun addActivatedFeature (recyclerView : RecyclerView, feature: FEATURE) {
         itemList.add(feature.value)
         recyclerView.adapter?.notifyItemInserted(itemList.size - 1)
@@ -1394,7 +1383,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            else -> {}
         }
     }
 
@@ -1887,7 +1875,7 @@ class MainActivity : AppCompatActivity() {
             isFlickeringOnDemand = false
             stopFlickering()
             setFlickeringHz(minFlickerHz.toLong())
-            flickerSwitchText.text = "Disabled"
+            flickerSwitchText.text = getString(R.string.disabled)
             flickerImageIcon.setImageResource(R.drawable.flicker_off)
             removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
         }
@@ -1897,7 +1885,7 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", "RAA - DISABLE SOS")
             stopSOS()
             sosImageIcon.setImageResource(R.drawable.sos_off)
-            sosSwitchText.text = "Disabled"
+            sosSwitchText.text = getString(R.string.disabled)
             removeActivatedFeature(recyclerView, FEATURE.SOS)
         }
 
@@ -1923,7 +1911,7 @@ class MainActivity : AppCompatActivity() {
             turnOffFlashlight()
             sensorManager.unregisterListener(sensorEventListener)
             isPhoneTilt = false
-            tiltSwitchText.text = "Disabled"
+            tiltSwitchText.text = getString(R.string.disabled)
             tiltImageIcon.setImageResource(R.drawable.tilt_off)
             removeActivatedFeature(recyclerView, FEATURE.TILT)
         }
@@ -1945,7 +1933,7 @@ class MainActivity : AppCompatActivity() {
             recordingThread = null
             loopHandlerFlickering.removeCallbacksAndMessages(null)
             soundImageIcon.setImageResource(R.drawable.sos_off)
-            soundSwitchText.text = "Disabled"
+            soundSwitchText.text = getString(R.string.disabled)
             removeActivatedFeature(recyclerView, FEATURE.AUDIO)
         }
 
@@ -1955,7 +1943,7 @@ class MainActivity : AppCompatActivity() {
             stopFlickering()
             connectivityManager.unregisterNetworkCallback(connectivityCallback)
             networkImageIcon.setImageResource(R.drawable.network_off)
-            networkSwitchText.text = "Disabled"
+            networkSwitchText.text = getString(R.string.disabled)
             removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
             removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
         }
@@ -1979,7 +1967,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     removeActivatedFeature(recyclerView, FEATURE.BATTERY)
                     batteryImageIcon.setImageResource(R.drawable.battery_off)
-                    batterySwitchText.text = "Disabled"
+                    batterySwitchText.text = getString(R.string.disabled)
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (BATTERY)")
@@ -2013,7 +2001,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                     altitudeImageIcon.setImageResource(R.drawable.altitude_off)
-                    altitudeSwitchText.text = "Disabled"
+                    altitudeSwitchText.text = getString(R.string.disabled)
                 }
                 else {
                     Log.i("MainActivity", "RAA - TURN OFF callbacks (ALTITUDE)")
@@ -2046,7 +2034,7 @@ class MainActivity : AppCompatActivity() {
                         // DO nothing here
                     }
                     timerImageIcon.setImageResource(R.drawable.timer_off)
-                    timerSwitchText.text = "Disabled"
+                    timerSwitchText.text = getString(R.string.disabled)
                     removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 }
                 else {
@@ -2408,7 +2396,7 @@ class ItemAdapter(private val itemList: List<String>) :
 
         fun bind(item: String) {
             // Set data to the views
-            itemImageView.setImageResource(R.drawable.success5)
+            itemImageView.setImageResource(R.drawable.activated)
             itemTextView.text = item
         }
     }
