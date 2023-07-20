@@ -478,21 +478,35 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center_vertical"
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:id="@+id/timerImageIcon"
-                                android:layout_width="@dimen/MainImageSize"
-                                android:layout_height="@dimen/MainImageSize"
+                                android:layout_width="76dp"
+                                android:layout_height="76dp"
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/timer_off"
                                 tools:ignore="ImageContrastCheck" />
+                            <TextView
+                                android:id="@+id/timerSwitchText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="1h 28m"
+                                android:textSize="18sp"
+                                android:textColor="@color/greyNoteDarker2"
+                                tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <TextView
@@ -503,17 +517,38 @@
                             android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_horizontal"
                             android:text="@string/flicker_on_time"
-                            android:textSize="24sp"
+                            android:textSize="34sp"
                             tools:ignore="VisualLintLongText" />
 
-                        <ImageButton
-                            android:id="@+id/timerExpandArrow"
-                            android:layout_width="48dp"
-                            android:layout_height="56dp"
-                            android:background="@color/backgroundWhite"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/arrow_down" />
+                        <!-- Switch -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/timerExpandArrow"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:background="@color/backgroundWhite"
+                                android:contentDescription="@string/backArrow"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/arrow_down" />
+
+                            <Switch
+                                android:id="@+id/switchTimer"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:checked="false"
+                                android:gravity="bottom"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"
+                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <!-- Expandable -->
@@ -522,12 +557,29 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:layout_marginTop="24dp"
                         android:visibility="gone">
+
+                        <!-- Text -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/cabin_regular"
+                                android:text="@string/set_time"
+                                android:textSize="20sp"
+                                tools:ignore="VisualLintLongText" />
+                        </LinearLayout>
 
                         <!-- Input & TIME -->
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
 
                             <TimePicker
                                 android:id="@+id/timePicker1"
@@ -535,38 +587,6 @@
                                 android:layout_height="wrap_content"
                                 android:theme="@style/timePicker"
                                 android:timePickerMode="spinner" />
-                        </LinearLayout>
-                        <!-- Image & Switch -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/timerSwitchText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="end"
-                                android:text="@string/disabled"
-                                android:textSize="18sp"
-                                tools:ignore="VisualLintLongText" />
-
-                            <Switch
-                                android:id="@+id/switchTimer"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="false"
-                                android:gravity="center"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -688,20 +708,34 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center_vertical"
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:id="@+id/batteryImageIcon"
-                                android:layout_width="@dimen/MainImageSize"
-                                android:layout_height="@dimen/MainImageSize"
+                                android:layout_width="76dp"
+                                android:layout_height="76dp"
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/battery_off" />
+                            <TextView
+                                android:id="@+id/batterySwitchText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="57%"
+                                android:textSize="18sp"
+                                android:textColor="@color/greyNoteDarker2"
+                                tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <TextView
@@ -712,17 +746,35 @@
                             android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_horizontal"
                             android:text="@string/flicker_on_battery_power"
-                            android:textSize="24sp"
+                            android:textSize="34sp"
                             tools:ignore="VisualLintLongText" />
-
-                        <ImageButton
-                            android:id="@+id/batteryExpandArrow"
-                            android:layout_width="48dp"
-                            android:layout_height="56dp"
-                            android:background="@color/backgroundWhite"
-                            android:contentDescription="@string/backArrow"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/arrow_down" />
+                        <!-- Switch -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center_vertical"
+                            android:orientation="vertical">
+                            <ImageButton
+                                android:id="@+id/batteryExpandArrow"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:background="@color/backgroundWhite"
+                                android:contentDescription="@string/backArrow"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/arrow_down" />
+                            <Switch
+                                android:id="@+id/switchBattery"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="false"
+                                android:gravity="bottom"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"
+                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <!-- Expandable -->
@@ -730,8 +782,8 @@
                         android:id="@+id/batteryHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:orientation="vertical"
+                        android:layout_marginTop="24dp"
                         android:visibility="gone">
 
                         <!-- Text -->
@@ -745,15 +797,16 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_battery_power_threshold"
-                                android:textSize="18sp"
+                                android:textSize="20sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <!-- Bar -->
                         <LinearLayout
+                            android:gravity="start"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="34dp">
+                            android:layout_height="48dp"
+                            android:layout_marginTop="2dp">
 
                             <SeekBar
                                 android:id="@+id/seekBarBattery"
@@ -761,40 +814,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:max="10"
-                                android:progress="3" />
-                        </LinearLayout>
-
-                        <!-- Switch -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/batterySwitchText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="end"
-                                android:text="@string/disabled"
-                                android:textSize="18sp"
-                                tools:ignore="VisualLintLongText" />
-
-                            <Switch
-                                android:id="@+id/switchBattery"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="false"
-                                android:gravity="center"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                                android:progress="1" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -814,20 +834,34 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center_vertical"
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:id="@+id/altitudeImageIcon"
-                                android:layout_width="@dimen/MainImageSize"
-                                android:layout_height="@dimen/MainImageSize"
+                                android:layout_width="76dp"
+                                android:layout_height="76dp"
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/altitude_off" />
+                            <TextView
+                                android:id="@+id/altitudeSwitchText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="1800m"
+                                android:textSize="18sp"
+                                android:textColor="@color/greyNoteDarker2"
+                                tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <TextView
@@ -838,17 +872,38 @@
                             android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_horizontal"
                             android:text="@string/flicker_on_altitude"
-                            android:textSize="24sp"
+                            android:textSize="34sp"
                             tools:ignore="VisualLintLongText" />
 
-                        <ImageButton
-                            android:id="@+id/altitudeExpandArrow"
-                            android:layout_width="48dp"
-                            android:layout_height="56dp"
-                            android:background="@color/backgroundWhite"
-                            android:contentDescription="@string/backArrow"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/arrow_down" />
+                        <!-- Switch -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/altitudeExpandArrow"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:background="@color/backgroundWhite"
+                                android:contentDescription="@string/backArrow"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/arrow_down" />
+
+                            <Switch
+                                android:id="@+id/switchAltitude"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:checked="false"
+                                android:gravity="bottom"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"
+                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <!-- Expandable -->
@@ -856,8 +911,8 @@
                         android:id="@+id/altitudeHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:orientation="vertical"
+                        android:layout_marginTop="24dp"
                         android:visibility="gone">
 
                         <!-- Text -->
@@ -871,15 +926,16 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_altitude_height_m"
-                                android:textSize="18sp"
+                                android:textSize="20sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <!-- Bar -->
                         <LinearLayout
+                            android:gravity="start"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="34dp">
+                            android:layout_height="48dp"
+                            android:layout_marginTop="2dp">
 
                             <SeekBar
                                 android:id="@+id/seekBarAltitude"
@@ -887,40 +943,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:max="10"
-                                android:progress="3" />
-                        </LinearLayout>
-
-                        <!-- Switch -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/altitudeSwitchText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="end"
-                                android:text="@string/disabled"
-                                android:textSize="18sp"
-                                tools:ignore="VisualLintLongText" />
-
-                            <Switch
-                                android:id="@+id/switchAltitude"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="false"
-                                android:gravity="center"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                                android:progress="1" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -940,21 +963,35 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center_vertical"
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:id="@+id/flickerImageIcon"
-                                android:layout_width="@dimen/MainImageSize"
-                                android:layout_height="@dimen/MainImageSize"
+                                android:layout_width="76dp"
+                                android:layout_height="76dp"
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/flicker_off"
                                 tools:ignore="ImageContrastCheck" />
+                            <TextView
+                                android:id="@+id/flickerSwitchText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:fontFamily="@font/cabin_semibold"
+                                android:gravity="center_horizontal"
+                                android:text="7Hz"
+                                android:textSize="18sp"
+                                android:textColor="@color/greyNoteDarker2"
+                                tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <TextView
@@ -965,17 +1002,38 @@
                             android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_horizontal"
                             android:text="@string/flickering"
-                            android:textSize="24sp"
+                            android:textSize="34sp"
                             tools:ignore="VisualLintLongText" />
 
-                        <ImageButton
-                            android:id="@+id/flickerExpandArrow"
-                            android:layout_width="48dp"
-                            android:layout_height="56dp"
-                            android:background="@color/backgroundWhite"
-                            android:contentDescription="@string/GeneralContentDescription2"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/arrow_down" />
+                        <!-- Switch -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/flickerExpandArrow"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:background="@color/backgroundWhite"
+                                android:contentDescription="@string/backArrow"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/arrow_down" />
+
+                            <Switch
+                                android:id="@+id/switchFlicker"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:checked="false"
+                                android:gravity="bottom"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"
+                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <!-- Expandable -->
@@ -984,6 +1042,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:layout_marginTop="24dp"
                         android:visibility="gone">
 
                         <!-- Text -->
@@ -998,15 +1057,16 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_frequency_hz"
-                                android:textSize="18sp"
+                                android:textSize="20sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <!-- Bar -->
                         <LinearLayout
+                            android:gravity="start"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="24dp">
+                            android:layout_height="48dp"
+                            android:layout_marginTop="2dp">
 
                             <SeekBar
                                 android:id="@+id/seekBarFlicker"
@@ -1016,44 +1076,6 @@
                                 android:max="10"
                                 android:progress="1" />
                         </LinearLayout>
-
-                        <!-- Switch -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/flickerSwitchText"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="end|bottom"
-                                android:text="@string/disabled"
-                                android:textSize="18sp"
-                                tools:ignore="VisualLintLongText" />
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="end">
-                                <Switch
-                                    android:id="@+id/switchFlicker"
-                                    android:layout_width="48dp"
-                                    android:layout_height="48dp"
-                                    android:checked="false"
-                                    android:gravity="bottom"
-                                    android:minWidth="48dp"
-                                    android:minHeight="48dp"
-                                    android:progressTint="@color/seekbarProgressTint"
-                                    android:thumb="@drawable/switch_thumb"
-                                    android:track="@drawable/switch_track"
-                                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-                            </LinearLayout>
-                        </LinearLayout>
-
                     </LinearLayout>
                 </LinearLayout>
 
