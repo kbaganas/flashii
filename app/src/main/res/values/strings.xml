@@ -183,4 +183,5 @@
     <string name="set_battery_power_threshold">Set Battery Power threshold (%)</string>
     <string name="set_frequency_hz">Set Frequency</string>
     <string name="set_time">Set Time</string>
+    <string name="time_reset">--:--</string>
 </resources>

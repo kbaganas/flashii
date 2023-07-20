@@ -358,7 +358,6 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // sosSwitch handler
-
         sosImageIcon = findViewById(R.id.sosImageIcon)
         sosSwitch = findViewById(R.id.switchSOS)
         sosSwitch.setOnCheckedChangeListener {_, isChecked ->
@@ -386,11 +385,13 @@ class MainActivity : AppCompatActivity() {
         flickeringBar.max = maxFlickerHz
         flickerHiddenViewText = findViewById(R.id.flickerHiddenViewText)
 
-        // Get references to views
         val flickerExpandArrow: ImageButton = findViewById(R.id.flickerExpandArrow)
         val flickerHiddenView: LinearLayout = findViewById(R.id.flickerHiddenView)
         flickerImageIcon = findViewById(R.id.flickerImageIcon)
         flickerSwitchText = findViewById(R.id.flickerSwitchText)
+        tempText = "${flickerFlashlightHz} Hz"
+        flickerSwitchText.text = tempText
+        flickerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
 
         // Expand or hide the main content
         flickerExpandArrow.setOnClickListener {
@@ -412,6 +413,9 @@ class MainActivity : AppCompatActivity() {
                 flickerFlashlightHz = progress.toLong()
                 tempText = "Set frequency to ${flickerFlashlightHz}Hz"
                 flickerHiddenViewText.text = tempText
+                tempText = "${flickerFlashlightHz} Hz"
+                flickerSwitchText.text = tempText
+                flickerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -437,7 +441,9 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity","flickerSwitch is ON with ${flickerFlashlightHz}Hz")
                 isFlickeringOnDemand = true
                 startFlickering()
-                flickerSwitchText.text = getString(R.string.enabled)
+                tempText = "${flickerFlashlightHz} Hz"
+                flickerSwitchText.text = tempText
+                flickerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
                 flickerImageIcon.setImageResource(R.drawable.flicker_on)
                 addActivatedFeature(recyclerView, FEATURE.FLICKERING)
             }
@@ -445,7 +451,9 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity","flickerSwitch is OFF")
                 isFlickeringOnDemand = false
                 stopFlickering()
-                flickerSwitchText.text = getString(R.string.disabled)
+                tempText = "${flickerFlashlightHz} Hz"
+                flickerSwitchText.text = tempText
+                flickerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 flickerImageIcon.setImageResource(R.drawable.flicker_off)
                 removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
             }
@@ -453,8 +461,6 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // incoming call handler
-
-        // Get references to views
         callImageIcon = findViewById(R.id.callImageIcon)
         incomingCallSwitch = findViewById(R.id.switchCALL)
         incomingCallSwitch.setOnCheckedChangeListener {_, isChecked ->
@@ -483,15 +489,13 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // incoming sound handler
-
-        // Get references to views
         val soundExpandArrow: ImageButton = findViewById(R.id.soundExpandArrow)
         val soundHiddenView: LinearLayout = findViewById(R.id.soundHiddenView)
         soundImageIcon = findViewById(R.id.soundImageIcon)
         soundSwitchText = findViewById(R.id.soundSwitchText)
         tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
         soundSwitchText.text = tempText
-        soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
+        soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
 
         // Expand or hide the main content
         soundExpandArrow.setOnClickListener {
@@ -528,7 +532,7 @@ class MainActivity : AppCompatActivity() {
                     soundImageIcon.setImageResource(R.drawable.sound_off)
                     tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
                     soundSwitchText.text = tempText
-                    soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
+                    soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                     removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                 }
                 else {
@@ -566,7 +570,7 @@ class MainActivity : AppCompatActivity() {
                     soundImageIcon.setImageResource(R.drawable.sound_on)
                     tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
                     soundSwitchText.text = tempText
-                    soundSwitchText.setTextColor(resources.getColor(R.color.blueText, theme));
+                    soundSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
                 }
             }
             else {
@@ -575,7 +579,7 @@ class MainActivity : AppCompatActivity() {
                 soundImageIcon.setImageResource(R.drawable.sos_off)
                 tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
                 soundSwitchText.text = tempText
-                soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
+                soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 incomingSoundSwitch.isChecked = false
                 Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
@@ -583,8 +587,6 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // tilt phone handler
-
-        // Get references to views
         val tiltExpandArrow: ImageButton = findViewById(R.id.tiltExpandArrow)
         val tiltHiddenView: LinearLayout = findViewById(R.id.tiltHiddenView)
         tiltImageIcon = findViewById(R.id.tiltImageIcon)
@@ -646,7 +648,7 @@ class MainActivity : AppCompatActivity() {
                     isPhoneTilt = true
                     tempText = "Angle ${sensitivityAngle}\u00B0"
                     tiltSwitchText.text = tempText
-                    tiltSwitchText.setTextColor(resources.getColor(R.color.green, theme));
+                    tiltSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
                     tiltImageIcon.setImageResource(R.drawable.tilt_on)
                     addActivatedFeature(recyclerView, FEATURE.TILT)
                 }
@@ -656,7 +658,7 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
                     tempText = "Angle ${sensitivityAngle}\u00B0"
                     tiltSwitchText.text = tempText
-                    tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
+                    tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                     tiltImageIcon.setImageResource(R.drawable.tilt_off)
                     removeActivatedFeature(recyclerView, FEATURE.TILT)
                 }
@@ -667,7 +669,7 @@ class MainActivity : AppCompatActivity() {
                 isPhoneTilt = false
                 tempText = "Angle ${sensitivityAngle}\u00B0"
                 tiltSwitchText.text = tempText
-                tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
+                tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 tiltImageIcon.setImageResource(R.drawable.tilt_off)
                 removeActivatedFeature(recyclerView, FEATURE.TILT)
             }
@@ -785,6 +787,9 @@ class MainActivity : AppCompatActivity() {
         val batteryHiddenView: LinearLayout = findViewById(R.id.batteryHiddenView)
         batteryImageIcon = findViewById(R.id.batteryImageIcon)
         batterySwitchText = findViewById(R.id.batterySwitchText)
+        tempText = "${batteryThreshold}%"
+        batterySwitchText.text = tempText
+        batterySwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
 
         // Expand or hide the main content
         batteryExpandArrow.setOnClickListener {
@@ -848,7 +853,9 @@ class MainActivity : AppCompatActivity() {
                 registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
                 addActivatedFeature(recyclerView, FEATURE.BATTERY)
                 batteryImageIcon.setImageResource(R.drawable.battery_on)
-                batterySwitchText.text = "Enabled"
+                tempText = "${batteryThreshold}%"
+                batterySwitchText.text = tempText
+                batterySwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
             }
             else {
                 Log.i("MainActivity","batterySwitch is OFF")
@@ -867,7 +874,9 @@ class MainActivity : AppCompatActivity() {
                 loopHandlerForInactivity.removeCallbacksAndMessages(null)
                 removeActivatedFeature(recyclerView, FEATURE.BATTERY)
                 batteryImageIcon.setImageResource(R.drawable.battery_off)
-                batterySwitchText.text = "Disabled"
+                tempText = "${batteryThreshold}%"
+                batterySwitchText.text = tempText
+                batterySwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -904,7 +913,7 @@ class MainActivity : AppCompatActivity() {
                 timerImageIcon.setImageResource(R.drawable.timer_on)
                 tempText = "--:--"
                 timerSwitchText.text = tempText
-                timerSwitchText.setTextColor(resources.getColor(R.color.green, theme))
+                timerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
                 addActivatedFeature(recyclerView, FEATURE.TIMER)
             }
             else {
@@ -930,6 +939,10 @@ class MainActivity : AppCompatActivity() {
         val altitudeHiddenView: LinearLayout = findViewById(R.id.altitudeHiddenView)
         altitudeImageIcon = findViewById(R.id.altitudeImageIcon)
         altitudeSwitchText = findViewById(R.id.altitudeSwitchText)
+        tempText = "${altitudeThreshold}m"
+        altitudeSwitchText.text = tempText
+        altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
+
         altitudeExpandArrow.setOnClickListener {
             // Toggle the visibility of the content view
             if (altitudeHiddenView.visibility == View.VISIBLE) {
@@ -997,7 +1010,9 @@ class MainActivity : AppCompatActivity() {
                         sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
                         addActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                         altitudeImageIcon.setImageResource(R.drawable.altitude_on)
-                        altitudeSwitchText.text = "Enabled"
+                        tempText = "${altitudeThreshold}m"
+                        altitudeSwitchText.text = tempText
+                        altitudeSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
                     }
                     else {
                         // we have to disable the btn now since sensor is not available on the device
@@ -1005,7 +1020,9 @@ class MainActivity : AppCompatActivity() {
                         Snackbar.make(rootView, "Device's barometer sensor\nis not available", Snackbar.LENGTH_LONG).show()
                         removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                         altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
-                        altitudeSwitchText.text = "Disabled"
+                        tempText = "${altitudeThreshold}m"
+                        altitudeSwitchText.text = tempText
+                        altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                         altitudeSwitch.isChecked = false
                     }
                 } else {
@@ -1018,7 +1035,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                     altitudeImageIcon.setImageResource(R.drawable.altitude_off)
-                    altitudeSwitchText.text = "Disabled"
+                    tempText = "${altitudeThreshold}m"
+                    altitudeSwitchText.text = tempText
+                    altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 }
             }
             else {
@@ -1027,7 +1046,9 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(rootView, "To use the feature, manually provide\nLocation access rights to $applicationName", Snackbar.LENGTH_LONG).show()
                 removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_off)
-                altitudeSwitchText.text = "Disabled"
+                tempText = "${altitudeThreshold}m"
+                altitudeSwitchText.text = tempText
+                altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 altitudeSwitch.isChecked = false
             }
         }
@@ -1273,7 +1294,7 @@ class MainActivity : AppCompatActivity() {
                         soundImageIcon.setImageResource(R.drawable.sos_off)
                         tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
                         soundSwitchText.text = tempText
-                        soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
+                        soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                         incomingSoundSwitch.isChecked = false
                     }
                 }
@@ -1291,7 +1312,9 @@ class MainActivity : AppCompatActivity() {
                         permissionsKeys["ALTITUDE"] = false
                         removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                         altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
-                        altitudeSwitchText.text = getString(R.string.disabled)
+                        tempText = "${altitudeThreshold}m"
+                        altitudeSwitchText.text = tempText
+                        altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                         altitudeSwitch.isChecked = false
                     }
                 }
@@ -1658,13 +1681,15 @@ class MainActivity : AppCompatActivity() {
                     incomingSoundSwitch.isChecked = false
                     tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
                     soundSwitchText.text = tempText
-                    soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
+                    soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 }
                 RequestKey.ALTITUDE.value -> {
                     Log.i("MainActivity", "Request NOT granted for LOCATION")
                     setBtnImage(altitudeImageIcon, R.drawable.altitude_no_permission)
                     altitudeSwitch.isChecked = false
-                    altitudeSwitchText.text = getString(R.string.disabled)
+                    tempText = "${altitudeThreshold}m"
+                    altitudeSwitchText.text = tempText
+                    altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 }
             }
         }
@@ -1782,7 +1807,9 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", "RAA - STOP FLICKERING on demand")
             isFlickeringOnDemand = false
             stopFlickering()
-            flickerSwitchText.text = getString(R.string.disabled)
+            tempText = "${flickerFlashlightHz} Hz"
+            flickerSwitchText.text = tempText
+            flickerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
             flickerImageIcon.setImageResource(R.drawable.flicker_off)
             removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
             flickerSwitch.isChecked = false
@@ -1809,7 +1836,7 @@ class MainActivity : AppCompatActivity() {
             isPhoneTilt = false
             tempText = "Angle ${sensitivityAngle}\u00B0"
             tiltSwitchText.text = tempText
-            tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
+            tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
             tiltImageIcon.setImageResource(R.drawable.tilt_off)
             removeActivatedFeature(recyclerView, FEATURE.TILT)
             incomingTiltSwitch.isChecked = false
@@ -1834,7 +1861,7 @@ class MainActivity : AppCompatActivity() {
             soundImageIcon.setImageResource(R.drawable.sos_off)
             tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
             soundSwitchText.text = tempText
-            soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
+            soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
             removeActivatedFeature(recyclerView, FEATURE.AUDIO)
             incomingSoundSwitch.isChecked = false
         }
@@ -1871,7 +1898,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     removeActivatedFeature(recyclerView, FEATURE.BATTERY)
                     batteryImageIcon.setImageResource(R.drawable.battery_off)
-                    batterySwitchText.text = getString(R.string.disabled)
+                    tempText = "${batteryThreshold}%"
+                    batterySwitchText.text = tempText
+                    batterySwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                     batterySwitch.isChecked = false
                 }
                 else {
@@ -1906,7 +1935,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                     altitudeImageIcon.setImageResource(R.drawable.altitude_off)
-                    altitudeSwitchText.text = getString(R.string.disabled)
+                    tempText = "${altitudeThreshold}m"
+                    altitudeSwitchText.text = tempText
+                    altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                     altitudeSwitch.isChecked = false
                 }
                 else {
