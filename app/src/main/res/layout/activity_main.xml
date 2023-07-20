@@ -74,7 +74,6 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="Angle 80&#xb0;"
                                 android:textSize="18sp"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
@@ -304,7 +303,6 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="Sensitivity\nlevel 5000"
                                 android:textSize="18sp"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
@@ -504,7 +502,6 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="@string/time_reset"
                                 android:textSize="18sp"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
@@ -987,7 +984,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="7Hz"
+
                                 android:textSize="18sp"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
