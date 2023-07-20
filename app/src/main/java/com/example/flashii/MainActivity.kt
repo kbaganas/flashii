@@ -152,9 +152,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var flashlightImageIcon : ImageView
 
     // Switch texts
-    private lateinit var smsSwitchText : TextView
-    private lateinit var sosSwitchText : TextView
-    private lateinit var callSwitchText : TextView
     private lateinit var tiltSwitchText : TextView
     private lateinit var batterySwitchText : TextView
     private lateinit var altitudeSwitchText : TextView
@@ -192,18 +189,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     enum class FEATURE (val value: String) {
-        FLASHLIGHT("Flashlight is On"),
+        FLASHLIGHT("Flashlight"),
         CALL("Flicker on incoming Call"),
         SMS("Flicker on incoming SMS"),
         AUDIO("Flicker on short Sounds"),
-        ALTITUDE("Flicker on Altitude Height reached"),
-        BATTERY("Flicker on Battery Power reached"),
-        SOS("SOS is transmitted"),
-        FLICKERING("Flickering is On"),
-        TIMER("Flicker at Time specified"),
-        NETWORK_FOUND("Flicker when Network Connection is found"),
-        NETWORK_LOST("Flicker when Network Connection is lost"),
-        TILT("Flashlight toggles on Phone Tilts")
+        ALTITUDE("Flicker on Height"),
+        BATTERY("Flicker on Battery Power"),
+        SOS("SOS"),
+        FLICKERING("Flickering"),
+        TIMER("Flicker at Time"),
+        NETWORK_FOUND("Flicker on Network Connection found"),
+        NETWORK_LOST("Flicker on Network Connection lost"),
+        NETWORK("Flicker on Network Connection changes"),
+        TILT("Flashlight toggle on Phone Tilts")
     }
 
     enum class Token {
@@ -311,7 +309,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // setup cameraManager
-        cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
@@ -361,22 +359,7 @@ class MainActivity : AppCompatActivity() {
         // sosSwitch handler
 
         // Get references to views
-        val sosExpandArrow: ImageButton = findViewById(R.id.sosExpandArrow)
-        val sosHiddenView: LinearLayout = findViewById(R.id.sosHiddenView)
         sosImageIcon = findViewById(R.id.sosImageIcon)
-        sosSwitchText = findViewById(R.id.sosSwitchText)
-
-        // Expand or hide the main content
-        sosExpandArrow.setOnClickListener {
-            // Toggle the visibility of the content view
-            if (sosHiddenView.visibility == View.VISIBLE) {
-                sosHiddenView.visibility = View.GONE
-                sosExpandArrow.setImageResource(R.drawable.arrow_down)
-            } else {
-                sosHiddenView.visibility = View.VISIBLE
-                sosExpandArrow.setImageResource(R.drawable.arrow_up)
-            }
-        }
 
         sosSwitch = findViewById(R.id.switchSOS)
         sosSwitch.setOnCheckedChangeListener {_, isChecked ->
@@ -385,14 +368,12 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity","sosSwitch is ON")
                 repeatSOS()
                 sosImageIcon.setImageResource(R.drawable.sos_on)
-                sosSwitchText.text = "Enabled"
                 addActivatedFeature(recyclerView, FEATURE.SOS)
             }
             else {
                 Log.i("MainActivity","sosSwitch is OFF")
                 stopSOS()
                 sosImageIcon.setImageResource(R.drawable.sos_off)
-                sosSwitchText.text = "Disabled"
                 removeActivatedFeature(recyclerView, FEATURE.SOS)
             }
         }
@@ -521,23 +502,7 @@ class MainActivity : AppCompatActivity() {
         // incoming call handler
 
         // Get references to views
-        val callExpandArrow: ImageButton = findViewById(R.id.callExpandArrow)
-        val callHiddenView: LinearLayout = findViewById(R.id.callHiddenView)
         callImageIcon = findViewById(R.id.callImageIcon)
-        callSwitchText = findViewById(R.id.callSwitchText)
-
-        // Expand or hide the main content
-        callExpandArrow.setOnClickListener {
-            // Toggle the visibility of the content view
-            if (callHiddenView.visibility == View.VISIBLE) {
-                callHiddenView.visibility = View.GONE
-                callExpandArrow.setImageResource(R.drawable.arrow_down)
-            } else {
-                callHiddenView.visibility = View.VISIBLE
-                callExpandArrow.setImageResource(R.drawable.arrow_up)
-            }
-        }
-
         incomingCallSwitch = findViewById(R.id.switchCALL)
         incomingCallSwitch.setOnCheckedChangeListener {_, isChecked ->
             // Check first if permissions are granted
@@ -546,20 +511,17 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity","incomingCallSwitch is ON")
                     registerIncomingEvents(TypeOfEvent.INCOMING_CALL)
                     callImageIcon.setImageResource(R.drawable.call_on2)
-                    callSwitchText.text = "Enabled"
                     addActivatedFeature(recyclerView, FEATURE.CALL)
                 } else {
                     Log.i("MainActivity", "incomingCallSwitch is OFF")
                     disableIncomingCallFlickering()
                     callImageIcon.setImageResource(R.drawable.call_off2)
-                    callSwitchText.text = "Disabled"
                     removeActivatedFeature(recyclerView, FEATURE.CALL)
                 }
             }
             else {
                 // user should be asked for permissions again
                 callImageIcon.setImageResource(R.drawable.call_no_permission)
-                callSwitchText.text = "Disabled"
                 incomingCallSwitch.isChecked = false
                 removeActivatedFeature(recyclerView, FEATURE.CALL)
                 Snackbar.make(rootView, "To use the feature, manually provide\nCall access rights to $applicationName", Snackbar.LENGTH_LONG).show()
@@ -607,7 +569,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     recordingThread?.join()
                     recordingThread = null
-                    soundImageIcon.setImageResource(R.drawable.sos_off)
+                    soundImageIcon.setImageResource(R.drawable.sound_off)
                     soundSwitchText.text = "Disabled"
                     removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                 }
@@ -682,7 +644,7 @@ class MainActivity : AppCompatActivity() {
         incomingTiltSwitch = findViewById(R.id.switchTilt)
         incomingTiltSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
-                sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
                 val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
                 if (accelerometerSensor != null) {
                     resetAllActivities(Token.TILT)
@@ -746,25 +708,7 @@ class MainActivity : AppCompatActivity() {
         //////////////////////////////////////////////////////////////////////////////////////
         // incoming SMS handler
 
-        // Get references to views
-        val smsExpandArrow: ImageButton = findViewById(R.id.smsExpandArrow)
-        val smsHiddenView: LinearLayout = findViewById(R.id.smsHiddenView)
         smsImageIcon = findViewById(R.id.smsImageIcon)
-        smsSwitchText = findViewById(R.id.smsSwitchText)
-
-        // Expand or hide the main content
-        smsExpandArrow.setOnClickListener {
-            // Toggle the visibility of the content view
-            if (smsHiddenView.visibility == View.VISIBLE) {
-                smsHiddenView.visibility = View.GONE
-                smsExpandArrow.setImageResource(R.drawable.arrow_down)
-            } else {
-                smsHiddenView.visibility = View.VISIBLE
-                smsExpandArrow.setImageResource(R.drawable.arrow_up)
-            }
-        }
-
-        // Switch listener
         incomingSMSSwitch = findViewById(R.id.switchSMS)
         incomingSMSSwitch.setOnCheckedChangeListener {_, isChecked ->
             // Check first if permissions are granted
@@ -773,13 +717,11 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity","incomingSMSSwitch is ON")
                     registerIncomingEvents(TypeOfEvent.SMS)
                     smsImageIcon.setImageResource(R.drawable.sms_on)
-                    smsSwitchText.text = "Enabled"
                     addActivatedFeature(recyclerView, FEATURE.SMS)
                 } else {
                     Log.i("MainActivity", "incomingSMSSwitch is OFF")
                     disableIncomingSMSFlickering()
                     smsImageIcon.setImageResource(R.drawable.sms_off)
-                    smsSwitchText.text = "Disabled"
                     removeActivatedFeature(recyclerView, FEATURE.SMS)
                 }
             }
@@ -829,10 +771,11 @@ class MainActivity : AppCompatActivity() {
                 networkSwitchText.text = "Disabled"
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
+                removeActivatedFeature(recyclerView, FEATURE.NETWORK)
             }
             else {
                 val networkRequest = NetworkRequest.Builder().build()
-                connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
 
                 // Check if network is currently available first
                 val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
@@ -878,15 +821,10 @@ class MainActivity : AppCompatActivity() {
                     }
                     Log.i("MainActivity", "Register CB $connectivityCallback")
                     connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
+                    addActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 }
                 Log.i("MainActivity","outInNetworkSwitch is ON")
                 networkSwitchText.text = "Enabled"
-                if (isPhoneInNetwork) {
-                    addActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
-                }
-                else if (isPhoneOutOfNetwork) {
-                    addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
-                }
             }
         }
 
@@ -1054,7 +992,7 @@ class MainActivity : AppCompatActivity() {
         altitudeSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (permissionsKeys["ALTITUDE"] == true) {
                 if (isChecked) {
-                    sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                    sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
                     val altitudeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
                     if (altitudeSensor != null) {
                         sensorEventListener = object : SensorEventListener {
@@ -1225,7 +1163,7 @@ class MainActivity : AppCompatActivity() {
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Permissions handling
-//        checkPermissions(ACTION.CREATE)
+        checkPermissions(ACTION.CREATE)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -1256,7 +1194,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isStoredSettings () : Boolean {
-        sharedPref = getSharedPreferences("FlashiiSettings", Context.MODE_PRIVATE)
+        sharedPref = getSharedPreferences("FlashiiSettings", MODE_PRIVATE)
         return sharedPref.contains("maxFlickerHz")
     }
     private fun retrieveStoredSettings () {
@@ -1272,7 +1210,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun storeSettings () {
         Log.i("MainActivity", "STORED Settings are: $maxFlickerHz,${maxTimerMinutes.inWholeMinutes.toInt()},$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
-        val sharedPref = getSharedPreferences("FlashiiSettings", Context.MODE_PRIVATE)
+        val sharedPref = getSharedPreferences("FlashiiSettings", MODE_PRIVATE)
         val editor = sharedPref.edit()
         editor.putInt("maxFlickerHz", maxFlickerHz)
         editor.putInt("maxTimerMinutes", maxTimerMinutes.inWholeMinutes.toInt())
@@ -1344,6 +1282,9 @@ class MainActivity : AppCompatActivity() {
                         setBtnImage(callImageIcon, R.drawable.call_no_permission)
                         Log.i("MainActivity", "CALL permissions RESUME: CALL = FALSE ")
                         permissionsKeys["CALL"] = false
+                        callImageIcon.setImageResource(R.drawable.call_no_permission)
+                        incomingCallSwitch.isChecked = false
+                        removeActivatedFeature(recyclerView, FEATURE.CALL)
                     }
                 }
 
@@ -1359,6 +1300,9 @@ class MainActivity : AppCompatActivity() {
                         setBtnImage(smsImageIcon, R.drawable.sms_no_permission)
                         Log.i("MainActivity", "CALL permissions RESUME: SMS = FALSE ")
                         permissionsKeys["SMS"] = false
+                        smsImageIcon.setImageResource(R.drawable.sms_no_permission)
+                        removeActivatedFeature(recyclerView, FEATURE.SMS)
+                        incomingSMSSwitch.isChecked = false
                     }
                 }
 
@@ -1374,6 +1318,10 @@ class MainActivity : AppCompatActivity() {
                         setBtnImage(soundImageIcon, R.drawable.sound_no_permission)
                         Log.i("MainActivity", "CALL permissions RESUME: AUDIO = FALSE ")
                         permissionsKeys["AUDIO"] = false
+                        removeActivatedFeature(recyclerView, FEATURE.AUDIO)
+                        soundImageIcon.setImageResource(R.drawable.sos_off)
+                        soundSwitchText.text = getString(R.string.disabled)
+                        incomingSoundSwitch.isChecked = false
                     }
                 }
 
@@ -1388,6 +1336,10 @@ class MainActivity : AppCompatActivity() {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         Log.i("MainActivity", "CALL permissions RESUME: ALTITUDE = FALSE ")
                         permissionsKeys["ALTITUDE"] = false
+                        removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
+                        altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
+                        altitudeSwitchText.text = getString(R.string.disabled)
+                        altitudeSwitch.isChecked = false
                     }
                 }
             }
@@ -1749,13 +1701,11 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "Request NOT granted for CALL")
                     setBtnImage(callImageIcon, R.drawable.call_no_permission)
                     incomingCallSwitch.isChecked = false
-                    callSwitchText.text = getString(R.string.disabled)
                 }
                 RequestKey.SMS.value -> {
                     Log.i("MainActivity", "Request NOT granted for SMS")
                     setBtnImage(smsImageIcon, R.drawable.sms_no_permission)
                     incomingSMSSwitch.isChecked = false
-                    smsSwitchText.text = getString(R.string.disabled)
                 }
                 RequestKey.AUDIO.value -> {
                     Log.i("MainActivity", "Request NOT granted for AUDIO")
@@ -1902,7 +1852,6 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", "RAA - DISABLE SOS")
             stopSOS()
             sosImageIcon.setImageResource(R.drawable.sos_off)
-            sosSwitchText.text = getString(R.string.disabled)
             removeActivatedFeature(recyclerView, FEATURE.SOS)
             sosSwitch.isChecked = false
         }
