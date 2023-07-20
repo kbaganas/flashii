@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.Typeface
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -634,7 +635,9 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity","incomingTiltSwitch is ON ($sensorEventListener)")
                     sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
                     isPhoneTilt = true
-                    tiltSwitchText.text = "Enabled"
+                    tempText = "Angle ${sensitivityAngle}\u00B0"
+                    tiltSwitchText.text = tempText
+                    tiltSwitchText.setTextColor(resources.getColor(R.color.green, theme));
                     tiltImageIcon.setImageResource(R.drawable.tilt_on)
                     addActivatedFeature(recyclerView, FEATURE.TILT)
                 }
@@ -642,7 +645,9 @@ class MainActivity : AppCompatActivity() {
                     // we have to disable the btn now since rotation sensor is not available on the device
                     Log.i("MainActivity","Accelerometer not available")
                     Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
-                    tiltSwitchText.text = "Disabled"
+                    tempText = "Angle ${sensitivityAngle}\u00B0"
+                    tiltSwitchText.text = tempText
+                    tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
                     tiltImageIcon.setImageResource(R.drawable.tilt_off)
                     removeActivatedFeature(recyclerView, FEATURE.TILT)
                 }
@@ -651,7 +656,9 @@ class MainActivity : AppCompatActivity() {
                 turnOffFlashlight()
                 sensorManager.unregisterListener(sensorEventListener)
                 isPhoneTilt = false
-                tiltSwitchText.text = "Disabled"
+                tempText = "Angle ${sensitivityAngle}\u00B0"
+                tiltSwitchText.text = tempText
+                tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
                 tiltImageIcon.setImageResource(R.drawable.tilt_off)
                 removeActivatedFeature(recyclerView, FEATURE.TILT)
             }
@@ -1785,7 +1792,9 @@ class MainActivity : AppCompatActivity() {
             turnOffFlashlight()
             sensorManager.unregisterListener(sensorEventListener)
             isPhoneTilt = false
-            tiltSwitchText.text = getString(R.string.disabled)
+            tempText = "Angle ${sensitivityAngle}\u00B0"
+            tiltSwitchText.text = tempText
+            tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
             tiltImageIcon.setImageResource(R.drawable.tilt_off)
             removeActivatedFeature(recyclerView, FEATURE.TILT)
             incomingTiltSwitch.isChecked = false
