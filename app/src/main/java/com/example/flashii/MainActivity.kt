@@ -46,7 +46,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.postDelayed
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flashii.databinding.ActivityMainBinding
@@ -445,7 +444,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity","flickerSwitch is ON with ${flickerFlashlightHz}Hz")
                 isFlickeringOnDemand = true
                 startFlickering()
-                tempText = "${flickerFlashlightHz} Hz"
+                tempText = "$flickerFlashlightHz Hz"
                 flickerSwitchText.text = tempText
                 flickerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
                 flickerImageIcon.setImageResource(R.drawable.flicker_on)
@@ -522,22 +521,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (!isChecked) {
                     Log.i("MainActivity","incomingSoundSwitch is OFF")
-                    isAudioIncoming = false
-                    audioRecordHandler.stop()
-                    audioRecordHandler.release()
-                    try {
-                        recordingThread?.interrupt()
-                    }
-                    catch (e : SecurityException) {
-                        Log.e("MainActivity", "THREAD SecurityException $e")
-                    }
-                    recordingThread?.join()
-                    recordingThread = null
-                    soundImageIcon.setImageResource(R.drawable.sound_off)
-                    tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
-                    soundSwitchText.text = tempText
-                    soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-                    removeActivatedFeature(recyclerView, FEATURE.AUDIO)
+                    resetFeature(Token.SOUND)
                 }
                 else {
                     Log.i("MainActivity","incomingSoundSwitch is ON")
@@ -1164,6 +1148,27 @@ class MainActivity : AppCompatActivity() {
                 altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 altitudeSwitch.isChecked = false
             }
+            Token.SOUND -> {
+                isAudioIncoming = false
+                turnOffFlashlight()
+                try {
+                    audioRecordHandler.stop()
+                    audioRecordHandler.release()
+                    recordingThread?.interrupt()
+                }
+                catch (e : java.lang.Exception) {
+                    // Do nothing
+                }
+                recordingThread?.join()
+                recordingThread = null
+                loopHandlerFlickering.removeCallbacksAndMessages(null)
+                soundImageIcon.setImageResource(R.drawable.sos_off)
+                tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+                soundSwitchText.text = tempText
+                soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
+                removeActivatedFeature(recyclerView, FEATURE.AUDIO)
+                incomingSoundSwitch.isChecked = false
+            }
             else -> {}
         }
 
@@ -1782,9 +1787,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (isAudioIncoming) {
-            audioRecordHandler.stop()
-            audioRecordHandler.release()
             try {
+                audioRecordHandler.stop()
+                audioRecordHandler.release()
                 recordingThread?.interrupt()
             }
             catch (e : SecurityException) {
@@ -1868,25 +1873,7 @@ class MainActivity : AppCompatActivity() {
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK)
         if ((featureToken in tokenValuesToCheckAgainst) && isAudioIncoming) {
             Log.i("MainActivity", "RAA - TURN OFF isAudioIncoming")
-            isAudioIncoming = false
-            turnOffFlashlight()
-            audioRecordHandler.stop()
-            audioRecordHandler.release()
-            try {
-                recordingThread?.interrupt()
-            }
-            catch (e : SecurityException) {
-                Log.e("MainActivity", "THREAD SecurityException $e")
-            }
-            recordingThread?.join()
-            recordingThread = null
-            loopHandlerFlickering.removeCallbacksAndMessages(null)
-            soundImageIcon.setImageResource(R.drawable.sos_off)
-            tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
-            soundSwitchText.text = tempText
-            soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-            removeActivatedFeature(recyclerView, FEATURE.AUDIO)
-            incomingSoundSwitch.isChecked = false
+            resetFeature(Token.SOUND)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK)
