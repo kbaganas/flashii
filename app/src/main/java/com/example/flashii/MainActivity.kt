@@ -489,6 +489,9 @@ class MainActivity : AppCompatActivity() {
         val soundHiddenView: LinearLayout = findViewById(R.id.soundHiddenView)
         soundImageIcon = findViewById(R.id.soundImageIcon)
         soundSwitchText = findViewById(R.id.soundSwitchText)
+        tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+        soundSwitchText.text = tempText
+        soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
 
         // Expand or hide the main content
         soundExpandArrow.setOnClickListener {
@@ -523,7 +526,9 @@ class MainActivity : AppCompatActivity() {
                     recordingThread?.join()
                     recordingThread = null
                     soundImageIcon.setImageResource(R.drawable.sound_off)
-                    soundSwitchText.text = "Disabled"
+                    tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+                    soundSwitchText.text = tempText
+                    soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
                     removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                 }
                 else {
@@ -559,14 +564,18 @@ class MainActivity : AppCompatActivity() {
                     recordingThread?.start()
                     addActivatedFeature(recyclerView, FEATURE.AUDIO)
                     soundImageIcon.setImageResource(R.drawable.sound_on)
-                    soundSwitchText.text = "Enabled"
+                    tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+                    soundSwitchText.text = tempText
+                    soundSwitchText.setTextColor(resources.getColor(R.color.blueText, theme));
                 }
             }
             else {
                 // user should be asked for permissions again
                 removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                 soundImageIcon.setImageResource(R.drawable.sos_off)
-                soundSwitchText.text = "Disabled"
+                tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+                soundSwitchText.text = tempText
+                soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
                 incomingSoundSwitch.isChecked = false
                 Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
@@ -869,6 +878,9 @@ class MainActivity : AppCompatActivity() {
         val timerHiddenView: LinearLayout = findViewById(R.id.timerHiddenView)
         timerImageIcon = findViewById(R.id.timerImageIcon)
         timerSwitchText = findViewById(R.id.timerSwitchText)
+        tempText = "--:--"
+        timerSwitchText.text = tempText
+        timerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
 
         // Expand or hide the main content
         timerExpandArrow.setOnClickListener {
@@ -890,7 +902,9 @@ class MainActivity : AppCompatActivity() {
                 resetAllActivities(Token.TIMER)
                 isTimerOn = true
                 timerImageIcon.setImageResource(R.drawable.timer_on)
-                timerSwitchText.text = "Enabled"
+                tempText = "--:--"
+                timerSwitchText.text = tempText
+                timerSwitchText.setTextColor(resources.getColor(R.color.green, theme))
                 addActivatedFeature(recyclerView, FEATURE.TIMER)
             }
             else {
@@ -902,7 +916,9 @@ class MainActivity : AppCompatActivity() {
                     stopFlickering()
                 }
                 timerImageIcon.setImageResource(R.drawable.timer_off)
-                timerSwitchText.text = "Disabled"
+                tempText = "--:--"
+                timerSwitchText.text = tempText
+                timerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
             }
         }
@@ -910,13 +926,10 @@ class MainActivity : AppCompatActivity() {
         ///////////////////////////////////////////////////////////////////////////////////////
         // altitude handler
 
-        // Get references to views
         val altitudeExpandArrow: ImageButton = findViewById(R.id.altitudeExpandArrow)
         val altitudeHiddenView: LinearLayout = findViewById(R.id.altitudeHiddenView)
         altitudeImageIcon = findViewById(R.id.altitudeImageIcon)
         altitudeSwitchText = findViewById(R.id.altitudeSwitchText)
-
-        // Expand or hide the main content
         altitudeExpandArrow.setOnClickListener {
             // Toggle the visibility of the content view
             if (altitudeHiddenView.visibility == View.VISIBLE) {
@@ -1018,8 +1031,6 @@ class MainActivity : AppCompatActivity() {
                 altitudeSwitch.isChecked = false
             }
         }
-
-
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // info button
@@ -1260,7 +1271,9 @@ class MainActivity : AppCompatActivity() {
                         permissionsKeys["AUDIO"] = false
                         removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                         soundImageIcon.setImageResource(R.drawable.sos_off)
-                        soundSwitchText.text = getString(R.string.disabled)
+                        tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+                        soundSwitchText.text = tempText
+                        soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
                         incomingSoundSwitch.isChecked = false
                     }
                 }
@@ -1643,7 +1656,9 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "Request NOT granted for AUDIO")
                     setBtnImage(soundImageIcon, R.drawable.sound_no_permission)
                     incomingSoundSwitch.isChecked = false
-                    soundSwitchText.text = getString(R.string.disabled)
+                    tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+                    soundSwitchText.text = tempText
+                    soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
                 }
                 RequestKey.ALTITUDE.value -> {
                     Log.i("MainActivity", "Request NOT granted for LOCATION")
@@ -1817,7 +1832,9 @@ class MainActivity : AppCompatActivity() {
             recordingThread = null
             loopHandlerFlickering.removeCallbacksAndMessages(null)
             soundImageIcon.setImageResource(R.drawable.sos_off)
-            soundSwitchText.text = getString(R.string.disabled)
+            tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+            soundSwitchText.text = tempText
+            soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme));
             removeActivatedFeature(recyclerView, FEATURE.AUDIO)
             incomingSoundSwitch.isChecked = false
         }
@@ -1923,7 +1940,9 @@ class MainActivity : AppCompatActivity() {
                         // DO nothing here
                     }
                     timerImageIcon.setImageResource(R.drawable.timer_off)
-                    timerSwitchText.text = getString(R.string.disabled)
+                    tempText = "--:--"
+                    timerSwitchText.text = tempText
+                    timerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                     removeActivatedFeature(recyclerView, FEATURE.TIMER)
                     timerSwitch.isChecked = false
                 }
