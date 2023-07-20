@@ -358,12 +358,11 @@ class MainActivity : AppCompatActivity() {
         ///////////////////////////////////////////////////////////////////////////////////////
         // sosSwitch handler
 
-        // Get references to views
         sosImageIcon = findViewById(R.id.sosImageIcon)
-
         sosSwitch = findViewById(R.id.switchSOS)
         sosSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
+                isSendSOS = true
                 resetAllActivities(Token.SOS)
                 Log.i("MainActivity","sosSwitch is ON")
                 repeatSOS()
@@ -371,6 +370,7 @@ class MainActivity : AppCompatActivity() {
                 addActivatedFeature(recyclerView, FEATURE.SOS)
             }
             else {
+                isSendSOS = false
                 Log.i("MainActivity","sosSwitch is OFF")
                 stopSOS()
                 sosImageIcon.setImageResource(R.drawable.sos_off)
@@ -1585,20 +1585,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun repeatSOS() {
-        if (!isSendSOS) {
-            val durationOfWord = s(o(s()))
-            loopHandlerFlickering.postDelayed({ repeatSOS() }, durationOfWord + spaceWordsDuration)
-            isSendSOS = true
-        }
+        val durationOfWord = s(o(s()))
+        loopHandlerFlickering.postDelayed({ repeatSOS() }, durationOfWord + spaceWordsDuration)
     }
 
     private fun stopSOS () {
-        if (isSendSOS) {
-            Log.i("MainActivity", "STOP SOS")
-            loopHandlerFlickering.removeCallbacksAndMessages(null)
-            atomicFlashLightOff()
-            isSendSOS = false
-        }
+        Log.i("MainActivity", "STOP SOS")
+        loopHandlerFlickering.removeCallbacksAndMessages(null)
+        atomicFlashLightOff()
     }
 
     // Handle the permission request result

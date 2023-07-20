@@ -139,27 +139,31 @@
                             <TextView
                                 android:id="@+id/flickerSwitchText"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_marginEnd="10dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/cabin_regular"
-                                android:gravity="end"
+                                android:gravity="end|bottom"
                                 android:text="@string/disabled"
                                 android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
-
-                            <Switch
-                                android:id="@+id/switchFlicker"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:checked="false"
-                                android:gravity="center"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                                android:gravity="end">
+                                <Switch
+                                    android:id="@+id/switchFlicker"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:checked="false"
+                                    android:gravity="bottom"
+                                    android:minWidth="48dp"
+                                    android:minHeight="48dp"
+                                    android:progressTint="@color/seekbarProgressTint"
+                                    android:thumb="@drawable/switch_thumb"
+                                    android:track="@drawable/switch_track"
+                                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+                            </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>
