@@ -129,14 +129,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var intentSettings : Intent
 
     // TextViews
-    private lateinit var seekBarTitle : TextView
-    private lateinit var tiltBtnSet : TextView
-    private lateinit var soundBtnSetId : TextView
-    private lateinit var flickerBtnSetId : TextView
-    private lateinit var networkBtnSetId : TextView
-    private lateinit var timerBtnTimeSetId : TextView
-    private lateinit var altitudeBtnSetId : TextView
-    private lateinit var batteryBtnSetId : TextView
+    private lateinit var flickerHiddenViewText : TextView
+    private lateinit var tiltHiddenViewText : TextView
+    private lateinit var soundHiddenViewText : TextView
+    private lateinit var altitudeHiddenViewText : TextView
+    private lateinit var timerHiddenViewText : TextView
+    private lateinit var batteryHiddenViewText : TextView
 
     // Icons
     private lateinit var smsImageIcon : ImageView
@@ -262,7 +260,6 @@ class MainActivity : AppCompatActivity() {
     private var isBatteryThresholdSet : Boolean = false
     private var isTimerOn : Boolean = false
     private var isTimerThresholdSet : Boolean = false
-    private var isStartTrackingTouched : Boolean = false
     private var itemList = mutableListOf<String>()
     private lateinit var recyclerView: RecyclerView
 
@@ -293,6 +290,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var batterySwitch : Switch
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var timerSwitch : Switch
+
+    // Common use
+    private lateinit var tempText : String
 
     @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility",
         "MissingInflatedId"
@@ -380,80 +380,10 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // flicker seekbar and textview handler
-//        flickeringBar = findViewById(R.id.switchFlicker)
-//        flickeringBar.min = minFlickerHz
-//        flickeringBar.max = maxFlickerHz
-//        flickeringBar.visibility = View.INVISIBLE
-        //seekBarTitle = findViewById(R.id.seekBarTitleId)
-        //seekBarTitle.visibility = View.INVISIBLE
-
-//        flickeringBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//                if (token == Token.FLICKER && isFlickeringOnDemand) {
-//                    setFlickeringHz(progress.toLong())
-//                    setSeekBarTitle(SeekBarMode.HZ, ACTION.SET)
-//                }
-//                else if (token == Token.BATTERY && isBatteryOn && isStartTrackingTouched && !isBatteryThresholdSet) {
-//                    batteryThreshold = progress
-//                    setSeekBarTitle(SeekBarMode.PERCENTAGE, ACTION.SET)
-//                }
-//                else if (token == Token.ALTITUDE && isAltitudeOn && isStartTrackingTouched && !isAltitudeThresholdSet) {
-//                    altitudeThreshold = progress
-//                    setSeekBarTitle(SeekBarMode.METERS, ACTION.SET)
-//                }
-//                else if (token == Token.TIMER && isTimerOn && isStartTrackingTouched && !isTimerThresholdSet) {
-//                    timerSetAfter = progress.minutes
-//                    setSeekBarTitle(SeekBarMode.HOURS, ACTION.SET)
-//                }
-//            }
-
-//            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-//                loopHandlerSeekBar.removeCallbacksAndMessages(null)
-//                atomicFlashLightOff()
-//                isStartTrackingTouched = true
-//
-//                if (token == Token.BATTERY && isBatteryOn && isBatteryThresholdSet) {
-//                    isBatteryThresholdSet = false
-//                    setSeekBarTitle(SeekBarMode.PERCENTAGE, ACTION.SET)
-//                }
-//                else if (token == Token.ALTITUDE && isAltitudeOn && isAltitudeThresholdSet) {
-//                    isAltitudeThresholdSet = false
-//                    setSeekBarTitle(SeekBarMode.METERS, ACTION.SET)
-//                }
-//                else if (token == Token.TIMER && isTimerOn && isTimerThresholdSet) {
-//                    isTimerThresholdSet = false
-//                    setSeekBarTitle(SeekBarMode.HOURS, ACTION.SET)
-////                }
-//            }
-//
-////            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-////                if (isFlickeringOnDemand) {
-////                    startFlickering()
-////                }
-////                else if (token == Token.BATTERY && isBatteryOn && !isBatteryThresholdSet) {
-////                    isBatteryThresholdSet = true
-////                    Log.d("MainActivity", "Battery power level \nset to ${batteryThreshold}%")
-////                    loopHandlerSeekBar.postDelayed({ resetSeekBarAndTitle() }, hideSeekBarAfterDelay25)
-////                    //setBtnSelector(layoutBattery, ACTION.SET)
-////                }
-////                else if (token == Token.ALTITUDE && isAltitudeOn && !isAltitudeThresholdSet) {
-////                    isAltitudeThresholdSet = true
-////                    Log.d("MainActivity", "Altitude point set to ${altitudeThreshold}m")
-////                    loopHandlerSeekBar.postDelayed({ resetSeekBarAndTitle() }, hideSeekBarAfterDelay25)
-////                }
-////                else if (token == Token.TIMER && isTimerOn && !isTimerThresholdSet) {
-////                    isTimerThresholdSet = true
-////                    Log.d("MainActivity", "Timer set to $timerSetAfter")
-////                    // set success
-////                    loopHandlerTimer.postDelayed({ startFlickering() }, timerSetAfter.inWholeMilliseconds)
-////                    // reset
-////                    loopHandlerTimer.postDelayed({ stopFlickering() }, timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
-////                    //loopHandlerTimer.postDelayed({ setBtnImage(timerSwitch, R.drawable.timer_off_m3) }, timerSetAfter.inWholeMilliseconds.toInt() + maxFlickerDuration15)
-////                    loopHandlerSeekBar.postDelayed({ resetSeekBarAndTitle() }, hideSeekBarAfterDelay25)
-////                }
-////                isStartTrackingTouched = false
-////            }
-//        })
+        flickeringBar = findViewById(R.id.seekBarFlicker)
+        flickeringBar.min = minFlickerHz
+        flickeringBar.max = maxFlickerHz
+        flickerHiddenViewText = findViewById(R.id.flickerHiddenViewText)
 
         // Get references to views
         val flickerExpandArrow: ImageButton = findViewById(R.id.flickerExpandArrow)
@@ -470,8 +400,32 @@ class MainActivity : AppCompatActivity() {
             } else {
                 flickerHiddenView.visibility = View.VISIBLE
                 flickerExpandArrow.setImageResource(R.drawable.arrow_up)
+                tempText = "Set frequency to ${flickerFlashlightHz}Hz"
+                flickerHiddenViewText.text = tempText
             }
         }
+
+        // Bar listeners
+        flickeringBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                flickerFlashlightHz = progress.toLong()
+                tempText = "Set frequency to ${flickerFlashlightHz}Hz"
+                flickerHiddenViewText.text = tempText
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                if (isFlickeringOnDemand) {
+                    loopHandlerFlickering.removeCallbacksAndMessages(null)
+                    atomicFlashLightOff()
+                }
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                if (isFlickeringOnDemand) {
+                    startFlickering()
+                }
+            }
+        })
 
         // flicker flashlight button handler
         flickerSwitch = findViewById(R.id.switchFlicker)
@@ -479,11 +433,10 @@ class MainActivity : AppCompatActivity() {
             if (isChecked) {
                 token = Token.FLICKER
                 resetAllActivities(Token.FLICKER)
-                setFlickeringHz(minFlickerHz.toLong())
                 Log.i("MainActivity","flickerSwitch is ON with ${flickerFlashlightHz}Hz")
                 isFlickeringOnDemand = true
                 startFlickering()
-                flickerSwitchText.text = "Enabled"
+                flickerSwitchText.text = getString(R.string.enabled)
                 flickerImageIcon.setImageResource(R.drawable.flicker_on)
                 addActivatedFeature(recyclerView, FEATURE.FLICKERING)
             }
@@ -491,8 +444,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity","flickerSwitch is OFF")
                 isFlickeringOnDemand = false
                 stopFlickering()
-                setFlickeringHz(minFlickerHz.toLong())
-                flickerSwitchText.text = "Disabled"
+                flickerSwitchText.text = getString(R.string.disabled)
                 flickerImageIcon.setImageResource(R.drawable.flicker_off)
                 removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
             }
@@ -1520,10 +1472,6 @@ class MainActivity : AppCompatActivity() {
         unregisterReceiver(incomingCallReceiver)
     }
 
-    fun setFlickeringHz(hz : Long) {
-        flickerFlashlightHz = hz
-    }
-
     fun stopFlickering() {
         if (isFlickering) {
             Log.d("MainActivity", "Flickering OFF")
@@ -1796,9 +1744,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-//        if (isTimerOn) {
-//        }
-
         loopHandlerForInactivity.removeCallbacksAndMessages(null)
         loopHandlerSeekBar.removeCallbacksAndMessages(null)
     }
@@ -1821,7 +1766,6 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", "RAA - STOP FLICKERING on demand")
             isFlickeringOnDemand = false
             stopFlickering()
-            setFlickeringHz(minFlickerHz.toLong())
             flickerSwitchText.text = getString(R.string.disabled)
             flickerImageIcon.setImageResource(R.drawable.flicker_off)
             removeActivatedFeature(recyclerView, FEATURE.FLICKERING)

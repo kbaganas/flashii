@@ -28,6 +28,8 @@
             android:orientation="vertical">
 
             <!-- Features -->
+
+            <!-- Bottom Tools -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -40,8 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin16"
-                    android:gravity="center_horizontal"
                     android:background="@drawable/feature_selector_flicker"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="18dp">
@@ -51,6 +53,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
@@ -65,16 +68,18 @@
                                 app:srcCompat="@drawable/flicker_off"
                                 tools:ignore="ImageContrastCheck" />
                         </LinearLayout>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:layout_weight="1"
                             android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
                             android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_horizontal"
                             android:text="@string/flickering"
+                            android:textSize="24sp"
                             tools:ignore="VisualLintLongText" />
+
                         <ImageButton
                             android:id="@+id/flickerExpandArrow"
                             android:layout_width="48dp"
@@ -90,20 +95,22 @@
                         android:id="@+id/flickerHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <!-- Text -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center">
+
                             <TextView
+                                android:id="@+id/flickerHiddenViewText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_frequency_hz"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
@@ -111,14 +118,15 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="34dp">
+                            android:layout_marginVertical="24dp">
+
                             <SeekBar
                                 android:id="@+id/seekBarFlicker"
                                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:max="10"
-                                android:progress="3" />
+                                android:progress="1" />
                         </LinearLayout>
 
                         <!-- Switch -->
@@ -127,25 +135,27 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/flickerSwitchText"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:layout_marginEnd="10dp"
-                                android:gravity="end"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="end"
                                 android:text="@string/disabled"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
+
                             <Switch
                                 android:id="@+id/switchFlicker"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
                                 android:checked="false"
                                 android:gravity="center"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
@@ -160,8 +170,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <!-- Incoming SMS -->
                     <LinearLayout
@@ -173,33 +183,41 @@
                         android:orientation="horizontal"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="18dp">
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1">
-                                <ImageView
-                                    android:id="@+id/smsImageIcon"
-                                    android:layout_width="68dp"
-                                    android:layout_height="@dimen/MainImageSize"
-                                    android:background="#00FFFFFF"
-                                    android:layout_gravity="start"
-                                    android:contentDescription="@string/IncomingSMSContentDescription"
-                                    android:scaleType="fitCenter"
-                                    app:srcCompat="@drawable/sms_off" />
-                            </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="78dp"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/smsImageIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/MainImageSize"
+                                android:layout_gravity="start"
+                                android:background="#00FFFFFF"
+                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/sms_off" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="end">
+
                             <Switch
                                 android:id="@+id/switchSMS"
-                                android:layout_width="wrap_content"
+                                android:layout_width="48dp"
                                 android:layout_height="match_parent"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
                                 android:checked="false"
                                 android:gravity="bottom"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
                                 tools:ignore="UseSwitchCompatOrMaterialXml" />
                         </LinearLayout>
+                    </LinearLayout>
 
                     <!-- Incoming Call -->
                     <LinearLayout
@@ -211,32 +229,40 @@
                         android:orientation="horizontal"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="18dp">
+
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_width="78dp"
+                            android:layout_height="wrap_content">
+
                             <ImageView
                                 android:id="@+id/callImageIcon"
-                                android:layout_width="68dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="@dimen/MainImageSize"
-                                android:background="#00FFFFFF"
                                 android:layout_gravity="start"
+                                android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/incoming_call_off" />
                         </LinearLayout>
-                        <Switch
-                            android:id="@+id/switchCALL"
-                            android:layout_width="wrap_content"
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:minWidth="48dp"
-                            android:minHeight="48dp"
-                            android:checked="false"
-                            android:gravity="bottom"
-                            android:progressTint="@color/seekbarProgressTint"
-                            android:thumb="@drawable/switch_thumb"
-                            android:track="@drawable/switch_track"
-                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+                            android:gravity="end">
+
+                            <Switch
+                                android:id="@+id/switchCALL"
+                                android:layout_width="48dp"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:gravity="bottom"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"
+                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -245,46 +271,54 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <!-- Network -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
                         android:layout_weight="1"
                         android:background="@drawable/feature_selector_network"
                         android:orientation="horizontal"
-                        android:layout_marginEnd="12dp"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="18dp">
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
                             <ImageView
                                 android:id="@+id/networkImageIcon"
-                                android:layout_width="60dp"
+                                android:layout_width="78dp"
                                 android:layout_height="@dimen/MainImageSize"
-                                android:background="#00FFFFFF"
                                 android:layout_gravity="start"
+                                android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/network_off" />
                         </LinearLayout>
-                        <Switch
-                            android:id="@+id/switchNetwork"
-                            android:layout_width="wrap_content"
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:minWidth="48dp"
-                            android:minHeight="48dp"
-                            android:checked="false"
-                            android:gravity="bottom"
-                            android:progressTint="@color/seekbarProgressTint"
-                            android:thumb="@drawable/switch_thumb"
-                            android:track="@drawable/switch_track"
-                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+                            android:gravity="end">
+
+                            <Switch
+                                android:id="@+id/switchNetwork"
+                                android:layout_width="48dp"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:gravity="bottom"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"
+                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <!-- SOS -->
@@ -298,32 +332,38 @@
                         android:paddingVertical="18dp">
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_width="78dp"
+                            android:layout_height="wrap_content">
+
                             <ImageView
                                 android:id="@+id/sosImageIcon"
-                                android:layout_width="78dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="@dimen/MainImageSize"
-                                android:scaleY="1.2"
                                 android:background="#00FFFFFF"
-                                android:layout_gravity="start"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
+                                android:scaleY="1.3"
                                 app:srcCompat="@drawable/sos_off" />
                         </LinearLayout>
-                        <Switch
-                            android:id="@+id/switchSOS"
-                            android:layout_width="wrap_content"
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:minWidth="48dp"
-                            android:minHeight="48dp"
-                            android:checked="false"
-                            android:gravity="bottom"
-                            android:progressTint="@color/seekbarProgressTint"
-                            android:thumb="@drawable/switch_thumb"
-                            android:track="@drawable/switch_track"
-                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+                            android:gravity="end">
+
+                            <Switch
+                                android:id="@+id/switchSOS"
+                                android:layout_width="48dp"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:gravity="bottom"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:progressTint="@color/seekbarProgressTint"
+                                android:thumb="@drawable/switch_thumb"
+                                android:track="@drawable/switch_track"
+                                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -332,9 +372,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="32dp"
                     android:baselineAligned="true"
                     android:gravity="center_vertical"
-                    android:layout_marginVertical="32dp"
                     android:orientation="horizontal">
 
                     <!-- Activated Features -->
@@ -343,18 +383,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2.3"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:textColor="@color/white"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/activated_features"
+                            android:textColor="@color/white"
+                            android:textSize="24sp"
                             tools:ignore="VisualLintLongText" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical">
+
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recyclerView"
                                 android:layout_width="match_parent"
@@ -368,26 +411,27 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginEnd="12dp"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="12dp">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/flashLightImageId"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/mainFlashlightHeight"
-                            android:background="#00FFFFFF"
                             android:layout_gravity="center_vertical"
+                            android:background="#00FFFFFF"
                             android:contentDescription="@string/FlashlightBtnContentDescription"
                             android:scaleType="centerInside"
                             app:srcCompat="@drawable/flashlight_off4" />
+
                         <ImageButton
                             android:id="@+id/flashLightBtnId"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
-                            android:background="#00FFFFFF"
-                            android:layout_marginTop="-148dp"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginTop="-148dp"
+                            android:background="#00FFFFFF"
                             android:contentDescription="@string/FlashlightBtnContentDescription"
                             android:scaleType="centerInside" />
 
@@ -398,8 +442,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/feature_selector_time"
                     android:layout_marginBottom="@dimen/margin16"
+                    android:background="@drawable/feature_selector_time"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingHorizontal="12dp"
@@ -410,6 +454,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
@@ -424,16 +469,18 @@
                                 app:srcCompat="@drawable/timer_off"
                                 tools:ignore="ImageContrastCheck" />
                         </LinearLayout>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:layout_weight="1"
                             android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
                             android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_horizontal"
                             android:text="@string/flicker_on_time"
+                            android:textSize="24sp"
                             tools:ignore="VisualLintLongText" />
+
                         <ImageButton
                             android:id="@+id/timerExpandArrow"
                             android:layout_width="48dp"
@@ -449,13 +496,14 @@
                         android:id="@+id/timerHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <!-- Input & TIME -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <TimePicker
                                 android:id="@+id/timePicker1"
                                 android:layout_width="match_parent"
@@ -469,25 +517,27 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/timerSwitchText"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:layout_marginEnd="10dp"
-                                android:gravity="end"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="end"
                                 android:text="@string/disabled"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
+
                             <Switch
                                 android:id="@+id/switchTimer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
                                 android:checked="false"
                                 android:gravity="center"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
@@ -501,8 +551,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin16"
-                    android:gravity="center_horizontal"
                     android:background="@drawable/feature_selector_tilt"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="18dp">
@@ -512,9 +562,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
+
                             <ImageView
                                 android:id="@+id/tiltImageIcon"
                                 android:layout_width="@dimen/MainImageSize"
@@ -524,16 +576,18 @@
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/tilt_off" />
                         </LinearLayout>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:layout_weight="1"
                             android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
                             android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_horizontal"
                             android:text="@string/phone_tilt"
+                            android:textSize="24sp"
                             tools:ignore="VisualLintLongText" />
+
                         <ImageButton
                             android:id="@+id/tiltExpandArrow"
                             android:layout_width="48dp"
@@ -549,21 +603,22 @@
                         android:id="@+id/tiltHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <!-- Text -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_sensitivity_angle_degrees"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
@@ -572,6 +627,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="34dp">
+
                             <SeekBar
                                 android:id="@+id/seekBarTilt"
                                 style="@style/Widget.AppCompat.SeekBar.Discrete"
@@ -587,25 +643,27 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/tiltSwitchText"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:layout_marginEnd="10dp"
-                                android:gravity="end"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="end"
                                 android:text="@string/disabled"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
+
                             <Switch
                                 android:id="@+id/switchTilt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
                                 android:checked="false"
                                 android:gravity="center"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
@@ -619,20 +677,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin16"
+                    android:background="@drawable/feature_selector_battery"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingHorizontal="12dp"
-                    android:paddingVertical="18dp"
-                    android:background="@drawable/feature_selector_battery">
+                    android:paddingVertical="18dp">
 
                     <!-- Header -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
+
                             <ImageView
                                 android:id="@+id/batteryImageIcon"
                                 android:layout_width="@dimen/MainImageSize"
@@ -642,16 +702,18 @@
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/battery_off" />
                         </LinearLayout>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:layout_weight="1"
                             android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
                             android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_horizontal"
                             android:text="@string/flicker_on_battery_power"
+                            android:textSize="24sp"
                             tools:ignore="VisualLintLongText" />
+
                         <ImageButton
                             android:id="@+id/batteryExpandArrow"
                             android:layout_width="48dp"
@@ -667,21 +729,22 @@
                         android:id="@+id/batteryHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <!-- Text -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_battery_power_threshold"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
@@ -690,6 +753,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="34dp">
+
                             <SeekBar
                                 android:id="@+id/seekBarBattery"
                                 style="@style/Widget.AppCompat.SeekBar.Discrete"
@@ -705,25 +769,27 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/batterySwitchText"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:layout_marginEnd="10dp"
-                                android:gravity="end"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="end"
                                 android:text="@string/disabled"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
+
                             <Switch
                                 android:id="@+id/switchBattery"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
                                 android:checked="false"
                                 android:gravity="center"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
@@ -737,20 +803,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin16"
+                    android:background="@drawable/feature_selector_sound"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingHorizontal="12dp"
-                    android:paddingVertical="18dp"
-                    android:background="@drawable/feature_selector_sound">
+                    android:paddingVertical="18dp">
 
                     <!-- Header -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
+
                             <ImageView
                                 android:id="@+id/soundImageIcon"
                                 android:layout_width="@dimen/MainImageSize"
@@ -760,16 +828,18 @@
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/sound_off" />
                         </LinearLayout>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:layout_weight="1"
                             android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
                             android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_horizontal"
                             android:text="@string/flicker_on_short_sounds"
+                            android:textSize="24sp"
                             tools:ignore="VisualLintLongText" />
+
                         <ImageButton
                             android:id="@+id/soundExpandArrow"
                             android:layout_width="48dp"
@@ -786,20 +856,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:visibility="gone"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <!-- Text -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_sound_sensitivity_level"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
@@ -808,6 +879,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="34dp">
+
                             <SeekBar
                                 android:id="@+id/seekBarSound"
                                 style="@style/Widget.AppCompat.SeekBar.Discrete"
@@ -823,25 +895,27 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/soundSwitchText"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:layout_marginEnd="10dp"
-                                android:gravity="end"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="end"
                                 android:text="@string/disabled"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
+
                             <Switch
                                 android:id="@+id/switchSound"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
                                 android:checked="false"
                                 android:gravity="center"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
@@ -855,9 +929,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin16"
+                    android:background="@drawable/feature_selector_altitude"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:background="@drawable/feature_selector_altitude"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="18dp">
 
@@ -866,9 +940,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
+
                             <ImageView
                                 android:id="@+id/altitudeImageIcon"
                                 android:layout_width="@dimen/MainImageSize"
@@ -878,16 +954,18 @@
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/altitude_off" />
                         </LinearLayout>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:layout_weight="1"
                             android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
                             android:fontFamily="@font/cabin_semibold"
                             android:gravity="center_horizontal"
                             android:text="@string/flicker_on_altitude"
+                            android:textSize="24sp"
                             tools:ignore="VisualLintLongText" />
+
                         <ImageButton
                             android:id="@+id/altitudeExpandArrow"
                             android:layout_width="48dp"
@@ -903,21 +981,22 @@
                         android:id="@+id/altitudeHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <!-- Text -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_altitude_height_m"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
@@ -926,6 +1005,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="34dp">
+
                             <SeekBar
                                 android:id="@+id/seekBarAltitude"
                                 style="@style/Widget.AppCompat.SeekBar.Discrete"
@@ -941,25 +1021,27 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/altitudeSwitchText"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:layout_marginEnd="10dp"
-                                android:gravity="end"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="end"
                                 android:text="@string/disabled"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
+
                             <Switch
                                 android:id="@+id/switchAltitude"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
                                 android:checked="false"
                                 android:gravity="center"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
@@ -970,7 +1052,6 @@
 
             </LinearLayout>
 
-            <!-- Bottom Tools -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
