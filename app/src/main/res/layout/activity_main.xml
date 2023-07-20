@@ -75,6 +75,7 @@
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
                                 android:textSize="18sp"
+                                android:minWidth="56dp"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
@@ -304,6 +305,8 @@
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
                                 android:textSize="18sp"
+                                android:minWidth="56dp"
+                                android:text="Sensitivity\nLevel 1"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
@@ -384,10 +387,12 @@
                             <SeekBar
                                 android:id="@+id/seekBarSound"
                                 style="@style/Widget.AppCompat.SeekBar.Discrete"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:max="10"
-                                android:progress="1" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
+                                android:max="9"
+                                android:progress="0"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -503,6 +508,7 @@
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
                                 android:textSize="18sp"
+                                android:minWidth="56dp"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
