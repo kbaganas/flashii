@@ -254,99 +254,37 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/feature_selector_network"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         android:layout_marginEnd="12dp"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="18dp">
 
-                        <!-- Header -->
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1">
-                                <ImageView
-                                    android:id="@+id/networkImageIcon"
-                                    android:layout_width="60dp"
-                                    android:layout_height="@dimen/MainImageSize"
-                                    android:background="#00FFFFFF"
-                                    android:contentDescription="@string/IncomingSMSContentDescription"
-                                    android:scaleType="fitCenter"
-                                    app:srcCompat="@drawable/network_off" />
-                            </LinearLayout>
-                            <ImageButton
-                                android:id="@+id/networkExpandArrow"
-                                android:layout_width="48dp"
-                                android:layout_height="56dp"
-                                android:background="@color/backgroundWhite"
-                                android:contentDescription="@string/GeneralContentDescription"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/arrow_down" />
-                        </LinearLayout>
-
-                        <!-- Expandable -->
-                        <LinearLayout
-                            android:id="@+id/networkHiddenView"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
-                            android:visibility="gone"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/networkTextMessage"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="18sp"
-                                android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
-                                android:text="@string/flashlight_flicker_non_changes_of"
-                                tools:ignore="VisualLintLongText" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="24sp"
-                                android:fontFamily="@font/cabin_semibold"
-                                android:gravity="center_horizontal"
-                                android:text="@string/network_connection"
-                                tools:ignore="VisualLintLongText" />
-
-                            <!-- Image & Switch -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="18dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:id="@+id/networkSwitchText"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="18sp"
-                                    android:layout_marginEnd="10dp"
-                                    android:gravity="end"
-                                    android:fontFamily="@font/cabin_regular"
-                                    android:text="@string/disabled"
-                                    tools:ignore="VisualLintLongText" />
-                                <Switch
-                                    android:id="@+id/switchNetwork"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:minWidth="48dp"
-                                    android:minHeight="48dp"
-                                    android:checked="false"
-                                    android:gravity="center"
-                                    android:progressTint="@color/seekbarProgressTint"
-                                    android:thumb="@drawable/switch_thumb"
-                                    android:track="@drawable/switch_track"
-                                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-                            </LinearLayout>
+                            android:layout_weight="1">
+                            <ImageView
+                                android:id="@+id/networkImageIcon"
+                                android:layout_width="60dp"
+                                android:layout_height="@dimen/MainImageSize"
+                                android:background="#00FFFFFF"
+                                android:layout_gravity="start"
+                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/network_off" />
                         </LinearLayout>
+                        <Switch
+                            android:id="@+id/switchNetwork"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:checked="false"
+                            android:gravity="bottom"
+                            android:progressTint="@color/seekbarProgressTint"
+                            android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
                     </LinearLayout>
 
                     <!-- SOS -->

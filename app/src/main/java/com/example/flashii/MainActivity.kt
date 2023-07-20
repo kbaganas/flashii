@@ -158,7 +158,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var soundSwitchText : TextView
     private lateinit var timerSwitchText : TextView
     private lateinit var flickerSwitchText : TextView
-    private lateinit var networkSwitchText : TextView
 
     enum class ACTION {
         CREATE,
@@ -253,6 +252,7 @@ class MainActivity : AppCompatActivity() {
     private var isIncomingSMS : Boolean = false
     private var isPhoneOutOfNetwork : Boolean = false
     private var isPhoneInNetwork : Boolean = false
+    private var flickeringDueToNetworkConnection : Boolean = false
     private var isPhoneTilt : Boolean = false
     private var isAudioIncoming : Boolean = false
     private var isNetworkConnectivityCbIsSet : Boolean = false
@@ -738,24 +738,7 @@ class MainActivity : AppCompatActivity() {
         ///////////////////////////////////////////////////////////////////////////////////////
         // phone out/in network handler
 
-        // Get references to views
-        val networkExpandArrow: ImageButton = findViewById(R.id.networkExpandArrow)
-        val networkHiddenView: LinearLayout = findViewById(R.id.networkHiddenView)
         networkImageIcon = findViewById(R.id.networkImageIcon)
-        networkSwitchText = findViewById(R.id.networkSwitchText)
-
-        // Expand or hide the main content
-        networkExpandArrow.setOnClickListener {
-            // Toggle the visibility of the content view
-            if (networkHiddenView.visibility == View.VISIBLE) {
-                networkHiddenView.visibility = View.GONE
-                networkExpandArrow.setImageResource(R.drawable.arrow_down)
-            } else {
-                networkHiddenView.visibility = View.VISIBLE
-                networkExpandArrow.setImageResource(R.drawable.arrow_up)
-            }
-        }
-
         outInNetworkSwitch = findViewById(R.id.switchNetwork)
         outInNetworkSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (!isChecked) {
@@ -768,7 +751,6 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "Unregister running CB $connectivityCallback")
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                 networkImageIcon.setImageResource(R.drawable.network_off)
-                networkSwitchText.text = "Disabled"
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK)
@@ -824,7 +806,6 @@ class MainActivity : AppCompatActivity() {
                     addActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 }
                 Log.i("MainActivity","outInNetworkSwitch is ON")
-                networkSwitchText.text = "Enabled"
             }
         }
 
@@ -1383,23 +1364,25 @@ class MainActivity : AppCompatActivity() {
                 connectivityCallback = object : ConnectivityManager.NetworkCallback() {
                     override fun onLost(network: Network) {
                         super.onLost(network)
-                        Log.i("MainActivity", "NETWORK is LOST")
+                        Log.i("MainActivity", "NETWORK from found to LOST")
                         resetAllActivities(Token.NETWORK)
                         Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
                         stopFlickeringAfterTimeout(maxFlickerDuration30)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
+                        flickeringDueToNetworkConnection = true
                     }
                     override fun onUnavailable() {
                         super.onUnavailable()
-                        Log.i("MainActivity", "NETWORK is UNAVAILABLE")
+                        Log.i("MainActivity", "NETWORK from available to UNAVAILABLE")
                         resetAllActivities(Token.NETWORK)
                         Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
                         stopFlickeringAfterTimeout(maxFlickerDuration30)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
+                        flickeringDueToNetworkConnection = true
                     }}
                 Log.i("MainActivity", "Register CB for OUT_OF_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
@@ -1410,17 +1393,17 @@ class MainActivity : AppCompatActivity() {
                 connectivityCallback = object : ConnectivityManager.NetworkCallback() {
                     override fun onAvailable(network: Network) {
                         super.onAvailable(network)
-                        Log.i("MainActivity", "NETWORK is AVAILABLE")
+                        Log.i("MainActivity", "NETWORK from unavailable to AVAILABLE")
                         resetAllActivities(Token.NETWORK)
                         Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
                         startFlickering()
                         stopFlickeringAfterTimeout(maxFlickerDuration30)
                         isPhoneOutOfNetwork = false
                         isPhoneInNetwork = true
+                        flickeringDueToNetworkConnection = true
                     }}
                 Log.i("MainActivity", "Register CB for IN_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
-                //setMessageText("Flashlight will be flickering if\nWiFi or Network signal are found", hideMessageTextAfter35, Token.NETWORK)
             }
             TypeOfEvent.PHONE_TILT -> {
 
@@ -1823,19 +1806,17 @@ class MainActivity : AppCompatActivity() {
     private fun resetAllActivities (featureToken : Token) {
         Log.i("MainActivity", " --------- Reset all activities --------- ")
 
-        var tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.SOS, Token.SOUND, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.TILT)
+        var tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.SOS, Token.SOUND, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.TILT, Token.NETWORK)
         if ((featureToken in tokenValuesToCheckAgainst) && isFlashLightOn) {
-            // Can be understood as:
-            // Until now I had Flashlight activated, but now I have activated
-            // Flickering or TILT or Sound or SOS.
-            // So, Phone Tilt must be deactivated.
+            // Can be understood as: Until now I had Flashlight activated, but now I have activated
+            // Flickering or TILT or Sound or SOS. So, Flashlight must be deactivated.
             Log.i("MainActivity", "RAA - TURN OFF Flashlight")
             turnOffFlashlight(true)
             removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
         }
 
 
-        tokenValuesToCheckAgainst = listOf(Token.FLASHLIGHT, Token.SOS, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT)
+        tokenValuesToCheckAgainst = listOf(Token.FLASHLIGHT, Token.SOS, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT, Token.NETWORK)
         if ((featureToken in tokenValuesToCheckAgainst) && isFlickering && isFlickeringOnDemand) {
             Log.i("MainActivity", "RAA - STOP FLICKERING on demand")
             isFlickeringOnDemand = false
@@ -1847,7 +1828,7 @@ class MainActivity : AppCompatActivity() {
             flickerSwitch.isChecked = false
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT, Token.NETWORK)
         if ((featureToken in tokenValuesToCheckAgainst) && isSendSOS) {
             Log.i("MainActivity", "RAA - DISABLE SOS")
             stopSOS()
@@ -1856,19 +1837,7 @@ class MainActivity : AppCompatActivity() {
             sosSwitch.isChecked = false
         }
 
-//        if ((featureToken in tokenValuesToCheckAgainst) && isIncomingCall) {
-//            Log.i("MainActivity", "RAA - TURN OFF isIncomingCall")
-//            disableIncomingCallFlickering()
-//            setBtnImage(incomingCallSwitch, R.drawable.incoming_call_off_m3)
-//        }
-
-//        if ((featureToken in tokenValuesToCheckAgainst) && isIncomingSMS) {
-//            Log.i("MainActivity", "RAA - TURN OFF isIncomingSMS")
-//            disableIncomingSMSFlickering()
-//            setBtnImage(incomingSMSSwitch, R.drawable.incoming_sms_off_m3)
-//        }
-
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK)
         if ((featureToken in tokenValuesToCheckAgainst) && isPhoneTilt) {
             // Can be understood as:
             // Until now I had Phone Tilt activated, but now I have activated
@@ -1884,7 +1853,7 @@ class MainActivity : AppCompatActivity() {
             incomingTiltSwitch.isChecked = false
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK)
         if ((featureToken in tokenValuesToCheckAgainst) && isAudioIncoming) {
             Log.i("MainActivity", "RAA - TURN OFF isAudioIncoming")
             isAudioIncoming = false
@@ -1906,16 +1875,17 @@ class MainActivity : AppCompatActivity() {
             incomingSoundSwitch.isChecked = false
         }
 
-        if ((featureToken in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet) {
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK)
+        if ((featureToken in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet && flickeringDueToNetworkConnection) {
             Log.i("MainActivity", "RAA - TURN OFF isNetworkConnectivityCbIsSet")
             isNetworkConnectivityCbIsSet = false
             stopFlickering()
             connectivityManager.unregisterNetworkCallback(connectivityCallback)
             networkImageIcon.setImageResource(R.drawable.network_off)
-            networkSwitchText.text = getString(R.string.disabled)
             removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
             removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
             outInNetworkSwitch.isChecked = false
+            flickeringDueToNetworkConnection = false
         }
 
         if (isBatteryOn) {
