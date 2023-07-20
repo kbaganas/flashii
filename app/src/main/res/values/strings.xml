@@ -184,4 +184,9 @@
     <string name="set_frequency_hz">Set Frequency</string>
     <string name="set_time">Set Time</string>
     <string name="time_reset">--:--</string>
+    <string name="to_turn_flashlight_on_amp_off"><![CDATA[to turn flashlight on & off]]></string>
+    <string name="make_sounds">Make Sounds</string>
+    <string name="at_which_flashlight_flickers">at which flashlight flickers</string>
+    <string name="battery_power">Battery Power</string>
+    <string name="time">Time</string>
 </resources>
