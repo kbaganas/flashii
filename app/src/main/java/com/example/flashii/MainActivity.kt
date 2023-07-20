@@ -419,7 +419,6 @@ class MainActivity : AppCompatActivity() {
                 flickerHiddenViewText.text = tempText
                 tempText = "$flickerFlashlightHz Hz"
                 flickerSwitchText.text = tempText
-                flickerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

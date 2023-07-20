@@ -51,7 +51,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:baselineAligned="false">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -76,6 +77,7 @@
                                 android:gravity="center_horizontal"
                                 android:textSize="18sp"
                                 android:minWidth="56dp"
+                                android:text="@string/angle_80"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
@@ -84,21 +86,22 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:gravity="center"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/phone_tilt"
-                                android:textSize="32sp"
+                                android:textSize="28sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/to_turn_flashlight_on_amp_off"
                                 android:textSize="18sp"
@@ -295,7 +298,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:baselineAligned="false">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -320,7 +324,7 @@
                                 android:gravity="center_horizontal"
                                 android:textSize="18sp"
                                 android:minWidth="56dp"
-                                android:text="Sensitivity\nLevel 1"
+                                android:text="@string/sensitivity_nlevel_1"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
@@ -329,21 +333,22 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:gravity="center"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/make_sounds"
-                                android:textSize="32sp"
+                                android:textSize="28sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/to_turn_flashlight_on_amp_off"
                                 android:textSize="18sp"
@@ -415,7 +420,7 @@
                             <SeekBar
                                 android:id="@+id/seekBarSound"
                                 style="@style/Widget.AppCompat.SeekBar.Discrete"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="48dp"
                                 android:layout_weight="1"
                                 android:layout_gravity="center_vertical"
@@ -511,7 +516,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:baselineAligned="false">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -545,21 +551,22 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:gravity="center"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/time"
-                                android:textSize="32sp"
+                                android:textSize="28sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/at_which_flashlight_flickers"
                                 android:textSize="18sp"
@@ -755,7 +762,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:baselineAligned="false">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -787,15 +795,16 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:gravity="center"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/battery_power"
-                                android:textSize="32sp"
+                                android:textSize="28sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
@@ -894,7 +903,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:baselineAligned="false">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -926,15 +936,16 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:gravity="center"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="Altitude Height"
-                                android:textSize="32sp"
+                                android:textSize="28sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
@@ -1036,7 +1047,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:baselineAligned="false">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -1070,15 +1082,16 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:gravity="center"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
-                                android:text="Flashlight Flickers"
-                                android:textSize="32sp"
+                                android:text="@string/flashlight_flickers"
+                                android:textSize="28sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
@@ -1086,7 +1099,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:text="at frequency specified"
+                                android:text="@string/at_frequency_specified"
                                 android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
