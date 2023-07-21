@@ -57,7 +57,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="end|center_vertical"
+                            android:minWidth="80dp"
+                            android:gravity="center"
                             android:orientation="vertical">
 
                             <ImageView
@@ -70,13 +71,10 @@
                                 app:srcCompat="@drawable/tilt_off" />
                             <TextView
                                 android:id="@+id/tiltSwitchText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="80dp"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
-                                android:gravity="center_horizontal"
                                 android:textSize="18sp"
-                                android:minWidth="56dp"
                                 android:text="@string/angle_80"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
@@ -95,7 +93,7 @@
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/phone_tilt"
-                                android:textSize="28sp"
+                                android:textSize="26sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
@@ -159,7 +157,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_sensitivity_angle_degrees"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
@@ -200,20 +198,15 @@
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="18dp">
 
-                        <LinearLayout
+                        <ImageView
+                            android:id="@+id/smsImageIcon"
                             android:layout_width="78dp"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:id="@+id/smsImageIcon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/MainImageSize"
-                                android:layout_gravity="start"
-                                android:background="#00FFFFFF"
-                                android:contentDescription="@string/IncomingSMSContentDescription"
-                                android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/sms_off" />
-                        </LinearLayout>
+                            android:layout_height="@dimen/MainImageSize"
+                            android:layout_gravity="start"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/IncomingSMSContentDescription"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/sms_off" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -246,20 +239,15 @@
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="18dp">
 
-                        <LinearLayout
+                        <ImageView
+                            android:id="@+id/callImageIcon"
                             android:layout_width="78dp"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:id="@+id/callImageIcon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/MainImageSize"
-                                android:layout_gravity="start"
-                                android:background="#00FFFFFF"
-                                android:contentDescription="@string/IncomingSMSContentDescription"
-                                android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/incoming_call_off" />
-                        </LinearLayout>
+                            android:layout_height="@dimen/MainImageSize"
+                            android:layout_gravity="start"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/IncomingSMSContentDescription"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/incoming_call_off" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -342,7 +330,7 @@
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/make_sounds"
-                                android:textSize="28sp"
+                                android:textSize="26sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
@@ -406,7 +394,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_sound_sensitivity_level"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
@@ -452,7 +440,7 @@
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/activated_features"
                             android:textColor="@color/white"
-                            android:textSize="24sp"
+                            android:textSize="22sp"
                             tools:ignore="VisualLintLongText" />
 
                         <LinearLayout
@@ -560,7 +548,7 @@
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/time"
-                                android:textSize="28sp"
+                                android:textSize="26sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
@@ -624,7 +612,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_time"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
@@ -663,20 +651,15 @@
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="18dp">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:id="@+id/networkImageIcon"
-                                android:layout_width="78dp"
-                                android:layout_height="@dimen/MainImageSize"
-                                android:layout_gravity="start"
-                                android:background="#00FFFFFF"
-                                android:contentDescription="@string/IncomingSMSContentDescription"
-                                android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/network_off" />
-                        </LinearLayout>
+                        <ImageView
+                            android:id="@+id/networkImageIcon"
+                            android:layout_width="78dp"
+                            android:layout_height="@dimen/MainImageSize"
+                            android:layout_gravity="start"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/IncomingSMSContentDescription"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/network_off" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -709,20 +692,15 @@
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="18dp">
 
-                        <LinearLayout
+                        <ImageView
+                            android:id="@+id/sosImageIcon"
                             android:layout_width="78dp"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:id="@+id/sosImageIcon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/MainImageSize"
-                                android:background="#00FFFFFF"
-                                android:contentDescription="@string/IncomingSMSContentDescription"
-                                android:scaleType="fitCenter"
-                                android:scaleY="1.3"
-                                app:srcCompat="@drawable/sos_off" />
-                        </LinearLayout>
+                            android:layout_height="@dimen/MainImageSize"
+                            android:background="#00FFFFFF"
+                            android:contentDescription="@string/IncomingSMSContentDescription"
+                            android:scaleType="fitCenter"
+                            android:scaleY="1.3"
+                            app:srcCompat="@drawable/sos_off" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -804,13 +782,13 @@
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/battery_power"
-                                android:textSize="28sp"
+                                android:textSize="26sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/at_which_flashlight_flickers"
                                 android:textSize="18sp"
@@ -855,19 +833,25 @@
                         android:visibility="gone">
 
                         <!-- Text -->
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
+                            android:gravity="center"
                             android:layout_height="wrap_content"
-                            android:gravity="center">
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/set_battery_power_threshold"
+                            android:textSize="18sp"
+                            tools:ignore="VisualLintLongText" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/cabin_regular"
-                                android:text="@string/set_battery_power_threshold"
-                                android:textSize="20sp"
-                                tools:ignore="VisualLintLongText" />
-                        </LinearLayout>
+                        <!-- Text -->
+                        <TextView
+                            android:id="@+id/seekBarBatteryText"
+                            android:layout_width="match_parent"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textSize="18sp"
+                            tools:ignore="VisualLintLongText"
+                            android:layout_marginBottom="24dp"/>
 
                         <!-- Bar -->
                         <LinearLayout
@@ -881,7 +865,7 @@
                                 style="@style/Widget.AppCompat.SeekBar"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:max="10"
+                                android:max="100"
                                 android:progress="1" />
                         </LinearLayout>
                     </LinearLayout>
@@ -945,13 +929,13 @@
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/altitude_height"
-                                android:textSize="28sp"
+                                android:textSize="26sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/at_which_flashlight_flickers"
                                 android:textSize="18sp"
@@ -1009,7 +993,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_altitude_height_m"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
@@ -1091,13 +1075,13 @@
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/flashlight_flickers"
-                                android:textSize="28sp"
+                                android:textSize="26sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/at_frequency_specified"
                                 android:textSize="18sp"
@@ -1156,7 +1140,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cabin_regular"
                                 android:text="@string/set_frequency_hz"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 

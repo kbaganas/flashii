@@ -30,6 +30,7 @@ import android.os.Looper
 import android.provider.Telephony
 import android.telephony.TelephonyManager
 import android.text.Editable
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -46,6 +47,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
+import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flashii.databinding.ActivityMainBinding
@@ -54,6 +57,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import kotlin.time.Duration.Companion.minutes
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -807,11 +811,14 @@ class MainActivity : AppCompatActivity() {
         // Get references to views
         val batteryExpandArrow: ImageButton = findViewById(R.id.batteryExpandArrow)
         val batteryHiddenView: LinearLayout = findViewById(R.id.batteryHiddenView)
+        var seekBarBatteryText : TextView = findViewById(R.id.seekBarBatteryText)
         batteryImageIcon = findViewById(R.id.batteryImageIcon)
         batterySwitchText = findViewById(R.id.batterySwitchText)
         tempText = "${batteryThreshold}%"
         batterySwitchText.text = tempText
         batterySwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
+        tempText = "Current Power: -%. Flicker at: -%"
+        seekBarBatteryText.text = tempText
 
         // Expand or hide the main content
         batteryExpandArrow.setOnClickListener {
@@ -824,6 +831,32 @@ class MainActivity : AppCompatActivity() {
                 batteryExpandArrow.setImageResource(R.drawable.arrow_up)
             }
         }
+
+        // Bar listeners
+        batteryBar = findViewById(R.id.seekBarBattery)
+        batteryBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                batteryThreshold = progress
+                tempText = "${batteryThreshold}%"
+                batterySwitchText.text = tempText
+                Log.i("MainActivity","batteryThreshold $progress, $batteryThreshold")
+                if (initBatteryLevel == minBattery) {
+                    tempText = "Current Power: -%. Flicker at ${batteryThreshold}%"
+                }
+                else {
+                    tempText = "Current Power: ${initBatteryLevel}%. Flicker at ${batteryThreshold}%"
+                }
+                seekBarBatteryText.text = tempText
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // Do nothing
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // Do nothing
+            }
+        })
 
         batterySwitch = findViewById(R.id.switchBattery)
         batterySwitch.setOnCheckedChangeListener {_, isChecked ->
@@ -839,6 +872,8 @@ class MainActivity : AppCompatActivity() {
                             val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
                             initBatteryLevel = ((level.toFloat() / scale.toFloat()) * 100).toInt()
                             Log.i("MainActivity", "Battery initial level is ${initBatteryLevel}%")
+                            tempText = "Current Power: ${initBatteryLevel}%. Flicker at ${batteryThreshold}%"
+                            seekBarBatteryText.text = tempText
                         }
 
                         if (intent.action == Intent.ACTION_BATTERY_CHANGED) {
@@ -1134,8 +1169,8 @@ class MainActivity : AppCompatActivity() {
                     stopFlickering()
                 }
                 flickeringDueToBattery = false
-                batteryThreshold = minBattery
-                initBatteryLevel = minBattery
+//                batteryThreshold = minBattery
+//                initBatteryLevel = minBattery
                 unregisterReceiver(batteryReceiver)
                 loopHandlerBattery.removeCallbacksAndMessages(null)
                 removeActivatedFeature(recyclerView, FEATURE.BATTERY)

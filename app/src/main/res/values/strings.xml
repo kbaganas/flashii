@@ -194,4 +194,5 @@
     <string name="list_item">List Item</string>
     <string name="flashlight_flickers">Flashlight Flickers</string>
     <string name="at_frequency_specified">at frequency specified</string>
+    <string name="altitude_height">Altitude Height</string>
 </resources>
