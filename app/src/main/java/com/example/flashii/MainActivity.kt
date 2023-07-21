@@ -30,7 +30,6 @@ import android.os.Looper
 import android.provider.Telephony
 import android.telephony.TelephonyManager
 import android.text.Editable
-import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -47,8 +46,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
-import androidx.core.text.HtmlCompat.fromHtml
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flashii.databinding.ActivityMainBinding
@@ -97,8 +94,8 @@ class MainActivity : AppCompatActivity() {
     private var initBatteryLevel : Int = minBattery
 
     // Altitude
-    private val minAltitude : Int = 1
-    private val maxAltitude : Int = 7000
+    private val minAltitude : Int = 0
+    private val maxAltitude : Int = 8848
     private var altitudeThreshold : Int = minAltitude
     private var initAltitudeLevel : Int = minAltitude
 
@@ -204,7 +201,6 @@ class MainActivity : AppCompatActivity() {
         TIMER("Flicker at Time"),
         NETWORK_FOUND("Flicker on Network Connection found"),
         NETWORK_LOST("Flicker on Network Connection lost"),
-        NETWORK("Flicker on Network Connection changes"),
         TILT("Flashlight toggle on Phone Tilts")
     }
 
@@ -811,7 +807,7 @@ class MainActivity : AppCompatActivity() {
         // Get references to views
         val batteryExpandArrow: ImageButton = findViewById(R.id.batteryExpandArrow)
         val batteryHiddenView: LinearLayout = findViewById(R.id.batteryHiddenView)
-        var seekBarBatteryText : TextView = findViewById(R.id.seekBarBatteryText)
+        val seekBarBatteryText : TextView = findViewById(R.id.seekBarBatteryText)
         batteryImageIcon = findViewById(R.id.batteryImageIcon)
         batterySwitchText = findViewById(R.id.batterySwitchText)
         tempText = "${batteryThreshold}%"
@@ -840,11 +836,10 @@ class MainActivity : AppCompatActivity() {
                 tempText = "${batteryThreshold}%"
                 batterySwitchText.text = tempText
                 Log.i("MainActivity","batteryThreshold $progress, $batteryThreshold")
-                if (initBatteryLevel == minBattery) {
-                    tempText = "Current Power: -%. Flicker at ${batteryThreshold}%"
-                }
-                else {
-                    tempText = "Current Power: ${initBatteryLevel}%. Flicker at ${batteryThreshold}%"
+                tempText = if (initBatteryLevel == minBattery) {
+                    "Current Power: -%. Flicker at ${batteryThreshold}%"
+                } else {
+                    "Current Power: ${initBatteryLevel}%. Flicker at ${batteryThreshold}%"
                 }
                 seekBarBatteryText.text = tempText
             }
@@ -970,11 +965,14 @@ class MainActivity : AppCompatActivity() {
 
         val altitudeExpandArrow: ImageButton = findViewById(R.id.altitudeExpandArrow)
         val altitudeHiddenView: LinearLayout = findViewById(R.id.altitudeHiddenView)
+        val seekBarAltitudeText : TextView = findViewById(R.id.seekBarAltitudeText)
         altitudeImageIcon = findViewById(R.id.altitudeImageIcon)
         altitudeSwitchText = findViewById(R.id.altitudeSwitchText)
         tempText = "${altitudeThreshold}m"
         altitudeSwitchText.text = tempText
         altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
+        tempText = "Current Altitude: -m. Flicker at: -m"
+        seekBarAltitudeText.text = tempText
 
         altitudeExpandArrow.setOnClickListener {
             // Toggle the visibility of the content view
@@ -986,6 +984,30 @@ class MainActivity : AppCompatActivity() {
                 altitudeExpandArrow.setImageResource(R.drawable.arrow_up)
             }
         }
+
+        // Bar listeners
+        altitudeBar = findViewById(R.id.seekBarAltitude)
+        altitudeBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                altitudeThreshold = minAltitude + ((maxAltitude - minAltitude).toFloat()/1000 * progress).toInt()
+                tempText = "${altitudeThreshold}m"
+                altitudeSwitchText.text = tempText
+                tempText = if (initAltitudeLevel == minAltitude) {
+                    "Current Altitude: -m. Flicker at: ${altitudeThreshold}m"
+                } else {
+                    "Current Altitude: ${initAltitudeLevel}m. Flicker at: ${altitudeThreshold}m"
+                }
+                seekBarAltitudeText.text = tempText
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // Do nothing
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // Do nothing
+            }
+        })
 
         altitudeSwitch = findViewById(R.id.switchAltitude)
         altitudeSwitch.setOnCheckedChangeListener {_, isChecked ->
@@ -1001,9 +1023,11 @@ class MainActivity : AppCompatActivity() {
                                     val altitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressureValue) // altitude in meters
                                     if (altitude > minAltitude) {
                                         if (initAltitudeLevel == minAltitude) {
-                                            initAltitudeLevel = altitude.toInt()
                                             Log.d("MainActivity", "initAltitudeLevel set to ${initAltitudeLevel}m")
+                                            initAltitudeLevel = altitude.toInt()
                                         }
+                                        tempText = "Current Altitude: ${altitude.toInt()}m. Flicker at: ${altitudeThreshold}m"
+                                        seekBarAltitudeText.text = tempText
                                         if (altitudeThreshold > initAltitudeLevel) {
                                             // In case User is ascending in height
                                             if (altitude > altitudeThreshold) {
@@ -1012,6 +1036,7 @@ class MainActivity : AppCompatActivity() {
                                                     stopFlickering()
                                                     Log.d("MainActivity", "Flickering ON while ascending \nto altitude of ${flickerFlashlightHz}m")
                                                     startFlickering()
+                                                    flickeringDueToAltitude = true
                                                     sensorManager.unregisterListener(sensorEventListener)
                                                 }
                                             }
@@ -1024,11 +1049,16 @@ class MainActivity : AppCompatActivity() {
                                                     stopFlickering()
                                                     Log.d("MainActivity", "Flickering ON while descending \nto altitude of ${flickerFlashlightHz}m")
                                                     startFlickering()
+                                                    flickeringDueToAltitude = true
                                                     stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong())
                                                     sensorManager.unregisterListener(sensorEventListener)
                                                 }
                                             }
                                         }
+                                    }
+                                    else {
+                                        tempText = "Current Altitude: ${altitude.toInt()}m. Flicker at: ${altitudeThreshold}m"
+                                        seekBarAltitudeText.text = tempText
                                     }
                                 }
                             }
@@ -1210,18 +1240,19 @@ class MainActivity : AppCompatActivity() {
             }
             Token.ALTITUDE -> {
                 isAltitudeOn = false
-                flickeringDueToAltitude = false
                 altitudeThreshold = minAltitude
                 sensorManager.unregisterListener(sensorEventListener)
                 if (flickeringDueToAltitude) {
                     stopFlickering()
                 }
+                flickeringDueToAltitude = false
                 removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_off)
-//                tempText = "${altitudeThreshold}m"
-//                altitudeSwitchText.text = tempText
+                tempText = "${altitudeThreshold}m"
+                altitudeSwitchText.text = tempText
                 altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 altitudeSwitch.isChecked = false
+                altitudeBar.progress = 0
             }
             Token.SOUND -> {
                 isAudioIncoming = false

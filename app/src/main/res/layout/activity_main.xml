@@ -118,7 +118,7 @@
                                 android:layout_width="48dp"
                                 android:layout_height="56dp"
                                 android:background="@color/backgroundWhite"
-                                android:contentDescription="@string/backArrow"
+                                android:contentDescription="@string/backArrowTilt"
                                 android:scaleType="fitCenter"
                                 android:src="@drawable/arrow_down" />
 
@@ -130,6 +130,7 @@
                                 android:gravity="bottom"
                                 android:minWidth="48dp"
                                 android:minHeight="48dp"
+                                android:contentDescription="@string/swith_for_tilt"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
@@ -221,6 +222,7 @@
                                 android:gravity="bottom"
                                 android:minWidth="48dp"
                                 android:minHeight="48dp"
+                                android:contentDescription="@string/switch_for_sms"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
@@ -312,7 +314,7 @@
                                 android:gravity="center_horizontal"
                                 android:textSize="18sp"
                                 android:minWidth="56dp"
-                                android:text="@string/sensitivity_nlevel_1"
+                                android:text="@string/sensitivity_level_1"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
@@ -471,7 +473,7 @@
                             android:layout_height="@dimen/mainFlashlightHeight"
                             android:layout_gravity="center_vertical"
                             android:background="#00FFFFFF"
-                            android:contentDescription="@string/FlashlightBtnContentDescription"
+                            android:contentDescription="@string/FlashlightImageContentDescription"
                             android:scaleType="centerInside"
                             app:srcCompat="@drawable/flashlight_off4" />
 
@@ -482,7 +484,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="-148dp"
                             android:background="#00FFFFFF"
-                            android:contentDescription="@string/FlashlightBtnContentDescription"
+                            android:contentDescription="@string/FlashlightImageBtnContentDescription"
                             android:scaleType="centerInside" />
 
                     </LinearLayout>
@@ -980,22 +982,28 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_marginTop="24dp"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <!-- Text -->
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center">
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/set_altitude_height_m"
+                            android:textSize="18sp"
+                            android:gravity="center"
+                            tools:ignore="VisualLintLongText" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/cabin_regular"
-                                android:text="@string/set_altitude_height_m"
-                                android:textSize="18sp"
-                                tools:ignore="VisualLintLongText" />
-                        </LinearLayout>
+                        <!-- Text -->
+                        <TextView
+                            android:id="@+id/seekBarAltitudeText"
+                            android:layout_width="match_parent"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textSize="18sp"
+                            tools:ignore="VisualLintLongText"
+                            android:layout_marginBottom="24dp"/>
 
                         <!-- Bar -->
                         <LinearLayout
@@ -1009,7 +1017,7 @@
                                 style="@style/Widget.AppCompat.SeekBar"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:max="10"
+                                android:max="1000"
                                 android:progress="1" />
                         </LinearLayout>
                     </LinearLayout>
