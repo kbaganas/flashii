@@ -49,10 +49,10 @@
     <string name="applyChanges">APPLY CHANGES</string>
     <string name="resetDefault">RESET\nDEFAULT</string>
 
-    <string name="settingsComments">Personalize Feature specs\naccording to ranges.</string>
+    <string name="settingsComments">Personalize Feature specs\naccording to Ranges</string>
     <string name="settingsFlickeringTitle">Max flickering frequency</string>
     <string name="settingsFlickeringNote">Range from 3 to 180 seconds (default 10)</string>
-    <string name="settingsHzNote">Range from 10 to 100 Hz (default 10)</string>
+    <string name="settingsHzNote">Range from 10 to 100 Hz\n(default 10)</string>
     <string name="settingsTimerTitle">Timer\'s max time</string>
     <string name="settingsTimerNote">Range from 240 (default) to 640 minutes.</string>
     <string name="settingsTiltTitle">Tilt sensitivity angle</string>
@@ -63,9 +63,9 @@
     <string name="settingsFlickeringCallNote">Range from 3 to 180 seconds (default 15)</string>
     <string name="settingsFlickeringSMSTitle">Flickering time on incoming SMS</string>
     <string name="settingsFlickeringSMSNote">Range from 3 to 180 seconds (default 15)</string>
-    <string name="settingsBatteryTitle">Flickering time on Battery level reached</string>
+    <string name="settingsBatteryTitle">Flickering time on Battery Power level reached</string>
     <string name="settingsBatteryNote">Range from 3 to 180 seconds (default 15)</string>
-    <string name="settingsAltitudeTitle">Flickering time on Altitude height reached</string>
+    <string name="settingsAltitudeTitle">Flickering time on Altitude Height reached</string>
     <string name="settingsAltitudeNote">Range from 3 to 180 seconds (default 15)</string>
 
     <string name="infoHelp">Help info</string>

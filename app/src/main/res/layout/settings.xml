@@ -43,23 +43,22 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_semibold"
+                    android:fontFamily="@font/cabin_regular"
                     android:text="@string/settings"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:textSize="32sp" />
+                    android:textSize="26sp" />
 
                 <Button
                     android:id="@+id/resetBtnId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_semibold"
+                    android:fontFamily="@font/cabin_regular"
                     android:text="@string/reset"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     app:backgroundTint="@color/blueOff"
                     app:cornerRadius="8dp"
-                    app:strokeColor="@color/whiteCollar"
-                    app:strokeWidth="1dp"
                     tools:ignore="VisualLintButtonSize" />
             </LinearLayout>
 
@@ -69,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="46dp"
-                android:fontFamily="@font/cabin_semibold"
+                android:fontFamily="@font/cabin_regular"
                 android:text="@string/settingsComments"
                 android:textAlignment="center"
                 android:textSize="20sp" />
@@ -85,15 +84,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginEnd="12dp"
-                    android:fontFamily="@font/cabin_semibold"
+                    android:fontFamily="@font/cabin_regular"
                     android:text="@string/Feature"
-                    android:textSize="14sp"
+                    android:textSize="20sp"
                     tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_semibold"
+                    android:fontFamily="@font/cabin_regular"
+                    android:textSize="20sp"
                     android:text="@string/Specification" />
             </LinearLayout>
 
@@ -107,12 +107,12 @@
                 android:textAlignment="center">
 
                 <View
-                    android:layout_width="76dp"
+                    android:layout_width="@dimen/MainImageSize"
                     android:layout_height="1dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="12dp"
                     android:background="@color/blueOff"
-                    android:fontFamily="@font/cabin_semibold"
+                    android:fontFamily="@font/cabin_regular"
                     android:text="@string/or"
                     tools:ignore="ExtraText" />
 
@@ -121,7 +121,7 @@
                     android:layout_height="1dp"
                     android:layout_gravity="center_vertical"
                     android:background="@color/blueOff"
-                    android:fontFamily="@font/cabin_semibold"
+                    android:fontFamily="@font/cabin_regular"
                     android:text="@string/or" />
             </LinearLayout>
 
@@ -129,20 +129,20 @@
             <LinearLayout
                 android:id="@+id/maxHz"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="96dp"
                 android:gravity="center_vertical"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/maxHz1"
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
-                    android:background="@drawable/feature_selector_sms"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="#00FFFFFF"
                     android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/flickering_off_m3" />
+                    app:srcCompat="@drawable/flicker_off" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -152,31 +152,31 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="12dp"
-                            android:fontFamily="@font/cabin_semibold"
+                            android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:text="@string/settingsFlickeringTitle"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             tools:ignore="VisualLintLongText" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="12dp"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:text="@string/settingsHzNote"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
 
@@ -206,229 +206,9 @@
 
             <!-- row -->
             <LinearLayout
-                android:id="@+id/timerSetting"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:layout_marginTop="16dp"
-                android:minHeight="34dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/timerSetting1"
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
-                    android:background="@drawable/feature_selector_sms"
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/timer_off_m3" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="12dp"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:gravity="center_vertical"
-                        android:text="@string/settingsTimerTitle"
-                        android:textSize="16sp"
-                        tools:ignore="VisualLintLongText" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="12dp"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/settingsTimerNote"
-                        android:textSize="12sp"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/maxTimerTimeId"
-                    android:layout_width="80dp"
-                    android:layout_height="48dp"
-                    android:autofillHints=""
-                    android:background="@drawable/shape"
-                    android:fontFamily="@font/cabin_regular"
-                    android:gravity="center"
-                    android:hint="@string/enterValue"
-                    android:inputType="phone"
-                    android:maxLength="3"
-                    android:padding="3dp"
-                    android:textColorHint="@color/greyNoteDarker4"
-                    android:textSize="14sp"
-                    tools:ignore="VisualLintTextFieldSize" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:background="@color/blueOffBack4" />
-
-            <!-- row -->
-            <LinearLayout
-                android:id="@+id/tiltSetting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center_vertical"
-                android:minHeight="34dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
-                    android:background="@drawable/feature_selector_sms"
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/tilt_off_m3" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="12dp"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:gravity="center_vertical"
-                        android:text="@string/settingsTiltTitle"
-                        android:textSize="16sp"
-                        tools:ignore="VisualLintLongText" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="12dp"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/settingsTiltNote"
-                        android:textSize="12sp"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/tiltAngleId"
-                    android:layout_width="80dp"
-                    android:layout_height="48dp"
-                    android:autofillHints=""
-                    android:background="@drawable/shape"
-                    android:fontFamily="@font/cabin_regular"
-                    android:gravity="center"
-                    android:hint="@string/enterValue"
-                    android:inputType="phone"
-                    android:maxLength="2"
-                    android:padding="3dp"
-                    android:textColorHint="@color/greyNoteDarker4"
-                    android:textSize="14sp"
-                    tools:ignore="VisualLintTextFieldSize" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:background="@color/blueOffBack4" />
-
-
-            <!-- row -->
-            <LinearLayout
-                android:id="@+id/soundSetting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center_vertical"
-                android:minHeight="34dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/soundSetting1"
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
-                    android:background="@drawable/feature_selector_sms"
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/sound_off_m3" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="12dp"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:gravity="center_vertical"
-                        android:text="@string/settingsSoundTitle"
-                        android:textSize="16sp"
-                        tools:ignore="VisualLintLongText" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="12dp"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/settingsSoundNote"
-                        android:textSize="12sp"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/soundThresholdId"
-                    android:layout_width="80dp"
-                    android:layout_height="48dp"
-                    android:autofillHints=""
-                    android:background="@drawable/shape"
-                    android:fontFamily="@font/cabin_regular"
-                    android:gravity="center"
-                    android:hint="@string/enterValue"
-                    android:inputType="phone"
-                    android:maxLength="5"
-                    android:padding="3dp"
-                    android:textColorHint="@color/greyNoteDarker4"
-                    android:textSize="14sp"
-                    tools:ignore="VisualLintTextFieldSize" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:background="@color/blueOffBack4" />
-
-            <!-- row -->
-            <LinearLayout
                 android:id="@+id/callSetting"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="96dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
                 android:minHeight="34dp"
@@ -436,13 +216,13 @@
 
                 <ImageView
                     android:id="@+id/callSetting1"
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
-                    android:background="@drawable/feature_selector_sms"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="#00FFFFFF"
                     android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/incoming_call_off_m3" />
+                    app:srcCompat="@drawable/incoming_call_off" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -453,24 +233,24 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringCallTitle"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringCallNote"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -501,7 +281,7 @@
             <LinearLayout
                 android:id="@+id/smsSetting"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="96dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
                 android:minHeight="34dp"
@@ -509,13 +289,14 @@
 
                 <ImageView
                     android:id="@+id/smsSetting1"
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
-                    android:background="@drawable/feature_selector_sms"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="#00FFFFFF"
                     android:layout_marginEnd="12dp"
+                    android:scaleY="1.1"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/incoming_sms_off_m3" />
+                    app:srcCompat="@drawable/sms_off" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -529,10 +310,10 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringSMSTitle"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -543,7 +324,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringSMSNote"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -574,7 +355,7 @@
             <LinearLayout
                 android:id="@+id/batterySetting"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="96dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
                 android:minHeight="34dp"
@@ -582,13 +363,13 @@
 
                 <ImageView
                     android:id="@+id/batterySetting1"
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
-                    android:background="@drawable/feature_selector_sms"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="#00FFFFFF"
                     android:layout_marginEnd="12dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/battery_off_m3" />
+                    app:srcCompat="@drawable/battery_off" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -602,10 +383,10 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsBatteryTitle"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -616,7 +397,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsBatteryNote"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -647,7 +428,7 @@
             <LinearLayout
                 android:id="@+id/altitudeSetting"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="96dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
                 android:minHeight="34dp"
@@ -655,13 +436,14 @@
 
                 <ImageView
                     android:id="@+id/altitudeSetting1"
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
-                    android:background="@drawable/feature_selector_sms"
+                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_height="@dimen/MainImageSize"
+                    android:background="#00FFFFFF"
                     android:layout_marginEnd="12dp"
+                    android:scaleY="1.35"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/altitude_off_m3" />
+                    app:srcCompat="@drawable/altitude_off" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -675,10 +457,10 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsAltitudeTitle"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -689,7 +471,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsAltitudeNote"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -729,15 +511,15 @@
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="36dp"
                     android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/cabin_semibold"
+                    android:fontFamily="@font/cabin_regular"
                     android:text="@string/resetDefault"
                     android:textAlignment="center"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     app:backgroundTint="@color/blueOff"
                     app:cornerRadius="8dp"
-                    app:strokeColor="@color/whiteCollar"
-                    app:strokeWidth="1dp"
-                    tools:ignore="VisualLintButtonSize" />
+                    android:textColor="@color/white"
+                    tools:ignore="VisualLintButtonSize"
+                    style="?android:attr/buttonBarButtonStyle" />
 
                 <Button
                     android:id="@+id/settingsApplyBtn"
@@ -745,15 +527,15 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="36dp"
-                    android:fontFamily="@font/cabin_semibold"
+                    android:fontFamily="@font/cabin_regular"
                     android:text="@string/applyChanges"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     app:backgroundTint="@color/blueOff"
                     app:cornerRadius="8dp"
-                    app:strokeColor="@color/whiteCollar"
-                    app:strokeWidth="1dp"
-                    tools:ignore="VisualLintButtonSize" />
+                    android:textColor="@color/white"
+                    tools:ignore="VisualLintButtonSize"
+                    style="?android:attr/buttonBarButtonStyle" />
             </LinearLayout>
 
 

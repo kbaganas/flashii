@@ -43,6 +43,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.Switch
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -53,6 +54,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 import kotlin.time.Duration.Companion.minutes
 
 
@@ -134,11 +136,7 @@ class MainActivity : AppCompatActivity() {
 
     // TextViews
     private lateinit var flickerHiddenViewText : TextView
-    private lateinit var tiltHiddenViewText : TextView
-    private lateinit var soundHiddenViewText : TextView
-    private lateinit var altitudeHiddenViewText : TextView
     private lateinit var timerHiddenViewText : TextView
-    private lateinit var batteryHiddenViewText : TextView
 
     // Icons
     private lateinit var smsImageIcon : ImageView
@@ -173,13 +171,6 @@ class MainActivity : AppCompatActivity() {
         AUDIO,
         OUT_OF_SERVICE,
         IN_SERVICE
-    }
-
-    enum class SeekBarMode {
-        HZ,
-        PERCENTAGE,
-        METERS,
-        HOURS
     }
 
     enum class RequestKey (val value: Int) {
@@ -262,9 +253,7 @@ class MainActivity : AppCompatActivity() {
     private var isAudioIncoming : Boolean = false
     private var isNetworkConnectivityCbIsSet : Boolean = false
     private var isAltitudeOn : Boolean = false
-    private var isAltitudeThresholdSet : Boolean = false
     private var isBatteryOn : Boolean = false
-    private var isBatteryThresholdSet : Boolean = false
     private var isTimerOn : Boolean = false
     private var isTimerThresholdSet : Boolean = false
     private var itemList = mutableListOf<String>()
@@ -311,8 +300,8 @@ class MainActivity : AppCompatActivity() {
 
         // Initialization of basic Settings
         if (isStoredSettings()) {
-            //retrieveStoredSettings()
-            //Log.i("MainActivity", "RETRIEVED STORED Settings are: $maxFlickerHz,${maxTimerMinutes.inWholeMinutes.toInt()},$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+            retrieveStoredSettings()
+            Log.i("MainActivity", "RETRIEVED STORED Settings are: $maxFlickerHz,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
         }
 
         // setup cameraManager
@@ -1112,67 +1101,62 @@ class MainActivity : AppCompatActivity() {
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // settings button init
-//        settingsBtn = findViewById(R.id.settingsBtnId)
+        settingsBtn = findViewById(R.id.settingsBtnId)
 //
-//        val registerSettings = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            if (result.resultCode == RESULT_OK) {
-//                // Handle the result from the SettingsActivity here
-//                val data = result.data
-//                maxFlickerHz = data?.getIntExtra("maxFlickerHz", maxFlickerHz) ?: maxFlickerHz
-//                sensitivityAngle = data?.getIntExtra("sensitivityAngle", sensitivityAngle) ?: sensitivityAngle
-//                sensitivitySoundThreshold = data?.getIntExtra("sensitivitySoundThreshold", sensitivitySoundThreshold) ?: sensitivitySoundThreshold
-//                maxFlickerDurationIncomingSMS = data?.getIntExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS) ?: maxFlickerDurationIncomingSMS
-//                maxFlickerDurationBattery = data?.getIntExtra("maxFlickerDurationBattery", maxFlickerDurationBattery) ?: maxFlickerDurationBattery
-//                maxFlickerDurationAltitude = data?.getIntExtra("maxFlickerDurationAltitude", maxFlickerDurationAltitude) ?: maxFlickerDurationAltitude
-//                maxFlickerDurationIncomingCall = data?.getIntExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall) ?: maxFlickerDurationIncomingCall
-//                val maxTimerMinutesFromSettings = data?.getIntExtra("maxTimerMinutes", maxTimerMinutes.inWholeMinutes.toInt()) ?: maxTimerMinutes.inWholeMinutes.toInt()
-//                maxTimerMinutes = maxTimerMinutesFromSettings.minutes
-//                Log.i("MainActivity", "Data from Settings are: $maxFlickerHz,${maxTimerMinutes.inWholeMinutes.toInt()},$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
-//
-//                // Store User's personal settings
-//                storeSettings()
-//            }
-//        }
-//
-//        // TODO: how to store personalized settings in Customer's phone device
-//        settingsBtn.setOnClickListener{
-//            setSettingsIntent()
-//            registerSettings.launch(intentSettings)
-//        }
+        val registerSettings = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // Handle the result from the SettingsActivity here
+                val data = result.data
+                maxFlickerHz = data?.getIntExtra("maxFlickerHz", maxFlickerHz) ?: maxFlickerHz
+                maxFlickerDurationIncomingSMS = data?.getIntExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS) ?: maxFlickerDurationIncomingSMS
+                maxFlickerDurationBattery = data?.getIntExtra("maxFlickerDurationBattery", maxFlickerDurationBattery) ?: maxFlickerDurationBattery
+                maxFlickerDurationAltitude = data?.getIntExtra("maxFlickerDurationAltitude", maxFlickerDurationAltitude) ?: maxFlickerDurationAltitude
+                maxFlickerDurationIncomingCall = data?.getIntExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall) ?: maxFlickerDurationIncomingCall
+                Log.i("MainActivity", "Data from Settings are: $maxFlickerHz,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+
+                // Store User's personal settings
+                storeSettings()
+            }
+        }
+
+        settingsBtn.setOnClickListener{
+            setSettingsIntent()
+            registerSettings.launch(intentSettings)
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // rate button
-//        reviewManager = ReviewManagerFactory.create(this)
-//        val request = reviewManager.requestReviewFlow()
-//        rateBtn = findViewById(R.id.rateBtnId)
-//
-//        request.addOnCompleteListener { requestInfo ->
-//            if (requestInfo.isSuccessful) {
-//                reviewInfo = requestInfo.result
-//                // Use the reviewInfo to launch the review flow
-//                Log.e("RateActivity", "request addOnCompleteListener: reviewInfo is ready}")
-//
-//            } else {
-//                // Handle the error case
-//               // setBtnImage(rateBtn, R.drawable.rate_no_bind)
-//                Log.e("RateActivity", "request addOnCompleteListener: reviewErrorCode = ${requestInfo.exception.toString()}")
-//            }
-//        }
-//
-//        rateBtn.setOnClickListener{
-//            try {
-//                val flow = reviewManager.launchReviewFlow(this, reviewInfo)
-//                flow.addOnCompleteListener {
-//                    // The flow has finished. The API does not indicate whether the user
-//                    // reviewed or not, or even whether the review dialog was shown. Thus, no
-//                    // matter the result, we continue our app flow.
-//                    Log.e("RateActivity", "flow addOnCompleteListener: complete")
-//                }
-//            }
-//            catch (e : java.lang.Exception) {
-//                Log.e("RateActivity", "Probably no service bind with Google Play")
-//            }
-//        }
+        reviewManager = ReviewManagerFactory.create(this)
+        val request = reviewManager.requestReviewFlow()
+        rateBtn = findViewById(R.id.rateBtnId)
+
+        request.addOnCompleteListener { requestInfo ->
+            if (requestInfo.isSuccessful) {
+                reviewInfo = requestInfo.result
+                // Use the reviewInfo to launch the review flow
+                Log.e("RateActivity", "request addOnCompleteListener: reviewInfo is ready}")
+
+            } else {
+                // Handle the error case
+               // setBtnImage(rateBtn, R.drawable.rate_no_bind)
+                Log.e("RateActivity", "request addOnCompleteListener: reviewErrorCode = ${requestInfo.exception.toString()}")
+            }
+        }
+
+        rateBtn.setOnClickListener{
+            try {
+                val flow = reviewManager.launchReviewFlow(this, reviewInfo)
+                flow.addOnCompleteListener {
+                    // The flow has finished. The API does not indicate whether the user
+                    // reviewed or not, or even whether the review dialog was shown. Thus, no
+                    // matter the result, we continue our app flow.
+                    Log.e("RateActivity", "flow addOnCompleteListener: complete")
+                }
+            }
+            catch (e : java.lang.Exception) {
+                Log.e("RateActivity", "Probably no service bind with Google Play")
+            }
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // support button
@@ -1567,66 +1551,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-
-    private fun setSeekBar(mode : SeekBarMode, resetToCurrentState : Boolean = false) {
-        flickeringBar.visibility = View.VISIBLE
-        thumbInitialPosition = flickeringBar.thumb.bounds.right
-        //seekBarTitle.visibility = View.VISIBLE
-        when (mode) {
-            SeekBarMode.HOURS -> {
-                flickeringBar.min = minTimerMinutes.inWholeMinutes.toInt()
-                flickeringBar.max = maxTimerMinutes.inWholeMinutes.toInt()
-                flickeringBar.progress = minTimerMinutes.inWholeMinutes.toInt()
-            }
-            SeekBarMode.HZ -> {
-                flickeringBar.min = minFlickerHz
-                flickeringBar.max = maxFlickerHz
-                if (resetToCurrentState) {
-                    flickeringBar.progress = flickerFlashlightHz.toInt()
-                }
-                else {
-                    flickeringBar.progress = minFlickerHz
-                }
-            }
-            SeekBarMode.METERS -> {
-                flickeringBar.min = minAltitude
-                flickeringBar.max = maxAltitude
-                if (initAltitudeLevel != minAltitude) {
-                    flickeringBar.progress = initAltitudeLevel
-                }
-            }
-            SeekBarMode.PERCENTAGE -> {
-                flickeringBar.min = minBattery
-                flickeringBar.max = maxBattery
-                if (initBatteryLevel != minBattery) {
-                    flickeringBar.progress = initBatteryLevel
-                }
-            }
-        }
-    }
-
-    private fun resetSeekBarAndTitle (hideBarOnly : Boolean = false) {
-        flickeringBar.visibility = View.INVISIBLE
-        //seekBarTitle.visibility = View.INVISIBLE
-        if (!hideBarOnly) {
-            flickeringBar.progress = flickeringBar.min
-        }
-        flickeringBar.min = when (token) {
-            Token.FLICKER -> {
-                minFlickerHz
-            }
-            Token.TIMER -> {
-                minTimerMinutes.inWholeMinutes.toInt()
-            }
-            Token.BATTERY -> {
-                minBattery
-            }
-            Token.ALTITUDE -> {
-                minAltitude
-            }
-            else -> {minFlickerHz}
-        }
-    }
 
     private fun isAboveThreshold(buffer: ShortArray, bytesRead: Int): Boolean {
         for (i in 0 until bytesRead) {
@@ -2104,9 +2028,6 @@ class SettingsActivity : AppCompatActivity() {
 
     // constants, variables
     private val defaultMaxFlickerHz : Int = 10
-    private val defaultMaxTimer = 240.minutes
-    private val defaultMaxTiltAngle : Int = 80
-    private val defaultSoundSenseLevel : Int = 20000
     private val defaultMaxFlickerIncomingCall : Int = 15000
     private val defaultMaxFlickerIncomingSMS : Int = 15000
     private val defaultMaxFlickerIncomingBattery : Int = 15000
@@ -2114,16 +2035,11 @@ class SettingsActivity : AppCompatActivity() {
 
     private var maxFlickerHz : Int = defaultMaxFlickerHz
     private var maxTimerMinutes : Int = 0
-    private var sensitivityAngle : Int = 0
-    private var sensitivitySoundThreshold : Int = 0
     private var maxFlickerDurationIncomingCall : Int = 0
     private var maxFlickerDurationIncomingSMS : Int = 0
     private var maxFlickerDurationBattery : Int = 0
     private var maxFlickerDurationAltitude : Int = 0
     private lateinit var maxFlickerHzEditText : EditText
-    private lateinit var maxTimerTimeEditText : EditText
-    private lateinit var tiltAngleEditText : EditText
-    private lateinit var soundThresholdEditText : EditText
     private lateinit var flickTimeIncCallEditText : EditText
     private lateinit var flickTimeIncSMSEditText : EditText
     private lateinit var flickTimeBatteryEditText : EditText
@@ -2132,12 +2048,6 @@ class SettingsActivity : AppCompatActivity() {
     private val _hzHigh = 100
     private val _flickTimeLow = 3
     private val _flickTimeHigh = 180
-    private val _timerLow = 240
-    private val _timerHigh = 640
-    private val _angleLow = 45
-    private val _angleHigh = 80
-    private val _soundLow = 4000
-    private val _soundHigh = 20000
 
     enum class CheckResult {
         SET,
@@ -2152,9 +2062,6 @@ class SettingsActivity : AppCompatActivity() {
 
         // Init editTexts
         maxFlickerHzEditText = findViewById(R.id.maxFlickerHzId)
-        maxTimerTimeEditText = findViewById(R.id.maxTimerTimeId)
-        tiltAngleEditText = findViewById(R.id.tiltAngleId)
-        soundThresholdEditText = findViewById(R.id.soundThresholdId)
         flickTimeIncCallEditText = findViewById(R.id.flickTimeIncCallId)
         flickTimeIncSMSEditText = findViewById(R.id.flickTimeIncSMSId)
         flickTimeBatteryEditText = findViewById(R.id.flickTimeBatteryId)
@@ -2162,9 +2069,6 @@ class SettingsActivity : AppCompatActivity() {
 
         // Retrieve the data value from the intent of the MainActivity
         maxFlickerHz = intent.getIntExtra("maxFlickerHz", 0)
-        maxTimerMinutes = intent.getIntExtra("maxTimerMinutes", 0)
-        sensitivityAngle = intent.getIntExtra("sensitivityAngle", 0)
-        sensitivitySoundThreshold = intent.getIntExtra("sensitivitySoundThreshold", 0)
         maxFlickerDurationIncomingCall = intent.getIntExtra("maxFlickerDurationIncomingCall", 0)
         maxFlickerDurationIncomingSMS = intent.getIntExtra("maxFlickerDurationIncomingSMS", 0)
         maxFlickerDurationBattery = intent.getIntExtra("maxFlickerDurationBattery", 0)
@@ -2173,14 +2077,14 @@ class SettingsActivity : AppCompatActivity() {
         // Set data of the intent in local variables
         setHintValues()
 
-        Log.i("SettingsActivity", "oCreate Input data are: $maxFlickerHz, $maxTimerMinutes,$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+        Log.i("SettingsActivity", "oCreate Input data are: $maxFlickerHz,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
 
 
         // apply button
         val settingsApplyBtn = findViewById<Button>(R.id.settingsApplyBtn)
         settingsApplyBtn.setOnClickListener {
             // Return the updated maxFlickerHz value back to MainActivity
-            Log.i("SettingsActivity", "setOnClickListener Input data are: $maxFlickerHz, $maxTimerMinutes,$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+            Log.i("SettingsActivity", "setOnClickListener Input data are: $maxFlickerHz,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
             val resultIntent = Intent()
             if (getValues(resultIntent)) {
                 Log.i("SettingsActivity", "Wrong values inserted by user")
@@ -2213,9 +2117,6 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun setHintValues() {
         maxFlickerHzEditText.hint = maxFlickerHz.toString()
-        maxTimerTimeEditText.hint = maxTimerMinutes.toString()
-        tiltAngleEditText.hint = sensitivityAngle.toString()
-        soundThresholdEditText.hint = sensitivitySoundThreshold.toString()
         var tempInt = defaultMaxFlickerIncomingCall / 1000
         flickTimeIncCallEditText.hint = tempInt.toString()
         tempInt = maxFlickerDurationIncomingSMS / 1000
@@ -2228,18 +2129,12 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun resetTextValues() {
         maxFlickerHz = defaultMaxFlickerHz
-        maxTimerMinutes = defaultMaxTimer.inWholeMinutes.toInt()
-        sensitivityAngle = defaultMaxTiltAngle
-        sensitivitySoundThreshold = defaultSoundSenseLevel
         maxFlickerDurationIncomingCall = defaultMaxFlickerIncomingCall
         maxFlickerDurationIncomingSMS = defaultMaxFlickerIncomingSMS
         maxFlickerDurationBattery = defaultMaxFlickerIncomingBattery
         maxFlickerDurationAltitude = defaultMaxFlickerIncomingAltitude
 
         maxFlickerHzEditText.text = Editable.Factory.getInstance().newEditable(maxFlickerHz.toString())
-        maxTimerTimeEditText.text = Editable.Factory.getInstance().newEditable(maxTimerMinutes.toString())
-        tiltAngleEditText.text = Editable.Factory.getInstance().newEditable(sensitivityAngle.toString())
-        soundThresholdEditText.text = Editable.Factory.getInstance().newEditable(sensitivitySoundThreshold.toString())
         var temp = maxFlickerDurationIncomingCall / 1000
         flickTimeIncCallEditText.text = Editable.Factory.getInstance().newEditable(temp.toString())
         temp = maxFlickerDurationIncomingSMS / 1000
@@ -2253,9 +2148,6 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun resetToDefaultHint () {
         maxFlickerHzEditText.hint = defaultMaxFlickerHz.toString()
-        maxTimerTimeEditText.hint = defaultMaxTimer.inWholeMinutes.toInt().toString()
-        tiltAngleEditText.hint = defaultMaxTiltAngle.toString()
-        soundThresholdEditText.hint = defaultSoundSenseLevel.toString()
         var tempInt = defaultMaxFlickerIncomingCall / 1000
         flickTimeIncCallEditText.hint = tempInt.toString()
         tempInt = defaultMaxFlickerIncomingSMS / 1000
@@ -2269,7 +2161,6 @@ class SettingsActivity : AppCompatActivity() {
     private fun getValues(resultIntent : Intent) : Boolean {
 
         var wrongValueInsertedByUser = false
-
         when (checkTextValue(maxFlickerHzEditText, _hzLow, _hzHigh)) {
             CheckResult.SET -> {
                 maxFlickerHz = maxFlickerHzEditText.text.toString().toInt()
@@ -2280,40 +2171,6 @@ class SettingsActivity : AppCompatActivity() {
             }
             else -> {}
         }
-
-        when (checkTextValue(maxTimerTimeEditText, _timerLow, _timerHigh)) {
-            CheckResult.SET -> {
-                maxTimerMinutes = maxTimerTimeEditText.text.toString().toInt()
-                resultIntent.putExtra("maxTimerMinutes", maxTimerMinutes)
-            }
-            CheckResult.FAULT -> {
-                wrongValueInsertedByUser = true
-            }
-            else -> {}
-        }
-
-        when (checkTextValue(tiltAngleEditText, _angleLow, _angleHigh)) {
-            CheckResult.SET -> {
-                sensitivityAngle = tiltAngleEditText.text.toString().toInt()
-                resultIntent.putExtra("sensitivityAngle", sensitivityAngle)
-            }
-            CheckResult.FAULT -> {
-                wrongValueInsertedByUser = true
-            }
-            else -> {}
-        }
-
-        when (checkTextValue(soundThresholdEditText, _soundLow, _soundHigh)) {
-            CheckResult.SET -> {
-                sensitivitySoundThreshold = soundThresholdEditText.text.toString().toInt()
-                resultIntent.putExtra("sensitivitySoundThreshold", sensitivitySoundThreshold)
-            }
-            CheckResult.FAULT -> {
-                wrongValueInsertedByUser = true
-            }
-            else -> {}
-        }
-
         when (checkTextValue(flickTimeIncCallEditText, _flickTimeLow, _flickTimeHigh)) {
             CheckResult.SET -> {
                 maxFlickerDurationIncomingCall = flickTimeIncCallEditText.text.toString().toInt()
@@ -2324,7 +2181,6 @@ class SettingsActivity : AppCompatActivity() {
             }
             else -> {}
         }
-
         when (checkTextValue(flickTimeIncSMSEditText, _flickTimeLow, _flickTimeHigh)) {
             CheckResult.SET -> {
                 maxFlickerDurationIncomingSMS = flickTimeIncSMSEditText.text.toString().toInt()
@@ -2335,7 +2191,6 @@ class SettingsActivity : AppCompatActivity() {
             }
             else -> {}
         }
-
         when (checkTextValue(flickTimeAltitudeEditText, _flickTimeLow, _flickTimeHigh)) {
             CheckResult.SET -> {
                 maxFlickerDurationAltitude = flickTimeAltitudeEditText.text.toString().toInt()
@@ -2346,7 +2201,6 @@ class SettingsActivity : AppCompatActivity() {
             }
             else -> {}
         }
-
         when (checkTextValue(flickTimeBatteryEditText, _flickTimeLow, _flickTimeHigh)) {
             CheckResult.SET -> {
                 maxFlickerDurationBattery = flickTimeBatteryEditText.text.toString().toInt()
