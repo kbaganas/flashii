@@ -172,11 +172,11 @@
 
                             <SeekBar
                                 android:id="@+id/seekBarTilt"
-                                style="@style/Widget.AppCompat.SeekBar"
+                                style="@style/Widget.AppCompat.SeekBar.Discrete"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:max="10"
-                                android:progress="1" />
+                                android:max="9"
+                                android:progress="7" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -944,7 +944,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
-                                android:text="Altitude Height"
+                                android:text="@string/altitude_height"
                                 android:textSize="28sp"
                                 tools:ignore="VisualLintLongText" />
                             <TextView

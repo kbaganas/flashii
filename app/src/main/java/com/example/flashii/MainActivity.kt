@@ -71,7 +71,9 @@ class MainActivity : AppCompatActivity() {
     // constants defaults
     private val defaultMaxFlickerHz : Int = 10
     private val defaultMaxTimer = 240.minutes
-    private val defaultMaxTiltAngle : Int = 80
+    private val defaultMaxTiltAngle : Int = 90
+    private val defaultTiltAngle : Int = 80
+    private val defaultMinTiltAngle : Int = 45
     private val defaultSoundSenseLevel : Int = 20000
     private val minSoundSenseLevel : Int = 4000
     private val defaultMaxFlickerIncomingCall : Int = 15000
@@ -120,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     private val initRotationAngle : Float = -1000f
     private var touchStartTime : Long = 0
     private var thumbInitialPosition = 0
-    private var sensitivityAngle = defaultMaxTiltAngle
+    private var sensitivityAngle = defaultTiltAngle
     private var sensitivitySoundThreshold = defaultSoundSenseLevel
 
     private val hideSeekBarAfterDelay25 : Long = 2000 // 3.5 seconds
@@ -612,6 +614,26 @@ class MainActivity : AppCompatActivity() {
                 tiltExpandArrow.setImageResource(R.drawable.arrow_up)
             }
         }
+
+        // Bar listeners
+        tiltBar = findViewById(R.id.seekBarTilt)
+        tiltBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                sensitivityAngle = defaultMinTiltAngle + (defaultMaxTiltAngle - defaultMinTiltAngle) / 9 * progress
+                tempText = "Angle ${sensitivityAngle}\u00B0"
+                tiltSwitchText.text = tempText
+                Log.i("MainActivity","Angle $progress, $sensitivityAngle")
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // Do nothing
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                Log.i("MainActivity","Angle onStopTrackingTouch, $sensitivityAngle")
+                // Do nothing
+            }
+        })
 
         // TODO: 45 degrees don't work well
         incomingTiltSwitch = findViewById(R.id.switchTilt)
