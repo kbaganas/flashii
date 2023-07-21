@@ -404,7 +404,7 @@
                 <EditText
                     android:id="@+id/flickTimeBatteryId"
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:autofillHints=""
                     android:background="@drawable/shape"
                     android:fontFamily="@font/cabin_regular"
@@ -478,7 +478,7 @@
                 <EditText
                     android:id="@+id/flickTimeAltitudeId"
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:autofillHints=""
                     android:background="@drawable/shape"
                     android:fontFamily="@font/cabin_regular"

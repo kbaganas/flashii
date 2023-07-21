@@ -1108,6 +1108,12 @@ class MainActivity : AppCompatActivity() {
                 // Handle the result from the SettingsActivity here
                 val data = result.data
                 maxFlickerHz = data?.getIntExtra("maxFlickerHz", maxFlickerHz) ?: maxFlickerHz
+                flickeringBar.max = maxFlickerHz
+                if (isFlickeringOnDemand && flickerFlashlightHz > maxFlickerHz) {
+                    // user has set a flickering Hz way lower than the running one; so we have to adapt to it
+                    flickerFlashlightHz = maxFlickerHz.toLong()
+                }
+
                 maxFlickerDurationIncomingSMS = data?.getIntExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS) ?: maxFlickerDurationIncomingSMS
                 maxFlickerDurationBattery = data?.getIntExtra("maxFlickerDurationBattery", maxFlickerDurationBattery) ?: maxFlickerDurationBattery
                 maxFlickerDurationAltitude = data?.getIntExtra("maxFlickerDurationAltitude", maxFlickerDurationAltitude) ?: maxFlickerDurationAltitude
@@ -2046,7 +2052,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var flickTimeAltitudeEditText : EditText
     private val _hzLow = 10
     private val _hzHigh = 100
-    private val _flickTimeLow = 3
+    private val _flickTimeLow = 10
     private val _flickTimeHigh = 180
 
     enum class CheckResult {
@@ -2078,7 +2084,6 @@ class SettingsActivity : AppCompatActivity() {
         setHintValues()
 
         Log.i("SettingsActivity", "oCreate Input data are: $maxFlickerHz,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
-
 
         // apply button
         val settingsApplyBtn = findViewById<Button>(R.id.settingsApplyBtn)
@@ -2143,7 +2148,6 @@ class SettingsActivity : AppCompatActivity() {
         flickTimeBatteryEditText.text = Editable.Factory.getInstance().newEditable(temp.toString())
         temp = maxFlickerDurationAltitude / 1000
         flickTimeAltitudeEditText.text = Editable.Factory.getInstance().newEditable(temp.toString())
-
     }
 
     private fun resetToDefaultHint () {

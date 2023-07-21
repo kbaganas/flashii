@@ -46,27 +46,27 @@
     <string name="or">or</string>
     <string name="enterComments">Enter your comments</string>
     <string name="enterValue">Enter value</string>
-    <string name="applyChanges">APPLY CHANGES</string>
+    <string name="applyChanges">APPLY</string>
     <string name="resetDefault">RESET\nDEFAULT</string>
 
     <string name="settingsComments">Personalize Feature specs\naccording to Ranges</string>
     <string name="settingsFlickeringTitle">Max flickering frequency</string>
     <string name="settingsFlickeringNote">Range from 3 to 180 seconds (default 10)</string>
-    <string name="settingsHzNote">Range from 10 to 100 Hz\n(default 10)</string>
+    <string name="settingsHzNote">(Range from 10 to 100 Hz)</string>
     <string name="settingsTimerTitle">Timer\'s max time</string>
     <string name="settingsTimerNote">Range from 240 (default) to 640 minutes.</string>
     <string name="settingsTiltTitle">Tilt sensitivity angle</string>
     <string name="settingsTiltNote">Range from 45 to 80 degrees (default)</string>
     <string name="settingsSoundTitle">Sound sensitivity threshold</string>
     <string name="settingsSoundNote">Range from 4000 to 20000 (default)</string>
-    <string name="settingsFlickeringCallTitle">Flickering time on incoming Call</string>
-    <string name="settingsFlickeringCallNote">Range from 3 to 180 seconds (default 15)</string>
-    <string name="settingsFlickeringSMSTitle">Flickering time on incoming SMS</string>
-    <string name="settingsFlickeringSMSNote">Range from 3 to 180 seconds (default 15)</string>
-    <string name="settingsBatteryTitle">Flickering time on Battery Power level reached</string>
-    <string name="settingsBatteryNote">Range from 3 to 180 seconds (default 15)</string>
-    <string name="settingsAltitudeTitle">Flickering time on Altitude Height reached</string>
-    <string name="settingsAltitudeNote">Range from 3 to 180 seconds (default 15)</string>
+    <string name="settingsFlickeringCallTitle">Flickering time on\nCall incoming</string>
+    <string name="settingsFlickeringCallNote">(Range from 3 to 180 seconds)</string>
+    <string name="settingsFlickeringSMSTitle">Flickering time on\nSMS incoming</string>
+    <string name="settingsFlickeringSMSNote">(Range from 3 to 180 seconds)</string>
+    <string name="settingsBatteryTitle">Flickering time on\nBattery Power reached</string>
+    <string name="settingsBatteryNote">(Range from 3 to 180 seconds)</string>
+    <string name="settingsAltitudeTitle">Flickering time on\nAltitude Height reached</string>
+    <string name="settingsAltitudeNote">(Range from 3 to 180 seconds)</string>
 
     <string name="infoHelp">Help info</string>
     <string name="infoMoreComments">Find below full description\nof each Feature and its Buttons.</string>
