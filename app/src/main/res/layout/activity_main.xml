@@ -533,6 +533,7 @@
                                 android:gravity="center_horizontal"
                                 android:textSize="18sp"
                                 android:minWidth="56dp"
+                                android:text="@string/time_reset"
                                 android:textColor="@color/greyNoteDarker2"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
@@ -604,19 +605,13 @@
                         android:visibility="gone">
 
                         <!-- Text -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/cabin_regular"
-                                android:text="@string/set_time"
-                                android:textSize="18sp"
-                                tools:ignore="VisualLintLongText" />
-                        </LinearLayout>
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/set_time"
+                            android:textSize="18sp"
+                            tools:ignore="VisualLintLongText" />
 
                         <!-- Input & TIME -->
                         <LinearLayout
@@ -626,6 +621,9 @@
 
                             <TimePicker
                                 android:id="@+id/timePicker1"
+                                android:scaleX="1.2"
+                                android:scaleY="1.2"
+                                android:layout_marginTop="6dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:theme="@style/timePicker"

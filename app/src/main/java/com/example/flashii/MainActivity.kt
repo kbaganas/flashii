@@ -16,6 +16,8 @@ import android.hardware.SensorManager
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
@@ -43,6 +45,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.TimePicker
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -55,6 +58,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import java.util.Locale
 import kotlin.time.Duration.Companion.minutes
 
 
@@ -65,7 +69,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var flickeringBar : SeekBar
     private lateinit var altitudeBar : SeekBar
-    private lateinit var timeBar : SeekBar
     private lateinit var batteryBar : SeekBar
     private lateinit var soundBar : SeekBar
     private lateinit var tiltBar : SeekBar
@@ -91,7 +94,6 @@ class MainActivity : AppCompatActivity() {
 
     // Battery
     private val minBattery : Int = 1
-    private val maxBattery : Int = 100
     private var batteryThreshold : Int = minBattery
     private var initBatteryLevel : Int = minBattery
 
@@ -114,7 +116,6 @@ class MainActivity : AppCompatActivity() {
     private val spaceWordsDuration : Long = 4 * spaceDuration // results to 7*ditDuration, considering that we add spaceCharsDuration after each letter
 
     // Flickering
-    private val maxFlickerDuration15 : Long = 15000 // 15 seconds
     private val maxFlickerDuration30 : Long = 30000 // 30 seconds
     private var maxFlickerDurationIncomingCall : Int = defaultMaxFlickerIncomingCall
     private var maxFlickerDurationIncomingSMS : Int = defaultMaxFlickerIncomingSMS
@@ -128,7 +129,6 @@ class MainActivity : AppCompatActivity() {
     private var sensitivityAngle = defaultTiltAngle
     private var sensitivitySoundThreshold = defaultSoundSenseLevel
 
-    private val hideSeekBarAfterDelay25 : Long = 2000 // 3.5 seconds
     private lateinit var token : Token // token regarding which key is pressed
     private lateinit var reviewInfo : ReviewInfo
     private lateinit var sharedPref : SharedPreferences // shared with Settings view
@@ -136,7 +136,6 @@ class MainActivity : AppCompatActivity() {
 
     // TextViews
     private lateinit var flickerHiddenViewText : TextView
-    private lateinit var timerHiddenViewText : TextView
 
     // Icons
     private lateinit var smsImageIcon : ImageView
@@ -258,6 +257,7 @@ class MainActivity : AppCompatActivity() {
     private var isTimerThresholdSet : Boolean = false
     private var itemList = mutableListOf<String>()
     private lateinit var recyclerView: RecyclerView
+    private var timerForFlickeringSet : Boolean = false
 
     // Buttons & Ids
     private var flashlightId : String = "0"
@@ -912,6 +912,11 @@ class MainActivity : AppCompatActivity() {
         // Get references to views
         val timerExpandArrow: ImageButton = findViewById(R.id.timerExpandArrow)
         val timerHiddenView: LinearLayout = findViewById(R.id.timerHiddenView)
+        val timerTimePicker = findViewById<TimePicker>(R.id.timePicker1)
+        var selectedTime = ""
+        var hourOfDayTimer = 0
+        var minuteTimer = 0
+        timerTimePicker.setIs24HourView(true)
         timerImageIcon = findViewById(R.id.timerImageIcon)
         timerSwitchText = findViewById(R.id.timerSwitchText)
         tempText = "--:--"
@@ -927,25 +932,60 @@ class MainActivity : AppCompatActivity() {
             } else {
                 timerHiddenView.visibility = View.VISIBLE
                 timerExpandArrow.setImageResource(R.drawable.arrow_up)
+                // Set a listener to handle the time selection
+                timerTimePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
+                    if (!timerForFlickeringSet) {
+                        selectedTime = formatTime(hourOfDay, minute)
+                        hourOfDayTimer = hourOfDay
+                        minuteTimer = minute
+                        Log.i("MainActivity", "Time selected = $selectedTime")
+                        timerSwitchText.text = selectedTime
+                    }
+                    else {
+                        Snackbar.make(rootView, "You have to deactivate the feature first, to select another timestamp.", Snackbar.LENGTH_LONG).show()
+                    }
+                }
+
             }
         }
 
         timerSwitch = findViewById(R.id.switchTimer)
         timerSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
-                Log.i("MainActivity","timerSwitch is ON")
-                token = Token.TIMER
-                resetAllActivities(Token.TIMER)
-                isTimerOn = true
-                timerImageIcon.setImageResource(R.drawable.timer_on)
-                tempText = "--:--"
-                timerSwitchText.text = tempText
-                timerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
-                addActivatedFeature(recyclerView, FEATURE.TIMER)
+                timerTimePicker.isEnabled = true
+                if (hourOfDayTimer == 0 && minuteTimer == 0) {
+                    Log.i("MainActivity","Time error: set to past time")
+                    Snackbar.make(rootView, "Have to select a future timestamp first", Snackbar.LENGTH_LONG).show()
+                    timerSwitch.isChecked = false
+                }
+                else {
+                    val calcTimeToFlickerInMillis = calcTimeToFlicker(hourOfDayTimer, minuteTimer)
+                    if (calcTimeToFlickerInMillis < 0) {
+                        Log.i("MainActivity","Time error: set to past time ($hourOfDayTimer, $minuteTimer)")
+                        timerSwitch.isChecked = false
+                    }
+                    else {
+                        Log.i("MainActivity","timerSwitch is ON")
+                        token = Token.TIMER
+                        resetAllActivities(Token.TIMER)
+                        isTimerOn = true
+                        timerImageIcon.setImageResource(R.drawable.timer_on)
+                        timerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
+                        addActivatedFeature(recyclerView, FEATURE.TIMER)
+                        timerForFlickeringSet = true
+                        Log.i("MainActivity", "TIME flickering at $selectedTime")
+                        loopHandlerTimer.removeCallbacksAndMessages(null)
+                        loopHandlerTimer.postDelayed({startFlickering()}, calcTimeToFlickerInMillis)
+                        loopHandlerTimer.postDelayed({resetFeature(Token.TIMER)}, calcTimeToFlickerInMillis + maxFlickerDuration30)
+                        // user can no longer interact with the timepicker
+                        timerTimePicker.isEnabled = false
+                    }
+                }
             }
             else {
                 Log.i("MainActivity","timerSwitch is OFF")
                 resetFeature(Token.TIMER)
+                timerTimePicker.isEnabled = true
             }
         }
 
@@ -1177,9 +1217,38 @@ class MainActivity : AppCompatActivity() {
         checkPermissions(ACTION.CREATE)
     }
 
+
+
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
+
+    private fun calcTimeToFlicker(hourOfDay: Int, minute: Int): Long {
+        val selectedTimeCalendar = Calendar.getInstance()
+        selectedTimeCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        selectedTimeCalendar.set(Calendar.MINUTE, minute)
+        selectedTimeCalendar.set(Calendar.SECOND, 0)
+        selectedTimeCalendar.set(Calendar.MILLISECOND, 0)
+        val selectedTimeInMillis = selectedTimeCalendar.timeInMillis
+
+        val currentTimeInMillis = Calendar.getInstance().timeInMillis
+
+        if (selectedTimeInMillis < currentTimeInMillis) {
+            Snackbar.make(rootView, "Have to select a future timestamp first", Snackbar.LENGTH_LONG).show()
+            return -1
+        }
+
+        return selectedTimeInMillis - currentTimeInMillis
+    }
+
+    // Function to format the selected time
+    private fun formatTime(hourOfDay: Int, minute: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        calendar.set(Calendar.MINUTE, minute)
+        val simpleDateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        return simpleDateFormat.format(calendar.time)
+    }
 
     private fun resetFeature (token : Token) {
         when (token) {
@@ -1227,6 +1296,7 @@ class MainActivity : AppCompatActivity() {
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerSwitch.isChecked = false
                 flickeringDueToTimer = false
+                timerForFlickeringSet = false
             }
             Token.ALTITUDE -> {
                 isAltitudeOn = false
@@ -2040,7 +2110,6 @@ class SettingsActivity : AppCompatActivity() {
     private val defaultMaxFlickerIncomingAltitude : Int = 15000
 
     private var maxFlickerHz : Int = defaultMaxFlickerHz
-    private var maxTimerMinutes : Int = 0
     private var maxFlickerDurationIncomingCall : Int = 0
     private var maxFlickerDurationIncomingSMS : Int = 0
     private var maxFlickerDurationBattery : Int = 0
