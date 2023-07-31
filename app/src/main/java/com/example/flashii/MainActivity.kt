@@ -1109,9 +1109,9 @@ class MainActivity : AppCompatActivity() {
                     else {
                         // we have to disable the btn now since sensor is not available on the device
                         Log.i("MainActivity","Barometer not available")
-                        Snackbar.make(rootView, "Device's barometer sensor\nis not available", Snackbar.LENGTH_LONG).show()
-                        altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
+                        Snackbar.make(rootView, "Device's barometer sensor is not available", Snackbar.LENGTH_LONG).show()
                         resetFeature(Token.ALTITUDE)
+                        altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                     }
                 } else {
                     Log.i("MainActivity","altitudeSwitch is OFF ($sensorEventListener)")
@@ -1260,7 +1260,13 @@ class MainActivity : AppCompatActivity() {
                 flickeringDueToBattery = false
 //                batteryThreshold = minBattery
 //                initBatteryLevel = minBattery
-                unregisterReceiver(batteryReceiver)
+                try {
+                    unregisterReceiver(batteryReceiver)
+                }
+                catch (e : java.lang.Exception) {
+                    // Do nothing
+                }
+
                 loopHandlerBattery.removeCallbacksAndMessages(null)
                 removeActivatedFeature(recyclerView, FEATURE.BATTERY)
                 batteryImageIcon.setImageResource(R.drawable.battery_off)
@@ -1275,7 +1281,13 @@ class MainActivity : AppCompatActivity() {
                     stopFlickering()
                 }
                 flickeringDueToNetworkConnection = false
-                connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                try {
+                    connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                }
+                catch (e : java.lang.Exception) {
+                    // Do nothing
+                }
+
                 networkImageIcon.setImageResource(R.drawable.network_off)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
@@ -1301,7 +1313,13 @@ class MainActivity : AppCompatActivity() {
             Token.ALTITUDE -> {
                 isAltitudeOn = false
                 altitudeThreshold = minAltitude
-                sensorManager.unregisterListener(sensorEventListener)
+                try {
+                    sensorManager.unregisterListener(sensorEventListener)
+                }
+                catch (e : java.lang.Exception) {
+                    // Do nothing
+                }
+
                 if (flickeringDueToAltitude) {
                     stopFlickering()
                 }
