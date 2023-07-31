@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/flashiiId"
@@ -10,23 +9,20 @@
     tools:context=".MainActivity">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical">
-
             <!-- Features -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,15 +45,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:baselineAligned="false"
                         android:gravity="center_vertical"
-                        android:baselineAligned="false">
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:minWidth="80dp"
                             android:gravity="center"
+                            android:minWidth="80dp"
                             android:orientation="vertical">
 
                             <ImageView
@@ -68,23 +64,25 @@
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/tilt_off" />
+
                             <TextView
                                 android:id="@+id/tiltSwitchText"
                                 android:layout_width="80dp"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/cabin_semibold"
-                                android:textSize="18sp"
                                 android:text="@string/angle_80"
                                 android:textColor="@color/greyNoteDarker2"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -94,6 +92,7 @@
                                 android:text="@string/phone_tilt"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -116,10 +115,10 @@
                                 android:id="@+id/tiltExpandArrow"
                                 android:layout_width="48dp"
                                 android:layout_height="56dp"
-                                android:paddingBottom="30dp"
-                                android:paddingStart="22dp"
                                 android:background="@color/backgroundWhite"
                                 android:contentDescription="@string/backArrowTilt"
+                                android:paddingStart="22dp"
+                                android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
                                 android:src="@drawable/arrow_down" />
 
@@ -128,10 +127,10 @@
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
                                 android:checked="false"
+                                android:contentDescription="@string/switch_for_tilt"
                                 android:gravity="bottom"
                                 android:minWidth="48dp"
                                 android:minHeight="48dp"
-                                android:contentDescription="@string/swith_for_tilt"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
@@ -144,8 +143,8 @@
                         android:id="@+id/tiltHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="24dp"
+                        android:orientation="vertical"
                         android:visibility="gone">
 
                         <!-- Text -->
@@ -165,37 +164,38 @@
 
                         <!-- Bar -->
                         <LinearLayout
-                            android:gravity="start"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
                             android:layout_marginTop="6dp"
+                            android:gravity="start"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/min"
-                                android:textSize="14sp"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_vertical"
+                                android:text="@string/min"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:gravity="center_vertical">
-                            </TextView>
+                                android:textSize="14sp" />
+
                             <SeekBar
                                 android:id="@+id/seekBarTilt"
                                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:max="9"
                                 android:progress="7" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/max"
-                                android:textSize="14sp"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_vertical"
+                                android:text="@string/max"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:gravity="center_vertical">
-                            </TextView>
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -238,10 +238,10 @@
                                 android:layout_width="48dp"
                                 android:layout_height="match_parent"
                                 android:checked="false"
+                                android:contentDescription="@string/switch_for_sms"
                                 android:gravity="bottom"
                                 android:minWidth="48dp"
                                 android:minHeight="48dp"
-                                android:contentDescription="@string/switch_for_sms"
                                 android:progressTint="@color/seekbarProgressTint"
                                 android:thumb="@drawable/switch_thumb"
                                 android:track="@drawable/switch_track"
@@ -304,9 +304,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:baselineAligned="false"
                         android:gravity="center_vertical"
-                        android:baselineAligned="false">
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -322,6 +322,7 @@
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/sound_off" />
+
                             <TextView
                                 android:id="@+id/soundSwitchText"
                                 android:layout_width="wrap_content"
@@ -329,19 +330,20 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:textSize="18sp"
                                 android:minWidth="56dp"
                                 android:text="@string/sensitivity_level_1"
                                 android:textColor="@color/greyNoteDarker2"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -351,6 +353,7 @@
                                 android:text="@string/finger_snap"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -373,10 +376,10 @@
                                 android:id="@+id/soundExpandArrow"
                                 android:layout_width="48dp"
                                 android:layout_height="56dp"
-                                android:paddingBottom="30dp"
-                                android:paddingStart="22dp"
                                 android:background="@color/backgroundWhite"
                                 android:contentDescription="@string/backArrow"
+                                android:paddingStart="22dp"
+                                android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
                                 android:src="@drawable/arrow_down" />
 
@@ -400,8 +403,8 @@
                         android:id="@+id/soundHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="24dp"
+                        android:orientation="vertical"
                         android:visibility="gone">
 
                         <!-- Text -->
@@ -421,38 +424,39 @@
 
                         <!-- Bar -->
                         <LinearLayout
-                            android:gravity="start"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
                             android:layout_marginTop="6dp"
+                            android:gravity="start"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/min"
-                                android:textSize="14sp"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_vertical"
+                                android:text="@string/min"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:gravity="center_vertical">
-                            </TextView>
+                                android:textSize="14sp" />
+
                             <SeekBar
                                 android:id="@+id/seekBarSound"
                                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                                 android:layout_width="0dp"
                                 android:layout_height="48dp"
-                                android:layout_weight="1"
                                 android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
                                 android:max="9"
-                                android:progress="0"/>
+                                android:progress="0" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/max"
-                                android:textSize="14sp"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_vertical"
+                                android:text="@string/max"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:gravity="center_vertical">
-                            </TextView>
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -541,9 +545,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:baselineAligned="false"
                         android:gravity="center_vertical"
-                        android:baselineAligned="false">
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -560,6 +564,7 @@
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/flicker_off"
                                 tools:ignore="ImageContrastCheck" />
+
                             <TextView
                                 android:id="@+id/flickerSwitchText"
                                 android:layout_width="match_parent"
@@ -568,17 +573,18 @@
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
                                 android:text="@string/pavlaHz"
-                                android:textSize="18sp"
                                 android:textColor="@color/greyNoteDarker2"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -588,6 +594,7 @@
                                 android:text="@string/flashlight_flickers"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -610,10 +617,10 @@
                                 android:id="@+id/flickerExpandArrow"
                                 android:layout_width="48dp"
                                 android:layout_height="56dp"
-                                android:paddingBottom="30dp"
-                                android:paddingStart="22dp"
                                 android:background="@color/backgroundWhite"
                                 android:contentDescription="@string/backArrow"
+                                android:paddingStart="22dp"
+                                android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
                                 android:src="@drawable/arrow_down" />
 
@@ -637,8 +644,8 @@
                         android:id="@+id/flickerHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="24dp"
+                        android:orientation="vertical"
                         android:visibility="gone">
 
                         <!-- Text -->
@@ -659,38 +666,38 @@
 
                         <!-- Bar -->
                         <LinearLayout
-                            android:gravity="start"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
                             android:layout_marginTop="6dp"
+                            android:gravity="start"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/min"
-                                android:textSize="14sp"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_vertical"
+                                android:text="@string/min"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:gravity="center_vertical">
-                            </TextView>
+                                android:textSize="14sp" />
 
                             <SeekBar
                                 android:id="@+id/seekBarFlicker"
                                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:max="10"
                                 android:progress="1" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/max"
-                                android:textSize="14sp"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_vertical"
+                                android:text="@string/max"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:gravity="center_vertical">
-                            </TextView>
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -709,9 +716,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:baselineAligned="false"
                         android:gravity="center_vertical"
-                        android:baselineAligned="false">
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -728,6 +735,7 @@
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/timer_off"
                                 tools:ignore="ImageContrastCheck" />
+
                             <TextView
                                 android:id="@+id/timerSwitchText"
                                 android:layout_width="match_parent"
@@ -735,19 +743,20 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:textSize="18sp"
                                 android:minWidth="56dp"
                                 android:text="@string/time_reset"
                                 android:textColor="@color/greyNoteDarker2"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -757,6 +766,7 @@
                                 android:text="@string/time"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -779,10 +789,10 @@
                                 android:id="@+id/timerExpandArrow"
                                 android:layout_width="48dp"
                                 android:layout_height="56dp"
-                                android:paddingBottom="30dp"
-                                android:paddingStart="22dp"
                                 android:background="@color/backgroundWhite"
                                 android:contentDescription="@string/backArrow"
+                                android:paddingStart="22dp"
+                                android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
                                 android:src="@drawable/arrow_down" />
 
@@ -806,8 +816,8 @@
                         android:id="@+id/timerHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="24dp"
+                        android:orientation="vertical"
                         android:visibility="gone">
 
                         <!-- Text -->
@@ -827,11 +837,11 @@
 
                             <TimePicker
                                 android:id="@+id/timePicker1"
-                                android:scaleX="1.2"
-                                android:scaleY="1.2"
-                                android:layout_marginTop="6dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:scaleX="1.2"
+                                android:scaleY="1.2"
                                 android:theme="@style/timePicker"
                                 android:timePickerMode="spinner" />
                         </LinearLayout>
@@ -942,9 +952,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:baselineAligned="false"
                         android:gravity="center_vertical"
-                        android:baselineAligned="false">
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -960,6 +970,7 @@
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/battery_off" />
+
                             <TextView
                                 android:id="@+id/batterySwitchText"
                                 android:layout_width="match_parent"
@@ -967,18 +978,19 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:textSize="18sp"
                                 android:text="@string/pavlaPerc"
                                 android:textColor="@color/greyNoteDarker2"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -988,6 +1000,7 @@
                                 android:text="@string/battery_power"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1004,16 +1017,18 @@
                             android:layout_height="wrap_content"
                             android:gravity="end|center_vertical"
                             android:orientation="vertical">
+
                             <ImageButton
                                 android:id="@+id/batteryExpandArrow"
                                 android:layout_width="48dp"
                                 android:layout_height="56dp"
-                                android:paddingBottom="30dp"
-                                android:paddingStart="22dp"
                                 android:background="@color/backgroundWhite"
                                 android:contentDescription="@string/backArrow"
+                                android:paddingStart="22dp"
+                                android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
                                 android:src="@drawable/arrow_down" />
+
                             <Switch
                                 android:id="@+id/switchBattery"
                                 android:layout_width="wrap_content"
@@ -1034,16 +1049,16 @@
                         android:id="@+id/batteryHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="24dp"
+                        android:orientation="vertical"
                         android:visibility="gone">
 
                         <!-- Text -->
                         <TextView
                             android:layout_width="match_parent"
-                            android:gravity="center"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
+                            android:gravity="center"
                             android:text="@string/set_battery_power_threshold"
                             android:textSize="18sp"
                             tools:ignore="VisualLintLongText" />
@@ -1052,47 +1067,47 @@
                         <TextView
                             android:id="@+id/seekBarBatteryText"
                             android:layout_width="match_parent"
-                            android:gravity="center"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="24dp"
                             android:fontFamily="@font/cabin_regular"
+                            android:gravity="center"
                             android:textSize="18sp"
-                            tools:ignore="VisualLintLongText"
-                            android:layout_marginBottom="24dp"/>
+                            tools:ignore="VisualLintLongText" />
 
                         <!-- Bar -->
                         <LinearLayout
-                            android:gravity="start"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
                             android:layout_marginTop="6dp"
+                            android:gravity="start"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/min"
-                                android:textSize="14sp"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_vertical"
+                                android:text="@string/min"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:gravity="center_vertical">
-                            </TextView>
+                                android:textSize="14sp" />
 
                             <SeekBar
                                 android:id="@+id/seekBarBattery"
                                 style="@style/Widget.AppCompat.SeekBar"
-                                android:layout_height="match_parent"
                                 android:layout_width="0dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:max="100"
                                 android:progress="1" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/max"
-                                android:textSize="14sp"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_vertical"
+                                android:text="@string/max"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:gravity="center_vertical">
-                            </TextView>
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -1111,9 +1126,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:baselineAligned="false"
                         android:gravity="center_vertical"
-                        android:baselineAligned="false">
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -1129,6 +1144,7 @@
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/altitude_off" />
+
                             <TextView
                                 android:id="@+id/altitudeSwitchText"
                                 android:layout_width="match_parent"
@@ -1136,18 +1152,19 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:textSize="18sp"
                                 android:text="@string/pavlaMeter"
                                 android:textColor="@color/greyNoteDarker2"
+                                android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1157,6 +1174,7 @@
                                 android:text="@string/altitude_height"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1179,10 +1197,10 @@
                                 android:id="@+id/altitudeExpandArrow"
                                 android:layout_width="48dp"
                                 android:layout_height="56dp"
-                                android:paddingBottom="30dp"
-                                android:paddingStart="22dp"
                                 android:background="@color/backgroundWhite"
                                 android:contentDescription="@string/backArrow"
+                                android:paddingStart="22dp"
+                                android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
                                 android:src="@drawable/arrow_down" />
 
@@ -1206,8 +1224,8 @@
                         android:id="@+id/altitudeHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="24dp"
+                        android:orientation="vertical"
                         android:visibility="gone">
 
                         <!-- Text -->
@@ -1215,124 +1233,132 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
+                            android:gravity="center"
                             android:text="@string/set_altitude_height_m"
                             android:textSize="18sp"
-                            android:gravity="center"
                             tools:ignore="VisualLintLongText" />
 
                         <!-- Text -->
                         <TextView
                             android:id="@+id/seekBarAltitudeText"
                             android:layout_width="match_parent"
-                            android:gravity="center"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="24dp"
                             android:fontFamily="@font/cabin_regular"
+                            android:gravity="center"
                             android:textSize="18sp"
-                            tools:ignore="VisualLintLongText"
-                            android:layout_marginBottom="24dp"/>
+                            tools:ignore="VisualLintLongText" />
 
                         <!-- Bar -->
                         <LinearLayout
-                            android:gravity="start"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
                             android:layout_marginTop="6dp"
+                            android:gravity="start"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/min"
-                                android:textSize="14sp"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_vertical"
+                                android:text="@string/min"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:gravity="center_vertical">
-                            </TextView>
+                                android:textSize="14sp" />
 
                             <SeekBar
                                 android:id="@+id/seekBarAltitude"
                                 style="@style/Widget.AppCompat.SeekBar"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:max="1000"
                                 android:progress="1" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/max"
-                                android:textSize="14sp"
                                 android:fontFamily="@font/cabin_regular"
+                                android:gravity="center_vertical"
+                                android:text="@string/max"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:gravity="center_vertical">
-                            </TextView>
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/bottom_tools_selector"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <!-- Settings -->
-                <ImageButton
-                    android:id="@+id/settingsBtnId"
-                    android:layout_width="@dimen/MainBottomRowImageSize"
-                    android:layout_height="@dimen/MainBottomRowImageSize"
-                    android:layout_marginEnd="36dp"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:contentDescription="@string/SettingsContentDescription"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/settings" />
-
-                <!-- Info -->
-                <ImageButton
-                    android:id="@+id/infoBtnId"
-                    android:layout_width="@dimen/MainBottomRowImageSize"
-                    android:layout_height="@dimen/MainBottomRowImageSize"
-                    android:layout_marginEnd="36dp"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/info"
-                    tools:ignore="DuplicateSpeakableTextCheck,NestedWeights" />
-
-                <!-- Rate -->
-                <ImageButton
-                    android:id="@+id/rateBtnId"
-                    android:layout_width="@dimen/MainBottomRowImageSize"
-                    android:layout_height="@dimen/MainBottomRowImageSize"
-                    android:layout_marginEnd="36dp"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/rate" />
-
-                <!-- Support -->
-                <ImageButton
-                    android:id="@+id/supportBtnId"
-                    android:layout_width="@dimen/MainBottomRowImageSize"
-                    android:layout_height="@dimen/MainBottomRowImageSize"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:contentDescription="@string/GeneralContentDescription"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/donate" />
+                <!-- EMPTY -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolsHeight"
+                    android:background="@drawable/feature_selector_altitude"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+                </LinearLayout>
 
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
+
+    <!-- Menu tools -->
+    <LinearLayout
+        android:id="@+id/toolsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/feature_tools"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <!-- Settings -->
+        <ImageButton
+            android:id="@+id/settingsBtnId"
+            android:layout_width="@dimen/MainBottomRowImageSize"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="36dp"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/SettingsContentDescription"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/settings" />
+
+        <!-- Info -->
+        <ImageButton
+            android:id="@+id/infoBtnId"
+            android:layout_width="@dimen/MainBottomRowImageSize"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="36dp"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/GeneralContentDescription"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/help"
+            tools:ignore="DuplicateSpeakableTextCheck,NestedWeights" />
+
+        <!-- Rate -->
+        <ImageButton
+            android:id="@+id/rateBtnId"
+            android:layout_width="@dimen/MainBottomRowImageSize"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="36dp"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/GeneralContentDescription"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/rate" />
+
+        <!-- Support -->
+        <ImageButton
+            android:id="@+id/supportBtnId"
+            android:layout_width="@dimen/MainBottomRowImageSize"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/GeneralContentDescription"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/support" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
