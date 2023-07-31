@@ -189,15 +189,18 @@
     <string name="time_reset">--:--</string>
     <string name="to_turn_flashlight_on_amp_off">to turn flashlight\non &amp; off</string>
     <string name="make_sounds">Make Sounds</string>
-    <string name="at_which_flashlight_flickers">at which\nflashlight flickers</string>
+    <string name="finger_snap">Finger Snap</string>
+    <string name="at_which_flashlight_flickers">at which\nflashlight flicker</string>
     <string name="battery_power">Battery Power</string>
     <string name="time">Time</string>
     <string name="angle_80">Angle 80°</string>
     <string name="sensitivity_level_1">Sensitivity\nLevel 1</string>
     <string name="list_item">List Item</string>
-    <string name="flashlight_flickers">Flashlight Flickers</string>
+    <string name="flashlight_flickers">Flashlight Flicker</string>
     <string name="at_frequency_specified">at frequency specified</string>
     <string name="altitude_height">Altitude Height</string>
     <string name="swith_for_tilt">Swith for tilt</string>
     <string name="switch_for_sms">Switch for SMS</string>
+    <string name="min">Min</string>
+    <string name="max">Max</string>
 </resources>

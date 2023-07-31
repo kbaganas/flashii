@@ -181,16 +181,16 @@ class MainActivity : AppCompatActivity() {
 
     enum class FEATURE (val value: String) {
         FLASHLIGHT("Flashlight"),
-        CALL("Flicker on incoming Call"),
-        SMS("Flicker on incoming SMS"),
-        AUDIO("Flicker on short Sounds"),
-        ALTITUDE("Flicker on Height"),
-        BATTERY("Flicker on Battery Power"),
+        CALL("Flashlight flicker on incoming Call"),
+        SMS("Flashlight flicker on incoming SMS"),
+        AUDIO("Flashlight flicker on short sounds"),
+        ALTITUDE("Flashlight flicker on Height reached"),
+        BATTERY("Flashlight flicker on Battery Power reached"),
         SOS("SOS"),
-        FLICKERING("Flickering"),
-        TIMER("Flicker at Time"),
-        NETWORK_FOUND("Flicker on Network Connection found"),
-        NETWORK_LOST("Flicker on Network Connection lost"),
+        FLICKERING("Flashlight flickering"),
+        TIMER("Flashlight flicker at Time specified"),
+        NETWORK_FOUND("Flashlight flicker on Network Connection found"),
+        NETWORK_LOST("Flashlight flicker on Network Connection lost"),
         TILT("Flashlight toggle on Phone Tilts")
     }
 
@@ -1927,7 +1927,7 @@ class MainActivity : AppCompatActivity() {
     private fun resetAllActivities (featureToken : Token) {
         Log.i("MainActivity", " --------- Reset all activities --------- ")
 
-        var tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.SOS, Token.SOUND, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.TILT, Token.NETWORK)
+        var tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.SOS, Token.SOUND, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.TILT, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isFlashLightOn) {
             // Can be understood as: Until now I had Flashlight activated, but now I have activated
             // Flickering or TILT or Sound or SOS. So, Flashlight must be deactivated.
@@ -1936,7 +1936,7 @@ class MainActivity : AppCompatActivity() {
             removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLASHLIGHT, Token.SOS, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT, Token.NETWORK)
+        tokenValuesToCheckAgainst = listOf(Token.FLASHLIGHT, Token.SOS, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isFlickering && isFlickeringOnDemand) {
             Log.i("MainActivity", "RAA - STOP FLICKERING on demand")
             isFlickeringOnDemand = false
@@ -1949,7 +1949,7 @@ class MainActivity : AppCompatActivity() {
             flickerSwitch.isChecked = false
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT, Token.NETWORK)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isSendSOS) {
             Log.i("MainActivity", "RAA - DISABLE SOS")
             stopSOS()
@@ -1958,7 +1958,7 @@ class MainActivity : AppCompatActivity() {
             sosSwitch.isChecked = false
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isPhoneTilt) {
             // Can be understood as:
             // Until now I had Phone Tilt activated, but now I have activated
@@ -1976,13 +1976,13 @@ class MainActivity : AppCompatActivity() {
             incomingTiltSwitch.isChecked = false
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isAudioIncoming) {
             Log.i("MainActivity", "RAA - TURN OFF isAudioIncoming")
             resetFeature(Token.SOUND)
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet && flickeringDueToNetworkConnection) {
             Log.i("MainActivity", "RAA - TURN OFF isNetworkConnectivityCbIsSet")
             isNetworkConnectivityCbIsSet = false
@@ -1995,7 +1995,7 @@ class MainActivity : AppCompatActivity() {
             flickeringDueToNetworkConnection = false
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.ALTITUDE)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.ALTITUDE, Token.TIMER)
         if ((featureToken in tokenValuesToCheckAgainst) && isBatteryOn && flickeringDueToBattery) {
             Log.i("MainActivity", "RAA - TURN OFF isBatteryOn")
             isBatteryOn = false
@@ -2018,7 +2018,7 @@ class MainActivity : AppCompatActivity() {
             batterySwitch.isChecked = false
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.BATTERY)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.BATTERY, Token.TIMER)
         if ((featureToken in tokenValuesToCheckAgainst) && isAltitudeOn && flickeringDueToAltitude) {
             Log.i("MainActivity", "RAA - TURN OFF isAltitudeOn")
             isAltitudeOn = false
@@ -2041,38 +2041,26 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        if (isTimerOn) {
-            if (featureToken != Token.TIMER) {
-                if (!isTimerThresholdSet) {
-                    Log.i("MainActivity", "RAA - TURN OFF isTimerOn")
-                    isTimerOn = false
-                    isTimerThresholdSet = false
-                    timerSetAfter = minTimerMinutes
-                    try {
-                        loopHandlerTimer.removeCallbacksAndMessages(null)
-                        loopHandlerFlickering.removeCallbacksAndMessages(null)
-                    }
-                    catch (e: java.lang.Exception) {
-                        // DO nothing here
-                    }
-                    timerImageIcon.setImageResource(R.drawable.timer_off)
-                    tempText = "--:--"
-                    timerSwitchText.text = tempText
-                    timerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-                    removeActivatedFeature(recyclerView, FEATURE.TIMER)
-                    timerSwitch.isChecked = false
-                }
-                else {
-                    Log.i("MainActivity", "RAA - TURN OFF callbacks (TIMER)")
-                    try {
-                        loopHandlerTimer.removeCallbacksAndMessages(null)
-                        loopHandlerFlickering.removeCallbacksAndMessages(null)
-                    }
-                    catch (e: java.lang.Exception) {
-                        // Do nothing
-                    }
-                }
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.BATTERY, Token.ALTITUDE)
+        if ((featureToken in tokenValuesToCheckAgainst) && isTimerOn && flickeringDueToTimer) {
+            Log.i("MainActivity", "RAA - TURN OFF isTimerOn")
+            isTimerOn = false
+            flickeringDueToTimer = false
+            timerSetAfter = minTimerMinutes
+            turnOffFlashlight()
+            try {
+                loopHandlerTimer.removeCallbacksAndMessages(null)
+                loopHandlerFlickering.removeCallbacksAndMessages(null)
             }
+            catch (e: java.lang.Exception) {
+                // DO nothing here
+            }
+            removeActivatedFeature(recyclerView, FEATURE.TIMER)
+            timerImageIcon.setImageResource(R.drawable.timer_off)
+//            tempText = "--:--"
+//            timerSwitchText.text = tempText
+            timerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
+            timerSwitch.isChecked = false
         }
     }
 
