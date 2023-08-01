@@ -29,6 +29,7 @@
     <color name="mainActivateText">#a6e4fa</color>
     <color name="green">#40b344</color>
     <color name="no_permission">#434241</color>
+    <color name="dollarColor">#85BB65</color>
 
     <color name="mainSMS">#E3F5FE</color>
     <color name="mainCALL">#e3e8fe</color>

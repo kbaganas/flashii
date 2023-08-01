@@ -13,8 +13,8 @@
     <dimen name="mainImageHeight">140dp</dimen>
     <dimen name="mainFlashlightHeight">248dp</dimen>
     <dimen name="mainSeekbarHeight">66dp</dimen>
-    <dimen name="infoFeatureTitle">20sp</dimen>
-    <dimen name="infoFeatureText">18sp</dimen>
+    <dimen name="infoFeatureTitle">18sp</dimen>
+    <dimen name="infoFeatureText">14sp</dimen>
     <dimen name="infoText">16sp</dimen>
     <dimen name="mainImageInfoText">13sp</dimen>
     <dimen name="mainTitle">28sp</dimen>

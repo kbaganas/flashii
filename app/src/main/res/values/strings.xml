@@ -103,12 +103,12 @@
     <string name="batteryFeature">Flickering at Battery power level</string>
 
     <string name="altitudeFeature">Flickering at Altitude height</string>
-    <string name="callFeature">Flickering on Incoming Calls</string>
-    <string name="smsFeature">Flickering on Incoming SMSes</string>
+    <string name="callFeature">Flashlight flicker on Incoming Call</string>
+    <string name="smsFeature">Flashlight flicker on Incoming SMS</string>
     <string name="networkFeature">Flickering on Connection changes</string>
     <string name="tiltFeature">Flickering on Phone Tilts</string>
     <string name="soundFeature">Flickering on short Sounds</string>
-    <string name="flickerFeature">Flickering on demand</string>
+    <string name="flickerFeature">Flashlight Flicker</string>
     <string name="flashlightFeature">Flashlight On/Off</string>
     <string name="sosFeature">Send SOS</string>
     <string name="Feature">Feature</string>

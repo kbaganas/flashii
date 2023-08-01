@@ -2377,7 +2377,7 @@ class SupportActivity : AppCompatActivity() {
             supportAmount = 1
             Log.i("SupportActivity", "support1Btn()")
             support1Btn.setTextColor(resources.getColor(R.color.white, theme))
-            support1Btn.setBackgroundColor(resources.getColor(R.color.green, theme))
+            support1Btn.setBackgroundColor(resources.getColor(R.color.dollarColor, theme))
             resetBtn(support10Btn)
             resetBtn(support100Btn)
             resetText(supportManualText)
@@ -2387,7 +2387,7 @@ class SupportActivity : AppCompatActivity() {
             supportAmount = 10
             Log.i("SupportActivity", "support10Btn()")
             support10Btn.setTextColor(resources.getColor(R.color.white, theme))
-            support10Btn.setBackgroundColor(resources.getColor(R.color.green, theme))
+            support10Btn.setBackgroundColor(resources.getColor(R.color.dollarColor, theme))
             resetBtn(support1Btn)
             resetBtn(support100Btn)
             resetText(supportManualText)
@@ -2397,7 +2397,7 @@ class SupportActivity : AppCompatActivity() {
             supportAmount = 100
             Log.i("SupportActivity", "support100Btn()")
             support100Btn.setTextColor(resources.getColor(R.color.white, theme))
-            support100Btn.setBackgroundColor(resources.getColor(R.color.green, theme))
+            support100Btn.setBackgroundColor(resources.getColor(R.color.dollarColor, theme))
             resetBtn(support1Btn)
             resetBtn(support10Btn)
             resetText(supportManualText)
