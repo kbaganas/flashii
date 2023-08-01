@@ -33,7 +33,7 @@
     <string name="reset">RESET</string>
     <string name="s_continue">CONTINUE</string>
     <string name="enterAmount">Enter your amount</string>
-    <string name="supportText">Thank you for supporting Flashii!\nYou contribution helps us\nimplementing more for you.</string>
+    <string name="supportText">Thank you for supporting @Flashii!</string>
     <string name="rateText">Your feedback is appreciated!</string>
     <string name="publishFeedback">PUBLISH FEEDBACK</string>
     <string name="publishNote">Your review will be posted to\nthe Google Play store</string>
@@ -49,7 +49,7 @@
     <string name="applyChanges">APPLY</string>
     <string name="resetDefault">RESET\nDEFAULT</string>
 
-    <string name="settingsComments">Personalize Feature specs\naccording to Ranges</string>
+    <string name="settingsComments">Personalize feature specifications\naccording to ranges</string>
     <string name="settingsFlickeringTitle">Max flickering frequency</string>
     <string name="settingsFlickeringNote">Range from 3 to 180 seconds (default 10)</string>
     <string name="settingsHzNote">(Range from 10 to 100 Hz)</string>
@@ -59,13 +59,13 @@
     <string name="settingsTiltNote">Range from 45 to 80 degrees (default)</string>
     <string name="settingsSoundTitle">Sound sensitivity threshold</string>
     <string name="settingsSoundNote">Range from 4000 to 20000 (default)</string>
-    <string name="settingsFlickeringCallTitle">Flickering time on\nCall incoming</string>
+    <string name="settingsFlickeringCallTitle">Flashlight flickering time\non Call incoming</string>
     <string name="settingsFlickeringCallNote">(Range from 3 to 180 seconds)</string>
-    <string name="settingsFlickeringSMSTitle">Flickering time on\nSMS incoming</string>
+    <string name="settingsFlickeringSMSTitle">Flashlight flickering time\non SMS incoming</string>
     <string name="settingsFlickeringSMSNote">(Range from 3 to 180 seconds)</string>
-    <string name="settingsBatteryTitle">Flickering time on\nBattery Power reached</string>
+    <string name="settingsBatteryTitle">Flashlight flickering time\non Battery Power reached</string>
     <string name="settingsBatteryNote">(Range from 3 to 180 seconds)</string>
-    <string name="settingsAltitudeTitle">Flickering time on\nAltitude Height reached</string>
+    <string name="settingsAltitudeTitle">Flashlight flickering time\non Altitude Height reached</string>
     <string name="settingsAltitudeNote">(Range from 3 to 180 seconds)</string>
 
     <string name="infoHelp">Help info</string>
@@ -113,7 +113,7 @@
     <string name="sosFeature">Send SOS</string>
     <string name="Feature">Feature</string>
     <string name="Rate">Rate</string>
-    <string name="Donate">Support us</string>
+    <string name="Support">Support us</string>
     <string name="attributeDescription">Attribute description</string>
     <string name="attribute">Attribute</string>
     <string name="Specification">Specification</string>

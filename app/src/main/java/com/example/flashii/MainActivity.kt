@@ -1105,7 +1105,7 @@ class MainActivity : AppCompatActivity() {
         // support button
         supportBtn = findViewById(R.id.supportBtnId)
         supportBtn.setOnClickListener {
-            val intent = Intent(this, DonateActivity::class.java)
+            val intent = Intent(this, SupportActivity::class.java)
             startActivity(intent)
         }
 
@@ -2340,11 +2340,11 @@ class SettingsActivity : AppCompatActivity() {
 }
 
 
-class DonateActivity : AppCompatActivity() {
+class SupportActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.donate)
-        val closeButton = findViewById<ImageButton>(R.id.donateGoBackArrow)
+        setContentView(R.layout.support)
+        val closeButton = findViewById<ImageButton>(R.id.supportGoBackArrow)
         closeButton.setOnClickListener {
             finish()
         }

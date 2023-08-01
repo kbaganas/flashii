@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:textAlignment="center">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,11 +28,12 @@
                 android:layout_marginTop="36dp">
 
                 <ImageButton
-                    android:id="@+id/donateGoBackArrow"
+                    android:id="@+id/supportGoBackArrow"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@color/backgroundWhite"
+                    android:background="@color/black"
                     android:scaleType="fitStart"
+                    android:padding="10dp"
                     android:src="@drawable/arrow_left"
                     android:contentDescription="@string/backArrow"
                     tools:ignore="TouchTargetSizeCheck" />
@@ -39,12 +41,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_semibold"
-                    android:text="@string/Donate"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/Support"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:layout_marginEnd="48dp"
-                    android:textSize="32sp" />
+                    android:textColor="@color/white"
+                    android:textSize="28sp" />
 
             </LinearLayout>
 
@@ -54,22 +57,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="46dp"
-                android:fontFamily="@font/cabin_semibold"
+                android:fontFamily="@font/cabin_regular"
                 android:text="@string/supportText"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textAlignment="center"
+                android:textColor="@color/white"
                 android:textStyle="bold"/>
 
             <Button
-                android:id="@+id/donate1Btn"
+                android:id="@+id/support1Btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
-                android:fontFamily="@font/cabin_semibold"
+                android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
                 android:text="@string/dollar1"
                 android:textSize="18sp"
-                android:textColor="@color/greyNoteDarker3"
+                android:textColor="@color/greyNoteDarker4"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
@@ -77,13 +81,13 @@
                 tools:ignore="VisualLintButtonSize" />
 
             <Button
-                android:id="@+id/donate10Btn"
+                android:id="@+id/support10Btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/cabin_semibold"
+                android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
                 android:text="@string/dollar10"
-                android:textColor="@color/greyNoteDarker3"
+                android:textColor="@color/greyNoteDarker4"
                 android:textSize="18sp"
                 android:layout_marginTop="8dp"
                 app:backgroundTint="@color/blueOffBack2"
@@ -93,14 +97,14 @@
                 app:cornerRadius="8dp"/>
 
             <Button
-                android:id="@+id/donate100Btn"
+                android:id="@+id/support100Btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/cabin_semibold"
+                android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
                 android:text="@string/dollar100"
-                android:textColor="@color/greyNoteDarker3"
+                android:textColor="@color/greyNoteDarker4"
                 android:textSize="18sp"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
@@ -138,6 +142,7 @@
                     android:fontFamily="@font/cabin_regular"
                     android:gravity="center_vertical|center"
                     android:text="@string/or"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
 
                 <View
@@ -153,7 +158,7 @@
 
 
             <EditText
-                android:id="@+id/donateManualText"
+                android:id="@+id/supportManualText"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginHorizontal="56dp"
@@ -163,16 +168,16 @@
                 android:hint="@string/enterAmount"
                 android:inputType="phone"
                 android:textAlignment="center"
-                android:textColorHint="@color/greyNoteDarker4"
+                android:textColorHint="@color/greyNote"
                 android:textSize="18sp"
                 app:backgroundTint="@color/blueOffBack4"
                 tools:ignore="VisualLintTextFieldSize" />
 
             <Button
-                android:id="@+id/donateContinueBtn"
+                android:id="@+id/supportContinueBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/cabin_semibold"
+                android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
                 android:text="@string/contribute"
                 android:textSize="18sp"

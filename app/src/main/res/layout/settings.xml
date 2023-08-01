@@ -8,7 +8,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/view_gradient1"
+        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +33,7 @@
                     android:id="@+id/settingsGoBackArrow"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:padding="10dp"
                     android:layout_gravity="center_vertical"
                     android:background="@color/backgroundWhite"
                     android:contentDescription="@string/backArrow"
@@ -45,9 +46,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/settings"
+                    android:textColor="@color/white"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:textSize="26sp" />
+                    android:textSize="28sp" />
 
                 <Button
                     android:id="@+id/resetBtnId"
@@ -69,9 +71,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="46dp"
                 android:fontFamily="@font/cabin_regular"
+                android:textColor="@color/white"
                 android:text="@string/settingsComments"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,20 +83,22 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="76dp"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginEnd="12dp"
                     android:fontFamily="@font/cabin_regular"
+                    android:textColor="@color/white"
                     android:text="@string/Feature"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
-                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
                     android:text="@string/Specification" />
             </LinearLayout>
 
@@ -107,7 +112,7 @@
                 android:textAlignment="center">
 
                 <View
-                    android:layout_width="@dimen/MainImageSize"
+                    android:layout_width="60dp"
                     android:layout_height="1dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="12dp"
@@ -139,7 +144,7 @@
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginEnd="24dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/flicker_off" />
@@ -162,6 +167,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="12dp"
+                            android:textColor="@color/white"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:text="@string/settingsFlickeringTitle"
@@ -173,6 +179,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="12dp"
+                            android:textColor="@color/white"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:text="@string/settingsHzNote"
@@ -219,7 +226,7 @@
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginEnd="24dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/incoming_call_off" />
@@ -238,6 +245,7 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
+                        android:textColor="@color/white"
                         android:text="@string/settingsFlickeringCallTitle"
                         android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
@@ -249,6 +257,7 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
+                        android:textColor="@color/white"
                         android:text="@string/settingsFlickeringCallNote"
                         android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
@@ -292,7 +301,7 @@
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginEnd="24dp"
                     android:scaleY="1.1"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
@@ -312,6 +321,7 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
+                        android:textColor="@color/white"
                         android:text="@string/settingsFlickeringSMSTitle"
                         android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
@@ -321,6 +331,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
+                        android:textColor="@color/white"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringSMSNote"
@@ -366,7 +377,7 @@
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginEnd="24dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/battery_off" />
@@ -385,6 +396,7 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
+                        android:textColor="@color/white"
                         android:text="@string/settingsBatteryTitle"
                         android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
@@ -396,6 +408,7 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
+                        android:textColor="@color/white"
                         android:text="@string/settingsBatteryNote"
                         android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
@@ -439,7 +452,7 @@
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginEnd="24dp"
                     android:scaleY="1.35"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
@@ -461,6 +474,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/settingsAltitudeTitle"
                         android:textSize="18sp"
+                        android:textColor="@color/white"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -470,6 +484,7 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
+                        android:textColor="@color/white"
                         android:text="@string/settingsAltitudeNote"
                         android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
