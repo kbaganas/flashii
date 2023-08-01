@@ -9,7 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@color/blueOffBack5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
                     android:id="@+id/supportGoBackArrow"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@color/black"
+                    android:background="@color/blueOffBack5"
                     android:scaleType="fitStart"
                     android:padding="10dp"
                     android:src="@drawable/arrow_left"
@@ -72,8 +72,8 @@
                 android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
                 android:text="@string/dollar1"
-                android:textSize="18sp"
-                android:textColor="@color/greyNoteDarker4"
+                android:textSize="16sp"
+                android:textColor="@color/greyNoteDarker6"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
@@ -87,8 +87,8 @@
                 android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
                 android:text="@string/dollar10"
-                android:textColor="@color/greyNoteDarker4"
-                android:textSize="18sp"
+                android:textColor="@color/greyNoteDarker6"
+                android:textSize="16sp"
                 android:layout_marginTop="8dp"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
@@ -104,8 +104,8 @@
                 android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
                 android:text="@string/dollar100"
-                android:textColor="@color/greyNoteDarker4"
-                android:textSize="18sp"
+                android:textColor="@color/greyNoteDarker6"
+                android:textSize="16sp"
                 app:backgroundTint="@color/blueOffBack2"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
@@ -143,7 +143,7 @@
                     android:gravity="center_vertical|center"
                     android:text="@string/or"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <View
                     android:id="@+id/secondDivider"
@@ -169,7 +169,7 @@
                 android:inputType="phone"
                 android:textAlignment="center"
                 android:textColorHint="@color/greyNote"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:backgroundTint="@color/blueOffBack4"
                 tools:ignore="VisualLintTextFieldSize" />
 

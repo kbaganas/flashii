@@ -90,6 +90,7 @@
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/phone_tilt"
+                                android:textColor="@color/blueOffBack5"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />
 
@@ -352,6 +353,7 @@
                                 android:gravity="center_horizontal"
                                 android:text="@string/finger_snap"
                                 android:textSize="@dimen/mainTitle"
+                                android:textColor="@color/blueOffBack5"
                                 tools:ignore="VisualLintLongText" />
 
                             <TextView
@@ -591,6 +593,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
+                                android:textColor="@color/blueOffBack5"
                                 android:text="@string/flashlight_flickers"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />
@@ -761,6 +764,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
+                                android:textColor="@color/blueOffBack5"
                                 android:text="@string/time"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />
@@ -986,6 +990,7 @@
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/battery_power"
+                                android:textColor="@color/blueOffBack5"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />
 
@@ -1160,6 +1165,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
+                                android:textColor="@color/blueOffBack5"
                                 android:text="@string/altitude_height"
                                 android:textSize="@dimen/mainTitle"
                                 tools:ignore="VisualLintLongText" />

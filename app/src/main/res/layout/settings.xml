@@ -8,7 +8,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
+        android:background="@color/blueOffBack5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,8 +134,11 @@
             <LinearLayout
                 android:id="@+id/maxHz"
                 android:layout_width="match_parent"
-                android:layout_height="96dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
                 android:gravity="center_vertical"
+                android:background="@drawable/feature_selector_flicker"
+                android:paddingHorizontal="8dp"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
 
@@ -144,20 +147,14 @@
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="18dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/flicker_off" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
@@ -167,11 +164,11 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="12dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/blueOffBack5"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:text="@string/settingsFlickeringTitle"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             tools:ignore="VisualLintLongText" />
 
                         <TextView
@@ -179,7 +176,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="12dp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/blueOffBack5"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:text="@string/settingsHzNote"
@@ -202,23 +199,19 @@
                         android:textColorHint="@color/greyNoteDarker4"
                         android:textSize="14sp"
                         tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
-                </LinearLayout>
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:background="@color/blueOffBack4" />
 
             <!-- row -->
             <LinearLayout
                 android:id="@+id/callSetting"
                 android:layout_width="match_parent"
-                android:layout_height="96dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
                 android:minHeight="34dp"
+                android:background="@drawable/feature_selector_call"
+                android:paddingHorizontal="8dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -226,7 +219,7 @@
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="18dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/incoming_call_off" />
@@ -245,9 +238,9 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/settingsFlickeringCallTitle"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -257,7 +250,7 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/settingsFlickeringCallNote"
                         android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
@@ -280,19 +273,18 @@
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:background="@color/blueOffBack4" />
+
 
             <!-- row -->
             <LinearLayout
                 android:id="@+id/smsSetting"
                 android:layout_width="match_parent"
-                android:layout_height="96dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
+                android:background="@drawable/feature_selector_sms"
+                android:paddingHorizontal="8dp"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
 
@@ -301,7 +293,7 @@
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="18dp"
                     android:scaleY="1.1"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
@@ -321,9 +313,9 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/settingsFlickeringSMSTitle"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -331,7 +323,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringSMSNote"
@@ -356,19 +348,16 @@
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:background="@color/blueOffBack4" />
-
             <!-- row -->
             <LinearLayout
                 android:id="@+id/batterySetting"
                 android:layout_width="match_parent"
-                android:layout_height="96dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
+                android:background="@drawable/feature_selector_battery"
+                android:paddingHorizontal="8dp"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
 
@@ -377,7 +366,7 @@
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="18dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/battery_off" />
@@ -396,9 +385,9 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/settingsBatteryTitle"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -408,7 +397,7 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/settingsBatteryNote"
                         android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
@@ -431,19 +420,16 @@
                     tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:background="@color/blueOffBack4" />
-
             <!-- row -->
             <LinearLayout
                 android:id="@+id/altitudeSetting"
                 android:layout_width="match_parent"
-                android:layout_height="96dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
+                android:background="@drawable/feature_selector_altitude"
+                android:paddingHorizontal="8dp"
                 android:minHeight="34dp"
                 android:orientation="horizontal">
 
@@ -452,7 +438,7 @@
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="18dp"
                     android:scaleY="1.35"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
@@ -473,8 +459,8 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsAltitudeTitle"
-                        android:textSize="18sp"
-                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:textColor="@color/blueOffBack5"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -484,7 +470,7 @@
                         android:layout_marginEnd="12dp"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/settingsAltitudeNote"
                         android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
