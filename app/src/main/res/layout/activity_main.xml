@@ -1060,6 +1060,7 @@
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center"
                             android:textSize="18sp"
+                            android:text="@string/current_battery_power"
                             tools:ignore="VisualLintLongText" />
 
                         <!-- Bar -->

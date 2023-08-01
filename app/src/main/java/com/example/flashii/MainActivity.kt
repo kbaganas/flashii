@@ -130,7 +130,6 @@ class MainActivity : AppCompatActivity() {
     private var sensitivityAngle = defaultTiltAngle
     private var sensitivitySoundThreshold = defaultSoundSenseLevel
 
-    private lateinit var token : Token // token regarding which key is pressed
     private lateinit var reviewInfo : ReviewInfo
     private lateinit var sharedPref : SharedPreferences // shared with Settings view
     private lateinit var intentSettings : Intent
@@ -148,13 +147,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var networkImageIcon : ImageView
     private lateinit var flashlightImageIcon : ImageView
 
-    // Switch texts
+    // TextViews
     private lateinit var tiltSwitchText : TextView
     private lateinit var batterySwitchText : TextView
     private lateinit var altitudeSwitchText : TextView
     private lateinit var soundSwitchText : TextView
     private lateinit var timerSwitchText : TextView
     private lateinit var flickerSwitchText : TextView
+    private lateinit var seekBarBatteryText : TextView
+
 
     enum class ACTION {
         CREATE,
@@ -424,7 +425,6 @@ class MainActivity : AppCompatActivity() {
         flickerSwitch = findViewById(R.id.switchFlicker)
         flickerSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
-                token = Token.FLICKER
                 resetAllActivities(Token.FLICKER)
                 Log.i("MainActivity","flickerSwitch is ON with ${flickerFlashlightHz}Hz")
                 startFlickering(Token.FLICKER)
@@ -788,14 +788,12 @@ class MainActivity : AppCompatActivity() {
         // Get references to views
         val batteryExpandArrow: ImageButton = findViewById(R.id.batteryExpandArrow)
         val batteryHiddenView: LinearLayout = findViewById(R.id.batteryHiddenView)
-        val seekBarBatteryText : TextView = findViewById(R.id.seekBarBatteryText)
+        seekBarBatteryText = findViewById(R.id.seekBarBatteryText)
         batteryImageIcon = findViewById(R.id.batteryImageIcon)
         batterySwitchText = findViewById(R.id.batterySwitchText)
         tempText = "${batteryThreshold}%"
         batterySwitchText.text = tempText
         batterySwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-        tempText = "Current Power: -%. Flicker at: -%"
-        seekBarBatteryText.text = tempText
 
         // Expand or hide the main content
         batteryExpandArrow.setOnClickListener {
@@ -813,16 +811,11 @@ class MainActivity : AppCompatActivity() {
         batteryBar = findViewById(R.id.seekBarBattery)
         batteryBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                initAndRegisterBatteryReceiver()
                 batteryThreshold = progress
                 tempText = "${batteryThreshold}%"
                 batterySwitchText.text = tempText
                 Log.i("MainActivity","batteryThreshold $progress, $batteryThreshold")
-                tempText = if (initBatteryLevel == minBattery) {
-                    "Current Power: -%. Flicker at ${batteryThreshold}%"
-                } else {
-                    "Current Power: ${initBatteryLevel}%. Flicker at ${batteryThreshold}%"
-                }
-                seekBarBatteryText.text = tempText
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -838,53 +831,9 @@ class MainActivity : AppCompatActivity() {
         batterySwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
                 Log.i("MainActivity","batterySwitch is ON")
-                token = Token.BATTERY
                 resetAllActivities(Token.BATTERY)
                 isBatteryOn = true
-                batteryReceiver = object : BroadcastReceiver() {
-                    override fun onReceive(context: Context, intent: Intent) {
-                        if (initBatteryLevel == minBattery) {
-                            val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-                            val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-                            initBatteryLevel = ((level.toFloat() / scale.toFloat()) * 100).toInt()
-                            Log.i("MainActivity", "Battery initial level is ${initBatteryLevel}%")
-                            tempText = "Current Power: ${initBatteryLevel}%. Flicker at ${batteryThreshold}%"
-                            seekBarBatteryText.text = tempText
-                        }
-
-                        if (intent.action == Intent.ACTION_BATTERY_CHANGED) {
-                            val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-                            val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-                            val batteryPercentage = (level.toFloat() / scale.toFloat()) * 100
-
-                            if (batteryThreshold > initBatteryLevel) {
-                                // So the user is charging his phone and wants an optical indication when threshold is reached
-                                if (batteryPercentage.toInt() >= batteryThreshold) {
-                                    Log.i("MainActivity", "Battery has been charged up to ${batteryPercentage}%")
-                                    startFlickering(Token.BATTERY)
-                                    // should stop flickering and reset after time
-                                    stopFlickeringAfterTimeout(maxFlickerDurationBattery.toLong(), Token.BATTERY)
-                                    loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
-                                    // Should unregister
-                                    unregisterReceiver(batteryReceiver)
-                                }
-                            }
-                            else {
-                                // So the phone is discharged and user wants an optical indication when threshold is reached
-                                if (batteryPercentage.toInt() < batteryThreshold) {
-                                    Log.i("MainActivity", "Battery is discharged to ${batteryPercentage}%")
-                                    startFlickering(Token.BATTERY)
-                                    // should stop flickering and reset after time
-                                    stopFlickeringAfterTimeout(maxFlickerDurationBattery.toLong(), Token.BATTERY)
-                                    loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
-                                    // Should unregister
-                                    unregisterReceiver(batteryReceiver)
-                                }
-                            }
-                        }
-                    }
-                }
-                registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+                initAndRegisterBatteryReceiver()
                 addActivatedFeature(recyclerView, FEATURE.BATTERY)
                 batteryImageIcon.setImageResource(R.drawable.battery_on)
                 tempText = "${batteryThreshold}%"
@@ -956,7 +905,6 @@ class MainActivity : AppCompatActivity() {
                     }
                     else {
                         Log.i("MainActivity","timerSwitch is ON")
-                        token = Token.TIMER
                         resetAllActivities(Token.TIMER)
                         isTimerOn = true
                         timerImageIcon.setImageResource(R.drawable.timer_on)
@@ -1085,7 +1033,6 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                         Log.i("MainActivity","altitudeSwitch is ON ($sensorEventListener)")
-                        token = Token.ALTITUDE
                         resetAllActivities(Token.ALTITUDE)
                         isAltitudeOn = true
                         sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
@@ -1204,6 +1151,59 @@ class MainActivity : AppCompatActivity() {
         ////////////////////////////////////////////////////////////////////////////////////////
         // Permissions handling
         checkPermissions(ACTION.CREATE)
+    }
+
+    private fun initAndRegisterBatteryReceiver() {
+        if (::batteryReceiver.isInitialized) {
+            // already initialized; do nothing
+        }
+        else {
+            Log.i("MainActivity", "batteryReceiver is initialized")
+            batteryReceiver = object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) {
+                    if (initBatteryLevel == minBattery) {
+                        val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+                        val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+                        initBatteryLevel = ((level.toFloat() / scale.toFloat()) * 100).toInt()
+                        Log.i("MainActivity", "Battery initial level is ${initBatteryLevel}%")
+                        tempText = "(current Battery Power: $initBatteryLevel%)"
+                        seekBarBatteryText.text = tempText
+                    }
+
+                    if (intent.action == Intent.ACTION_BATTERY_CHANGED) {
+                        val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+                        val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+                        val batteryPercentage = (level.toFloat() / scale.toFloat()) * 100
+
+                        if (batteryThreshold > initBatteryLevel) {
+                            // So the user is charging his phone and wants an optical indication when threshold is reached
+                            if (batteryPercentage.toInt() >= batteryThreshold) {
+                                Log.i("MainActivity", "Battery has been charged up to ${batteryPercentage}%")
+                                startFlickering(Token.BATTERY)
+                                // should stop flickering and reset after time
+                                stopFlickeringAfterTimeout(maxFlickerDurationBattery.toLong(), Token.BATTERY)
+                                loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
+                                // Should unregister
+                                unregisterReceiver(batteryReceiver)
+                            }
+                        }
+                        else {
+                            // So the phone is discharged and user wants an optical indication when threshold is reached
+                            if (batteryPercentage.toInt() < batteryThreshold) {
+                                Log.i("MainActivity", "Battery is discharged to ${batteryPercentage}%")
+                                startFlickering(Token.BATTERY)
+                                // should stop flickering and reset after time
+                                stopFlickeringAfterTimeout(maxFlickerDurationBattery.toLong(), Token.BATTERY)
+                                loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
+                                // Should unregister
+                                unregisterReceiver(batteryReceiver)
+                            }
+                        }
+                    }
+                }
+            }
+            registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        }
     }
 
 
