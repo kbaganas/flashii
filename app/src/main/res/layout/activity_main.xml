@@ -1236,6 +1236,7 @@
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center"
                             android:textSize="18sp"
+                            android:text="@string/current_altitude_height"
                             tools:ignore="VisualLintLongText" />
 
                         <!-- Bar -->
@@ -1309,7 +1310,7 @@
             android:layout_marginEnd="36dp"
             android:background="#00FFFFFF"
             android:contentDescription="@string/SettingsContentDescription"
-            android:padding="12dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/settings" />
 
@@ -1321,7 +1322,7 @@
             android:layout_marginEnd="36dp"
             android:background="#00FFFFFF"
             android:contentDescription="@string/GeneralContentDescription"
-            android:padding="12dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/help"
             tools:ignore="DuplicateSpeakableTextCheck,NestedWeights" />
@@ -1334,7 +1335,7 @@
             android:layout_marginEnd="36dp"
             android:background="#00FFFFFF"
             android:contentDescription="@string/GeneralContentDescription"
-            android:padding="12dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/rate" />
 
@@ -1345,7 +1346,7 @@
             android:layout_height="match_parent"
             android:background="#00FFFFFF"
             android:contentDescription="@string/GeneralContentDescription"
-            android:padding="12dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/support" />
     </LinearLayout>

@@ -204,4 +204,5 @@
     <string name="min">Min</string>
     <string name="max">Max</string>
     <string name="current_battery_power">(current Battery Power: -%)</string>
+    <string name="current_altitude_height">(current Altitude Height: -m)</string>
 </resources>

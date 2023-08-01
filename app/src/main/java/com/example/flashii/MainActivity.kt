@@ -34,7 +34,6 @@ import android.telephony.TelephonyManager
 import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -126,7 +125,6 @@ class MainActivity : AppCompatActivity() {
     // Tilt
     private val initRotationAngle : Float = -1000f
     private var touchStartTime : Long = 0
-    private var thumbInitialPosition = 0
     private var sensitivityAngle = defaultTiltAngle
     private var sensitivitySoundThreshold = defaultSoundSenseLevel
 
@@ -219,8 +217,6 @@ class MainActivity : AppCompatActivity() {
     private var loopHandlerTimer : Handler = Handler(Looper.getMainLooper())
     private var loopHandlerFlickering : Handler = Handler(Looper.getMainLooper())
     private var loopHandlerBattery : Handler = Handler(Looper.getMainLooper())
-    private var loopHandlerAltitude : Handler = Handler(Looper.getMainLooper())
-    private var loopHandlerNetwork : Handler = Handler(Looper.getMainLooper())
 
     // Handlers, Threads, Managers, Receivers, Detectors
     private lateinit var audioRecordHandler : AudioRecord
@@ -228,7 +224,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cameraManager : CameraManager
     private lateinit var connectivityManager: ConnectivityManager
     private lateinit var sensorManager : SensorManager
-    private lateinit var sensorEventListener : SensorEventListener
+    private lateinit var sensorRotationEventListener : SensorEventListener
+    private lateinit var sensorPressureEventListener : SensorEventListener
     private lateinit var connectivityCallback: ConnectivityManager.NetworkCallback
     private lateinit var reviewManager : ReviewManager
     private lateinit var incomingCallReceiver : BroadcastReceiver
@@ -620,43 +617,12 @@ class MainActivity : AppCompatActivity() {
         incomingTiltSwitch = findViewById(R.id.switchTilt)
         incomingTiltSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (isChecked) {
-                sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+                initSensorManager()
                 val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
                 if (accelerometerSensor != null) {
+                    Log.i("MainActivity","incomingTiltSwitch is ON")
                     resetAllActivities(Token.TILT)
-                    var rotationAngle = initRotationAngle
-                    sensorEventListener = object : SensorEventListener {
-                        override fun onSensorChanged(event: SensorEvent) {
-                            if (event.sensor?.type == Sensor.TYPE_ROTATION_VECTOR) {
-                                val rotationMatrix = FloatArray(9)
-                                SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
-                                val orientationAngles = FloatArray(3)
-                                SensorManager.getOrientation(rotationMatrix, orientationAngles)
-                                val angleInDegrees = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
-                                if (angleInDegrees > -5f && rotationAngle == initRotationAngle) {
-                                    // Phone rotated to the left ~ 90 degrees
-                                    rotationAngle = angleInDegrees
-                                } else if (angleInDegrees < -sensitivityAngle.toFloat() && rotationAngle > -5f) {
-                                    // Phone returned to portrait orientation
-                                    rotationAngle = initRotationAngle
-                                    if (isFlashLightOn) {
-                                        Log.i("MainActivity","TILT REACHED ANGLE - TURN OFF Flashlight")
-                                        turnOffFlashlight()
-                                    }
-                                    else {
-                                        Log.i("MainActivity","TILT REACHED ANGLE - TURN ON Flashlight")
-                                        turnOnFlashlight()
-                                    }
-                                }
-                            }
-                        }
-                        override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-                            // Handle accuracy changes if needed
-                            Log.i("MainActivity","onAccuracyChanged (accuracy = $accuracy)")
-                        }
-                    }
-                    Log.i("MainActivity","incomingTiltSwitch is ON ($sensorEventListener)")
-                    sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
+                    initAndRegisterRotationSensor(accelerometerSensor)
                     isPhoneTilt = true
                     tempText = "Angle ${sensitivityAngle}\u00B0"
                     tiltSwitchText.text = tempText
@@ -675,9 +641,9 @@ class MainActivity : AppCompatActivity() {
                     removeActivatedFeature(recyclerView, FEATURE.TILT)
                 }
             } else {
-                Log.i("MainActivity","incomingTiltSwitch is OFF ($sensorEventListener)")
+                Log.i("MainActivity","incomingTiltSwitch is OFF ($sensorRotationEventListener)")
                 turnOffFlashlight()
-                sensorManager.unregisterListener(sensorEventListener)
+                sensorManager.unregisterListener(sensorRotationEventListener)
                 isPhoneTilt = false
                 tempText = "Angle ${sensitivityAngle}\u00B0"
                 tiltSwitchText.text = tempText
@@ -939,8 +905,6 @@ class MainActivity : AppCompatActivity() {
         tempText = "${altitudeThreshold}m"
         altitudeSwitchText.text = tempText
         altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-        tempText = "Current Altitude: -m. Flicker at: -m"
-        seekBarAltitudeText.text = tempText
 
         altitudeExpandArrow.setOnClickListener {
             // Toggle the visibility of the content view
@@ -960,11 +924,7 @@ class MainActivity : AppCompatActivity() {
                 altitudeThreshold = minAltitude + ((maxAltitude - minAltitude).toFloat()/1000 * progress).toInt()
                 tempText = "${altitudeThreshold}m"
                 altitudeSwitchText.text = tempText
-                tempText = if (initAltitudeLevel == minAltitude) {
-                    "Current Altitude: -m. Flicker at: ${altitudeThreshold}m"
-                } else {
-                    "Current Altitude: ${initAltitudeLevel}m. Flicker at: ${altitudeThreshold}m"
-                }
+                tempText = "(current Altitude Height: ${initAltitudeLevel}m)"
                 seekBarAltitudeText.text = tempText
             }
 
@@ -981,10 +941,10 @@ class MainActivity : AppCompatActivity() {
         altitudeSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (permissionsKeys["ALTITUDE"] == true) {
                 if (isChecked) {
-                    sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+                    initSensorManager()
                     val altitudeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
                     if (altitudeSensor != null) {
-                        sensorEventListener = object : SensorEventListener {
+                        sensorPressureEventListener = object : SensorEventListener {
                             override fun onSensorChanged(event: SensorEvent) {
                                 if (event.sensor?.type == Sensor.TYPE_PRESSURE) {
                                     val pressureValue = event.values[0] // Get the pressure value in hPa
@@ -993,9 +953,10 @@ class MainActivity : AppCompatActivity() {
                                         if (initAltitudeLevel == minAltitude) {
                                             Log.d("MainActivity", "initAltitudeLevel set to ${initAltitudeLevel}m")
                                             initAltitudeLevel = altitude.toInt()
+                                            tempText = "(current Altitude Height: ${initAltitudeLevel}m)"
+                                            seekBarAltitudeText.text = tempText
                                         }
-                                        tempText = "Current Altitude: ${altitude.toInt()}m. Flicker at: ${altitudeThreshold}m"
-                                        seekBarAltitudeText.text = tempText
+
                                         if (altitudeThreshold > initAltitudeLevel) {
                                             // In case User is ascending in height
                                             if (altitude > altitudeThreshold) {
@@ -1004,7 +965,7 @@ class MainActivity : AppCompatActivity() {
                                                     stopFlickering(Token.ALTITUDE)
                                                     Log.d("MainActivity", "Flickering ON while ascending \nto altitude of ${flickerFlashlightHz}m")
                                                     startFlickering(Token.ALTITUDE)
-                                                    sensorManager.unregisterListener(sensorEventListener)
+                                                    sensorManager.unregisterListener(sensorPressureEventListener)
                                                 }
                                             }
                                         }
@@ -1017,13 +978,13 @@ class MainActivity : AppCompatActivity() {
                                                     Log.d("MainActivity", "Flickering ON while descending \nto altitude of ${flickerFlashlightHz}m")
                                                     startFlickering(Token.ALTITUDE)
                                                     stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
-                                                    sensorManager.unregisterListener(sensorEventListener)
+                                                    sensorManager.unregisterListener(sensorPressureEventListener)
                                                 }
                                             }
                                         }
                                     }
                                     else {
-                                        tempText = "Current Altitude: ${altitude.toInt()}m. Flicker at: ${altitudeThreshold}m"
+                                        tempText = "(current Altitude Height: ${altitude.toInt()}m)"
                                         seekBarAltitudeText.text = tempText
                                     }
                                 }
@@ -1032,10 +993,10 @@ class MainActivity : AppCompatActivity() {
                                 // Handle accuracy changes if needed
                             }
                         }
-                        Log.i("MainActivity","altitudeSwitch is ON ($sensorEventListener)")
+                        Log.i("MainActivity","altitudeSwitch is ON ($sensorPressureEventListener)")
                         resetAllActivities(Token.ALTITUDE)
                         isAltitudeOn = true
-                        sensorManager.registerListener(sensorEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
+                        sensorManager.registerListener(sensorPressureEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
                         addActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                         altitudeImageIcon.setImageResource(R.drawable.altitude_on)
                         tempText = "${altitudeThreshold}m"
@@ -1050,7 +1011,7 @@ class MainActivity : AppCompatActivity() {
                         altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                     }
                 } else {
-                    Log.i("MainActivity","altitudeSwitch is OFF ($sensorEventListener)")
+                    Log.i("MainActivity","altitudeSwitch is OFF ($sensorPressureEventListener)")
                     resetFeature(Token.ALTITUDE)
                 }
             }
@@ -1078,7 +1039,7 @@ class MainActivity : AppCompatActivity() {
         ////////////////////////////////////////////////////////////////////////////////////////
         // settings button init
         settingsBtn = findViewById(R.id.settingsBtnId)
-//
+
         val registerSettings = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 // Handle the result from the SettingsActivity here
@@ -1153,12 +1114,68 @@ class MainActivity : AppCompatActivity() {
         checkPermissions(ACTION.CREATE)
     }
 
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    private fun initSensorManager () {
+        if (::sensorManager.isInitialized) {
+            // already initialized; do nothing
+        }
+        else {
+            sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        }
+    }
+
+    private fun initAndRegisterRotationSensor(accelerometerSensor : Sensor) {
+        if (::sensorRotationEventListener.isInitialized) {
+            // already initialized; do nothing
+        }
+        else {
+            var rotationAngle = initRotationAngle
+            sensorRotationEventListener = object : SensorEventListener {
+                override fun onSensorChanged(event: SensorEvent) {
+                    if (event.sensor?.type == Sensor.TYPE_ROTATION_VECTOR) {
+                        val rotationMatrix = FloatArray(9)
+                        SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+                        val orientationAngles = FloatArray(3)
+                        SensorManager.getOrientation(rotationMatrix, orientationAngles)
+                        val angleInDegrees = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
+                        //Log.i("MainActivity","angleInDegrees=$angleInDegrees, rotationAngle=$rotationAngle, sensitivityAngle=${sensitivityAngle.toFloat()}")
+                        if (angleInDegrees > -5f && rotationAngle == initRotationAngle) {
+                            // Phone rotated to the left ~ 90 degrees
+                            rotationAngle = angleInDegrees
+                        } else if (angleInDegrees < -sensitivityAngle.toFloat() && rotationAngle > -5f) {
+                            // Phone returned to portrait orientation
+                            rotationAngle = initRotationAngle
+                            if (isFlashLightOn) {
+                                Log.i("MainActivity","TILT REACHED ANGLE - TURN OFF Flashlight")
+                                turnOffFlashlight()
+                            }
+                            else {
+                                Log.i("MainActivity","TILT REACHED ANGLE - TURN ON Flashlight")
+                                turnOnFlashlight()
+                            }
+                        }
+                    }
+                }
+                override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+                    // Handle accuracy changes if needed
+                    Log.i("MainActivity","onAccuracyChanged (accuracy = $accuracy)")
+                }
+            }
+            Log.i("MainActivity","sensorRotationEventListener initialized ($sensorRotationEventListener)")
+            sensorManager.registerListener(sensorRotationEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+    }
+
     private fun initAndRegisterBatteryReceiver() {
         if (::batteryReceiver.isInitialized) {
             // already initialized; do nothing
         }
         else {
-            Log.i("MainActivity", "batteryReceiver is initialized")
             batteryReceiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
                     if (initBatteryLevel == minBattery) {
@@ -1203,13 +1220,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+            Log.i("MainActivity","batteryReceiver initialized ($batteryReceiver)")
         }
     }
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
 
     private fun snackBarTimeSelected(calcTimeToFlickerInMillis: Long) {
         val calcTimeToFlickerInSeconds = calcTimeToFlickerInMillis / 1000
@@ -1311,9 +1324,9 @@ class MainActivity : AppCompatActivity() {
             }
             Token.ALTITUDE -> {
                 isAltitudeOn = false
-                altitudeThreshold = minAltitude
+                //altitudeThreshold = minAltitude
                 try {
-                    sensorManager.unregisterListener(sensorEventListener)
+                    sensorManager.unregisterListener(sensorPressureEventListener)
                 }
                 catch (e : java.lang.Exception) {
                     // Do nothing
@@ -1324,11 +1337,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_off)
-                tempText = "${altitudeThreshold}m"
-                altitudeSwitchText.text = tempText
+                //tempText = "${altitudeThreshold}m"
+                //altitudeSwitchText.text = tempText
                 altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 altitudeSwitch.isChecked = false
-                altitudeBar.progress = 0
+                //altitudeBar.progress = 0
             }
             Token.SOUND -> {
                 isAudioIncoming = false
@@ -1360,6 +1373,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter?.notifyItemInserted(itemList.size - 1)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun removeActivatedFeature (recyclerView: RecyclerView, feature: FEATURE) {
         itemList.removeIf { item -> item == feature.value }
         recyclerView.adapter?.notifyDataSetChanged()
@@ -1368,9 +1382,7 @@ class MainActivity : AppCompatActivity() {
     private fun setSettingsIntent () {
         // set intent for Settings activity
         intentSettings = Intent(this, SettingsActivity::class.java)
-        intentSettings.putExtra("maxFlickerHz", maxFlickerHz)
         intentSettings.putExtra("maxTimerMinutes", maxTimerMinutes.inWholeMinutes.toInt())
-        intentSettings.putExtra("sensitivityAngle", sensitivityAngle)
         intentSettings.putExtra("sensitivitySoundThreshold", sensitivitySoundThreshold)
         intentSettings.putExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall)
         intentSettings.putExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS)
@@ -1383,9 +1395,7 @@ class MainActivity : AppCompatActivity() {
         return sharedPref.contains("maxFlickerHz")
     }
     private fun retrieveStoredSettings () {
-        maxFlickerHz = sharedPref.getInt("maxFlickerHz", defaultMaxFlickerHz)
         maxTimerMinutes = sharedPref.getInt("maxTimerMinutes", defaultMaxTimer.inWholeMinutes.toInt()).minutes
-        sensitivityAngle = sharedPref.getInt("sensitivityAngle", defaultMaxTiltAngle)
         sensitivitySoundThreshold = sharedPref.getInt("sensitivitySoundThreshold", defaultSoundSenseLevel)
         maxFlickerDurationIncomingCall = sharedPref.getInt("maxFlickerDurationIncomingCall", defaultMaxFlickerIncomingCall)
         maxFlickerDurationIncomingSMS = sharedPref.getInt("maxFlickerDurationIncomingSMS", defaultMaxFlickerIncomingSMS)
@@ -1397,9 +1407,7 @@ class MainActivity : AppCompatActivity() {
         Log.i("MainActivity", "STORED Settings are: $maxFlickerHz,${maxTimerMinutes.inWholeMinutes.toInt()},$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
         val sharedPref = getSharedPreferences("FlashiiSettings", MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.putInt("maxFlickerHz", maxFlickerHz)
         editor.putInt("maxTimerMinutes", maxTimerMinutes.inWholeMinutes.toInt())
-        editor.putInt("sensitivityAngle", sensitivityAngle)
         editor.putInt("sensitivitySoundThreshold", sensitivitySoundThreshold)
         editor.putInt("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall)
         editor.putInt("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS)
@@ -1923,7 +1931,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isPhoneTilt) {
             try {
-                sensorManager.unregisterListener(sensorEventListener)
+                sensorManager.unregisterListener(sensorRotationEventListener)
             }
             catch (e : java.lang.Exception) {
                 // Do nothing
@@ -1954,7 +1962,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isAltitudeOn) {
             try {
-                sensorManager.unregisterListener(sensorEventListener)
+                sensorManager.unregisterListener(sensorPressureEventListener)
             }
             catch (e : SecurityException) {
                 Log.e("MainActivity", "onDestroy sensorManager exception $e")
@@ -2011,7 +2019,7 @@ class MainActivity : AppCompatActivity() {
             // So, Phone Tilt must be deactivated.
             Log.i("MainActivity", "RAA - TURN OFF isPhoneTilt")
             turnOffFlashlight()
-            sensorManager.unregisterListener(sensorEventListener)
+            sensorManager.unregisterListener(sensorRotationEventListener)
             isPhoneTilt = false
             tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
             tiltImageIcon.setImageResource(R.drawable.tilt_off)
@@ -2063,7 +2071,7 @@ class MainActivity : AppCompatActivity() {
             isAltitudeOn = false
             altitudeThreshold = minAltitude
             stopFlickering(Token.ALTITUDE)
-            sensorManager.unregisterListener(sensorEventListener)
+            sensorManager.unregisterListener(sensorPressureEventListener)
             try {
                 loopHandlerFlickering.removeCallbacksAndMessages(null)
             }
