@@ -743,10 +743,8 @@
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_semibold"
                                 android:gravity="center_horizontal"
-                                android:minWidth="56dp"
-                                android:text="@string/time_reset"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 
@@ -816,18 +814,8 @@
                         android:id="@+id/timerHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
                         android:orientation="vertical"
                         android:visibility="gone">
-
-                        <!-- Text -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/set_time"
-                            android:textSize="18sp"
-                            tools:ignore="VisualLintLongText" />
 
                         <!-- Input & TIME -->
                         <LinearLayout
@@ -1291,7 +1279,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/toolsHeight"
-                    android:background="@drawable/feature_selector_altitude"
+                    android:background="#00FFFFFF"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:padding="12dp">
