@@ -121,7 +121,8 @@
                                 android:paddingStart="22dp"
                                 android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
-                                android:src="@drawable/arrow_down" />
+                                android:src="@drawable/arrow_down"
+                                tools:ignore="RtlSymmetry" />
 
                             <Switch
                                 android:id="@+id/switchTilt"
@@ -383,7 +384,8 @@
                                 android:paddingStart="22dp"
                                 android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
-                                android:src="@drawable/arrow_down" />
+                                android:src="@drawable/arrow_down"
+                                tools:ignore="RtlSymmetry" />
 
                             <Switch
                                 android:id="@+id/switchSound"
@@ -625,7 +627,8 @@
                                 android:paddingStart="22dp"
                                 android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
-                                android:src="@drawable/arrow_down" />
+                                android:src="@drawable/arrow_down"
+                                tools:ignore="RtlSymmetry" />
 
                             <Switch
                                 android:id="@+id/switchFlicker"
@@ -796,7 +799,8 @@
                                 android:paddingStart="22dp"
                                 android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
-                                android:src="@drawable/arrow_down" />
+                                android:src="@drawable/arrow_down"
+                                tools:ignore="RtlSymmetry" />
 
                             <Switch
                                 android:id="@+id/switchTimer"
@@ -822,21 +826,15 @@
                         android:visibility="gone">
 
                         <!-- Input & TIME -->
-                        <LinearLayout
+                        <TimePicker
+                            android:id="@+id/timePicker1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center">
-
-                            <TimePicker
-                                android:id="@+id/timePicker1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:scaleX="1.2"
-                                android:scaleY="1.2"
-                                android:theme="@style/timePicker"
-                                android:timePickerMode="spinner" />
-                        </LinearLayout>
+                            android:layout_marginTop="6dp"
+                            android:scaleX="1.2"
+                            android:scaleY="1.2"
+                            android:theme="@style/timePicker"
+                            android:timePickerMode="spinner" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -1020,7 +1018,8 @@
                                 android:paddingStart="22dp"
                                 android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
-                                android:src="@drawable/arrow_down" />
+                                android:src="@drawable/arrow_down"
+                                tools:ignore="RtlSymmetry" />
 
                             <Switch
                                 android:id="@+id/switchBattery"
@@ -1197,7 +1196,8 @@
                                 android:paddingStart="22dp"
                                 android:paddingBottom="30dp"
                                 android:scaleType="fitCenter"
-                                android:src="@drawable/arrow_down" />
+                                android:src="@drawable/arrow_down"
+                                tools:ignore="RtlSymmetry" />
 
                             <Switch
                                 android:id="@+id/switchAltitude"
@@ -1301,7 +1301,7 @@
     <LinearLayout
         android:id="@+id/toolsLayout"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="54dp"
         android:background="@drawable/feature_tools"
         android:gravity="center"
         android:orientation="horizontal"

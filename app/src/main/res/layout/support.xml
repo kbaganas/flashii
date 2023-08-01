@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/supportLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -166,10 +167,12 @@
                 android:autofillHints=""
                 android:fontFamily="@font/cabin_regular"
                 android:hint="@string/enterAmount"
-                android:inputType="phone"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:textAlignment="center"
                 android:textColorHint="@color/greyNote"
                 android:textSize="16sp"
+                android:inputType="number"
                 app:backgroundTint="@color/blueOffBack4"
                 tools:ignore="VisualLintTextFieldSize" />
 
