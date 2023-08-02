@@ -76,7 +76,7 @@
     <string name="infoBattery">Phone\'s battery power shall be monitored and you will get notified by flashlight flickering when the power level you \'ve specified is reached.\n\nWhen that happens, the flashlight will be flickering for 15 seconds (default).</string>
     <string name="infoBatteryCheck">Battery power level specified has been reached.</string>
     <string name="infoNoPermissionByUser">Feature has no rights by User to function.</string>
-    <string name="infoTimer">Set exactly after how much time you want to get notified by flashlight flickering.\n\nWhen time is reached, the flashlight will be flickering for 15 seconds (default).</string>
+    <string name="infoTimer">Set the time at which you want to get notified by flashlight flickering.\n\nWhen time is reached, the flashlight will be flickering for 15 seconds (default).</string>
     <string name="infoTimerCheck">Time specified has come.</string>
     <string name="infoSOS">Enable this feature to continuously transmit SOS message in Morse code from your flashlight</string>
     <string name="infoSound">You can turn On and Off the flashlight by producing short sounds, e.g. finger-snapping and hand-clapping. \n\nNote that you can configure the sound sensitivity in Settings at the desired level.\n\nFeature is only available if you permit Audio rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
@@ -99,7 +99,7 @@
     <string name="ConnectionToFound">Get notified when Connection found</string>
     <string name="backArrow">Back arrow</string>
     <string name="backArrowTilt">Back arrow Tilt</string>
-    <string name="timerFeature">Flickering after Time</string>
+    <string name="timerFeature">Time</string>
     <string name="batteryFeature">Flickering at Battery power level</string>
 
     <string name="altitudeFeature">Flickering at Altitude height</string>
