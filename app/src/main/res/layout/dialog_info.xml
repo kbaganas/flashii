@@ -734,185 +734,6 @@
 
             </LinearLayout>
 
-            <!-- Short Sounds -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_sound"
-                android:paddingHorizontal="12dp"
-                android:layout_marginTop="18dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/soundFeature"
-                        android:textSize="@dimen/infoFeatureTitle" />
-                    <ImageButton
-                        android:id="@+id/infoSoundExpandArrow"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
-                </LinearLayout>
-
-                <!-- Expandable -->
-                <LinearLayout
-                    android:id="@+id/infoHiddenSound"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:textColor="@color/blueOffBack5"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoSound"
-                        android:textSize="@dimen/infoFeatureText" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:textSize="@dimen/infoFeatureText">
-
-                        <TextView
-                            android:layout_width="48dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:textColor="@color/blueOffBack5"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Button"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText,TextSizeCheck" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:textColor="@color/blueOffBack5"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:textAlignment="center">
-
-                        <View
-                            android:layout_width="48dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or"
-                            tools:ignore="ExtraText,TooManyViews" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="14dp"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sound_on" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/infoActivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sound_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoDeactivated"
-                            android:textColor="@color/blueOffBack5"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sound_no_permission" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoNoPermissionByUser"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
             <!-- Tilt -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -1086,315 +907,6 @@
                             android:gravity="center_vertical"
                             android:textColor="@color/blueOffBack5"
                             android:text="@string/infoNoPermissionByUser"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Timer -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_time"
-                android:paddingHorizontal="12dp"
-                android:layout_marginTop="18dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:textColor="@color/blueOffBack5"
-
-                        android:text="@string/timerFeature"
-                        android:textSize="@dimen/infoFeatureTitle" />
-                    <ImageButton
-                        android:id="@+id/infoTimeExpandArrow"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
-                </LinearLayout>
-
-                <!-- Expandable -->
-                <LinearLayout
-                    android:id="@+id/infoHiddenTimer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/infoTimer"
-                        android:textSize="@dimen/infoFeatureText" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:textSize="@dimen/infoFeatureText">
-
-                        <TextView
-                            android:layout_width="48dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/Button"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText,TextSizeCheck" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:textAlignment="center">
-
-                        <View
-                            android:layout_width="48dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or"
-                            tools:ignore="ExtraText" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/timer_on" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:textColor="@color/blueOffBack5"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoActivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/timer_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoDeactivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Battery -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_battery"
-                android:paddingHorizontal="12dp"
-                android:layout_marginTop="18dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/batteryFeature"
-                        android:textSize="@dimen/infoFeatureTitle" />
-                    <ImageButton
-                        android:id="@+id/infoBatteryExpandArrow"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
-                </LinearLayout>
-
-                <!-- Expandable -->
-                <LinearLayout
-                    android:id="@+id/infoHiddenBattery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/infoBattery"
-                        android:textSize="@dimen/infoFeatureText" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:textSize="@dimen/infoFeatureText">
-
-                        <TextView
-                            android:layout_width="48dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/Button"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText,TextSizeCheck" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/blueOffBack5"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:textAlignment="center">
-
-                        <View
-                            android:layout_width="48dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or"
-                            tools:ignore="ExtraText" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="14dp"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:textColor="@color/blueOffBack5"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/battery_on" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueOffBack5"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoActivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/battery_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoDeactivated"
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -1771,7 +1283,6 @@
                 android:background="@drawable/feature_selector_sos"
                 android:paddingHorizontal="12dp"
                 android:layout_marginTop="18dp"
-                android:layout_marginBottom="12dp"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1919,6 +1430,496 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
+            <!-- Timer -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/feature_selector_time"
+                android:paddingHorizontal="12dp"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+
+                        android:text="@string/timerFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoTimeExpandArrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenTimer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/infoTimer"
+                        android:textSize="@dimen/infoFeatureText" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textSize="@dimen/infoFeatureText">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/Button"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
+
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/timer_on" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:textColor="@color/blueOffBack5"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoActivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/timer_off" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Short Sounds -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/feature_selector_sound"
+                android:paddingHorizontal="12dp"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/soundFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoSoundExpandArrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenSound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textColor="@color/blueOffBack5"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:text="@string/infoSound"
+                        android:textSize="@dimen/infoFeatureText" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textSize="@dimen/infoFeatureText">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:textColor="@color/blueOffBack5"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Button"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:textColor="@color/blueOffBack5"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
+
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText,TooManyViews" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sound_on" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/infoActivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sound_off" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textColor="@color/blueOffBack5"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sound_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoNoPermissionByUser"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Battery -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/feature_selector_battery"
+                android:paddingHorizontal="12dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="28dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/batteryFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoBatteryExpandArrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenBattery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/infoBattery"
+                        android:textSize="@dimen/infoFeatureText" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textSize="@dimen/infoFeatureText">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/Button"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/blueOffBack5"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
+
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:textColor="@color/blueOffBack5"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/battery_on" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/blueOffBack5"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoActivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/battery_off" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

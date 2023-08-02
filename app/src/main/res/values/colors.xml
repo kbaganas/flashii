@@ -31,15 +31,15 @@
     <color name="no_permission">#434241</color>
     <color name="dollarColor">#85BB65</color>
 
-    <color name="mainFlashlight">#eefee3</color>
+    <color name="mainFlashlight">#e3f5fe</color>
     <color name="mainSMS">#E3F5FE</color>
     <color name="mainCALL">#e3e8fe</color>
-    <color name="mainSound">#fee3ee</color>
+    <color name="mainSound">#feede3</color>
     <color name="mainTilt">#e3fefa</color>
     <color name="mainTime">#fefae3</color>
     <color name="mainSOS">#F5F6E9</color>
     <color name="mainNetwork">#E9F6EA</color>
-    <color name="mainBattery">#fee3e8</color>
+    <color name="mainBattery">#fee3e7</color>
     <color name="mainAltitude">#DDF2EF</color>
     <color name="mainFlicker">#e3eefe</color>
 
