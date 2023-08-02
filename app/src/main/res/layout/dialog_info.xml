@@ -72,7 +72,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_sos"
+                android:background="@drawable/feature_selector_flashlight"
                 android:paddingHorizontal="12dp"
                 android:orientation="vertical">
                 <LinearLayout
@@ -86,7 +86,6 @@
                         android:gravity="center_vertical"
                         android:fontFamily="@font/cabin_semibold"
                         android:textColor="@color/blueOffBack5"
-
                         android:text="@string/flashlightFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton

@@ -31,9 +31,10 @@
     <color name="no_permission">#434241</color>
     <color name="dollarColor">#85BB65</color>
 
+    <color name="mainFlashlight">#eefee3</color>
     <color name="mainSMS">#E3F5FE</color>
     <color name="mainCALL">#e3e8fe</color>
-    <color name="mainSound">#f5fee3</color>
+    <color name="mainSound">#fee3ee</color>
     <color name="mainTilt">#e3fefa</color>
     <color name="mainTime">#fefae3</color>
     <color name="mainSOS">#F5F6E9</color>
@@ -41,6 +42,7 @@
     <color name="mainBattery">#fee3e8</color>
     <color name="mainAltitude">#DDF2EF</color>
     <color name="mainFlicker">#e3eefe</color>
+
     <color name="switch_off">#A24C3F</color>
     <color name="switch_on">#40B344</color>
     <color name="blueText">#5f78f1</color>
