@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <layer-list>
-            <item>
-                <shape>
-                    <size
-                        android:layout_height="45dp"
-                        android:layout_width="45dp" />
-                    <solid android:color="@android:color/transparent" />
-                </shape>
-            </item>
-            <item android:drawable="@drawable/thumb_n1"/>
-        </layer-list>
+        <shape android:shape="oval">
+            <solid android:color="@color/blueText2"/>
+            <stroke android:color="#88a5b3f7" android:width="25dp"/>
+            <size android:height="48dp" android:width="48dp"/>
+        </shape>
     </item>
 </selector>

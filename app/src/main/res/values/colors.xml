@@ -47,5 +47,6 @@
     <color name="switch_on">#40B344</color>
     <color name="blueText">#5f78f1</color>
     <color name="blueText2">#a5b3f7</color>
+    <color name="seekBarRemain">#E6E0E9</color>
 </resources>
 

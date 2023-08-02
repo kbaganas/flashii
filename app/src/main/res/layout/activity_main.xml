@@ -168,7 +168,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="10dp"
                             android:gravity="start"
                             android:orientation="horizontal">
 
@@ -188,6 +188,10 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:max="9"
+                                android:progressDrawable="@drawable/seekbar_progress"
+                                android:thumb="@drawable/seekbar_thumb"
+                                android:background="@null"
+                                android:splitTrack="false"
                                 android:progress="7" />
 
                             <TextView
@@ -430,7 +434,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="10dp"
                             android:gravity="start"
                             android:orientation="horizontal">
 
@@ -450,6 +454,10 @@
                                 android:layout_height="48dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
+                                android:progressDrawable="@drawable/seekbar_progress"
+                                android:thumb="@drawable/seekbar_thumb"
+                                android:background="@null"
+                                android:splitTrack="false"
                                 android:max="9"
                                 android:progress="0" />
 
@@ -674,7 +682,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="10dp"
                             android:gravity="start"
                             android:orientation="horizontal">
 
@@ -693,6 +701,10 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:progressDrawable="@drawable/seekbar_progress"
+                                android:thumb="@drawable/seekbar_thumb"
+                                android:background="@null"
+                                android:splitTrack="false"
                                 android:max="10"
                                 android:progress="1" />
 
@@ -1060,7 +1072,7 @@
                             android:id="@+id/seekBarBatteryText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="24dp"
+                            android:layout_marginBottom="12dp"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center"
                             android:textSize="18sp"
@@ -1071,7 +1083,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
-                            android:layout_marginTop="6dp"
                             android:gravity="start"
                             android:orientation="horizontal">
 
@@ -1090,6 +1101,10 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:progressDrawable="@drawable/seekbar_progress"
+                                android:thumb="@drawable/seekbar_thumb"
+                                android:background="@null"
+                                android:splitTrack="false"
                                 android:max="100"
                                 android:progress="1" />
 
@@ -1219,7 +1234,7 @@
                         android:id="@+id/altitudeHiddenView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="12dp"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -1238,7 +1253,7 @@
                             android:id="@+id/seekBarAltitudeText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="24dp"
+                            android:layout_marginBottom="12dp"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center"
                             android:textSize="18sp"
@@ -1249,7 +1264,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
-                            android:layout_marginTop="6dp"
                             android:gravity="start"
                             android:orientation="horizontal">
 
@@ -1268,6 +1282,10 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:progressDrawable="@drawable/seekbar_progress"
+                                android:thumb="@drawable/seekbar_thumb"
+                                android:background="@null"
+                                android:splitTrack="false"
                                 android:max="1000"
                                 android:progress="1" />
 
