@@ -69,8 +69,8 @@
     <string name="settingsAltitudeNote">(Range: 3 to 180 seconds)</string>
 
     <string name="infoHelp">Help info</string>
-    <string name="infoMoreComments">Find below full description\nof each Feature and its Buttons.</string>
-    <string name="infoFlashlight">Click to turn On and Off the  phone\'s flashlight.\n\nYou can also Press+Hold and Release the button to turn the flashlight On and Off as well on demand.</string>
+    <string name="infoMoreComments">Find below full description\nof each feature and its icons.</string>
+    <string name="infoFlashlight">Click the red/green button in the flashlight to turn On and Off the  phone\'s flashlight.\n\nYou can also Press+Hold and Release the button to turn the flashlight On and Off as well on demand.</string>
     <string name="infoFlashlightOn">Feature activated (flashlight is turned On).</string>
     <string name="infoFlashlightOff">Feature deactivated (flashlight is turned Off).</string>
     <string name="infoBattery">Phone\'s battery power shall be monitored and you will get notified by flashlight flickering when the power level you \'ve specified is reached.\n\nWhen that happens, the flashlight will be flickering for 15 seconds (default).</string>
@@ -84,9 +84,9 @@
     <string name="infoIncomingSMS">Enable this feature to get notified by flashlight flickering when an incoming SMS reaches your phone. \n\nFlickering will stop after 15 seconds (is configured in the Settings view).\n\nFeature is only available if you permit SMS rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoActivated">Feature activated.</string>
     <string name="infoDeactivated">Feature deactivated.</string>
-    <string name="infoIncomingCall">Enable this feature to get notified by flashlight flickering when an incoming Call reaches your phone.\n\nFlickering will stop if you answer or reject the incoming Call, or automatically after 15 seconds (configurable).\n\nFeature is only available if you permit Call rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
+    <string name="infoIncomingCall">Enable this feature to get notified by flashlight flickering when you receive an incoming Call on your phone.\n\nFlickering will stop if you answer or reject the incoming Call, or automatically after 15 seconds (configurable in Settings).\n\nFeature is only available if you permit Call rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoTilt">You can turn On and Off the flashlight by tilting the phone at around 90 degrees angles (from its standpoint).\n\nNote that you can configure the angle\'s sensitivity in the Settings view.\n\nFeature is only available if your phone device has a Rotation Sensor available. If otherwise, the deactivated button is displayed instead.</string>
-    <string name="infoFlickering">Flashlight will be flickering at the frequency (in Hertz) you specify in the seekbar.\nBy default frequency ranges from 1 to 10Hz.\n\nNote that you can configure the max frequency of 10Hz to the desired value in the Settings view.</string>
+    <string name="infoFlickering">Flashlight will be flickering at the frequency (in Hertz) you specify in the seekbar. By default frequency ranges from 1 to 10Hz.\n\nNote that you can configure the max frequency of 10Hz to the desired value in the Settings.</string>
     <string name="infoAltitude">Set a specific Altitude height in meters (m) at which you want to get notified by flashlight flickering.\n\nWhen Altitude is reached, the flashlight will be flickering for 15 seconds (default).\n\nFeature is only available if you permit Location rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoAltitudeCheck">Altitude specified has been reached.</string>
     <string name="infoNetwork">Based on your phone\'s current network connection status, you \'ll get notified by flashlight flickering when\n\na) provider\'s Network signal, Data or WiFi connections are lost, \n\nb) provider\'s Network signal, Data or WiFi are found.</string>

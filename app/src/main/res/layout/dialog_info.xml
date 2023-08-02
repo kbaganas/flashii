@@ -72,128 +72,149 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/feature_selector_sos"
+                android:paddingHorizontal="12dp"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_regular"
-                    android:textColor="@color/blueOffBack5"
-                    android:background="@drawable/feature_selector_sos"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+
+                        android:text="@string/flashlightFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoFlashlightExpandArrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenFlashlight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:text="@string/flashlightFeature"
-                    android:textSize="@dimen/infoFeatureTitle" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_regular"
-                    android:text="@string/infoFlashlight"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/infoFeatureText" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal"
-                    android:textSize="@dimen/infoFeatureText">
-
-                    <TextView
-                        android:layout_width="48dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
-                        android:text="@string/Button"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText,TextSizeCheck" />
-
+                    android:orientation="vertical"
+                    android:visibility="gone">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
-                        android:text="@string/Description"
+                        android:text="@string/infoFlashlight"
+                        android:textColor="@color/blueOffBack5"
                         android:textSize="@dimen/infoFeatureText" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:textAlignment="center">
-
-                    <View
-                        android:layout_width="48dp"
-                        android:layout_height="1dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider2"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/or"
-                        tools:ignore="ExtraText" />
-
-                    <View
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider2"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/or" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textSize="@dimen/infoFeatureText">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginVertical="14dp"
-                    tools:ignore="UseCompoundDrawables">
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/Button"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="28dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/flashlight_off4" />
-
-                    <TextView
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/infoDeactivated"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText" />
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="28dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/flashlight_on6" />
-
-                    <TextView
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/infoActivated"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/flashlight_on6" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoActivated"
+                            android:textColor="@color/blueOffBack5"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/flashlight_off4" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textColor="@color/blueOffBack5"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -201,130 +222,155 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="58dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/feature_selector_flicker"
+                android:paddingHorizontal="12dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_regular"
-                    android:textColor="@color/blueOffBack5"
-                    android:background="@drawable/feature_selector_flicker"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
-                    android:layout_marginBottom="12dp"
-                    android:text="@string/flickerFeature"
-                    android:textSize="@dimen/infoFeatureTitle" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_regular"
-                    android:text="@string/infoFlickering"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/infoFeatureText" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/infoFeatureText">
-
+                    android:orientation="horizontal">
                     <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/flickerFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoFlickerExpandArrow"
                         android:layout_width="48dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/Button"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText,TextSizeCheck" />
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
 
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenFlicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
-                        android:text="@string/Description"
+                        android:text="@string/infoFlickering"
+                        android:textColor="@color/blueOffBack5"
                         android:textSize="@dimen/infoFeatureText" />
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:textAlignment="center">
-
-                    <View
-                        android:layout_width="48dp"
-                        android:layout_height="1dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider2"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/or"
-                        tools:ignore="ExtraText" />
-
-                    <View
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider2"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/or" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textColor="@color/blueOffBack5"
+                        android:textSize="@dimen/infoFeatureText">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="14dp"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"
+                            android:textColor="@color/blueOffBack5"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Button"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="28dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/flicker_off" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/infoDeactivated"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText" />
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="28dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/flicker_on" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
-                        android:gravity="center_vertical"
-                        android:text="@string/infoActivated"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/flicker_on" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoActivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/flicker_off" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textColor="@color/blueOffBack5"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -332,154 +378,178 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="58dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/feature_selector_call"
+                android:paddingHorizontal="12dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/blueOffBack5"
-                    android:fontFamily="@font/cabin_regular"
-                    android:background="@drawable/feature_selector_call"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/callFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoCallExpandArrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenCall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:text="@string/callFeature"
-                    android:textSize="@dimen/infoFeatureTitle" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/cabin_regular"
-                    android:text="@string/infoIncomingCall"
-                    android:textSize="@dimen/infoFeatureText" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal"
-                    android:textSize="@dimen/infoFeatureText">
-
-                    <TextView
-                        android:layout_width="48dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="16dp"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/Button"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText,TextSizeCheck" />
-
+                    android:orientation="vertical"
+                    android:visibility="gone">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
-                        android:text="@string/Description"
+                        android:text="@string/infoIncomingCall"
                         android:textSize="@dimen/infoFeatureText" />
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:textAlignment="center">
-
-                    <View
-                        android:layout_width="48dp"
-                        android:layout_height="1dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="16dp"
-                        android:background="@color/greyDivider2"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/or"
-                        tools:ignore="ExtraText" />
-
-                    <View
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/greyDivider2"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/or" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textSize="@dimen/infoFeatureText">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="14dp"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Button"
+                            android:textColor="@color/blueOffBack5"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="28dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/incoming_call_off" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/infoDeactivated"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText" />
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="28dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/call_on2" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/white"
-                        android:text="@string/infoActivated"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp"
+                        tools:ignore="UseCompoundDrawables">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="14dp"
-                    tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/call_on2" />
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="28dp"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/call_no_permission" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/infoActivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
-                        android:gravity="center_vertical"
-                        android:text="@string/infoNoPermissionByUser"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/incoming_call_off" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/blueOffBack5"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/call_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoNoPermissionByUser"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -487,7 +557,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="58dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/feature_selector_sms"
+                android:padding="12dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -495,10 +567,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:textColor="@color/blueOffBack5"
-                    android:background="@drawable/feature_selector_sms"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/smsFeature"
                     android:textSize="@dimen/infoFeatureTitle" />
 
@@ -507,7 +575,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoIncomingSMS"
-                    android:textColor="@color/white"
+                    android:textColor="@color/blueOffBack5"
                     android:textSize="@dimen/infoFeatureText" />
 
                 <LinearLayout
@@ -522,7 +590,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginEnd="16dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
                         android:textSize="@dimen/infoFeatureText"
@@ -531,7 +599,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
                         android:textSize="@dimen/infoFeatureText" />
@@ -579,7 +647,7 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
@@ -606,7 +674,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/infoActivated"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText" />
@@ -631,7 +699,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/infoNoPermissionByUser"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText" />
@@ -642,7 +710,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="58dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/feature_selector_sound"
+                android:padding="12dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -659,7 +729,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:textColor="@color/white"
+                    android:textColor="@color/blueOffBack5"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/infoSound"
@@ -676,7 +746,7 @@
                         android:layout_width="48dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
@@ -685,7 +755,7 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
@@ -738,7 +808,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
@@ -761,7 +831,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/infoActivated"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText" />
@@ -785,7 +855,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:gravity="center_vertical"
                         android:text="@string/infoNoPermissionByUser"
                         android:textSize="@dimen/infoFeatureText"
@@ -797,7 +867,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="58dp"
+                android:background="@drawable/feature_selector_tilt"
+                android:padding="12dp"
+                android:layout_marginTop="18dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -805,10 +877,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:textColor="@color/blueOffBack5"
-                    android:background="@drawable/feature_selector_tilt"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/tiltFeature"
                     android:textSize="@dimen/infoFeatureTitle" />
 
@@ -816,7 +884,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
-                    android:textColor="@color/white"
+                    android:textColor="@color/blueOffBack5"
                     android:text="@string/infoTilt"
                     android:textSize="@dimen/infoFeatureText" />
 
@@ -835,14 +903,14 @@
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Button"
                         android:textSize="@dimen/infoFeatureText"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/Description"
                         android:textSize="@dimen/infoFeatureText" />
                 </LinearLayout>
@@ -890,7 +958,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
@@ -918,7 +986,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
                         android:textSize="@dimen/infoFeatureText"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
@@ -941,7 +1009,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/infoNoPermissionByUser"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText" />
@@ -952,7 +1020,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="58dp"
+                android:background="@drawable/feature_selector_time"
+                android:padding="12dp"
+                android:layout_marginTop="18dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -960,10 +1030,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:textColor="@color/blueOffBack5"
-                    android:background="@drawable/feature_selector_time"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/timerFeature"
                     android:textSize="@dimen/infoFeatureTitle" />
 
@@ -971,7 +1037,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
-                    android:textColor="@color/white"
+                    android:textColor="@color/blueOffBack5"
                     android:text="@string/infoTimer"
                     android:textSize="@dimen/infoFeatureText" />
 
@@ -988,7 +1054,7 @@
                         android:layout_gravity="start"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/Button"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
@@ -997,7 +1063,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/Description"
                         android:textSize="@dimen/infoFeatureText" />
                 </LinearLayout>
@@ -1046,7 +1112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
                         android:textSize="@dimen/infoFeatureText"
@@ -1068,7 +1134,7 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
@@ -1082,7 +1148,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="58dp"
+                android:background="@drawable/feature_selector_battery"
+                android:padding="12dp"
+                android:layout_marginTop="18dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -1090,10 +1158,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:textColor="@color/blueOffBack5"
-                    android:background="@drawable/feature_selector_battery"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/batteryFeature"
                     android:textSize="@dimen/infoFeatureTitle" />
 
@@ -1101,7 +1165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
-                    android:textColor="@color/white"
+                    android:textColor="@color/blueOffBack5"
                     android:text="@string/infoBattery"
                     android:textSize="@dimen/infoFeatureText" />
 
@@ -1118,7 +1182,7 @@
                         android:layout_gravity="start"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/Button"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
@@ -1126,7 +1190,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
                         android:textSize="@dimen/infoFeatureText" />
@@ -1176,7 +1240,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
                         android:textSize="@dimen/infoFeatureText"
@@ -1193,14 +1257,14 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="28dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:contentDescription="@string/GeneralContentDescription"
                         app:srcCompat="@drawable/battery_on" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
@@ -1213,7 +1277,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="58dp"
+                android:background="@drawable/feature_selector_altitude"
+                android:padding="12dp"
+                android:layout_marginTop="18dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -1221,10 +1287,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:textColor="@color/blueOffBack5"
-                    android:background="@drawable/feature_selector_altitude"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/altitudeFeature"
                     android:textSize="@dimen/infoFeatureTitle" />
 
@@ -1232,7 +1294,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
-                    android:textColor="@color/white"
+                    android:textColor="@color/blueOffBack5"
                     android:text="@string/infoAltitude"
                     android:textSize="@dimen/infoFeatureText" />
 
@@ -1249,7 +1311,7 @@
                         android:layout_gravity="start"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/Button"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
@@ -1257,7 +1319,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
                         android:textSize="@dimen/infoFeatureText" />
@@ -1307,7 +1369,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
                         android:textSize="@dimen/infoFeatureText"
@@ -1331,7 +1393,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:gravity="center_vertical"
                         android:text="@string/infoActivated"
                         android:textSize="@dimen/infoFeatureText"
@@ -1352,7 +1414,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:gravity="center_vertical"
                         android:text="@string/infoNoPermissionByUser"
                         android:textSize="@dimen/infoFeatureText"
@@ -1364,7 +1426,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="58dp"
+                android:background="@drawable/feature_selector_network"
+                android:padding="12dp"
+                android:layout_marginTop="18dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -1372,17 +1436,13 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:textColor="@color/blueOffBack5"
-                    android:background="@drawable/feature_selector_network"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/networkFeature"
                     android:textSize="@dimen/infoFeatureTitle" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
-                    android:textColor="@color/white"
+                    android:textColor="@color/blueOffBack5"
                     android:text="@string/infoNetwork"
                     android:textSize="@dimen/infoFeatureText" />
                 <LinearLayout
@@ -1398,7 +1458,7 @@
                         android:layout_gravity="start"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/Button"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
@@ -1407,7 +1467,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/Description"
                         android:textSize="@dimen/infoFeatureText" />
                 </LinearLayout>
@@ -1456,7 +1516,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
@@ -1478,7 +1538,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/ConnectionToFound"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
@@ -1501,7 +1561,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/ConnectionToLost"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
@@ -1522,7 +1582,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:gravity="center_vertical"
                         android:text="@string/infoNoPermissionByUser"
                         android:textSize="@dimen/infoFeatureText"
@@ -1534,7 +1594,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="58dp"
+                android:background="@drawable/feature_selector_sos"
+                android:padding="12dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginBottom="28dp"
                 android:orientation="vertical">
 
@@ -1543,10 +1605,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
                     android:textColor="@color/blueOffBack5"
-                    android:background="@drawable/feature_selector_sos"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/sosFeature"
                     android:textSize="@dimen/infoFeatureTitle" />
 
@@ -1554,7 +1612,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/cabin_regular"
-                    android:textColor="@color/white"
+                    android:textColor="@color/blueOffBack5"
                     android:text="@string/infoSOS"
                     android:textSize="@dimen/infoFeatureText" />
 
@@ -1571,7 +1629,7 @@
                         android:layout_gravity="start"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:text="@string/Button"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText,TextSizeCheck" />
@@ -1579,7 +1637,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:text="@string/Description"
                         android:textSize="@dimen/infoFeatureText" />
@@ -1614,6 +1672,30 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="28dp"
+                        android:scaleY="1.3"
+                        android:contentDescription="@string/GeneralContentDescription"
+                        app:srcCompat="@drawable/sos_on" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/cabin_regular"
+                        android:gravity="center_vertical"
+                        android:text="@string/infoActivated"
+                        android:textColor="@color/blueOffBack5"
+                        android:textSize="@dimen/infoFeatureText"
+                        tools:ignore="VisualLintLongText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="14dp"
                     android:orientation="horizontal"
@@ -1631,33 +1713,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/blueOffBack5"
                         android:gravity="center_vertical"
                         android:text="@string/infoDeactivated"
-                        android:textSize="@dimen/infoFeatureText"
-                        tools:ignore="VisualLintLongText" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="28dp"
-                        android:scaleY="1.3"
-                        android:contentDescription="@string/GeneralContentDescription"
-                        app:srcCompat="@drawable/sos_on" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cabin_regular"
-                        android:gravity="center_vertical"
-                        android:text="@string/infoActivated"
-                        android:textColor="@color/white"
                         android:textSize="@dimen/infoFeatureText"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
