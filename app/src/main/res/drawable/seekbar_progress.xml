@@ -12,6 +12,7 @@
         <clip>
             <shape
                 android:shape="line">
+                <solid android:color="@color/seekBarRemain" />
                 <stroke
                     android:color="@color/blueText2"
                     android:width="8dp"/>
