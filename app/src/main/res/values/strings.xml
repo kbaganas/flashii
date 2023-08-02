@@ -79,9 +79,9 @@
     <string name="infoTimer">Set exactly after how much time you want to get notified by flashlight flickering.\n\nWhen time is reached, the flashlight will be flickering for 15 seconds (default).</string>
     <string name="infoTimerCheck">Time specified has come.</string>
     <string name="infoSOS">Enable this feature to continuously transmit SOS message in Morse code from your flashlight</string>
-    <string name="infoSound">You can turn On and Off the flashlight by producing short sounds, e.g. by finger snapping. \n\nNote that you can configure the sound sensitivity in the Settings view at the desired level.\n\nFeature is only available if you permit Audio rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
+    <string name="infoSound">You can turn On and Off the flashlight by producing short sounds, e.g. finger-snapping and hand-clapping. \n\nNote that you can configure the sound sensitivity in Settings at the desired level.\n\nFeature is only available if you permit Audio rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoNoPermissionByDevice">Feature cannot function on this Device.</string>
-    <string name="infoIncomingSMS">Enable this feature to get notified by flashlight flickering when an incoming SMS reaches your phone. \n\nFlickering will stop after 15 seconds (is configured in the Settings view).\n\nFeature is only available if you permit SMS rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
+    <string name="infoIncomingSMS">Enable this feature to get notified by flashlight flickering when you receive an incoming SMS in your phone. \n\nFlickering will stop after 15 seconds (configurable in Settings).\n\nFeature is only available if you permit SMS rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoActivated">Feature activated.</string>
     <string name="infoDeactivated">Feature deactivated.</string>
     <string name="infoIncomingCall">Enable this feature to get notified by flashlight flickering when you receive an incoming Call on your phone.\n\nFlickering will stop if you answer or reject the incoming Call, or automatically after 15 seconds (configurable in Settings).\n\nFeature is only available if you permit Call rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
@@ -107,7 +107,7 @@
     <string name="smsFeature">Flashlight flicker on Incoming SMS</string>
     <string name="networkFeature">Flickering on Connection changes</string>
     <string name="tiltFeature">Flickering on Phone Tilts</string>
-    <string name="soundFeature">Flickering on short Sounds</string>
+    <string name="soundFeature">Finger Snap</string>
     <string name="flickerFeature">Flashlight Flicker</string>
     <string name="flashlightFeature">Flashlight On/Off</string>
     <string name="sosFeature">Send SOS</string>
