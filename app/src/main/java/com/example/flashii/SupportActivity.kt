@@ -24,7 +24,7 @@ class SupportActivity : AppCompatActivity() {
         // handlers of supportManualText
         val supportManualText = findViewById<EditText>(R.id.supportManualText)
         val positiveFilter = InputFilter { source, _, _, _, _, _ ->
-            if (source.matches(Regex("[1-9]+"))) {
+            if (source.matches(Regex("[0-9]+"))) {
                 null // Accept the input as it is (positive integer numbers)
             } else {
                 // Reject the input (don't allow other characters)
