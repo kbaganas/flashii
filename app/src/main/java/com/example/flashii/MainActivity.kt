@@ -2113,16 +2113,6 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-class InfoActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_info)
-        val closeButton = findViewById<ImageButton>(R.id.infoGoBackArrow)
-        closeButton.setOnClickListener {
-            finish()
-        }
-    }
-}
 
 // Create a custom RecyclerView adapter to handle the list of items
 class ItemAdapter(private val itemList: List<String>) :

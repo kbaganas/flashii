@@ -93,7 +93,7 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
+                        android:contentDescription="@string/backArrowFlashlight"
                         android:paddingStart="22dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
@@ -256,6 +256,7 @@
                     android:id="@+id/infoHiddenFlicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
