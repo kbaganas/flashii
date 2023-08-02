@@ -89,28 +89,28 @@
     <string name="infoFlickering">Flashlight will be flickering at the frequency (in Hertz) you specify in the seekbar. By default frequency ranges from 1 to 10Hz.\n\nNote that you can configure the max frequency of 10Hz to the desired value in the Settings.</string>
     <string name="infoAltitude">Set a specific Altitude height in meters (m) at which you want to get notified by flashlight flickering.\n\nWhen Altitude is reached, the flashlight will be flickering for 15 seconds (default).\n\nFeature is only available if you permit Location rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoAltitudeCheck">Altitude specified has been reached.</string>
-    <string name="infoNetwork">Based on your phone\'s current network connection status, you \'ll get notified by flashlight flickering when\n\na) provider\'s Network signal, Data or WiFi connections are lost, \n\nb) provider\'s Network signal, Data or WiFi are found.</string>
+    <string name="infoNetwork">Based on your phone\'s current network connection status, you \'ll get notified by flashlight flickering when\n\na) provider\'s Network Signal, Data or WiFi connections are lost, \nb) provider\'s Network signal, Data or WiFi are found.</string>
 
     <string name="maxHz">Max flickering frequency:\nRange from 10Hz (default) to 100Hz.</string>
     <string name="maxFlickeringTimer">Flickering time after an incoming Call:\nRange from 3s to 180s (default 15s)</string>
     <string name="ConnectionLost">Connection lost!</string>
     <string name="ConnectionFound">Connection found!</string>
-    <string name="ConnectionToLost">Get notified when Connection lost</string>
-    <string name="ConnectionToFound">Get notified when Connection found</string>
+    <string name="ConnectionToLost">Get notified when Signal, Data or WiFi are lost</string>
+    <string name="ConnectionToFound">Get notified when Signal, Data or WiFi are found</string>
     <string name="backArrow">Back arrow</string>
     <string name="backArrowTilt">Back arrow Tilt</string>
     <string name="timerFeature">Time</string>
-    <string name="batteryFeature">Flickering at Battery power level</string>
+    <string name="batteryFeature">Battery Power</string>
 
-    <string name="altitudeFeature">Flickering at Altitude height</string>
+    <string name="altitudeFeature">Altitude Height</string>
     <string name="callFeature">Flashlight flicker on Incoming Call</string>
     <string name="smsFeature">Flashlight flicker on Incoming SMS</string>
-    <string name="networkFeature">Flickering on Connection changes</string>
+    <string name="networkFeature">Network Connection changes</string>
     <string name="tiltFeature">Phone Tilt</string>
     <string name="soundFeature">Finger Snap</string>
     <string name="flickerFeature">Flashlight Flicker</string>
     <string name="flashlightFeature">Flashlight On/Off</string>
-    <string name="sosFeature">Send SOS</string>
+    <string name="sosFeature">SOS</string>
     <string name="Feature">Feature</string>
     <string name="Rate">Rate</string>
     <string name="Support">Support us</string>
