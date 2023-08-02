@@ -147,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         android:orientation="vertical"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <!-- Text -->
                         <LinearLayout
@@ -183,7 +183,7 @@
 
                             <SeekBar
                                 android:id="@+id/seekBarTilt"
-                                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                style="@style/Widget.AppCompat.SeekBar"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -325,7 +325,7 @@
                             <ImageView
                                 android:id="@+id/soundImageIcon"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/MainImageSize"
+                                android:layout_height="42dp"
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
@@ -349,16 +349,15 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="top"
                             android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/cabin_regular"
-                                android:gravity="center_horizontal"
                                 android:text="@string/finger_snap"
+                                android:gravity="center"
                                 android:textSize="@dimen/mainTitle"
                                 android:textColor="@color/blueOffBack5"
                                 tools:ignore="VisualLintLongText" />
@@ -451,7 +450,7 @@
 
                             <SeekBar
                                 android:id="@+id/seekBarSound"
-                                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                style="@style/Widget.AppCompat.SeekBar"
                                 android:layout_width="0dp"
                                 android:layout_height="48dp"
                                 android:layout_gravity="center_vertical"
@@ -573,7 +572,7 @@
 
                             <ImageView
                                 android:id="@+id/flickerImageIcon"
-                                android:layout_width="76dp"
+                                android:layout_width="@dimen/MainImageSize"
                                 android:layout_height="@dimen/MainImageSize"
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
@@ -599,6 +598,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:layout_marginBottom="10dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -701,7 +701,7 @@
 
                             <SeekBar
                                 android:id="@+id/seekBarFlicker"
-                                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                style="@style/Widget.AppCompat.SeekBar"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
