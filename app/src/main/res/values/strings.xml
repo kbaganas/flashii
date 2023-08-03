@@ -33,7 +33,7 @@
     <string name="reset">RESET</string>
     <string name="s_continue">CONTINUE</string>
     <string name="enterAmount">Enter your amount</string>
-    <string name="supportText">Thank you for supporting @Flashii!</string>
+    <string name="supportText">Thank you for supporting @Flashii</string>
     <string name="rateText">Your feedback is appreciated!</string>
     <string name="publishFeedback">PUBLISH FEEDBACK</string>
     <string name="publishNote">Your review will be posted to\nthe Google Play store</string>

@@ -74,7 +74,7 @@
                 android:textColor="@color/white"
                 android:text="@string/settingsComments"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="22sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,7 +169,7 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/settingsFlickeringSMSTitle"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -241,7 +241,7 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/settingsFlickeringCallTitle"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -313,7 +313,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsFlickeringTitle"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -385,7 +385,7 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/settingsBatteryTitle"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
 
                     <TextView
@@ -458,7 +458,7 @@
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
                         android:text="@string/settingsAltitudeTitle"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textColor="@color/blueOffBack5"
                         tools:ignore="VisualLintLongText" />
 

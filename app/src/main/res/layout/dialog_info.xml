@@ -60,7 +60,7 @@
                 android:layout_marginTop="46dp"
                 android:textColor="@color/white"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="22sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -80,13 +80,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/tiltFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
@@ -98,6 +99,7 @@
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="22dp"
+                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry,DuplicateSpeakableTextCheck,ImageContrastCheck" />
@@ -108,7 +110,7 @@
                     android:id="@+id/infoHiddenTilt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -127,7 +129,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
@@ -154,7 +156,7 @@
                         android:textAlignment="center">
 
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -182,7 +184,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/tilt_on" />
 
@@ -207,7 +209,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/tilt_off" />
 
@@ -231,13 +233,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/tilt_no_permission" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:textColor="@color/blueOffBack5"
@@ -260,13 +262,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/smsFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
@@ -274,6 +277,7 @@
                         android:id="@+id/infoSMSExpandArrow"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:layout_gravity="center"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="22dp"
@@ -287,7 +291,7 @@
                     android:id="@+id/infoHiddenSMS"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -306,7 +310,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
@@ -333,7 +337,7 @@
                         android:textAlignment="center">
 
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -361,7 +365,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/sms_on" />
 
@@ -386,7 +390,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/sms_off" />
 
@@ -410,13 +414,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/sms_no_permission" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:textColor="@color/blueOffBack5"
@@ -441,13 +445,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/callFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
@@ -459,6 +464,7 @@
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="22dp"
                         android:scaleType="fitCenter"
+                        android:layout_gravity="center"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry" />
                 </LinearLayout>
@@ -468,7 +474,7 @@
                     android:id="@+id/infoHiddenCall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -487,7 +493,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
@@ -514,7 +520,7 @@
                         android:textAlignment="center">
 
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -542,7 +548,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/call_on2" />
 
@@ -567,7 +573,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/incoming_call_off" />
 
@@ -591,13 +597,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/call_no_permission" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:textColor="@color/blueOffBack5"
                             android:gravity="center_vertical"
@@ -620,13 +626,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/soundFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
@@ -638,6 +645,7 @@
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="22dp"
+                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry,ImageContrastCheck" />
@@ -648,7 +656,7 @@
                     android:id="@+id/infoHiddenSound"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -667,7 +675,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:textColor="@color/blueOffBack5"
@@ -695,7 +703,7 @@
                         android:textAlignment="center">
 
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -723,7 +731,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/sound_on" />
 
@@ -748,7 +756,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/sound_off" />
 
@@ -772,13 +780,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/sound_no_permission" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:textColor="@color/blueOffBack5"
                             android:gravity="center_vertical"
@@ -800,13 +808,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/flashlightFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
@@ -817,6 +826,7 @@
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowFlashlight"
                         android:paddingStart="22dp"
+                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry" />
@@ -827,7 +837,7 @@
                     android:id="@+id/infoHiddenFlashlight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -845,7 +855,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
@@ -871,7 +881,7 @@
                         android:textAlignment="center">
 
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -898,7 +908,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/flashlight_on6" />
 
@@ -922,13 +932,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/flashlight_off4" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:text="@string/infoDeactivated"
@@ -951,13 +961,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/flickerFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
@@ -968,6 +979,7 @@
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="22dp"
+                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry" />
@@ -978,7 +990,7 @@
                     android:id="@+id/infoHiddenFlicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -998,7 +1010,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
@@ -1025,7 +1037,7 @@
                         android:textAlignment="center">
 
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -1053,7 +1065,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/flicker_on" />
 
@@ -1078,13 +1090,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/flicker_off" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:text="@string/infoDeactivated"
@@ -1108,13 +1120,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
 
                         android:text="@string/timerFeature"
@@ -1127,6 +1140,7 @@
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="22dp"
+                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry,ImageContrastCheck" />
@@ -1137,7 +1151,7 @@
                     android:id="@+id/infoHiddenTimer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -1156,7 +1170,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
@@ -1183,7 +1197,7 @@
                         android:textAlignment="center">
 
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -1211,7 +1225,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/timer_on" />
 
@@ -1236,13 +1250,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/timer_off" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:textColor="@color/blueOffBack5"
                             android:gravity="center_vertical"
@@ -1264,13 +1278,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/networkFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
@@ -1282,6 +1297,7 @@
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="22dp"
                         android:scaleType="fitCenter"
+                        android:layout_gravity="center"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry" />
                 </LinearLayout>
@@ -1291,7 +1307,7 @@
                     android:id="@+id/infoHiddenNetwork"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -1309,7 +1325,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
@@ -1335,7 +1351,7 @@
                         android:textAlignment="center">
 
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -1361,13 +1377,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/network_lost_to_found" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:text="@string/ConnectionToFound"
@@ -1384,13 +1400,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/network_found_to_lost" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
                             android:text="@string/ConnectionToLost"
@@ -1408,7 +1424,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/network_off" />
 
@@ -1431,13 +1447,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/network_no_permission" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:textColor="@color/blueOffBack5"
                             android:gravity="center_vertical"
@@ -1460,13 +1476,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/sosFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
@@ -1477,6 +1494,7 @@
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="22dp"
+                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry" />
@@ -1487,7 +1505,7 @@
                     android:id="@+id/infoHiddenSOS"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -1506,7 +1524,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
@@ -1533,7 +1551,7 @@
                         android:textAlignment="center">
 
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -1560,7 +1578,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:scaleY="1.3"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/sos_on" />
@@ -1586,14 +1604,14 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:scaleY="1.3"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/sos_off" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:textColor="@color/blueOffBack5"
                             android:gravity="center_vertical"
@@ -1615,13 +1633,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/batteryFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
@@ -1632,6 +1651,7 @@
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="22dp"
+                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry" />
@@ -1642,7 +1662,7 @@
                     android:id="@+id/infoHiddenBattery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -1660,7 +1680,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
@@ -1687,7 +1707,7 @@
                         android:textAlignment="center">
 
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -1715,7 +1735,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:textColor="@color/blueOffBack5"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/battery_on" />
@@ -1740,13 +1760,13 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/battery_off" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:textColor="@color/blueOffBack5"
                             android:gravity="center_vertical"
@@ -1769,13 +1789,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
+                        android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/altitudeFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
@@ -1786,6 +1807,7 @@
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="22dp"
+                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry" />
@@ -1796,7 +1818,7 @@
                     android:id="@+id/infoHiddenAltitude"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginVertical="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
@@ -1815,7 +1837,7 @@
                         android:textSize="@dimen/infoFeatureText">
 
                         <TextView
-                            android:layout_width="48dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
@@ -1840,7 +1862,7 @@
                         android:orientation="horizontal"
                         android:textAlignment="center">
                         <View
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="1dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
@@ -1865,7 +1887,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/altitude_off" />
                         <TextView
@@ -1887,7 +1909,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/altitude_on" />
                         <TextView
@@ -1909,12 +1931,12 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
+                            android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
                             app:srcCompat="@drawable/altitude_no_permission" />
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:textColor="@color/blueOffBack5"
                             android:gravity="center_vertical"
