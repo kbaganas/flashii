@@ -68,12 +68,731 @@
                 android:layout_marginVertical="28dp"
                 android:background="@color/blueOff" />
 
+            <!-- Tilt -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/feature_selector_tilt"
+                android:paddingHorizontal="12dp"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/tiltFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoTiltExpandArrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenTilt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/infoTilt"
+                        android:textSize="@dimen/infoFeatureText" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textSize="@dimen/infoFeatureText">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Button"
+                            android:textSize="@dimen/infoFeatureText"
+                            android:textColor="@color/blueOffBack5"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
+
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/tilt_on" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoActivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            android:textColor="@color/blueOffBack5"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/tilt_off" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/blueOffBack5"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/tilt_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/infoNoPermissionByUser"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Incoming SMS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/feature_selector_sms"
+                android:paddingHorizontal="12dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/smsFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoSMSExpandArrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenSMS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:text="@string/infoIncomingSMS"
+                        android:textColor="@color/blueOffBack5"
+                        android:textSize="@dimen/infoFeatureText" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textSize="@dimen/infoFeatureText">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"
+                            android:textColor="@color/blueOffBack5"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Button"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/blueOffBack5"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
+
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sms_on" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/infoActivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sms_off" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:textColor="@color/blueOffBack5"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sms_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/infoNoPermissionByUser"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- Incoming Call -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/feature_selector_call"
+                android:paddingHorizontal="12dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/callFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoCallExpandArrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenCall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blueOffBack5"
+                        android:fontFamily="@font/cabin_regular"
+                        android:text="@string/infoIncomingCall"
+                        android:textSize="@dimen/infoFeatureText" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textSize="@dimen/infoFeatureText">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Button"
+                            android:textColor="@color/blueOffBack5"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
+
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/call_on2" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/infoActivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/incoming_call_off" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/blueOffBack5"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/call_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoNoPermissionByUser"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Short Sounds -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/feature_selector_sound"
+                android:paddingHorizontal="12dp"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/soundFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoSoundExpandArrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenSound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textColor="@color/blueOffBack5"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:text="@string/infoSound"
+                        android:textSize="@dimen/infoFeatureText" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textSize="@dimen/infoFeatureText">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:textColor="@color/blueOffBack5"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Button"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:textColor="@color/blueOffBack5"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
+
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText,TooManyViews" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sound_on" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/infoActivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sound_off" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textColor="@color/blueOffBack5"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sound_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoNoPermissionByUser"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
             <!-- Flashlight -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/feature_selector_flashlight"
                 android:paddingHorizontal="12dp"
+                android:layout_marginTop="18dp"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -374,13 +1093,13 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Incoming Call -->
+            <!-- Timer -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/feature_selector_call"
+                android:background="@drawable/feature_selector_time"
                 android:paddingHorizontal="12dp"
+                android:layout_marginTop="18dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -394,10 +1113,11 @@
                         android:gravity="center_vertical"
                         android:fontFamily="@font/cabin_semibold"
                         android:textColor="@color/blueOffBack5"
-                        android:text="@string/callFeature"
+
+                        android:text="@string/timerFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
-                        android:id="@+id/infoCallExpandArrow"
+                        android:id="@+id/infoTimeExpandArrow"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
@@ -410,7 +1130,7 @@
 
                 <!-- Expandable -->
                 <LinearLayout
-                    android:id="@+id/infoHiddenCall"
+                    android:id="@+id/infoHiddenTimer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
@@ -419,9 +1139,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoIncomingCall"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/infoTimer"
                         android:textSize="@dimen/infoFeatureText" />
 
                     <LinearLayout
@@ -437,8 +1157,8 @@
                             android:layout_gravity="start"
                             android:layout_marginEnd="16dp"
                             android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Button"
                             android:textColor="@color/blueOffBack5"
+                            android:text="@string/Button"
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText,TextSizeCheck" />
 
@@ -480,8 +1200,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
                         tools:ignore="UseCompoundDrawables">
 
                         <ImageView
@@ -489,14 +1209,14 @@
                             android:layout_height="36dp"
                             android:layout_marginEnd="28dp"
                             android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/call_on2" />
+                            app:srcCompat="@drawable/timer_on" />
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/blueOffBack5"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
-                            android:textColor="@color/blueOffBack5"
                             android:text="@string/infoActivated"
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
@@ -505,524 +1225,17 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/incoming_call_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueOffBack5"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoDeactivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/call_no_permission" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoNoPermissionByUser"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Incoming SMS -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/feature_selector_sms"
-                android:paddingHorizontal="12dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/smsFeature"
-                        android:textSize="@dimen/infoFeatureTitle" />
-                    <ImageButton
-                        android:id="@+id/infoSMSExpandArrow"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
-                </LinearLayout>
-
-                <!-- Expandable -->
-                <LinearLayout
-                    android:id="@+id/infoHiddenSMS"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoIncomingSMS"
-                        android:textColor="@color/blueOffBack5"
-                        android:textSize="@dimen/infoFeatureText" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:textSize="@dimen/infoFeatureText">
-
-                        <TextView
-                            android:layout_width="48dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="16dp"
-                            android:textColor="@color/blueOffBack5"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Button"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText,TextSizeCheck" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/blueOffBack5"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:textAlignment="center">
-
-                        <View
-                            android:layout_width="48dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or"
-                            tools:ignore="ExtraText" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="14dp"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sms_on" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/infoActivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sms_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:textColor="@color/blueOffBack5"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoDeactivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sms_no_permission" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/infoNoPermissionByUser"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <!-- Tilt -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_tilt"
-                android:paddingHorizontal="12dp"
-                android:layout_marginTop="18dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/tiltFeature"
-                        android:textSize="@dimen/infoFeatureTitle" />
-                    <ImageButton
-                        android:id="@+id/infoTiltExpandArrow"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
-                </LinearLayout>
-
-                <!-- Expandable -->
-                <LinearLayout
-                    android:id="@+id/infoHiddenTilt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/infoTilt"
-                        android:textSize="@dimen/infoFeatureText" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:textSize="@dimen/infoFeatureText">
-
-                        <TextView
-                            android:layout_width="48dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Button"
-                            android:textSize="@dimen/infoFeatureText"
-                            android:textColor="@color/blueOffBack5"
-                            tools:ignore="VisualLintLongText,TextSizeCheck" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:textAlignment="center">
-
-                        <View
-                            android:layout_width="48dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or"
-                            tools:ignore="ExtraText" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="14dp"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/tilt_on" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoActivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            android:textColor="@color/blueOffBack5"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/tilt_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueOffBack5"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoDeactivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/tilt_no_permission" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/infoNoPermissionByUser"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Altitude -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_altitude"
-                android:paddingHorizontal="12dp"
-                android:layout_marginTop="18dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/altitudeFeature"
-                        android:textSize="@dimen/infoFeatureTitle" />
-                    <ImageButton
-                        android:id="@+id/infoAltitudeExpandArrow"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
-                </LinearLayout>
-
-                <!-- Expandable -->
-                <LinearLayout
-                    android:id="@+id/infoHiddenAltitude"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/infoAltitude"
-                        android:textSize="@dimen/infoFeatureText" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:textSize="@dimen/infoFeatureText">
-
-                        <TextView
-                            android:layout_width="48dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/Button"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText,TextSizeCheck" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/blueOffBack5"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:textAlignment="center">
-                        <View
-                            android:layout_width="48dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or"
-                            tools:ignore="ExtraText" />
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
                         android:orientation="horizontal"
                         tools:ignore="UseCompoundDrawables">
+
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginEnd="28dp"
                             android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/altitude_off" />
+                            app:srcCompat="@drawable/timer_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -1030,50 +1243,6 @@
                             android:textColor="@color/blueOffBack5"
                             android:gravity="center_vertical"
                             android:text="@string/infoDeactivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/altitude_on" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoActivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="14dp"
-                        tools:ignore="UseCompoundDrawables">
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/altitude_no_permission" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoNoPermissionByUser"
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -1431,341 +1600,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Timer -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_time"
-                android:paddingHorizontal="12dp"
-                android:layout_marginTop="18dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:textColor="@color/blueOffBack5"
-
-                        android:text="@string/timerFeature"
-                        android:textSize="@dimen/infoFeatureTitle" />
-                    <ImageButton
-                        android:id="@+id/infoTimeExpandArrow"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
-                </LinearLayout>
-
-                <!-- Expandable -->
-                <LinearLayout
-                    android:id="@+id/infoHiddenTimer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/infoTimer"
-                        android:textSize="@dimen/infoFeatureText" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:textSize="@dimen/infoFeatureText">
-
-                        <TextView
-                            android:layout_width="48dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/Button"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText,TextSizeCheck" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:textAlignment="center">
-
-                        <View
-                            android:layout_width="48dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or"
-                            tools:ignore="ExtraText" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/timer_on" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:textColor="@color/blueOffBack5"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoActivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/timer_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoDeactivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Short Sounds -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_sound"
-                android:paddingHorizontal="12dp"
-                android:layout_marginTop="18dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_semibold"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/soundFeature"
-                        android:textSize="@dimen/infoFeatureTitle" />
-                    <ImageButton
-                        android:id="@+id/infoSoundExpandArrow"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
-                </LinearLayout>
-
-                <!-- Expandable -->
-                <LinearLayout
-                    android:id="@+id/infoHiddenSound"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:textColor="@color/blueOffBack5"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:text="@string/infoSound"
-                        android:textSize="@dimen/infoFeatureText" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:textSize="@dimen/infoFeatureText">
-
-                        <TextView
-                            android:layout_width="48dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:textColor="@color/blueOffBack5"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Button"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText,TextSizeCheck" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:textColor="@color/blueOffBack5"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:textAlignment="center">
-
-                        <View
-                            android:layout_width="48dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or"
-                            tools:ignore="ExtraText,TooManyViews" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="14dp"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sound_on" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/infoActivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sound_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoDeactivated"
-                            android:textColor="@color/blueOffBack5"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="28dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sound_no_permission" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoNoPermissionByUser"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
             <!-- Battery -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -1773,7 +1607,6 @@
                 android:background="@drawable/feature_selector_battery"
                 android:paddingHorizontal="12dp"
                 android:layout_marginTop="18dp"
-                android:layout_marginBottom="28dp"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1914,6 +1747,174 @@
                             android:textColor="@color/blueOffBack5"
                             android:gravity="center_vertical"
                             android:text="@string/infoDeactivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Altitude -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/feature_selector_altitude"
+                android:paddingHorizontal="12dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="28dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/cabin_semibold"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/altitudeFeature"
+                        android:textSize="@dimen/infoFeatureTitle" />
+                    <ImageButton
+                        android:id="@+id/infoAltitudeExpandArrow"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundWhite"
+                        android:contentDescription="@string/backArrowTilt"
+                        android:paddingStart="22dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/arrow_down"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <!-- Expandable -->
+                <LinearLayout
+                    android:id="@+id/infoHiddenAltitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cabin_regular"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/infoAltitude"
+                        android:textSize="@dimen/infoFeatureText" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:textSize="@dimen/infoFeatureText">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:text="@string/Button"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText,TextSizeCheck" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/blueOffBack5"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/infoFeatureText" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:textAlignment="center">
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or"
+                            tools:ignore="ExtraText" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/greyDivider2"
+                            android:fontFamily="@font/cabin_regular"
+                            android:text="@string/or" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/altitude_off" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoDeactivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/altitude_on" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoActivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="28dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/altitude_no_permission" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoNoPermissionByUser"
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>

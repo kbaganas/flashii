@@ -31,17 +31,18 @@
     <color name="no_permission">#434241</color>
     <color name="dollarColor">#85BB65</color>
 
-    <color name="mainFlashlight">#e3f5fe</color>
-    <color name="mainSMS">#E3F5FE</color>
-    <color name="mainCALL">#e3e8fe</color>
-    <color name="mainSound">#feede3</color>
-    <color name="mainTilt">#e3fefa</color>
-    <color name="mainTime">#fefae3</color>
-    <color name="mainSOS">#F5F6E9</color>
-    <color name="mainNetwork">#E9F6EA</color>
-    <color name="mainBattery">#fee3e7</color>
-    <color name="mainAltitude">#DDF2EF</color>
-    <color name="mainFlicker">#e3eefe</color>
+    <color name="mainTilt">#E3F5FE</color>
+    <color name="mainSMS">#E3F8FE</color>
+    <color name="mainCALL">#E3FBFD</color>
+    <color name="mainSound">#e3fbfe</color>
+    <color name="mainFlashlight">#EAFDF9</color>
+    <color name="mainFlicker">#F1FEF4</color>
+    <color name="mainTime">#FAFEEE</color>
+    <color name="mainNetwork">#FCF9EC</color>
+    <color name="mainSOS">#FEF5E9</color>
+    <color name="mainBattery">#FEECE8</color>
+    <color name="mainAltitude">#fee3e7</color>
+
 
     <color name="switch_off">#A24C3F</color>
     <color name="switch_on">#40B344</color>
