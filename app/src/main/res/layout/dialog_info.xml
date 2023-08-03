@@ -90,6 +90,7 @@
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/tiltFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
+
                     <ImageButton
                         android:id="@+id/infoTiltExpandArrow"
                         android:layout_width="48dp"
@@ -99,7 +100,7 @@
                         android:paddingStart="22dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
+                        tools:ignore="RtlSymmetry,DuplicateSpeakableTextCheck,ImageContrastCheck" />
                 </LinearLayout>
 
                 <!-- Expandable -->
@@ -629,6 +630,7 @@
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/soundFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
+
                     <ImageButton
                         android:id="@+id/infoSoundExpandArrow"
                         android:layout_width="48dp"
@@ -638,7 +640,7 @@
                         android:paddingStart="22dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
+                        tools:ignore="RtlSymmetry,ImageContrastCheck" />
                 </LinearLayout>
 
                 <!-- Expandable -->
@@ -681,7 +683,8 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="TooManyViews" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1116,6 +1119,7 @@
 
                         android:text="@string/timerFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
+
                     <ImageButton
                         android:id="@+id/infoTimeExpandArrow"
                         android:layout_width="48dp"
@@ -1125,7 +1129,7 @@
                         android:paddingStart="22dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
+                        tools:ignore="RtlSymmetry,ImageContrastCheck" />
                 </LinearLayout>
 
                 <!-- Expandable -->

@@ -55,7 +55,7 @@
                     android:id="@+id/resetBtnId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin_regular"
+                    android:fontFamily="@font/cabin_semibold"
                     android:text="@string/reset"
                     android:textColor="@color/white"
                     android:textSize="18sp"
@@ -199,7 +199,7 @@
                     android:padding="3dp"
                     android:textColorHint="@color/greyNoteDarker4"
                     android:textSize="14sp"
-                    tools:ignore="VisualLintTextFieldSize" />
+                    tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
             </LinearLayout>
 
             <!-- Call -->
@@ -435,12 +435,13 @@
                     android:id="@+id/altitudeSetting1"
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
-                    android:background="#00FFFFFF"
                     android:layout_marginEnd="18dp"
-                    android:scaleY="1.35"
+                    android:background="#00FFFFFF"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/altitude_off" />
+                    android:scaleY="1.35"
+                    app:srcCompat="@drawable/altitude_off"
+                    tools:ignore="ImageContrastCheck" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -512,7 +513,7 @@
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="36dp"
                     android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/cabin_regular"
+                    android:fontFamily="@font/cabin_semibold"
                     android:text="@string/resetDefault"
                     android:textAlignment="center"
                     android:textSize="18sp"
@@ -528,7 +529,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="36dp"
-                    android:fontFamily="@font/cabin_regular"
+                    android:fontFamily="@font/cabin_semibold"
                     android:text="@string/applyChanges"
                     android:textAlignment="center"
                     android:textSize="18sp"
