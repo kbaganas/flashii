@@ -475,7 +475,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="32dp"
                     android:baselineAligned="true"
-                    android:gravity="center_vertical"
+                    android:gravity="top"
                     android:orientation="horizontal">
 
                     <!-- Activated Features -->
@@ -511,7 +511,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="top"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -520,7 +520,6 @@
                             android:id="@+id/flashLightImageId"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/mainFlashlightHeight"
-                            android:layout_gravity="center_vertical"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/FlashlightImageContentDescription"
                             android:scaleType="centerInside"
@@ -529,9 +528,8 @@
                         <ImageButton
                             android:id="@+id/flashLightBtnId"
                             android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="-148dp"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="-154dp"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/FlashlightImageBtnContentDescription"
                             android:scaleType="centerInside" />
