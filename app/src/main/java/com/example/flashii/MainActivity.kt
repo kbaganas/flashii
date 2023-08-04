@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     private val initRotationAngle : Float = -1000f
     private var touchStartTime : Long = 0
     private var sensitivityAngle = defaultTiltAngle
-    private var sensitivitySoundThreshold = defaultSoundSenseLevel
+    private var sensitivitySoundThreshold = 7
 
     private lateinit var reviewInfo : ReviewInfo
     private lateinit var sharedPref : SharedPreferences // shared with Settings view
@@ -552,7 +552,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 removeActivatedFeature(recyclerView, FEATURE.AUDIO)
-                soundImageIcon.setImageResource(R.drawable.sound_off)
+                soundImageIcon.setImageResource(R.drawable.sound_no_permission)
                 soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 incomingSoundSwitch.isChecked = false
                 Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
@@ -991,7 +991,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "request permission for ALTITUDE")
                 Snackbar.make(rootView, "To use the feature, manually provide\nLocation access rights to $applicationName", Snackbar.LENGTH_LONG).show()
                 removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
-                altitudeImageIcon.setImageResource(R.drawable.altitude_off)
+                altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                 tempText = "${altitudeThreshold}m"
                 setTextAndColor(altitudeSwitchText, tempText, R.color.greyNoteDarker2)
                 altitudeSwitch.isChecked = false
