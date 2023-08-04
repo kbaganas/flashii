@@ -31,19 +31,21 @@
 
                 <ImageButton
                     android:id="@+id/settingsGoBackArrow"
-                    android:layout_width="48dp"
+                    android:layout_width="76dp"
                     android:layout_height="48dp"
-                    android:padding="10dp"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="38dp"
                     android:layout_gravity="center_vertical"
                     android:background="@color/backgroundWhite"
                     android:contentDescription="@string/backArrow"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/arrow_left" />
+                    android:src="@drawable/arrow_left"
+                    tools:ignore="RtlSymmetry" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/settings"
                     android:textColor="@color/white"
@@ -489,7 +491,7 @@
                     android:padding="3dp"
                     android:textColorHint="@color/greyNoteDarker4"
                     android:textSize="14sp"
-                    tools:ignore="VisualLintTextFieldSize" />
+                    tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
             </LinearLayout>
 
 

@@ -30,23 +30,25 @@
 
                 <ImageButton
                     android:id="@+id/supportGoBackArrow"
-                    android:layout_width="48dp"
+                    android:layout_width="76dp"
                     android:layout_height="48dp"
                     android:background="@color/blueOffBack5"
                     android:scaleType="fitStart"
-                    android:padding="10dp"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="38dp"
+                    android:paddingStart="12dp"
                     android:src="@drawable/arrow_left"
                     android:contentDescription="@string/backArrow"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/cabin_regular"
                     android:text="@string/Support"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:layout_marginEnd="48dp"
+                    android:layout_marginEnd="76dp"
                     android:textColor="@color/white"
                     android:textSize="28sp" />
 
@@ -180,17 +182,17 @@
                 android:id="@+id/supportContinueBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="36dp"
                 android:fontFamily="@font/cabin_regular"
-                android:textAlignment="center"
                 android:text="@string/contribute"
+                android:textAlignment="center"
                 android:textSize="18sp"
                 app:backgroundTint="@color/blueOff"
+                app:cornerRadius="8dp"
                 app:strokeColor="@color/whiteCollar"
                 app:strokeWidth="1dp"
-                tools:ignore="VisualLintButtonSize"
-                app:cornerRadius="8dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginBottom="36dp"/>
+                tools:ignore="VisualLintButtonSize,TextContrastCheck" />
 
         </LinearLayout>
     </ScrollView>

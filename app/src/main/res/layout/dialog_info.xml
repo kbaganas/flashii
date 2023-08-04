@@ -31,9 +31,11 @@
 
                 <ImageButton
                     android:id="@+id/infoGoBackArrow"
-                    android:layout_width="48dp"
+                    android:layout_width="76dp"
                     android:layout_height="48dp"
-                    android:padding="10dp"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="38dp"
+                    android:paddingStart="12dp"
                     android:background="@color/backgroundWhite"
                     android:contentDescription="@string/backArrow"
                     android:scaleType="fitStart"
@@ -41,12 +43,12 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/cabin_regular"
                     android:textColor="@color/white"
                     android:text="@string/infoHelp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="48dp"
+                    android:layout_marginEnd="76dp"
                     android:gravity="center"
                     android:textSize="28sp" />
             </LinearLayout>
@@ -94,11 +96,11 @@
 
                     <ImageButton
                         android:id="@+id/infoTiltExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
@@ -275,12 +277,12 @@
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
                         android:id="@+id/infoSMSExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
                         tools:ignore="RtlSymmetry" />
@@ -458,11 +460,11 @@
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
                         android:id="@+id/infoCallExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:scaleType="fitCenter"
                         android:layout_gravity="center"
                         android:src="@drawable/arrow_down"
@@ -640,11 +642,11 @@
 
                     <ImageButton
                         android:id="@+id/infoSoundExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
@@ -821,11 +823,11 @@
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
                         android:id="@+id/infoFlashlightExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowFlashlight"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
@@ -974,11 +976,11 @@
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
                         android:id="@+id/infoFlickerExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
@@ -1135,11 +1137,11 @@
 
                     <ImageButton
                         android:id="@+id/infoTimeExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
@@ -1291,11 +1293,11 @@
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
                         android:id="@+id/infoNetworkExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:scaleType="fitCenter"
                         android:layout_gravity="center"
                         android:src="@drawable/arrow_down"
@@ -1489,11 +1491,11 @@
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
                         android:id="@+id/infoSOSExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
@@ -1646,11 +1648,11 @@
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
                         android:id="@+id/infoBatteryExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
@@ -1802,11 +1804,11 @@
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
                         android:id="@+id/infoAltitudeExpandArrow"
-                        android:layout_width="48dp"
+                        android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="22dp"
+                        android:paddingStart="48dp"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
