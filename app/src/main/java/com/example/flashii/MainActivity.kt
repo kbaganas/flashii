@@ -168,7 +168,8 @@ class MainActivity : AppCompatActivity() {
         CALL(1),
         SMS(2),
         AUDIO(3),
-        ALTITUDE(4)
+        ALTITUDE(4),
+        FLASHLIGHT (5)
     }
 
     enum class FEATURE (val value: String) {
@@ -205,7 +206,8 @@ class MainActivity : AppCompatActivity() {
         "CALL" to false,
         "SMS" to false,
         "AUDIO" to false,
-        "ALTITUDE" to false
+        "ALTITUDE" to false,
+        "FLASHLIGHT" to false
     )
 
     // Handlers
@@ -1384,6 +1386,13 @@ class MainActivity : AppCompatActivity() {
     private fun checkPermissions (activity: ACTION) {
         when (activity) {
             ACTION.CREATE -> {
+
+                // CAMERA
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "requestPermissions for CAMERA")
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), RequestKey.FLASHLIGHT.value)
+                }
+
                 // CALL
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                     Log.i("MainActivity", "requestPermissions for CALL")
@@ -1427,6 +1436,22 @@ class MainActivity : AppCompatActivity() {
             ACTION.RESUME -> {
                 // User may have changed the permissions in Settings/App/Flashii/Licenses, so we have to align with that
                 Log.i("MainActivity", "Ask for permissions again RESUME")
+
+                // CAMERA
+                if (permissionsKeys["FLASHLIGHT"] == false) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                        Log.i("MainActivity", "Ask for CAMERA permissions again RESUME ")
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), RequestKey.FLASHLIGHT.value)
+                    }
+                }
+                else {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        Log.i("MainActivity", "CAMERA permissions RESUME: CAMERA = FALSE ")
+                        permissionsKeys["FLASHLIGHT"] = false
+                        // TODO: no permissions for anything and info to user to enable rights
+                    }
+                }
+
 
                 // CALL
                 if (permissionsKeys["CALL"] == false) {
@@ -1806,6 +1831,10 @@ class MainActivity : AppCompatActivity() {
             // Permission has been granted, so register the TelephonyCallback
             Log.i("MainActivity", "Request granted")
             when (requestCode) {
+                RequestKey.FLASHLIGHT.value -> {
+                    permissionsKeys["FLASHLIGHT"] = true
+                    // TODO: enable all feature icons related to this permission
+                }
                 RequestKey.CALL.value -> {
                     permissionsKeys["CALL"] = true
                     setBtnImage(callImageIcon, R.drawable.call_off2)
@@ -1826,6 +1855,10 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             when (requestCode) {
+                RequestKey.FLASHLIGHT.value -> {
+                    Log.i("MainActivity", "Request NOT granted for FLASHLIGHT")
+                    // TODO: set no permissions to anything related to this
+                }
                 RequestKey.CALL.value -> {
                     Log.i("MainActivity", "Request NOT granted for CALL")
                     setBtnImage(callImageIcon, R.drawable.call_no_permission)
