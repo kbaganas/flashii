@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     private val initRotationAngle : Float = -1000f
     private var touchStartTime : Long = 0
     private var sensitivityAngle = defaultTiltAngle
-    private var sensitivitySoundThreshold = 7
+    private var sensitivitySoundThreshold = defaultSoundSenseLevel
 
     private lateinit var reviewInfo : ReviewInfo
     private lateinit var sharedPref : SharedPreferences // shared with Settings view
