@@ -118,7 +118,6 @@ class MainActivity : AppCompatActivity() {
     private var maxFlickerDurationAltitude : Int = defaultMaxFlickerIncomingAltitude
 
     // Tilt
-    private val initRotationAngle : Float = -1000f
     private var touchStartTime : Long = 0
     private var sensitivityAngle = defaultTiltAngle
     private var sensitivitySoundThreshold = defaultSoundSenseLevel
@@ -617,6 +616,8 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // tilt phone handler
+        initSensorManager()
+        val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
         val tiltExpandArrow: ImageButton = findViewById(R.id.tiltExpandArrow)
         val tiltHiddenView: LinearLayout = findViewById(R.id.tiltHiddenView)
         tempText = "Angle ${sensitivityAngle}\u00B0"
@@ -644,12 +645,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                // Do nothing
+                try {
+                    Log.i("MainActivity","unregisterListener sensorRotationEventListener $sensorRotationEventListener")
+                    sensorManager.unregisterListener(sensorRotationEventListener)
+                }
+                catch (_: Exception) {}
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 Log.i("MainActivity","Angle onStopTrackingTouch, $sensitivityAngle")
-                // Do nothing
+                if (accelerometerSensor != null && incomingTiltSwitch.isChecked) {
+                    registerRotationSensor(accelerometerSensor)
+                }
             }
         })
 
@@ -657,12 +664,10 @@ class MainActivity : AppCompatActivity() {
         incomingTiltSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (permissionsKeys["FLASHLIGHT"] == true) {
                 if (isChecked) {
-                    initSensorManager()
-                    val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
                     if (accelerometerSensor != null) {
                         Log.i("MainActivity","incomingTiltSwitch is ON")
                         resetAllActivities(Token.TILT)
-                        initAndRegisterRotationSensor(accelerometerSensor)
+                        registerRotationSensor(accelerometerSensor)
                         isPhoneTilt = true
                         tempText = "Angle ${sensitivityAngle}\u00B0"
                         setTextAndColor(tiltSwitchText, tempText, R.color.blueText)
@@ -1169,46 +1174,41 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initAndRegisterRotationSensor(accelerometerSensor : Sensor) {
-        if (::sensorRotationEventListener.isInitialized) {
-            // already initialized; do nothing
-        }
-        else {
-            var rotationAngle = initRotationAngle
-            sensorRotationEventListener = object : SensorEventListener {
-                override fun onSensorChanged(event: SensorEvent) {
-                    if (event.sensor?.type == Sensor.TYPE_ROTATION_VECTOR) {
-                        val rotationMatrix = FloatArray(9)
-                        SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
-                        val orientationAngles = FloatArray(3)
-                        SensorManager.getOrientation(rotationMatrix, orientationAngles)
-                        val angleInDegrees = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
-                        //Log.i("MainActivity","angleInDegrees=$angleInDegrees, rotationAngle=$rotationAngle, sensitivityAngle=${sensitivityAngle.toFloat()}")
-                        if (angleInDegrees > -5f && rotationAngle == initRotationAngle) {
-                            // Phone rotated to the left ~ 90 degrees
-                            rotationAngle = angleInDegrees
-                        } else if (angleInDegrees < -sensitivityAngle.toFloat() && rotationAngle > -5f) {
-                            // Phone returned to portrait orientation
-                            rotationAngle = initRotationAngle
-                            if (isFlashLightOn) {
-                                Log.i("MainActivity","TILT REACHED ANGLE - TURN OFF Flashlight")
-                                turnOffFlashlight()
-                            }
-                            else {
-                                Log.i("MainActivity","TILT REACHED ANGLE - TURN ON Flashlight")
-                                turnOnFlashlight()
-                            }
+    private fun registerRotationSensor(accelerometerSensor : Sensor) {
+        var firstPositionReached = false
+        sensorRotationEventListener = object : SensorEventListener {
+            override fun onSensorChanged(event: SensorEvent) {
+                if (event.sensor?.type == Sensor.TYPE_ROTATION_VECTOR) {
+                    val rotationMatrix = FloatArray(9)
+                    SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+                    val orientationAngles = FloatArray(3)
+                    SensorManager.getOrientation(rotationMatrix, orientationAngles)
+                    val angleInDegrees = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
+
+                    if (angleInDegrees > (sensitivityAngle.toFloat() - 90) && !firstPositionReached) {
+                        // Phone rotated to the left for sensitivityAngle.toFloat() degrees
+                        firstPositionReached = true
+                    } else if (angleInDegrees < -80 && firstPositionReached) {
+                        // Phone returned to portrait orientation
+                        firstPositionReached = false
+                        if (isFlashLightOn) {
+                            Log.i("MainActivity","TILT REACHED ANGLE - TURN OFF Flashlight")
+                            turnOffFlashlight()
+                        }
+                        else {
+                            Log.i("MainActivity","TILT REACHED ANGLE - TURN ON Flashlight")
+                            turnOnFlashlight()
                         }
                     }
                 }
-                override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-                    // Handle accuracy changes if needed
-                    Log.i("MainActivity","onAccuracyChanged (accuracy = $accuracy)")
-                }
             }
-            Log.i("MainActivity","sensorRotationEventListener initialized ($sensorRotationEventListener)")
-            sensorManager.registerListener(sensorRotationEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
+            override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+                // Handle accuracy changes if needed
+                Log.i("MainActivity","onAccuracyChanged (accuracy = $accuracy)")
+            }
         }
+        Log.i("MainActivity","sensorRotationEventListener initialized ($sensorRotationEventListener)")
+        sensorManager.registerListener(sensorRotationEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
     }
 
     private fun initAndRegisterBatteryReceiver() {
