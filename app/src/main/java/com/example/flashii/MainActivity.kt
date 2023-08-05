@@ -307,74 +307,126 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = ItemAdapter(itemList)
 
+        // Init buttons and icons
+        flashlightBtn = findViewById(R.id.flashLightBtnId)
+        flashlightImageIcon = findViewById(R.id.flashLightImageId)
+        sosImageIcon = findViewById(R.id.sosImageIcon)
+        sosSwitch = findViewById(R.id.switchSOS)
+        flickerImageIcon = findViewById(R.id.flickerImageIcon)
+        flickerSwitchText = findViewById(R.id.flickerSwitchText)
+        flickeringBar = findViewById(R.id.seekBarFlicker)
+        flickerSwitch = findViewById(R.id.switchFlicker)
+        callImageIcon = findViewById(R.id.callImageIcon)
+        incomingCallSwitch = findViewById(R.id.switchCALL)
+        soundImageIcon = findViewById(R.id.soundImageIcon)
+        soundSwitchText = findViewById(R.id.soundSwitchText)
+        soundBar = findViewById(R.id.seekBarSound)
+        incomingSoundSwitch = findViewById(R.id.switchSound)
+        tiltImageIcon = findViewById(R.id.tiltImageIcon)
+        tiltSwitchText = findViewById(R.id.tiltSwitchText)
+        tiltBar = findViewById(R.id.seekBarTilt)
+        incomingTiltSwitch = findViewById(R.id.switchTilt)
+        smsImageIcon = findViewById(R.id.smsImageIcon)
+        incomingSMSSwitch = findViewById(R.id.switchSMS)
+        networkImageIcon = findViewById(R.id.networkImageIcon)
+        outInNetworkSwitch = findViewById(R.id.switchNetwork)
+        batteryImageIcon = findViewById(R.id.batteryImageIcon)
+        batterySwitchText = findViewById(R.id.batterySwitchText)
+        seekBarBatteryText = findViewById(R.id.seekBarBatteryText)
+        batteryBar = findViewById(R.id.seekBarBattery)
+        batterySwitch = findViewById(R.id.switchBattery)
+        timerImageIcon = findViewById(R.id.timerImageIcon)
+        timerSwitchText = findViewById(R.id.timerSwitchText)
+        timerSwitch = findViewById(R.id.switchTimer)
+        altitudeImageIcon = findViewById(R.id.altitudeImageIcon)
+        altitudeSwitchText = findViewById(R.id.altitudeSwitchText)
+        altitudeBar = findViewById(R.id.seekBarAltitude)
+        altitudeSwitch = findViewById(R.id.switchAltitude)
+
+        // Permissions handling
+        checkPermissions(ACTION.CREATE)
+
         ///////////////////////////////////////////////////////////////////////////////////////
         // flashLightBtn handler
         setFlashlightId()
-        flashlightBtn = findViewById(R.id.flashLightBtnId)
-        flashlightImageIcon = findViewById(R.id.flashLightImageId)
-        turnOnFlashlight(true)
-        addActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
+        if (permissionsKeys["FLASHLIGHT"] == true) {
+            turnOnFlashlight(true)
+            addActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
+        }
+
         flashlightBtn.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    touchStartTime = System.currentTimeMillis()
-                    if (isFlashLightOn) {
-                        Log.i("MainActivity","flashlightBtn is OFF")
-                        turnOffFlashlight(true)
-                        removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
-                    } else {
-                        Log.i("MainActivity","flashlightBtn is ON")
-                        resetAllActivities(Token.FLASHLIGHT)
-                        turnOnFlashlight(true)
-                        addActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
+            if (permissionsKeys["FLASHLIGHT"] == true) {
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        touchStartTime = System.currentTimeMillis()
+                        if (isFlashLightOn) {
+                            Log.i("MainActivity","flashlightBtn is OFF")
+                            turnOffFlashlight(true)
+                            removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
+                        } else {
+                            Log.i("MainActivity","flashlightBtn is ON")
+                            resetAllActivities(Token.FLASHLIGHT)
+                            turnOnFlashlight(true)
+                            addActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
+                        }
+                        true
                     }
-                    true
-                }
-                MotionEvent.ACTION_UP -> {
-                    // If touch duration > 350ms, then its a press-and-hold action and we need to turn-off flashlight.
-                    // If otherwise, user just clicked to enable/disable the flashlight.
-                    if (System.currentTimeMillis() - touchStartTime > 350) {
-                        Log.i("MainActivity","flashlightBtn is OFF after press/hold")
-                        turnOffFlashlight(true)
+                    MotionEvent.ACTION_UP -> {
+                        // If touch duration > 350ms, then its a press-and-hold action and we need to turn-off flashlight.
+                        // If otherwise, user just clicked to enable/disable the flashlight.
+                        if (System.currentTimeMillis() - touchStartTime > 350) {
+                            Log.i("MainActivity","flashlightBtn is OFF after press/hold")
+                            turnOffFlashlight(true)
+                        }
+                        false
                     }
-                    false
+                    else -> {false}
                 }
-                else -> {false}
+            }
+            else {
+                // user should be asked for permissions again
+                removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
+                Snackbar.make(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG).show()
+                false
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // sosSwitch handler
-        sosImageIcon = findViewById(R.id.sosImageIcon)
-        sosSwitch = findViewById(R.id.switchSOS)
         sosSwitch.setOnCheckedChangeListener {_, isChecked ->
-            if (isChecked) {
-                Log.i("MainActivity","sosSwitch is ON")
-                isSendSOS = true
-                resetAllActivities(Token.SOS)
-                repeatSOS()
-                sosImageIcon.setImageResource(R.drawable.sos_on)
-                addActivatedFeature(recyclerView, FEATURE.SOS)
+            if (permissionsKeys["FLASHLIGHT"] == true) {
+                if (isChecked) {
+                    Log.i("MainActivity","sosSwitch is ON")
+                    isSendSOS = true
+                    resetAllActivities(Token.SOS)
+                    repeatSOS()
+                    sosImageIcon.setImageResource(R.drawable.sos_on)
+                    addActivatedFeature(recyclerView, FEATURE.SOS)
+                }
+                else {
+                    Log.i("MainActivity","sosSwitch is OFF")
+                    isSendSOS = false
+                    stopSOS()
+                    sosImageIcon.setImageResource(R.drawable.sos_off)
+                    removeActivatedFeature(recyclerView, FEATURE.SOS)
+                }
             }
             else {
-                Log.i("MainActivity","sosSwitch is OFF")
-                isSendSOS = false
-                stopSOS()
-                sosImageIcon.setImageResource(R.drawable.sos_off)
+                // user should be asked for permissions again
+                sosImageIcon.setImageResource(R.drawable.sos_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SOS)
+                sosSwitch.isChecked = false
+                Snackbar.make(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // flicker seekbar and textview handler
-        flickeringBar = findViewById(R.id.seekBarFlicker)
         flickeringBar.min = minFlickerHz
         flickeringBar.max = maxFlickerHz
-
         val flickerExpandArrow: ImageButton = findViewById(R.id.flickerExpandArrow)
         val flickerHiddenView: LinearLayout = findViewById(R.id.flickerHiddenView)
-        flickerImageIcon = findViewById(R.id.flickerImageIcon)
-        flickerSwitchText = findViewById(R.id.flickerSwitchText)
+
         tempText = "$flickerFlashlightHz Hz"
         setTextAndColor(flickerSwitchText, tempText, R.color.greyNoteDarker2)
 
@@ -413,30 +465,36 @@ class MainActivity : AppCompatActivity() {
         })
 
         // flicker flashlight button handler
-        flickerSwitch = findViewById(R.id.switchFlicker)
         flickerSwitch.setOnCheckedChangeListener {_, isChecked ->
-            if (isChecked) {
-                Log.i("MainActivity","flickerSwitch is ON with ${flickerFlashlightHz}Hz")
-                resetActivitiesAndFlicker(Token.FLICKER)
-                tempText = "$flickerFlashlightHz Hz"
-                setTextAndColor(flickerSwitchText, tempText, R.color.blueText)
-                flickerImageIcon.setImageResource(R.drawable.flicker_on)
-                addActivatedFeature(recyclerView, FEATURE.FLICKERING)
+            if (permissionsKeys["FLASHLIGHT"] == true) {
+                if (isChecked) {
+                    Log.i("MainActivity","flickerSwitch is ON with ${flickerFlashlightHz}Hz")
+                    resetActivitiesAndFlicker(Token.FLICKER)
+                    tempText = "$flickerFlashlightHz Hz"
+                    setTextAndColor(flickerSwitchText, tempText, R.color.blueText)
+                    flickerImageIcon.setImageResource(R.drawable.flicker_on)
+                    addActivatedFeature(recyclerView, FEATURE.FLICKERING)
+                }
+                else {
+                    Log.i("MainActivity","flickerSwitch is OFF")
+                    stopFlickering(Token.FLICKER)
+                    tempText = "$flickerFlashlightHz Hz"
+                    setTextAndColor(flickerSwitchText, tempText, R.color.greyNoteDarker2)
+                    flickerImageIcon.setImageResource(R.drawable.flicker_off)
+                    removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
+                }
             }
             else {
-                Log.i("MainActivity","flickerSwitch is OFF")
-                stopFlickering(Token.FLICKER)
-                tempText = "$flickerFlashlightHz Hz"
-                setTextAndColor(flickerSwitchText, tempText, R.color.greyNoteDarker2)
-                flickerImageIcon.setImageResource(R.drawable.flicker_off)
+                // user should be asked for permissions again
+                flickerImageIcon.setImageResource(R.drawable.flicker_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
+                flickerSwitch.isChecked = false
+                Snackbar.make(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // incoming call handler
-        callImageIcon = findViewById(R.id.callImageIcon)
-        incomingCallSwitch = findViewById(R.id.switchCALL)
         incomingCallSwitch.setOnCheckedChangeListener {_, isChecked ->
             // Check first if permissions are granted
             if (permissionsKeys["CALL"] == true) {
@@ -465,8 +523,6 @@ class MainActivity : AppCompatActivity() {
         // incoming sound handler
         val soundExpandArrow: ImageButton = findViewById(R.id.soundExpandArrow)
         val soundHiddenView: LinearLayout = findViewById(R.id.soundHiddenView)
-        soundImageIcon = findViewById(R.id.soundImageIcon)
-        soundSwitchText = findViewById(R.id.soundSwitchText)
 
         tempText = "Sensitivity\n Level 1"
         setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
@@ -485,7 +541,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Bar listeners
-        soundBar = findViewById(R.id.seekBarSound)
         soundBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 tempText = "Sensitivity\nLevel ${progress + 1}"
@@ -504,7 +559,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        incomingSoundSwitch = findViewById(R.id.switchSound)
         incomingSoundSwitch.setOnCheckedChangeListener {_, isChecked ->
             Log.i("MainActivity","isAudioIncoming CLICKED")
             if (permissionsKeys["AUDIO"] == true) {
@@ -557,7 +611,7 @@ class MainActivity : AppCompatActivity() {
                 soundImageIcon.setImageResource(R.drawable.sound_no_permission)
                 soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 incomingSoundSwitch.isChecked = false
-                Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(rootView, "To use the feature, manually provide\nMicrophone access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
 
@@ -565,8 +619,6 @@ class MainActivity : AppCompatActivity() {
         // tilt phone handler
         val tiltExpandArrow: ImageButton = findViewById(R.id.tiltExpandArrow)
         val tiltHiddenView: LinearLayout = findViewById(R.id.tiltHiddenView)
-        tiltImageIcon = findViewById(R.id.tiltImageIcon)
-        tiltSwitchText = findViewById(R.id.tiltSwitchText)
         tempText = "Angle ${sensitivityAngle}\u00B0"
         setTextAndColor(tiltSwitchText, tempText, R.color.greyNoteDarker2)
 
@@ -583,7 +635,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Bar listeners
-        tiltBar = findViewById(R.id.seekBarTilt)
         tiltBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 sensitivityAngle = defaultMinTiltAngle + (defaultMaxTiltAngle - defaultMinTiltAngle) / 9 * progress
@@ -603,47 +654,52 @@ class MainActivity : AppCompatActivity() {
         })
 
         // TODO: 45 degrees don't work well
-        incomingTiltSwitch = findViewById(R.id.switchTilt)
         incomingTiltSwitch.setOnCheckedChangeListener {_, isChecked ->
-            if (isChecked) {
-                initSensorManager()
-                val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
-                if (accelerometerSensor != null) {
-                    Log.i("MainActivity","incomingTiltSwitch is ON")
-                    resetAllActivities(Token.TILT)
-                    initAndRegisterRotationSensor(accelerometerSensor)
-                    isPhoneTilt = true
-                    tempText = "Angle ${sensitivityAngle}\u00B0"
-                    setTextAndColor(tiltSwitchText, tempText, R.color.blueText)
-                    tiltImageIcon.setImageResource(R.drawable.tilt_on)
-                    addActivatedFeature(recyclerView, FEATURE.TILT)
-                }
-                else {
-                    // we have to disable the btn now since rotation sensor is not available on the device
-                    Log.i("MainActivity","Accelerometer not available")
-                    Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
+            if (permissionsKeys["FLASHLIGHT"] == true) {
+                if (isChecked) {
+                    initSensorManager()
+                    val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+                    if (accelerometerSensor != null) {
+                        Log.i("MainActivity","incomingTiltSwitch is ON")
+                        resetAllActivities(Token.TILT)
+                        initAndRegisterRotationSensor(accelerometerSensor)
+                        isPhoneTilt = true
+                        tempText = "Angle ${sensitivityAngle}\u00B0"
+                        setTextAndColor(tiltSwitchText, tempText, R.color.blueText)
+                        tiltImageIcon.setImageResource(R.drawable.tilt_on)
+                        addActivatedFeature(recyclerView, FEATURE.TILT)
+                    }
+                    else {
+                        // we have to disable the btn now since rotation sensor is not available on the device
+                        Log.i("MainActivity","Accelerometer not available")
+                        Snackbar.make(rootView, "To use the feature, manually provide\nAudio access rights to $applicationName", Snackbar.LENGTH_LONG).show()
+                        tempText = "Angle ${sensitivityAngle}\u00B0"
+                        setTextAndColor(tiltSwitchText, tempText, R.color.greyNoteDarker2)
+                        tiltImageIcon.setImageResource(R.drawable.tilt_off)
+                        removeActivatedFeature(recyclerView, FEATURE.TILT)
+                    }
+                } else {
+                    Log.i("MainActivity","incomingTiltSwitch is OFF ($sensorRotationEventListener)")
+                    turnOffFlashlight()
+                    sensorManager.unregisterListener(sensorRotationEventListener)
+                    isPhoneTilt = false
                     tempText = "Angle ${sensitivityAngle}\u00B0"
                     setTextAndColor(tiltSwitchText, tempText, R.color.greyNoteDarker2)
                     tiltImageIcon.setImageResource(R.drawable.tilt_off)
                     removeActivatedFeature(recyclerView, FEATURE.TILT)
                 }
-            } else {
-                Log.i("MainActivity","incomingTiltSwitch is OFF ($sensorRotationEventListener)")
-                turnOffFlashlight()
-                sensorManager.unregisterListener(sensorRotationEventListener)
-                isPhoneTilt = false
-                tempText = "Angle ${sensitivityAngle}\u00B0"
-                setTextAndColor(tiltSwitchText, tempText, R.color.greyNoteDarker2)
-                tiltImageIcon.setImageResource(R.drawable.tilt_off)
+            }
+            else {
+                // user should be asked for permissions again
+                tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.TILT)
+                incomingTiltSwitch.isChecked = false
+                Snackbar.make(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
 
         //////////////////////////////////////////////////////////////////////////////////////
         // incoming SMS handler
-
-        smsImageIcon = findViewById(R.id.smsImageIcon)
-        incomingSMSSwitch = findViewById(R.id.switchSMS)
         incomingSMSSwitch.setOnCheckedChangeListener {_, isChecked ->
             // Check first if permissions are granted
             if (permissionsKeys["SMS"] == true) {
@@ -665,71 +721,79 @@ class MainActivity : AppCompatActivity() {
                 smsImageIcon.setImageResource(R.drawable.sms_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SMS)
                 incomingSMSSwitch.isChecked = false
-                Snackbar.make(rootView, "To use the feature, manually provide\nSMS access rights to $applicationName", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(rootView, "To use the feature, manually provide\nCall (SMS) access rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // phone out/in network handler
-        networkImageIcon = findViewById(R.id.networkImageIcon)
-        outInNetworkSwitch = findViewById(R.id.switchNetwork)
         outInNetworkSwitch.setOnCheckedChangeListener {_, isChecked ->
-            if (!isChecked) {
-                // User wants to disable the feature
-                Log.i("MainActivity","outInNetworkSwitch is OFF")
-                resetFeature(Token.NETWORK)
-            }
-            else {
-                val networkRequest = NetworkRequest.Builder().build()
-                connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-
-                // Check if network is currently available first
-                val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-                val isConnected = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
-                isNetworkConnectivityCbIsSet = true
-                if (!isConnected) {
-                    Log.i("MainActivity", "NETWORK is right now UNAVAILABLE")
-                    isPhoneOutOfNetwork = true
-                    registerIncomingEvents(TypeOfEvent.IN_SERVICE)
-                    networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
-                    addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
+            if (permissionsKeys["FLASHLIGHT"] == true) {
+                if (!isChecked) {
+                    // User wants to disable the feature
+                    Log.i("MainActivity","outInNetworkSwitch is OFF")
+                    resetFeature(Token.NETWORK)
                 }
                 else {
-                    Log.i("MainActivity", "NETWORK is right now AVAILABLE")
-                    connectivityCallback = object : ConnectivityManager.NetworkCallback() {
-                        override fun onUnavailable () {
-                            super.onUnavailable()
-                            Log.i("MainActivity", "NETWORK is currently UNAVAILABLE")
-                            isPhoneOutOfNetwork = true
-                            Log.i("MainActivity", "Unregister status CB $connectivityCallback")
-                            connectivityManager.unregisterNetworkCallback(connectivityCallback)
-                            registerIncomingEvents(TypeOfEvent.IN_SERVICE)
-                            networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
-                        }
-                        override fun onLost(network: Network) {
-                            super.onLost(network)
-                            Log.i("MainActivity", "NETWORK is currently LOST")
-                            isPhoneOutOfNetwork = true
-                            Log.i("MainActivity", "Unregister status CB $connectivityCallback")
-                            connectivityManager.unregisterNetworkCallback(connectivityCallback)
-                            registerIncomingEvents(TypeOfEvent.IN_SERVICE)
-                            networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
-                        }
-                        override fun onAvailable(network: Network) {
-                            super.onAvailable(network)
-                            Log.i("MainActivity", "NETWORK is currently AVAILABLE")
-                            isPhoneInNetwork = true
-                            Log.i("MainActivity", "Unregister status CB $connectivityCallback")
-                            connectivityManager.unregisterNetworkCallback(connectivityCallback)
-                            registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE)
-                            networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
-                        }
+                    val networkRequest = NetworkRequest.Builder().build()
+                    connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+
+                    // Check if network is currently available first
+                    val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                    val isConnected = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+                    isNetworkConnectivityCbIsSet = true
+                    if (!isConnected) {
+                        Log.i("MainActivity", "NETWORK is right now UNAVAILABLE")
+                        isPhoneOutOfNetwork = true
+                        registerIncomingEvents(TypeOfEvent.IN_SERVICE)
+                        networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
+                        addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                     }
-                    Log.i("MainActivity", "Register CB $connectivityCallback")
-                    connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
-                    addActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
+                    else {
+                        Log.i("MainActivity", "NETWORK is right now AVAILABLE")
+                        connectivityCallback = object : ConnectivityManager.NetworkCallback() {
+                            override fun onUnavailable () {
+                                super.onUnavailable()
+                                Log.i("MainActivity", "NETWORK is currently UNAVAILABLE")
+                                isPhoneOutOfNetwork = true
+                                Log.i("MainActivity", "Unregister status CB $connectivityCallback")
+                                connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                                registerIncomingEvents(TypeOfEvent.IN_SERVICE)
+                                networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
+                            }
+                            override fun onLost(network: Network) {
+                                super.onLost(network)
+                                Log.i("MainActivity", "NETWORK is currently LOST")
+                                isPhoneOutOfNetwork = true
+                                Log.i("MainActivity", "Unregister status CB $connectivityCallback")
+                                connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                                registerIncomingEvents(TypeOfEvent.IN_SERVICE)
+                                networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
+                            }
+                            override fun onAvailable(network: Network) {
+                                super.onAvailable(network)
+                                Log.i("MainActivity", "NETWORK is currently AVAILABLE")
+                                isPhoneInNetwork = true
+                                Log.i("MainActivity", "Unregister status CB $connectivityCallback")
+                                connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                                registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE)
+                                networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
+                            }
+                        }
+                        Log.i("MainActivity", "Register CB $connectivityCallback")
+                        connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
+                        addActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
+                    }
+                    Log.i("MainActivity","outInNetworkSwitch is ON")
                 }
-                Log.i("MainActivity","outInNetworkSwitch is ON")
+            }
+            else {
+                // user should be asked for permissions again
+                networkImageIcon.setImageResource(R.drawable.network_no_permission)
+                removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
+                removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
+                outInNetworkSwitch.isChecked = false
+                Snackbar.make(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
 
@@ -739,9 +803,6 @@ class MainActivity : AppCompatActivity() {
         // Get references to views
         val batteryExpandArrow: ImageButton = findViewById(R.id.batteryExpandArrow)
         val batteryHiddenView: LinearLayout = findViewById(R.id.batteryHiddenView)
-        seekBarBatteryText = findViewById(R.id.seekBarBatteryText)
-        batteryImageIcon = findViewById(R.id.batteryImageIcon)
-        batterySwitchText = findViewById(R.id.batterySwitchText)
         tempText = "${batteryThreshold}%"
         setTextAndColor(batterySwitchText, tempText, R.color.greyNoteDarker2)
 
@@ -758,7 +819,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Bar listeners
-        batteryBar = findViewById(R.id.seekBarBattery)
         batteryBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 initAndRegisterBatteryReceiver()
@@ -777,20 +837,28 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        batterySwitch = findViewById(R.id.switchBattery)
         batterySwitch.setOnCheckedChangeListener {_, isChecked ->
-            if (isChecked) {
-                Log.i("MainActivity","batterySwitch is ON")
-                isBatteryOn = true
-                initAndRegisterBatteryReceiver()
-                addActivatedFeature(recyclerView, FEATURE.BATTERY)
-                batteryImageIcon.setImageResource(R.drawable.battery_on)
-                tempText = "${batteryThreshold}%"
-                setTextAndColor(batterySwitchText, tempText, R.color.blueText)
+            if (permissionsKeys["FLASHLIGHT"] == true) {
+                if (isChecked) {
+                    Log.i("MainActivity","batterySwitch is ON")
+                    isBatteryOn = true
+                    initAndRegisterBatteryReceiver()
+                    addActivatedFeature(recyclerView, FEATURE.BATTERY)
+                    batteryImageIcon.setImageResource(R.drawable.battery_on)
+                    tempText = "${batteryThreshold}%"
+                    setTextAndColor(batterySwitchText, tempText, R.color.blueText)
+                }
+                else {
+                    Log.i("MainActivity","batterySwitch is OFF")
+                    resetFeature(Token.BATTERY)
+                }
             }
             else {
-                Log.i("MainActivity","batterySwitch is OFF")
-                resetFeature(Token.BATTERY)
+                // user should be asked for permissions again
+                batteryImageIcon.setImageResource(R.drawable.battery_no_permission)
+                removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
+                batterySwitch.isChecked = false
+                Snackbar.make(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -804,8 +872,7 @@ class MainActivity : AppCompatActivity() {
         var hourOfDayTimer = 0
         var minuteTimer = 0
 //        timerTimePicker.setIs24HourView(true)
-        timerImageIcon = findViewById(R.id.timerImageIcon)
-        timerSwitchText = findViewById(R.id.timerSwitchText)
+
         tempText = "--:--"
         setTextAndColor(timerSwitchText, tempText, R.color.greyNoteDarker2)
 
@@ -835,42 +902,50 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        timerSwitch = findViewById(R.id.switchTimer)
         timerSwitch.setOnCheckedChangeListener {_, isChecked ->
-            if (isChecked) {
-                timerTimePicker.isEnabled = true
-                if (hourOfDayTimer == 0 && minuteTimer == 0) {
-                    Log.i("MainActivity","Time error: set to past time")
-                    Snackbar.make(rootView, "Have to select a time first", Snackbar.LENGTH_LONG).show()
-                    timerSwitch.isChecked = false
-                }
-                else {
-                    val calcTimeToFlickerInMillis = calcTimeToFlicker(hourOfDayTimer, minuteTimer)
-                    if (calcTimeToFlickerInMillis < 0) {
-                        Log.i("MainActivity","Time error: set to past time ($hourOfDayTimer, $minuteTimer)")
+            if (permissionsKeys["FLASHLIGHT"] == true) {
+                if (isChecked) {
+                    timerTimePicker.isEnabled = true
+                    if (hourOfDayTimer == 0 && minuteTimer == 0) {
+                        Log.i("MainActivity","Time error: set to past time")
+                        Snackbar.make(rootView, "Have to select a time first", Snackbar.LENGTH_LONG).show()
                         timerSwitch.isChecked = false
                     }
                     else {
-                        Log.i("MainActivity","timerSwitch is ON")
-                        isTimerOn = true
-                        timerImageIcon.setImageResource(R.drawable.timer_on)
-                        timerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
-                        addActivatedFeature(recyclerView, FEATURE.TIMER)
-                        timerForFlickeringSet = true
-                        Log.i("MainActivity", "TIME flickering at $selectedTime")
-                        loopHandlerTimer.removeCallbacksAndMessages(null)
-                        loopHandlerTimer.postDelayed({resetActivitiesAndFlicker(Token.TIMER)}, calcTimeToFlickerInMillis)
-                        loopHandlerTimer.postDelayed({resetFeature(Token.TIMER)}, calcTimeToFlickerInMillis + maxFlickerDuration30)
-                        // user can no longer interact with the timepicker
-                        timerTimePicker.isEnabled = false
-                        snackBarTimeSelected(calcTimeToFlickerInMillis)
+                        val calcTimeToFlickerInMillis = calcTimeToFlicker(hourOfDayTimer, minuteTimer)
+                        if (calcTimeToFlickerInMillis < 0) {
+                            Log.i("MainActivity","Time error: set to past time ($hourOfDayTimer, $minuteTimer)")
+                            timerSwitch.isChecked = false
+                        }
+                        else {
+                            Log.i("MainActivity","timerSwitch is ON")
+                            isTimerOn = true
+                            timerImageIcon.setImageResource(R.drawable.timer_on)
+                            timerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
+                            addActivatedFeature(recyclerView, FEATURE.TIMER)
+                            timerForFlickeringSet = true
+                            Log.i("MainActivity", "TIME flickering at $selectedTime")
+                            loopHandlerTimer.removeCallbacksAndMessages(null)
+                            loopHandlerTimer.postDelayed({resetActivitiesAndFlicker(Token.TIMER)}, calcTimeToFlickerInMillis)
+                            loopHandlerTimer.postDelayed({resetFeature(Token.TIMER)}, calcTimeToFlickerInMillis + maxFlickerDuration30)
+                            // user can no longer interact with the timepicker
+                            timerTimePicker.isEnabled = false
+                            snackBarTimeSelected(calcTimeToFlickerInMillis)
+                        }
                     }
+                }
+                else {
+                    Log.i("MainActivity","timerSwitch is OFF")
+                    resetFeature(Token.TIMER)
+                    timerTimePicker.isEnabled = true
                 }
             }
             else {
-                Log.i("MainActivity","timerSwitch is OFF")
-                resetFeature(Token.TIMER)
-                timerTimePicker.isEnabled = true
+                // user should be asked for permissions again
+                timerImageIcon.setImageResource(R.drawable.timer_no_permission)
+                removeActivatedFeature(recyclerView, FEATURE.TIMER)
+                timerSwitch.isChecked = false
+                Snackbar.make(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG).show()
             }
         }
 
@@ -880,8 +955,6 @@ class MainActivity : AppCompatActivity() {
         val altitudeExpandArrow: ImageButton = findViewById(R.id.altitudeExpandArrow)
         val altitudeHiddenView: LinearLayout = findViewById(R.id.altitudeHiddenView)
         val seekBarAltitudeText : TextView = findViewById(R.id.seekBarAltitudeText)
-        altitudeImageIcon = findViewById(R.id.altitudeImageIcon)
-        altitudeSwitchText = findViewById(R.id.altitudeSwitchText)
         tempText = "${altitudeThreshold}m"
         setTextAndColor(altitudeSwitchText, tempText, R.color.greyNoteDarker2)
 
@@ -897,7 +970,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Bar listeners
-        altitudeBar = findViewById(R.id.seekBarAltitude)
         altitudeBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 altitudeThreshold = minAltitude + ((maxAltitude - minAltitude).toFloat()/1000 * progress).toInt()
@@ -916,7 +988,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        altitudeSwitch = findViewById(R.id.switchAltitude)
         altitudeSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (permissionsKeys["ALTITUDE"] == true) {
                 if (isChecked) {
@@ -1082,8 +1153,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        // Permissions handling
-        checkPermissions(ACTION.CREATE)
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -1329,11 +1399,16 @@ class MainActivity : AppCompatActivity() {
                 removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                 incomingSoundSwitch.isChecked = false
             }
+            Token.SOS -> {
+                isSendSOS = false
+                stopSOS()
+                sosImageIcon.setImageResource(R.drawable.sos_off)
+                removeActivatedFeature(recyclerView, FEATURE.SOS)
+            }
             else -> {}
         }
 
     }
-
 
     private fun addActivatedFeature (recyclerView : RecyclerView, feature: FEATURE) {
         itemList.add(feature.value)
@@ -1392,6 +1467,10 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "requestPermissions for CAMERA")
                     ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), RequestKey.FLASHLIGHT.value)
                 }
+                else {
+                    Log.i("MainActivity", "requestPermissions CAMERA = TRUE")
+                    permissionsKeys["FLASHLIGHT"] = true
+                }
 
                 // CALL
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
@@ -1448,10 +1527,31 @@ class MainActivity : AppCompatActivity() {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                         Log.i("MainActivity", "CAMERA permissions RESUME: CAMERA = FALSE ")
                         permissionsKeys["FLASHLIGHT"] = false
-                        // TODO: no permissions for anything and info to user to enable rights
+                        setBtnImage(flashlightImageIcon, R.drawable.flashlight_no_permission)
+                        setBtnImage(sosImageIcon, R.drawable.sos_no_permission)
+                        setBtnImage(flickerImageIcon, R.drawable.flicker_no_permission)
+                        setBtnImage(tiltImageIcon, R.drawable.tilt_no_permission)
+                        setBtnImage(networkImageIcon, R.drawable.network_no_permission)
+                        setBtnImage(batteryImageIcon, R.drawable.battery_no_permission)
+                        setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
+
+                        sosSwitch.isChecked = false
+                        flickerSwitch.isChecked = false
+                        incomingTiltSwitch.isChecked = false
+                        outInNetworkSwitch.isChecked = false
+                        batterySwitch.isChecked = false
+                        timerSwitch.isChecked = false
+
+                        removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
+                        removeActivatedFeature(recyclerView, FEATURE.SOS)
+                        removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
+                        removeActivatedFeature(recyclerView, FEATURE.TILT)
+                        removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
+                        removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
+                        removeActivatedFeature(recyclerView, FEATURE.BATTERY)
+                        removeActivatedFeature(recyclerView, FEATURE.TIMER)
                     }
                 }
-
 
                 // CALL
                 if (permissionsKeys["CALL"] == false) {
@@ -1829,11 +1929,17 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             // Permission has been granted, so register the TelephonyCallback
-            Log.i("MainActivity", "Request granted")
+            Log.i("MainActivity", "Request granted for $requestCode")
             when (requestCode) {
                 RequestKey.FLASHLIGHT.value -> {
                     permissionsKeys["FLASHLIGHT"] = true
-                    // TODO: enable all feature icons related to this permission
+                    setBtnImage(flashlightImageIcon, R.drawable.flashlight_off4)
+                    setBtnImage(sosImageIcon, R.drawable.sos_off)
+                    setBtnImage(flickerImageIcon, R.drawable.flicker_off)
+                    setBtnImage(tiltImageIcon, R.drawable.tilt_off)
+                    setBtnImage(networkImageIcon, R.drawable.network_off)
+                    setBtnImage(batteryImageIcon, R.drawable.battery_off)
+                    setBtnImage(timerImageIcon, R.drawable.timer_off)
                 }
                 RequestKey.CALL.value -> {
                     permissionsKeys["CALL"] = true
@@ -1841,7 +1947,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 RequestKey.SMS.value -> {
                     permissionsKeys["SMS"] = true
-                    setBtnImage(sosImageIcon, R.drawable.sos_off)
+                    setBtnImage(smsImageIcon, R.drawable.sms_off)
                 }
                 RequestKey.AUDIO.value -> {
                     permissionsKeys["AUDIO"] = true
@@ -1857,7 +1963,14 @@ class MainActivity : AppCompatActivity() {
             when (requestCode) {
                 RequestKey.FLASHLIGHT.value -> {
                     Log.i("MainActivity", "Request NOT granted for FLASHLIGHT")
-                    // TODO: set no permissions to anything related to this
+                    setBtnImage(flashlightImageIcon, R.drawable.flashlight_no_permission)
+                    setBtnImage(sosImageIcon, R.drawable.sos_no_permission)
+                    setBtnImage(flickerImageIcon, R.drawable.flicker_no_permission)
+                    setBtnImage(tiltImageIcon, R.drawable.tilt_no_permission)
+                    setBtnImage(networkImageIcon, R.drawable.network_no_permission)
+                    setBtnImage(batteryImageIcon, R.drawable.battery_no_permission)
+                    setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
+                    permissionsKeys["FLASHLIGHT"] = false
                 }
                 RequestKey.CALL.value -> {
                     Log.i("MainActivity", "Request NOT granted for CALL")
@@ -1870,7 +1983,7 @@ class MainActivity : AppCompatActivity() {
                     incomingSMSSwitch.isChecked = false
                 }
                 RequestKey.AUDIO.value -> {
-                    Log.i("MainActivity", "Request NOT granted for AUDIO")
+                    Log.i("MainActivity", "Request NOT granted for MICROPHONE")
                     setBtnImage(soundImageIcon, R.drawable.sound_no_permission)
                     incomingSoundSwitch.isChecked = false
                     tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
@@ -1901,17 +2014,21 @@ class MainActivity : AppCompatActivity() {
         Log.i("MainActivity", "onDestroy is running")
         super.onDestroy()
         if (isFlashLightOn) {
+            Log.i("MainActivity", "Flashlight OFF")
             turnOffFlashlight()
         }
         else if (isSendSOS) {
+            Log.i("MainActivity", "SOS OFF")
             stopSOS()
         }
         else if (isFlickering) {
+            Log.i("MainActivity", "Flickering OFF")
             stopFlickering(Token.OTHER)
         }
 
         if (isIncomingCall) {
             try {
+                Log.i("MainActivity", "incomingCallReceiver OFF $incomingCallReceiver ")
                 unregisterReceiver(incomingCallReceiver)
             }
             catch (e : java.lang.Exception) {
@@ -1921,6 +2038,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isIncomingSMS) {
             try {
+                Log.i("MainActivity", "incomingSMSReceiver OFF $incomingSMSReceiver ")
                 unregisterReceiver(incomingSMSReceiver)
             }
             catch (e : java.lang.Exception) {
@@ -1930,6 +2048,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isPhoneTilt) {
             try {
+                Log.i("MainActivity", "sensorRotationEventListener OFF $sensorRotationEventListener ")
                 sensorManager.unregisterListener(sensorRotationEventListener)
             }
             catch (e : java.lang.Exception) {
@@ -1939,6 +2058,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isNetworkConnectivityCbIsSet) {
             try {
+                Log.i("MainActivity", "connectivityCallback OFF $connectivityCallback ")
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
             }
             catch (e : java.lang.Exception) {
@@ -1948,6 +2068,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isAudioIncoming) {
             try {
+                Log.i("MainActivity", "audioRecordHandler OFF $audioRecordHandler ")
                 audioRecordHandler.stop()
                 audioRecordHandler.release()
                 recordingThread?.interrupt()
@@ -1961,6 +2082,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isAltitudeOn) {
             try {
+                Log.i("MainActivity", "sensorPressureEventListener OFF $sensorPressureEventListener ")
                 sensorManager.unregisterListener(sensorPressureEventListener)
             }
             catch (e : SecurityException) {
@@ -1970,6 +2092,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isBatteryOn) {
             try {
+                Log.i("MainActivity", "batteryReceiver OFF $batteryReceiver ")
                 unregisterReceiver(batteryReceiver)
             }
             catch (e : SecurityException) {
