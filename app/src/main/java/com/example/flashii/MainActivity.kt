@@ -522,7 +522,14 @@ class MainActivity : AppCompatActivity() {
         val soundExpandArrow: ImageButton = findViewById(R.id.soundExpandArrow)
         val soundHiddenView: LinearLayout = findViewById(R.id.soundHiddenView)
 
-        tempText = "Sensitivity\nLevel 1"
+        if (sensitivitySoundThreshold != defaultSoundSenseLevel) {
+            val tempProgress = 9 * (defaultSoundSenseLevel - sensitivitySoundThreshold) / (defaultSoundSenseLevel - minSoundSenseLevel)
+            tempText = "Sensitivity\nLevel ${tempProgress + 1}"
+        }
+        else {
+            tempText = "Sensitivity\nLevel 1"
+        }
+
         setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
         Log.i("MainActivity","Sensitivity start $sensitivitySoundThreshold, ${soundSwitchText.text}")
 
@@ -2015,6 +2022,7 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         Log.i("MainActivity", "onPause is running")
         super.onPause()
+        storeSettings()
     }
 
     override fun onRestart() {
@@ -2025,6 +2033,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         Log.i("MainActivity", "onDestroy is running")
         super.onDestroy()
+
         if (isFlashLightOn) {
             Log.i("MainActivity", "Flashlight OFF")
             turnOffFlashlight()
