@@ -62,7 +62,7 @@
                                 android:id="@+id/tiltSwitchText"
                                 android:layout_width="80dp"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:text="@string/angle_80"
                                 android:textColor="@color/greyNoteDarker3"
                                 android:textSize="18sp"
@@ -312,7 +312,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="end|center_vertical"
+                            android:gravity="center"
+                            android:minWidth="80dp"
                             android:orientation="vertical">
 
                             <ImageView
@@ -326,13 +327,11 @@
 
                             <TextView
                                 android:id="@+id/soundSwitchText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="80dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
-                                android:minWidth="56dp"
-                                android:text="@string/sensitivity_level_1"
                                 android:textColor="@color/greyNoteDarker2"
                                 android:textSize="18sp"
                                 tools:ignore="VisualLintLongText" />
@@ -576,7 +575,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/pavlaHz"
                                 android:textColor="@color/greyNoteDarker2"
@@ -756,7 +755,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:textColor="@color/greyNoteDarker2"
                                 android:textSize="16sp"
@@ -977,7 +976,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/cabin_semibold"
+                                android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:text="@string/pavlaPerc"
                                 android:textColor="@color/greyNoteDarker2"

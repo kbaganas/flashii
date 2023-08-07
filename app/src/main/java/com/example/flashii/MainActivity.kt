@@ -523,7 +523,7 @@ class MainActivity : AppCompatActivity() {
         val soundExpandArrow: ImageButton = findViewById(R.id.soundExpandArrow)
         val soundHiddenView: LinearLayout = findViewById(R.id.soundHiddenView)
 
-        tempText = "Sensitivity\n Level 1"
+        tempText = "Sensitivity\nLevel 1"
         setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
         Log.i("MainActivity","Sensitivity start $sensitivitySoundThreshold, ${soundSwitchText.text}")
 
