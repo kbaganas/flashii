@@ -275,6 +275,7 @@
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/smsFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
+
                     <ImageButton
                         android:id="@+id/infoSMSExpandArrow"
                         android:layout_width="76dp"
@@ -285,7 +286,7 @@
                         android:paddingStart="48dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
+                        tools:ignore="RtlSymmetry,ImageContrastCheck" />
                 </LinearLayout>
 
                 <!-- Expandable -->
@@ -458,17 +459,18 @@
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/callFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
+
                     <ImageButton
                         android:id="@+id/infoCallExpandArrow"
                         android:layout_width="76dp"
                         android:layout_height="48dp"
+                        android:layout_gravity="center"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="48dp"
                         android:scaleType="fitCenter"
-                        android:layout_gravity="center"
                         android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
+                        tools:ignore="RtlSymmetry,ImageContrastCheck" />
                 </LinearLayout>
 
                 <!-- Expandable -->
@@ -821,17 +823,18 @@
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/flashlightFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
+
                     <ImageButton
                         android:id="@+id/infoFlashlightExpandArrow"
                         android:layout_width="76dp"
                         android:layout_height="48dp"
+                        android:layout_gravity="center"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowFlashlight"
                         android:paddingStart="48dp"
-                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
+                        tools:ignore="RtlSymmetry,ImageContrastCheck" />
                 </LinearLayout>
 
                 <!-- Expandable -->
@@ -930,7 +933,6 @@
                         android:orientation="horizontal"
                         android:layout_marginTop="14dp"
                         tools:ignore="UseCompoundDrawables">
-
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
@@ -945,6 +947,30 @@
                             android:gravity="center_vertical"
                             android:text="@string/infoDeactivated"
                             android:textColor="@color/blueOffBack5"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="32dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/flashlight_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoNoPermissionByUser"
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
@@ -974,17 +1000,18 @@
                         android:textColor="@color/blueOffBack5"
                         android:text="@string/flickerFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
+
                     <ImageButton
                         android:id="@+id/infoFlickerExpandArrow"
                         android:layout_width="76dp"
                         android:layout_height="48dp"
+                        android:layout_gravity="center"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="48dp"
-                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
+                        tools:ignore="RtlSymmetry,ImageContrastCheck" />
                 </LinearLayout>
 
                 <!-- Expandable -->
@@ -1107,6 +1134,30 @@
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="32dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/flicker_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoNoPermissionByUser"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -1266,6 +1317,32 @@
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="32dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/timer_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoNoPermissionByUser"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -1621,6 +1698,32 @@
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="32dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/sos_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoNoPermissionByUser"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -1773,6 +1876,31 @@
                             android:textColor="@color/blueOffBack5"
                             android:gravity="center_vertical"
                             android:text="@string/infoDeactivated"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="32dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/battery_no_permission" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
+                            android:gravity="center_vertical"
+                            android:text="@string/infoNoPermissionByUser"
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
