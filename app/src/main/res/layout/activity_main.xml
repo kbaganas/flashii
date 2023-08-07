@@ -28,7 +28,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin16"
+                    android:layout_marginBottom="@dimen/margin15"
                     android:background="@drawable/feature_selector_tilt"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
@@ -275,7 +275,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin16"
+                    android:layout_marginBottom="@dimen/margin15"
                     android:background="@drawable/feature_selector_sound"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
@@ -497,7 +497,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin16"
+                    android:layout_marginBottom="@dimen/margin15"
                     android:background="@drawable/feature_selector_flicker"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
@@ -636,7 +636,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin16"
+                    android:layout_marginBottom="@dimen/margin15"
                     android:background="@drawable/feature_selector_time"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
@@ -858,7 +858,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin16"
+                    android:layout_marginBottom="@dimen/margin15"
                     android:background="@drawable/feature_selector_battery"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
@@ -1010,7 +1010,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin16"
+                    android:layout_marginBottom="@dimen/margin15"
                     android:background="@drawable/feature_selector_altitude"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
