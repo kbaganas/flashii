@@ -18,6 +18,7 @@
     <dimen name="infoText">16sp</dimen>
     <dimen name="mainImageInfoText">13sp</dimen>
     <dimen name="mainTitle">28sp</dimen>
+    <dimen name="mainTitleDescription">22sp</dimen>
     <dimen name="toolsHeight">66sp</dimen>
 </resources>
 
