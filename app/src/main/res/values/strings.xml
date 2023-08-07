@@ -183,7 +183,7 @@
     <string name="flicker_on_altitude">Altitude</string>
     <string name="set_altitude_height_m">Set Altitude Height (m)</string>
     <string name="flicker_on_short_sounds">Sounds</string>
-    <string name="set_sound_sensitivity_level">Set sound sensitivity level</string>
+    <string name="set_sound_sensitivity_level">Sound sensitivity level:</string>
     <string name="set_battery_power_threshold">Set Battery Power % threshold</string>
     <string name="set_frequency_hz">Set frequency</string>
     <string name="set_time">Set Time</string>
@@ -206,4 +206,14 @@
     <string name="max">Max</string>
     <string name="current_battery_power">(current Battery Power: -%)</string>
     <string name="current_altitude_height">(current Altitude Height: -m)</string>
+    <string name="soft">Soft\nSound</string>
+    <string name="loud">Loud\nSound</string>
+    <string name="max_nangle">Max\nAngle</string>
+    <string name="min_nangle">Min\nAngle</string>
+    <string name="min_nfrequency">Min\nFrequency</string>
+    <string name="max_nfrequency">Max\nFrequency</string>
+    <string name="min_nbattery">Min\nBattery</string>
+    <string name="max_nbattery">Max\nBattery</string>
+    <string name="min_nheight">Min\nHeight</string>
+    <string name="max_nheight">Max\nHeight</string>
 </resources>

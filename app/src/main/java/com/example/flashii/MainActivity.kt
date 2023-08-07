@@ -144,7 +144,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var soundSwitchText : TextView
     private lateinit var timerSwitchText : TextView
     private lateinit var flickerSwitchText : TextView
-    private lateinit var seekBarBatteryText : TextView
 
 
     enum class ACTION {
@@ -323,7 +322,6 @@ class MainActivity : AppCompatActivity() {
         outInNetworkSwitch = findViewById(R.id.switchNetwork)
         batteryImageIcon = findViewById(R.id.batteryImageIcon)
         batterySwitchText = findViewById(R.id.batterySwitchText)
-        seekBarBatteryText = findViewById(R.id.seekBarBatteryText)
         batteryBar = findViewById(R.id.seekBarBattery)
         batterySwitch = findViewById(R.id.switchBattery)
         timerImageIcon = findViewById(R.id.timerImageIcon)
@@ -826,6 +824,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 batteryHiddenView.visibility = View.VISIBLE
                 batteryExpandArrow.setImageResource(R.drawable.arrow_up)
+                initAndRegisterBatteryReceiver()
             }
         }
 
@@ -965,7 +964,6 @@ class MainActivity : AppCompatActivity() {
 
         val altitudeExpandArrow: ImageButton = findViewById(R.id.altitudeExpandArrow)
         val altitudeHiddenView: LinearLayout = findViewById(R.id.altitudeHiddenView)
-        val seekBarAltitudeText : TextView = findViewById(R.id.seekBarAltitudeText)
         tempText = "${altitudeThreshold}m"
         setTextAndColor(altitudeSwitchText, tempText, R.color.greyNoteDarker2)
 
@@ -987,7 +985,7 @@ class MainActivity : AppCompatActivity() {
                 tempText = "${altitudeThreshold}m"
                 altitudeSwitchText.text = tempText
                 tempText = "(current Altitude Height: ${initAltitudeLevel}m)"
-                seekBarAltitudeText.text = tempText
+//                seekBarAltitudeText.text = tempText
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -1014,8 +1012,6 @@ class MainActivity : AppCompatActivity() {
                                         if (initAltitudeLevel == minAltitude) {
                                             Log.d("MainActivity", "initAltitudeLevel set to ${initAltitudeLevel}m")
                                             initAltitudeLevel = altitude.toInt()
-                                            tempText = "(current Altitude Height: ${initAltitudeLevel}m)"
-                                            seekBarAltitudeText.text = tempText
                                         }
 
                                         if (altitudeThreshold > initAltitudeLevel) {
@@ -1041,8 +1037,8 @@ class MainActivity : AppCompatActivity() {
                                         }
                                     }
                                     else {
-                                        tempText = "(current Altitude Height: ${altitude.toInt()}m)"
-                                        seekBarAltitudeText.text = tempText
+//                                        tempText = "(current Altitude Height: ${altitude.toInt()}m)"
+//                                        seekBarAltitudeText.text = tempText
                                     }
                                 }
                             }
@@ -1229,8 +1225,12 @@ class MainActivity : AppCompatActivity() {
                         val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
                         initBatteryLevel = ((level.toFloat() / scale.toFloat()) * 100).toInt()
                         Log.i("MainActivity", "Battery initial level is ${initBatteryLevel}%")
-                        tempText = "(current Battery Power: $initBatteryLevel%)"
-                        seekBarBatteryText.text = tempText
+                        if (!batterySwitch.isChecked) {
+                            batteryThreshold = initBatteryLevel
+                            tempText = "${batteryThreshold}%"
+                            batterySwitchText.text = tempText
+                            batteryBar.progress = batteryThreshold
+                        }
                     }
 
                     if (intent.action == Intent.ACTION_BATTERY_CHANGED) {
