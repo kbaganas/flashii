@@ -22,10 +22,10 @@ class SettingsActivity : AppCompatActivity() {
     private val defaultMaxFlickerIncomingAltitude : Int = 15000
 
     private var maxFlickerHz : Int = defaultMaxFlickerHz
-    private var maxFlickerDurationIncomingCall : Int = 0
-    private var maxFlickerDurationIncomingSMS : Int = 0
-    private var maxFlickerDurationBattery : Int = 0
-    private var maxFlickerDurationAltitude : Int = 0
+    private var maxFlickerDurationIncomingCall : Int = defaultMaxFlickerIncomingCall
+    private var maxFlickerDurationIncomingSMS : Int = defaultMaxFlickerIncomingSMS
+    private var maxFlickerDurationBattery : Int = defaultMaxFlickerIncomingBattery
+    private var maxFlickerDurationAltitude : Int = defaultMaxFlickerIncomingAltitude
     private lateinit var maxFlickerHzEditText : EditText
     private lateinit var flickTimeIncCallEditText : EditText
     private lateinit var flickTimeIncSMSEditText : EditText
@@ -55,11 +55,11 @@ class SettingsActivity : AppCompatActivity() {
         flickTimeAltitudeEditText = findViewById(R.id.flickTimeAltitudeId)
 
         // Retrieve the data value from the intent of the MainActivity
-        maxFlickerHz = intent.getIntExtra("maxFlickerHz", 0)
-        maxFlickerDurationIncomingCall = intent.getIntExtra("maxFlickerDurationIncomingCall", 0)
-        maxFlickerDurationIncomingSMS = intent.getIntExtra("maxFlickerDurationIncomingSMS", 0)
-        maxFlickerDurationBattery = intent.getIntExtra("maxFlickerDurationBattery", 0)
-        maxFlickerDurationAltitude = intent.getIntExtra("maxFlickerDurationAltitude", 0)
+        maxFlickerHz = intent.getIntExtra("maxFlickerHz", defaultMaxFlickerHz)
+        maxFlickerDurationIncomingCall = intent.getIntExtra("maxFlickerDurationIncomingCall", defaultMaxFlickerIncomingCall)
+        maxFlickerDurationIncomingSMS = intent.getIntExtra("maxFlickerDurationIncomingSMS", defaultMaxFlickerIncomingSMS)
+        maxFlickerDurationBattery = intent.getIntExtra("maxFlickerDurationBattery", defaultMaxFlickerIncomingBattery)
+        maxFlickerDurationAltitude = intent.getIntExtra("maxFlickerDurationAltitude", defaultMaxFlickerIncomingAltitude)
 
         // Set data of the intent in local variables
         setHintValues()
@@ -114,12 +114,6 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun resetTextValues() {
-        maxFlickerHz = defaultMaxFlickerHz
-        maxFlickerDurationIncomingCall = defaultMaxFlickerIncomingCall
-        maxFlickerDurationIncomingSMS = defaultMaxFlickerIncomingSMS
-        maxFlickerDurationBattery = defaultMaxFlickerIncomingBattery
-        maxFlickerDurationAltitude = defaultMaxFlickerIncomingAltitude
-
         maxFlickerHzEditText.text = Editable.Factory.getInstance().newEditable(maxFlickerHz.toString())
         var temp = maxFlickerDurationIncomingCall / 1000
         flickTimeIncCallEditText.text = Editable.Factory.getInstance().newEditable(temp.toString())

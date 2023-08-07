@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
 
     // constants defaults
     private val defaultMaxFlickerHz : Int = 10
-    private val defaultMaxTimer = 240.minutes
     private val defaultMaxTiltAngle : Int = 90
     private val defaultTiltAngle : Int = 80
     private val defaultMinTiltAngle : Int = 45
@@ -100,7 +99,6 @@ class MainActivity : AppCompatActivity() {
 
     // Timer
     private val minTimerMinutes = 1.minutes
-    private var maxTimerMinutes = defaultMaxTimer
     private var timerSetAfter = 0.minutes
 
     // SOS
@@ -289,12 +287,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         rootView = findViewById(android.R.id.content)
 
-        // Initialization of basic Settings
-        if (isStoredSettings()) {
-            retrieveStoredSettings()
-            Log.i("MainActivity", "RETRIEVED STORED Settings are: $maxFlickerHz,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
-        }
-
         // setup cameraManager
         cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -341,6 +333,13 @@ class MainActivity : AppCompatActivity() {
         altitudeSwitchText = findViewById(R.id.altitudeSwitchText)
         altitudeBar = findViewById(R.id.seekBarAltitude)
         altitudeSwitch = findViewById(R.id.switchAltitude)
+
+        // Initialization of basic Settings
+        if (isStoredSettings()) {
+            retrieveStoredSettings()
+            Log.i("MainActivity", "RETRIEVED STORED Settings are: $flickerFlashlightHz (Hz), $maxFlickerHz (max Hz), $sensitivitySoundThreshold (sound), $sensitivityAngle (degrees), $maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+        }
+
 
         // Permissions handling
         checkPermissions(ACTION.CREATE)
@@ -1424,8 +1423,7 @@ class MainActivity : AppCompatActivity() {
     private fun setSettingsIntent () {
         // set intent for Settings activity
         intentSettings = Intent(this, SettingsActivity::class.java)
-        intentSettings.putExtra("maxTimerMinutes", maxTimerMinutes.inWholeMinutes.toInt())
-        intentSettings.putExtra("sensitivitySoundThreshold", sensitivitySoundThreshold)
+        intentSettings.putExtra("maxFlickerHz", maxFlickerHz)
         intentSettings.putExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall)
         intentSettings.putExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS)
         intentSettings.putExtra("maxFlickerDurationBattery", maxFlickerDurationBattery)
@@ -1437,8 +1435,16 @@ class MainActivity : AppCompatActivity() {
         return sharedPref.contains("maxFlickerHz")
     }
     private fun retrieveStoredSettings () {
-        maxTimerMinutes = sharedPref.getInt("maxTimerMinutes", defaultMaxTimer.inWholeMinutes.toInt()).minutes
-        sensitivitySoundThreshold = sharedPref.getInt("sensitivitySoundThreshold", defaultSoundSenseLevel)
+        flickerFlashlightHz = sharedPref.getInt("flickerFlashlightHz", defaultMaxFlickerHz).toLong() // default is 10
+        sensitivitySoundThreshold = sharedPref.getInt("sensitivitySoundThreshold", defaultSoundSenseLevel) // default is 20000
+        sensitivityAngle = sharedPref.getInt("sensitivityAngle", defaultTiltAngle) // default is 80
+
+        // set seekbars accordingly
+        flickeringBar.progress = flickerFlashlightHz.toInt()
+        soundBar.progress = 9 * (defaultSoundSenseLevel - sensitivitySoundThreshold) / (defaultSoundSenseLevel - minSoundSenseLevel)
+        tiltBar.progress = 9 * (sensitivityAngle - defaultMinTiltAngle) / (defaultMaxTiltAngle - defaultMinTiltAngle)
+
+        maxFlickerHz = sharedPref.getInt("maxFlickerHz", defaultMaxFlickerHz) // max 10 - 100
         maxFlickerDurationIncomingCall = sharedPref.getInt("maxFlickerDurationIncomingCall", defaultMaxFlickerIncomingCall)
         maxFlickerDurationIncomingSMS = sharedPref.getInt("maxFlickerDurationIncomingSMS", defaultMaxFlickerIncomingSMS)
         maxFlickerDurationBattery = sharedPref.getInt("maxFlickerDurationBattery", defaultMaxFlickerIncomingBattery)
@@ -1446,11 +1452,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun storeSettings () {
-        Log.i("MainActivity", "STORED Settings are: $maxFlickerHz,${maxTimerMinutes.inWholeMinutes.toInt()},$sensitivityAngle,$sensitivitySoundThreshold,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+        Log.i("MainActivity", "STORED Settings are: $flickerFlashlightHz (Hz), $maxFlickerHz (max Hz), $sensitivityAngle (degrees), $sensitivitySoundThreshold (sound),$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
         val sharedPref = getSharedPreferences("FlashiiSettings", MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.putInt("maxTimerMinutes", maxTimerMinutes.inWholeMinutes.toInt())
-        editor.putInt("sensitivitySoundThreshold", sensitivitySoundThreshold)
+
+        // settings User can configure with seekbars
+        editor.putInt("flickerFlashlightHz", flickerFlashlightHz.toInt()) // flicker on demand
+        editor.putInt("sensitivitySoundThreshold", sensitivitySoundThreshold) // finger-snap
+        editor.putInt("sensitivityAngle", sensitivityAngle) // phone Tilt
+
+        // settings User can configure in Settings
+        editor.putInt("maxFlickerHz", maxFlickerHz) // max flickering Hz (3 - 100)
         editor.putInt("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall)
         editor.putInt("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS)
         editor.putInt("maxFlickerDurationBattery", maxFlickerDurationBattery)
