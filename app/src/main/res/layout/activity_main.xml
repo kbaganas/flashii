@@ -394,7 +394,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="start|center_vertical"
-                            android:text="@string/soft"
+                            android:text="@string/loud"
                             android:textColor="@color/greyNoteDarker2"
                             android:textSize="14sp" />
 
@@ -419,7 +419,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="end|center_vertical"
-                            android:text="@string/loud"
+                            android:text="@string/soft"
                             android:textColor="@color/greyNoteDarker2"
                             android:textSize="14sp" />
                     </LinearLayout>
