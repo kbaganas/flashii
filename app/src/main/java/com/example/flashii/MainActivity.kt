@@ -181,8 +181,8 @@ class MainActivity : AppCompatActivity() {
         SOS("SOS"),
         FLICKERING("Flashlight flickering"),
         TIMER("Flashlight flicker at Time specified"),
-        NETWORK_FOUND("Flashlight flicker on Network Connection found"),
-        NETWORK_LOST("Flashlight flicker on Network Connection lost"),
+        NETWORK_FOUND("Flashlight flicker on Internet connection found"),
+        NETWORK_LOST("Flashlight flicker on Internet connection lost"),
         TILT("Flashlight toggle on Phone Tilts")
     }
 
@@ -549,9 +549,7 @@ class MainActivity : AppCompatActivity() {
         val soundExpandArrow: ImageButton = findViewById(R.id.soundExpandArrow)
         val soundHiddenView: LinearLayout = findViewById(R.id.soundHiddenView)
 
-        val tempProgress = calcSensitivityLevel(sensitivitySoundThreshold)
-        tempText = "Sensitivity\n${tempProgress}"
-
+        tempText = "Sensitivity\n${calcSensitivityLevel(sensitivitySoundThreshold)}"
         setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
         Log.i("MainActivity","Sensitivity start $sensitivitySoundThreshold, ${soundSwitchText.text}")
 
@@ -571,10 +569,9 @@ class MainActivity : AppCompatActivity() {
         soundBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 sensitivitySoundThreshold = defaultSoundSenseLevel - (defaultSoundSenseLevel - minSoundSenseLevel) / 9 * progress
-                val tempProgress = calcSensitivityLevel(sensitivitySoundThreshold)
-                tempText = "Sensitivity\n${tempProgress}"
+                tempText = "Sensitivity\n${calcSensitivityLevel(sensitivitySoundThreshold)}"
                 soundSwitchText.text = tempText
-                Log.i("MainActivity","Sensitivity $progress, $sensitivitySoundThreshold")
+                // Log.i("MainActivity","Sensitivity $progress, $sensitivitySoundThreshold")
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -582,7 +579,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                Log.i("MainActivity","Sensitivity onStopTrackingTouch, $sensitivitySoundThreshold")
+                // Log.i("MainActivity","Sensitivity onStopTrackingTouch, $sensitivitySoundThreshold")
                 // Do nothing
             }
         })
@@ -774,7 +771,7 @@ class MainActivity : AppCompatActivity() {
 
                     // Check if network is currently available first
                     val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-                    val isConnected = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+                    val isConnected = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
                     isNetworkConnectivityCbIsSet = true
                     if (!isConnected) {
                         Log.i("MainActivity", "NETWORK is right now UNAVAILABLE")
