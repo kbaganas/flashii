@@ -41,6 +41,7 @@
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/cabin_regular"
                 android:textColor="@color/mainTextMessage"
+                android:layout_gravity="center_vertical"
                 android:textSize="18sp"
                 tools:ignore="TextContrastCheck" />
 
@@ -53,7 +54,7 @@
                 android:paddingStart="24dp"
                 android:src="@drawable/close"
                 android:contentDescription="@string/backArrow"
-                tools:ignore="TouchTargetSizeCheck" />
+                tools:ignore="RtlSymmetry,TouchTargetSizeCheck" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

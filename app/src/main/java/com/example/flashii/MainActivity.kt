@@ -176,16 +176,16 @@ class MainActivity : AppCompatActivity() {
 
     enum class FEATURE (val value: String) {
         FLASHLIGHT("Flashlight"),
-        CALL("Flashlight flicker on incoming Call"),
-        SMS("Flashlight flicker on incoming SMS"),
-        AUDIO("Flashlight flicker on short sounds"),
-        ALTITUDE("Flashlight flicker on Height reached"),
-        BATTERY("Flashlight flicker on Battery Power reached"),
+        CALL("Flicker on incoming Call"),
+        SMS("Flicker on incoming SMS"),
+        AUDIO("Flicker on short sounds"),
+        ALTITUDE("Flicker on Height reached"),
+        BATTERY("Flicker on Battery Power reached"),
         SOS("SOS"),
         FLICKERING("Flashlight flickering"),
-        TIMER("Flashlight flicker at Time specified"),
-        NETWORK_FOUND("Flashlight flicker on Internet connection found"),
-        NETWORK_LOST("Flashlight flicker on Internet connection lost"),
+        TIMER("Flicker on Time"),
+        NETWORK_FOUND("Flicker on Internet connection found"),
+        NETWORK_LOST("Flicker on Internet connection lost"),
         TILT("Flashlight toggle on Phone Tilts")
     }
 
@@ -795,6 +795,7 @@ class MainActivity : AppCompatActivity() {
                         registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                         networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
                         addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
+                        triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found", ACTION.INFO)
                     }
                     else {
                         Log.i("MainActivity", "NETWORK is right now AVAILABLE")
@@ -807,6 +808,7 @@ class MainActivity : AppCompatActivity() {
                                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                                 registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                                 networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
+                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found", ACTION.INFO)
                             }
                             override fun onLost(network: Network) {
                                 super.onLost(network)
@@ -816,6 +818,7 @@ class MainActivity : AppCompatActivity() {
                                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                                 registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                                 networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
+                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found", ACTION.INFO)
                             }
                             override fun onAvailable(network: Network) {
                                 super.onAvailable(network)
@@ -825,6 +828,7 @@ class MainActivity : AppCompatActivity() {
                                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                                 registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE)
                                 networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
+                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is lost", ACTION.INFO)
                             }
                         }
                         Log.i("MainActivity", "Register CB $connectivityCallback")
@@ -1754,6 +1758,7 @@ class MainActivity : AppCompatActivity() {
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
                         triggerSnackbar(rootView, "Internet Connection is lost", ACTION.SUCCESS)
+                        loopHandlerTimer.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
                     }
                     override fun onUnavailable() {
                         super.onUnavailable()
@@ -1764,6 +1769,7 @@ class MainActivity : AppCompatActivity() {
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
                         triggerSnackbar(rootView, "Internet Connection is lost", ACTION.SUCCESS)
+                        loopHandlerTimer.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
                     }}
                 Log.i("MainActivity", "Register CB for OUT_OF_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
@@ -1780,6 +1786,7 @@ class MainActivity : AppCompatActivity() {
                         isPhoneOutOfNetwork = false
                         isPhoneInNetwork = true
                         triggerSnackbar(rootView, "Internet Connection is found", ACTION.SUCCESS)
+                        loopHandlerTimer.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
                     }}
                 Log.i("MainActivity", "Register CB for IN_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
@@ -1821,6 +1828,12 @@ class MainActivity : AppCompatActivity() {
     private fun resetActivitiesAndFlicker (token: Token) {
         resetAllActivities(token)
         startFlickering(token)
+        when (token) {
+            Token.TIMER -> {
+                triggerSnackbar(rootView, "Time ${timerSwitchText.text} is reached", ACTION.INFO)
+            }
+            else -> {}
+        }
     }
 
     private fun isAboveThreshold(buffer: ShortArray, bytesRead: Int): Boolean {
