@@ -829,7 +829,7 @@
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/IncomingSMSContentDescription"
                             android:scaleType="fitCenter"
-                            android:scaleY="1.3"
+                            android:scaleY="1.1"
                             app:srcCompat="@drawable/sos_off" />
 
                         <LinearLayout

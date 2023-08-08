@@ -37,6 +37,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -284,18 +285,22 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tempText : String
 
     @SuppressLint("InflateParams")
-    private fun triggerSnackbar(view: View, text: CharSequence, time: Int, attention : Boolean = true) {
+    private fun triggerSnackbar(view: View, text: CharSequence, attention : Boolean = true) {
         val customSnackView: View = layoutInflater.inflate(R.layout.custom_snackbar, null)
+        val snackBarImg = customSnackView.findViewById<ImageView>(R.id.snackbar_img)
+        val snackbarBtn: ImageButton = customSnackView.findViewById(R.id.snackbar_Btn)
         val snackBarText = customSnackView.findViewById<TextView>(R.id.snackbar_text)
         snackBarText.text = text.toString()
 
-        if (!attention) {
+        if (attention) {
+            snackBarImg.setImageResource(R.drawable.attention)
+        }
+        else {
             // success msg is displayed
-            val snackBarImg = customSnackView.findViewById<ImageView>(R.id.snackbar_img)
-            snackBarImg.setImageResource(R.drawable.activated)
+            snackBarImg.setImageResource(R.drawable.success)
         }
 
-        val snackbar = Snackbar.make(view, "", time)
+        val snackbar = Snackbar.make(view, "", Snackbar.LENGTH_INDEFINITE)
         snackbar.view.setBackgroundColor(Color.TRANSPARENT)
         val snackbarLayout = snackbar.view as Snackbar.SnackbarLayout
         snackbarLayout.setPadding(0, 0, 0, 0)
@@ -307,6 +312,10 @@ class MainActivity : AppCompatActivity() {
         // params.topMargin = 200
         snackbar.view.layoutParams = params
         snackbar.show()
+
+        snackbarBtn.setOnClickListener {
+            snackbar.dismiss()
+        }
     }
 
     @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility", "MissingInflatedId")
@@ -411,7 +420,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
                 false
             }
         }
@@ -441,7 +450,7 @@ class MainActivity : AppCompatActivity() {
                 sosImageIcon.setImageResource(R.drawable.sos_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SOS)
                 sosSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
             }
         }
 
@@ -514,7 +523,7 @@ class MainActivity : AppCompatActivity() {
                 flickerImageIcon.setImageResource(R.drawable.flicker_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
                 flickerSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
             }
         }
 
@@ -540,7 +549,7 @@ class MainActivity : AppCompatActivity() {
                 callImageIcon.setImageResource(R.drawable.call_no_permission)
                 incomingCallSwitch.isChecked = false
                 removeActivatedFeature(recyclerView, FEATURE.CALL)
-                triggerSnackbar(rootView, "To use the feature, manually provide Call rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Call rights to $applicationName")
             }
         }
 
@@ -636,7 +645,7 @@ class MainActivity : AppCompatActivity() {
                 soundImageIcon.setImageResource(R.drawable.sound_no_permission)
                 soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 incomingSoundSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Microphone rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Microphone rights to $applicationName")
             }
         }
 
@@ -703,7 +712,7 @@ class MainActivity : AppCompatActivity() {
                     else {
                         // we have to disable the btn now since rotation sensor is not available on the device
                         Log.i("MainActivity","Accelerometer not available")
-                        triggerSnackbar(rootView, "To use the feature, manually provide Audio rights to $applicationName", Snackbar.LENGTH_LONG)
+                        triggerSnackbar(rootView, "To use the feature, manually provide Audio rights to $applicationName")
                         tempText = "Angle ${sensitivityAngle}\u00B0"
                         setTextAndColor(tiltSwitchText, tempText, R.color.greyNoteDarker2)
                         tiltImageIcon.setImageResource(R.drawable.tilt_off)
@@ -725,7 +734,7 @@ class MainActivity : AppCompatActivity() {
                 tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.TILT)
                 incomingTiltSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
             }
         }
 
@@ -752,7 +761,7 @@ class MainActivity : AppCompatActivity() {
                 smsImageIcon.setImageResource(R.drawable.sms_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SMS)
                 incomingSMSSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide SMS rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide SMS rights to $applicationName")
             }
         }
 
@@ -824,7 +833,7 @@ class MainActivity : AppCompatActivity() {
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                 outInNetworkSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
             }
         }
 
@@ -890,7 +899,7 @@ class MainActivity : AppCompatActivity() {
                 batteryImageIcon.setImageResource(R.drawable.battery_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                 batterySwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -927,7 +936,7 @@ class MainActivity : AppCompatActivity() {
                         timerSwitchText.text = selectedTime
                     }
                     else {
-                        triggerSnackbar(rootView, "You have to deactivate the feature first, to select another timestamp.", Snackbar.LENGTH_LONG)
+                        triggerSnackbar(rootView, "You have to deactivate the feature first, to select another timestamp.")
                     }
                 }
 
@@ -940,7 +949,7 @@ class MainActivity : AppCompatActivity() {
                     timerTimePicker.isEnabled = true
                     if (hourOfDayTimer == 0 && minuteTimer == 0) {
                         Log.i("MainActivity","Time error: set to past time")
-                        triggerSnackbar(rootView, "Have to select a time first, before enabling the feature", Snackbar.LENGTH_LONG)
+                        triggerSnackbar(rootView, "Have to select a time first, before enabling the feature")
                         timerSwitch.isChecked = false
                     }
                     else {
@@ -977,7 +986,7 @@ class MainActivity : AppCompatActivity() {
                 timerImageIcon.setImageResource(R.drawable.timer_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerSwitch.isChecked = false
-                triggerSnackbar(rootView, "You have to deactivate the feature first, to select another time.", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "You have to deactivate the feature first, to select another time.")
             }
         }
 
@@ -1043,6 +1052,7 @@ class MainActivity : AppCompatActivity() {
                                                     Log.d("MainActivity", "Flickering ON while ascending \nto altitude of ${flickerFlashlightHz}m")
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
+                                                    triggerSnackbar(rootView, "Flickering as Altitude Height ${altitudeThreshold}m has been reached")
                                                 }
                                             }
                                         }
@@ -1054,6 +1064,7 @@ class MainActivity : AppCompatActivity() {
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
+                                                    triggerSnackbar(rootView, "Flickering as Altitude Height ${altitudeThreshold}m has been reached")
                                                 }
                                             }
                                         }
@@ -1079,7 +1090,7 @@ class MainActivity : AppCompatActivity() {
                     else {
                         // we have to disable the btn now since sensor is not available on the device
                         Log.i("MainActivity","Barometer not available")
-                        triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible", Snackbar.LENGTH_LONG)
+                        triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible")
                         resetFeature(Token.ALTITUDE)
                         altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                     }
@@ -1091,7 +1102,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for ALTITUDE")
-                triggerSnackbar(rootView, "To use the feature, manually provide Location rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Location rights to $applicationName")
                 removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                 tempText = "${altitudeThreshold}m"
@@ -1288,6 +1299,7 @@ class MainActivity : AppCompatActivity() {
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
                                 unregisterReceiver(batteryReceiver)
+                                triggerSnackbar(rootView, "Flickering as Battery Power charged up to ${batteryThreshold}%")
                             }
                         }
                         else {
@@ -1300,6 +1312,7 @@ class MainActivity : AppCompatActivity() {
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
                                 unregisterReceiver(batteryReceiver)
+                                triggerSnackbar(rootView, "Flickering as Battery Power discharged to ${batteryThreshold}%")
                             }
                         }
                     }
@@ -1319,16 +1332,16 @@ class MainActivity : AppCompatActivity() {
             val hours = if (calcTimeToFlickerInHours > 1) {"hours"} else {"hour"}
             if (calcTimeToFlickerInMinutes > 0) {
                 val minutes = if (calcTimeToFlickerInMinutes > 1) {"minutes"} else {"minute"}
-                triggerSnackbar(rootView, "Flashlight will flicker after\n$calcTimeToFlickerInHours $hours: $calcTimeToFlickerInMinutes $minutes", Snackbar.LENGTH_LONG, false)
+                triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours: $calcTimeToFlickerInMinutes $minutes", false)
             } else {
-                triggerSnackbar(rootView, "Flashlight will flicker after\n$calcTimeToFlickerInHours $hours", Snackbar.LENGTH_LONG, false)
+                triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours", false)
             }
         }
         else if (calcTimeToFlickerInMinutes > 0) {
-            triggerSnackbar(rootView, "Flashlight will flicker after\n$calcTimeToFlickerInMinutes minutes", Snackbar.LENGTH_LONG, false)
+            triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInMinutes minutes", false)
         }
         else {
-            triggerSnackbar(rootView, "Flashlight will flicker after\n$calcTimeToFlickerInSeconds seconds", Snackbar.LENGTH_LONG, false)
+            triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInSeconds seconds", false)
         }
     }
 
@@ -1732,6 +1745,7 @@ class MainActivity : AppCompatActivity() {
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
+                        triggerSnackbar(rootView, "Flickering as Internet Connection is lost")
                     }
                     override fun onUnavailable() {
                         super.onUnavailable()
@@ -1741,6 +1755,7 @@ class MainActivity : AppCompatActivity() {
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
+                        triggerSnackbar(rootView, "Flickering as Internet Connection is lost")
                     }}
                 Log.i("MainActivity", "Register CB for OUT_OF_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
@@ -1756,6 +1771,7 @@ class MainActivity : AppCompatActivity() {
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = false
                         isPhoneInNetwork = true
+                        triggerSnackbar(rootView, "Flickering as Internet Connection is found")
                     }}
                 Log.i("MainActivity", "Register CB for IN_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)

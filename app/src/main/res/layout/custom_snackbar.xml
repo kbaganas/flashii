@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,15 +10,18 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/blueOff"
-        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/blueOffBack2"
+        app:cardCornerRadius="12dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/toast_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="56dp"
+            android:orientation="horizontal"
+            android:gravity="top"
             android:padding="12dp">
 
             <ImageView
@@ -27,21 +30,31 @@
                 android:layout_height="44dp"
                 android:contentDescription="Image for custom snackbar"
                 android:paddingTop="4dp"
-                android:src="@drawable/attention"
+                android:src="@drawable/success"
                 tools:ignore="ImageContrastCheck" />
 
             <TextView
                 android:id="@+id/snackbar_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_toEndOf="@id/snackbar_img"
                 android:fontFamily="@font/cabin_regular"
-                android:text="To use this feature you have to provide rights to Flashii"
-                android:textColor="@android:color/white"
+                android:textColor="@color/mainTextMessage"
                 android:textSize="18sp"
                 tools:ignore="TextContrastCheck" />
 
-        </RelativeLayout>
+            <ImageButton
+                android:id="@+id/snackbar_Btn"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:background="#00FFFFFF"
+                android:scaleType="fitStart"
+                android:paddingStart="24dp"
+                android:src="@drawable/close"
+                android:contentDescription="@string/backArrow"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
-</RelativeLayout>
+</LinearLayout>
