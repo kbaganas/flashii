@@ -37,7 +37,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -152,7 +151,10 @@ class MainActivity : AppCompatActivity() {
 
     enum class ACTION {
         CREATE,
-        RESUME
+        RESUME,
+        SUCCESS,
+        INFO,
+        ATTENTION
     }
 
     enum class TypeOfEvent {
@@ -285,19 +287,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tempText : String
 
     @SuppressLint("InflateParams")
-    private fun triggerSnackbar(view: View, text: CharSequence, attention : Boolean = true) {
+    private fun triggerSnackbar(view: View, text: CharSequence, action : ACTION = ACTION.ATTENTION) {
         val customSnackView: View = layoutInflater.inflate(R.layout.custom_snackbar, null)
         val snackBarImg = customSnackView.findViewById<ImageView>(R.id.snackbar_img)
         val snackbarBtn: ImageButton = customSnackView.findViewById(R.id.snackbar_Btn)
         val snackBarText = customSnackView.findViewById<TextView>(R.id.snackbar_text)
         snackBarText.text = text.toString()
 
-        if (attention) {
-            snackBarImg.setImageResource(R.drawable.attention)
-        }
-        else {
-            // success msg is displayed
-            snackBarImg.setImageResource(R.drawable.success)
+        when (action) {
+            ACTION.ATTENTION -> {
+                snackBarImg.setImageResource(R.drawable.attention)
+            }
+            ACTION.INFO -> {
+                snackBarImg.setImageResource(R.drawable.info_snackbar)
+            }
+            ACTION.SUCCESS -> {
+                snackBarImg.setImageResource(R.drawable.success)
+            }
+            else -> {}
         }
 
         val snackbar = Snackbar.make(view, "", Snackbar.LENGTH_INDEFINITE)
@@ -1052,7 +1059,7 @@ class MainActivity : AppCompatActivity() {
                                                     Log.d("MainActivity", "Flickering ON while ascending \nto altitude of ${flickerFlashlightHz}m")
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
-                                                    triggerSnackbar(rootView, "Flickering as Altitude Height ${altitudeThreshold}m has been reached")
+                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached", ACTION.SUCCESS)
                                                 }
                                             }
                                         }
@@ -1064,7 +1071,7 @@ class MainActivity : AppCompatActivity() {
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
-                                                    triggerSnackbar(rootView, "Flickering as Altitude Height ${altitudeThreshold}m has been reached")
+                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached", ACTION.SUCCESS)
                                                 }
                                             }
                                         }
@@ -1299,7 +1306,7 @@ class MainActivity : AppCompatActivity() {
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
                                 unregisterReceiver(batteryReceiver)
-                                triggerSnackbar(rootView, "Flickering as Battery Power charged up to ${batteryThreshold}%")
+                                triggerSnackbar(rootView, "Battery Power charged up to ${batteryThreshold}%", ACTION.SUCCESS)
                             }
                         }
                         else {
@@ -1312,7 +1319,7 @@ class MainActivity : AppCompatActivity() {
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
                                 unregisterReceiver(batteryReceiver)
-                                triggerSnackbar(rootView, "Flickering as Battery Power discharged to ${batteryThreshold}%")
+                                triggerSnackbar(rootView, "Battery Power discharged to ${batteryThreshold}%", ACTION.SUCCESS)
                             }
                         }
                     }
@@ -1332,16 +1339,16 @@ class MainActivity : AppCompatActivity() {
             val hours = if (calcTimeToFlickerInHours > 1) {"hours"} else {"hour"}
             if (calcTimeToFlickerInMinutes > 0) {
                 val minutes = if (calcTimeToFlickerInMinutes > 1) {"minutes"} else {"minute"}
-                triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours: $calcTimeToFlickerInMinutes $minutes", false)
+                triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours: $calcTimeToFlickerInMinutes $minutes", ACTION.INFO)
             } else {
-                triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours", false)
+                triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours", ACTION.INFO)
             }
         }
         else if (calcTimeToFlickerInMinutes > 0) {
-            triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInMinutes minutes", false)
+            triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInMinutes minutes", ACTION.INFO)
         }
         else {
-            triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInSeconds seconds", false)
+            triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInSeconds seconds", ACTION.INFO)
         }
     }
 
@@ -1700,6 +1707,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+            else -> {}
         }
     }
 
@@ -1745,7 +1753,7 @@ class MainActivity : AppCompatActivity() {
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
-                        triggerSnackbar(rootView, "Flickering as Internet Connection is lost")
+                        triggerSnackbar(rootView, "Internet Connection is lost", ACTION.SUCCESS)
                     }
                     override fun onUnavailable() {
                         super.onUnavailable()
@@ -1755,7 +1763,7 @@ class MainActivity : AppCompatActivity() {
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
-                        triggerSnackbar(rootView, "Flickering as Internet Connection is lost")
+                        triggerSnackbar(rootView, "Internet Connection is lost", ACTION.SUCCESS)
                     }}
                 Log.i("MainActivity", "Register CB for OUT_OF_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
@@ -1771,7 +1779,7 @@ class MainActivity : AppCompatActivity() {
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = false
                         isPhoneInNetwork = true
-                        triggerSnackbar(rootView, "Flickering as Internet Connection is found")
+                        triggerSnackbar(rootView, "Internet Connection is found", ACTION.SUCCESS)
                     }}
                 Log.i("MainActivity", "Register CB for IN_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
