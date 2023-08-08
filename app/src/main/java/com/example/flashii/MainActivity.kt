@@ -877,7 +877,7 @@ class MainActivity : AppCompatActivity() {
                 batteryThreshold = progress
                 tempText = "${batteryThreshold}%"
                 batterySwitchText.text = tempText
-                Log.i("MainActivity","batteryThreshold $progress, $batteryThreshold")
+                // Log.i("MainActivity","batteryThreshold $progress, $batteryThreshold")
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -1299,7 +1299,7 @@ class MainActivity : AppCompatActivity() {
                         val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
                         val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
                         val batteryPercentage = (level.toFloat() / scale.toFloat()) * 100
-
+                        // Log.i("MainActivity", "batteryThreshold = $batteryThreshold,  initBatteryLevel = $initBatteryLevel, batteryPercentage.toInt() = ${batteryPercentage.toInt()} ")
                         if (batteryThreshold > initBatteryLevel) {
                             // So the user is charging his phone and wants an optical indication when threshold is reached
                             if (batteryPercentage.toInt() >= batteryThreshold) {
