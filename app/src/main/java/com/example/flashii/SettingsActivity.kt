@@ -66,6 +66,53 @@ class SettingsActivity : AppCompatActivity() {
 
         Log.i("SettingsActivity", "oCreate Input data are: $maxFlickerHz,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
 
+
+        // Clear Hint on focus
+        flickTimeIncSMSEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                flickTimeIncSMSEditText.hint = ""
+            } else {
+                val tempInt = maxFlickerDurationIncomingSMS / 1000
+                flickTimeIncSMSEditText.hint = tempInt.toString()
+                flickTimeIncSMSEditText.clearFocus()
+            }
+        }
+        flickTimeIncCallEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                flickTimeIncCallEditText.hint = ""
+            } else {
+                val tempInt = defaultMaxFlickerIncomingCall / 1000
+                flickTimeIncCallEditText.hint = tempInt.toString()
+                flickTimeIncCallEditText.clearFocus()
+            }
+        }
+        maxFlickerHzEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                maxFlickerHzEditText.hint = ""
+            } else {
+                maxFlickerHzEditText.hint = maxFlickerHz.toString()
+                maxFlickerHzEditText.clearFocus()
+            }
+        }
+        flickTimeBatteryEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                flickTimeBatteryEditText.hint = ""
+            } else {
+                val tempInt = maxFlickerDurationBattery / 1000
+                flickTimeBatteryEditText.hint = tempInt.toString()
+                flickTimeBatteryEditText.clearFocus()
+            }
+        }
+        flickTimeAltitudeEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                flickTimeAltitudeEditText.hint = ""
+            } else {
+                val tempInt = maxFlickerDurationAltitude / 1000
+                flickTimeAltitudeEditText.hint = tempInt.toString()
+                flickTimeAltitudeEditText.clearFocus()
+            }
+        }
+
         // apply button
         val settingsApplyBtn = findViewById<Button>(R.id.settingsApplyBtn)
         settingsApplyBtn.setOnClickListener {

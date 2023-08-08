@@ -284,10 +284,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tempText : String
 
     @SuppressLint("InflateParams")
-    private fun triggerSnackbar(view: View, text: CharSequence, time: Int) {
+    private fun triggerSnackbar(view: View, text: CharSequence, time: Int, attention : Boolean = true) {
         val customSnackView: View = layoutInflater.inflate(R.layout.custom_snackbar, null)
         val snackBarText = customSnackView.findViewById<TextView>(R.id.snackbar_text)
         snackBarText.text = text.toString()
+
+        if (!attention) {
+            // success msg is displayed
+            val snackBarImg = customSnackView.findViewById<ImageView>(R.id.snackbar_img)
+            snackBarImg.setImageResource(R.drawable.activated)
+        }
+
         val snackbar = Snackbar.make(view, "", time)
         snackbar.view.setBackgroundColor(Color.TRANSPARENT)
         val snackbarLayout = snackbar.view as Snackbar.SnackbarLayout
@@ -404,7 +411,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
-                triggerSnackbar(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
                 false
             }
         }
@@ -434,7 +441,7 @@ class MainActivity : AppCompatActivity() {
                 sosImageIcon.setImageResource(R.drawable.sos_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SOS)
                 sosSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -507,7 +514,7 @@ class MainActivity : AppCompatActivity() {
                 flickerImageIcon.setImageResource(R.drawable.flicker_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
                 flickerSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -533,7 +540,7 @@ class MainActivity : AppCompatActivity() {
                 callImageIcon.setImageResource(R.drawable.call_no_permission)
                 incomingCallSwitch.isChecked = false
                 removeActivatedFeature(recyclerView, FEATURE.CALL)
-                triggerSnackbar(rootView, "To use the feature, manually provide\nCall rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Call rights to $applicationName", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -542,12 +549,8 @@ class MainActivity : AppCompatActivity() {
         val soundExpandArrow: ImageButton = findViewById(R.id.soundExpandArrow)
         val soundHiddenView: LinearLayout = findViewById(R.id.soundHiddenView)
 
-        tempText = if (sensitivitySoundThreshold != defaultSoundSenseLevel) {
-            val tempProgress = 9 * (defaultSoundSenseLevel - sensitivitySoundThreshold) / (defaultSoundSenseLevel - minSoundSenseLevel)
-            "Sensitivity\nLevel ${tempProgress + 1}"
-        } else {
-            "Sensitivity\nLevel 1"
-        }
+        val tempProgress = calcSensitivityLevel(sensitivitySoundThreshold)
+        tempText = "Sensitivity\n${tempProgress}"
 
         setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
         Log.i("MainActivity","Sensitivity start $sensitivitySoundThreshold, ${soundSwitchText.text}")
@@ -567,8 +570,9 @@ class MainActivity : AppCompatActivity() {
         // Bar listeners
         soundBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                tempText = "Sensitivity\nLevel ${progress + 1}"
                 sensitivitySoundThreshold = defaultSoundSenseLevel - (defaultSoundSenseLevel - minSoundSenseLevel) / 9 * progress
+                val tempProgress = calcSensitivityLevel(sensitivitySoundThreshold)
+                tempText = "Sensitivity\n${tempProgress}"
                 soundSwitchText.text = tempText
                 Log.i("MainActivity","Sensitivity $progress, $sensitivitySoundThreshold")
             }
@@ -635,7 +639,7 @@ class MainActivity : AppCompatActivity() {
                 soundImageIcon.setImageResource(R.drawable.sound_no_permission)
                 soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 incomingSoundSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide\nMicrophone rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Microphone rights to $applicationName", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -702,7 +706,7 @@ class MainActivity : AppCompatActivity() {
                     else {
                         // we have to disable the btn now since rotation sensor is not available on the device
                         Log.i("MainActivity","Accelerometer not available")
-                        triggerSnackbar(rootView, "To use the feature, manually provide\nAudio rights to $applicationName", Snackbar.LENGTH_LONG)
+                        triggerSnackbar(rootView, "To use the feature, manually provide Audio rights to $applicationName", Snackbar.LENGTH_LONG)
                         tempText = "Angle ${sensitivityAngle}\u00B0"
                         setTextAndColor(tiltSwitchText, tempText, R.color.greyNoteDarker2)
                         tiltImageIcon.setImageResource(R.drawable.tilt_off)
@@ -724,7 +728,7 @@ class MainActivity : AppCompatActivity() {
                 tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.TILT)
                 incomingTiltSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -751,7 +755,7 @@ class MainActivity : AppCompatActivity() {
                 smsImageIcon.setImageResource(R.drawable.sms_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SMS)
                 incomingSMSSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide\nSMS rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide SMS rights to $applicationName", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -823,7 +827,7 @@ class MainActivity : AppCompatActivity() {
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                 outInNetworkSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -889,7 +893,7 @@ class MainActivity : AppCompatActivity() {
                 batteryImageIcon.setImageResource(R.drawable.battery_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                 batterySwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide\nFlashlight rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName", Snackbar.LENGTH_LONG)
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -939,7 +943,7 @@ class MainActivity : AppCompatActivity() {
                     timerTimePicker.isEnabled = true
                     if (hourOfDayTimer == 0 && minuteTimer == 0) {
                         Log.i("MainActivity","Time error: set to past time")
-                        triggerSnackbar(rootView, "Have to select time first", Snackbar.LENGTH_LONG)
+                        triggerSnackbar(rootView, "Have to select a time first, before enabling the feature", Snackbar.LENGTH_LONG)
                         timerSwitch.isChecked = false
                     }
                     else {
@@ -976,7 +980,7 @@ class MainActivity : AppCompatActivity() {
                 timerImageIcon.setImageResource(R.drawable.timer_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerSwitch.isChecked = false
-                triggerSnackbar(rootView, "You have to deactivate the feature first, to select another timestamp.", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "You have to deactivate the feature first, to select another time.", Snackbar.LENGTH_LONG)
             }
         }
 
@@ -1078,7 +1082,7 @@ class MainActivity : AppCompatActivity() {
                     else {
                         // we have to disable the btn now since sensor is not available on the device
                         Log.i("MainActivity","Barometer not available")
-                        triggerSnackbar(rootView, "This phone device has no barometer sensor available", Snackbar.LENGTH_LONG)
+                        triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible", Snackbar.LENGTH_LONG)
                         resetFeature(Token.ALTITUDE)
                         altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                     }
@@ -1090,7 +1094,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for ALTITUDE")
-                triggerSnackbar(rootView, "To use the feature, manually provide\nLocation rights to $applicationName", Snackbar.LENGTH_LONG)
+                triggerSnackbar(rootView, "To use the feature, manually provide Location rights to $applicationName", Snackbar.LENGTH_LONG)
                 removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                 tempText = "${altitudeThreshold}m"
@@ -1187,6 +1191,24 @@ class MainActivity : AppCompatActivity() {
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
+
+    private fun calcSensitivityLevel (sensitivitySoundThreshold : Int) : String {
+        val tempProgress = 9 * (defaultSoundSenseLevel - sensitivitySoundThreshold) / (defaultSoundSenseLevel - minSoundSenseLevel)
+        val result = if (tempProgress > 7) {
+            "Highest"
+        }
+        else if (tempProgress in 5..7) {
+            "High"
+        }
+        else if (tempProgress in 2..4) {
+            "Medium"
+        }
+        else {
+            "Low"
+        }
+        return result
+    }
+
 
     private fun initSensorManager () {
         if (::sensorManager.isInitialized) {
@@ -1300,16 +1322,16 @@ class MainActivity : AppCompatActivity() {
             val hours = if (calcTimeToFlickerInHours > 1) {"hours"} else {"hour"}
             if (calcTimeToFlickerInMinutes > 0) {
                 val minutes = if (calcTimeToFlickerInMinutes > 1) {"minutes"} else {"minute"}
-                Snackbar.make(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours : $calcTimeToFlickerInMinutes $minutes", Snackbar.LENGTH_LONG).show()
+                triggerSnackbar(rootView, "Flashlight will flicker after\n$calcTimeToFlickerInHours $hours: $calcTimeToFlickerInMinutes $minutes", Snackbar.LENGTH_LONG, false)
             } else {
-                Snackbar.make(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours", Snackbar.LENGTH_LONG).show()
+                triggerSnackbar(rootView, "Flashlight will flicker after\n$calcTimeToFlickerInHours $hours", Snackbar.LENGTH_LONG, false)
             }
         }
         else if (calcTimeToFlickerInMinutes > 0) {
-            Snackbar.make(rootView, "Flashlight will flicker after $calcTimeToFlickerInMinutes minutes", Snackbar.LENGTH_LONG).show()
+            triggerSnackbar(rootView, "Flashlight will flicker after\n$calcTimeToFlickerInMinutes minutes", Snackbar.LENGTH_LONG, false)
         }
         else {
-            Snackbar.make(rootView, "Flashlight will flicker after $calcTimeToFlickerInSeconds seconds", Snackbar.LENGTH_LONG).show()
+            triggerSnackbar(rootView, "Flashlight will flicker after\n$calcTimeToFlickerInSeconds seconds", Snackbar.LENGTH_LONG, false)
         }
     }
 

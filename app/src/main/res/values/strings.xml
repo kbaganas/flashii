@@ -87,8 +87,8 @@
     <string name="altitude_height">Altitude Height</string>
     <string name="switch_for_tilt">Switch for tilt</string>
     <string name="switch_for_sms">Switch for SMS</string>
-    <string name="soft">Soft\nSound</string>
-    <string name="loud">Loud\nSound</string>
+    <string name="soft">Soft\nSnap</string>
+    <string name="loud">Loud\nSnap</string>
     <string name="max_nangle">Max\nAngle</string>
     <string name="min_nangle">Min\nAngle</string>
     <string name="min_nfrequency">Min\nFrequency</string>
