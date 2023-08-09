@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
     private val defaultMaxFlickerIncomingSMS : Int = 15000
     private val defaultMaxFlickerIncomingBattery : Int = 15000
     private val defaultMaxFlickerIncomingAltitude : Int = 15000
+    private val delaySnackbarMsg : Long = 5000
 
     // HZ
     private var minFlickerHz : Int = 1
@@ -214,8 +215,10 @@ class MainActivity : AppCompatActivity() {
 
     // Handlers
     private var loopHandlerTimer : Handler = Handler(Looper.getMainLooper())
-    private var loopHandlerFlickering : Handler = Handler(Looper.getMainLooper())
     private var loopHandlerBattery : Handler = Handler(Looper.getMainLooper())
+    private var loopHandlerNetwork : Handler = Handler(Looper.getMainLooper())
+    private var loopHandlerFlickering : Handler = Handler(Looper.getMainLooper())
+    private var loopHandler : Handler = Handler(Looper.getMainLooper())
 
     // Handlers, Threads, Managers, Receivers, Detectors
     private lateinit var audioRecordHandler : AudioRecord
@@ -254,6 +257,7 @@ class MainActivity : AppCompatActivity() {
     private var itemList = mutableListOf<String>()
     private lateinit var recyclerView: RecyclerView
     private var timerForFlickeringSet : Boolean = false
+    private var batteryReceiverRegistered : Boolean = false
 
     // Buttons & Ids
     private var flashlightId : String = "0"
@@ -287,25 +291,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tempText : String
 
     @SuppressLint("InflateParams")
-    private fun triggerSnackbar(view: View, text: CharSequence, action : ACTION = ACTION.ATTENTION) {
+    private fun triggerSnackbar(view: View, text: CharSequence, action : ACTION = ACTION.ATTENTION, token: Token = Token.OTHER) {
         val customSnackView: View = layoutInflater.inflate(R.layout.custom_snackbar, null)
         val snackBarImg = customSnackView.findViewById<ImageView>(R.id.snackbar_img)
         val snackbarBtn: ImageButton = customSnackView.findViewById(R.id.snackbar_Btn)
         val snackBarText = customSnackView.findViewById<TextView>(R.id.snackbar_text)
         snackBarText.text = text.toString()
-
-        when (action) {
-            ACTION.ATTENTION -> {
-                snackBarImg.setImageResource(R.drawable.attention)
-            }
-            ACTION.INFO -> {
-                snackBarImg.setImageResource(R.drawable.info_snackbar)
-            }
-            ACTION.SUCCESS -> {
-                snackBarImg.setImageResource(R.drawable.success)
-            }
-            else -> {}
-        }
 
         val snackbar = Snackbar.make(view, "", Snackbar.LENGTH_INDEFINITE)
         snackbar.view.setBackgroundColor(Color.TRANSPARENT)
@@ -322,6 +313,22 @@ class MainActivity : AppCompatActivity() {
 
         snackbarBtn.setOnClickListener {
             snackbar.dismiss()
+            resetFeature(token)
+        }
+
+        when (action) {
+            ACTION.ATTENTION -> {
+                snackBarImg.setImageResource(R.drawable.attention)
+                loopHandler.postDelayed({snackbar.dismiss()}, delaySnackbarMsg)
+            }
+            ACTION.INFO -> {
+                snackBarImg.setImageResource(R.drawable.info_snackbar)
+                loopHandler.postDelayed({snackbar.dismiss()}, delaySnackbarMsg)
+            }
+            ACTION.SUCCESS -> {
+                snackBarImg.setImageResource(R.drawable.success)
+            }
+            else -> {}
         }
     }
 
@@ -380,7 +387,7 @@ class MainActivity : AppCompatActivity() {
         // Initialization of basic Settings
         if (isStoredSettings()) {
             retrieveStoredSettings()
-            Log.i("MainActivity", "RETRIEVED STORED Settings are: $flickerFlashlightHz (Hz), $maxFlickerHz (max Hz), $sensitivitySoundThreshold (sound), $sensitivityAngle (degrees), $maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+            Log.i("MainActivity", "Retrieved stored settings are: $flickerFlashlightHz (current Hz), $maxFlickerHz (max Hz), $sensitivitySoundThreshold (sound), $sensitivityAngle (tilt degrees), $maxFlickerDurationIncomingCall (call),$maxFlickerDurationIncomingSMS (SMS),$maxFlickerDurationBattery (battery),$maxFlickerDurationAltitude (altitude)")
         }
 
 
@@ -401,11 +408,9 @@ class MainActivity : AppCompatActivity() {
                     MotionEvent.ACTION_DOWN -> {
                         touchStartTime = System.currentTimeMillis()
                         if (isFlashLightOn) {
-                            Log.i("MainActivity","flashlightBtn is OFF")
                             turnOffFlashlight(true)
                             removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                         } else {
-                            Log.i("MainActivity","flashlightBtn is ON")
                             resetAllActivities(Token.FLASHLIGHT)
                             turnOnFlashlight(true)
                             addActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
@@ -567,8 +572,6 @@ class MainActivity : AppCompatActivity() {
 
         tempText = "Sensitivity\n${calcSensitivityLevel(sensitivitySoundThreshold)}"
         setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
-        Log.i("MainActivity","Sensitivity start $sensitivitySoundThreshold, ${soundSwitchText.text}")
-
         // Expand or hide the main content
         soundExpandArrow.setOnClickListener {
             // Toggle the visibility of the content view
@@ -756,7 +759,7 @@ class MainActivity : AppCompatActivity() {
                     smsImageIcon.setImageResource(R.drawable.sms_on)
                     addActivatedFeature(recyclerView, FEATURE.SMS)
                 } else {
-                    Log.i("MainActivity", "incomingSMSSwitch is OFF")
+                    Log.i("MainActivity", "incomingSMSSwitch is OFF (unregister $incomingSMSReceiver)")
                     disableIncomingSMSFlickering()
                     smsImageIcon.setImageResource(R.drawable.sms_off)
                     removeActivatedFeature(recyclerView, FEATURE.SMS)
@@ -873,7 +876,6 @@ class MainActivity : AppCompatActivity() {
         // Bar listeners
         batteryBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                initAndRegisterBatteryReceiver()
                 batteryThreshold = progress
                 tempText = "${batteryThreshold}%"
                 batterySwitchText.text = tempText
@@ -885,7 +887,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                // Do nothing
+                initAndRegisterBatteryReceiver()
             }
         })
 
@@ -1063,7 +1065,7 @@ class MainActivity : AppCompatActivity() {
                                                     Log.d("MainActivity", "Flickering ON while ascending \nto altitude of ${flickerFlashlightHz}m")
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
-                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached", ACTION.SUCCESS)
+                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached", ACTION.SUCCESS, Token.ALTITUDE)
                                                 }
                                             }
                                         }
@@ -1075,7 +1077,7 @@ class MainActivity : AppCompatActivity() {
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
-                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached", ACTION.SUCCESS)
+                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached", ACTION.SUCCESS, Token.ALTITUDE)
                                                 }
                                             }
                                         }
@@ -1278,8 +1280,10 @@ class MainActivity : AppCompatActivity() {
     private fun initAndRegisterBatteryReceiver() {
         if (::batteryReceiver.isInitialized) {
             // already initialized; do nothing
+            Log.i("MainActivity","batteryReceiver do nothing")
         }
         else {
+            batteryReceiverRegistered = true
             batteryReceiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
                     if (initBatteryLevel == minBattery) {
@@ -1310,7 +1314,7 @@ class MainActivity : AppCompatActivity() {
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
                                 unregisterReceiver(batteryReceiver)
-                                triggerSnackbar(rootView, "Battery Power charged up to ${batteryThreshold}%", ACTION.SUCCESS)
+                                triggerSnackbar(rootView, "Battery Power charged up to ${batteryThreshold}%", ACTION.SUCCESS, Token.BATTERY)
                             }
                         }
                         else {
@@ -1323,12 +1327,14 @@ class MainActivity : AppCompatActivity() {
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
                                 unregisterReceiver(batteryReceiver)
-                                triggerSnackbar(rootView, "Battery Power discharged to ${batteryThreshold}%", ACTION.SUCCESS)
+                                triggerSnackbar(rootView, "Battery Power discharged to ${batteryThreshold}%", ACTION.SUCCESS, Token.BATTERY)
                             }
                         }
                     }
                 }
             }
+        }
+        if (!batteryReceiverRegistered) {
             registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
             Log.i("MainActivity","batteryReceiver initialized ($batteryReceiver)")
         }
@@ -1388,13 +1394,14 @@ class MainActivity : AppCompatActivity() {
                     stopFlickering(Token.BATTERY)
                 }
                 try {
+                    batteryReceiverRegistered = false
                     unregisterReceiver(batteryReceiver)
+                    loopHandlerBattery.removeCallbacksAndMessages(null)
                 }
                 catch (e : java.lang.Exception) {
                     // Do nothing
                 }
 
-                loopHandlerBattery.removeCallbacksAndMessages(null)
                 removeActivatedFeature(recyclerView, FEATURE.BATTERY)
                 batteryImageIcon.setImageResource(R.drawable.battery_off)
                 batterySwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
@@ -1408,14 +1415,15 @@ class MainActivity : AppCompatActivity() {
 
                 try {
                     connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                    loopHandlerNetwork.removeCallbacksAndMessages(null)
                 }
                 catch (e : java.lang.Exception) {
                     // Do nothing
                 }
 
-                networkImageIcon.setImageResource(R.drawable.network_off)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
+                networkImageIcon.setImageResource(R.drawable.network_off)
                 outInNetworkSwitch.isChecked = false
             }
             Token.TIMER -> {
@@ -1425,10 +1433,16 @@ class MainActivity : AppCompatActivity() {
                 }
                 isTimerThresholdSet = false
                 timerSetAfter = minTimerMinutes
-                loopHandlerTimer.removeCallbacksAndMessages(null)
+
+                try {
+                    loopHandlerTimer.removeCallbacksAndMessages(null)
+                }
+                catch (e : java.lang.Exception) {
+                    // Do nothing
+                }
+                removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerImageIcon.setImageResource(R.drawable.timer_off)
                 timerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-                removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerSwitch.isChecked = false
                 timerForFlickeringSet = false
             }
@@ -1474,6 +1488,32 @@ class MainActivity : AppCompatActivity() {
                 stopSOS()
                 sosImageIcon.setImageResource(R.drawable.sos_off)
                 removeActivatedFeature(recyclerView, FEATURE.SOS)
+                sosSwitch.isChecked = false
+            }
+            Token.TILT -> {
+                turnOffFlashlight()
+                try {
+                    sensorManager.unregisterListener(sensorRotationEventListener)
+                }
+                catch (e : Exception) {
+                    // We are OK, receiver is already unregistered
+                }
+                isPhoneTilt = false
+                tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
+                tiltImageIcon.setImageResource(R.drawable.tilt_off)
+                removeActivatedFeature(recyclerView, FEATURE.TILT)
+                incomingTiltSwitch.isChecked = false
+            }
+            Token.FLICKER -> {
+                stopFlickering(Token.FLICKER)
+                flickerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
+                flickerImageIcon.setImageResource(R.drawable.flicker_off)
+                removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
+                flickerSwitch.isChecked = false
+            }
+            Token.FLASHLIGHT -> {
+                turnOffFlashlight(true)
+                removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
             }
             else -> {}
         }
@@ -1757,8 +1797,8 @@ class MainActivity : AppCompatActivity() {
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
-                        triggerSnackbar(rootView, "Internet Connection is lost", ACTION.SUCCESS)
-                        loopHandlerTimer.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
+                        triggerSnackbar(rootView, "Internet Connection is lost", ACTION.SUCCESS, Token.NETWORK)
+                        loopHandlerNetwork.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
                     }
                     override fun onUnavailable() {
                         super.onUnavailable()
@@ -1768,8 +1808,8 @@ class MainActivity : AppCompatActivity() {
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
-                        triggerSnackbar(rootView, "Internet Connection is lost", ACTION.SUCCESS)
-                        loopHandlerTimer.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
+                        triggerSnackbar(rootView, "Internet Connection is lost", ACTION.SUCCESS, Token.NETWORK)
+                        loopHandlerNetwork.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
                     }}
                 Log.i("MainActivity", "Register CB for OUT_OF_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
@@ -1785,8 +1825,8 @@ class MainActivity : AppCompatActivity() {
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = false
                         isPhoneInNetwork = true
-                        triggerSnackbar(rootView, "Internet Connection is found", ACTION.SUCCESS)
-                        loopHandlerTimer.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
+                        triggerSnackbar(rootView, "Internet Connection is found", ACTION.SUCCESS, Token.NETWORK)
+                        loopHandlerNetwork.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
                     }}
                 Log.i("MainActivity", "Register CB for IN_SERVICE $connectivityCallback")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
@@ -1798,7 +1838,6 @@ class MainActivity : AppCompatActivity() {
 
             }
             TypeOfEvent.SMS -> {
-                Log.i("MainActivity", "SMS_RECEIVED_ACTION registered")
                 isIncomingSMS = true
                 incomingSMSReceiver = object : BroadcastReceiver() {
                     override fun onReceive(context: Context, intent: Intent) {
@@ -1813,7 +1852,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 val intentFilter = IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
                 registerReceiver(incomingSMSReceiver, intentFilter)
-                //setMessageText("Flashlight will be flickering\non incoming SMSes", hideMessageTextAfter35, Token.INCOMING_SMS)
+                Log.i("MainActivity", "SMS_RECEIVED_ACTION registered ($incomingSMSReceiver)")
             }
         }
     }
@@ -1830,7 +1869,7 @@ class MainActivity : AppCompatActivity() {
         startFlickering(token)
         when (token) {
             Token.TIMER -> {
-                triggerSnackbar(rootView, "Time ${timerSwitchText.text} is reached", ACTION.INFO)
+                triggerSnackbar(rootView, "Time ${timerSwitchText.text} is reached", ACTION.INFO, Token.TIMER)
             }
             else -> {}
         }
@@ -2201,34 +2240,24 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun resetAllActivities (featureToken : Token) {
-        Log.i("MainActivity", " --------- Reset all activities --------- ")
-
         var tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.SOS, Token.SOUND, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.TILT, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isFlashLightOn) {
             // Can be understood as: Until now I had Flashlight activated, but now I have activated
             // Flickering or TILT or Sound or SOS. So, Flashlight must be deactivated.
             Log.i("MainActivity", "RAA - TURN OFF Flashlight")
-            turnOffFlashlight(true)
-            removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
+            resetFeature(Token.FLASHLIGHT)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLASHLIGHT, Token.SOS, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isFlickering && isFlickeringOnDemand) {
             Log.i("MainActivity", "RAA - STOP FLICKERING on demand")
-            stopFlickering(Token.FLICKER)
-            flickerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-            flickerImageIcon.setImageResource(R.drawable.flicker_off)
-            removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
-            flickerSwitch.isChecked = false
+            resetFeature(Token.FLICKER)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.TILT, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isSendSOS) {
             Log.i("MainActivity", "RAA - DISABLE SOS")
-            stopSOS()
-            sosImageIcon.setImageResource(R.drawable.sos_off)
-            removeActivatedFeature(recyclerView, FEATURE.SOS)
-            sosSwitch.isChecked = false
+            resetFeature(Token.SOS)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
@@ -2238,13 +2267,7 @@ class MainActivity : AppCompatActivity() {
             // Flickering or Flashlight or Sound or SOS.
             // So, Phone Tilt must be deactivated.
             Log.i("MainActivity", "RAA - TURN OFF isPhoneTilt")
-            turnOffFlashlight()
-            sensorManager.unregisterListener(sensorRotationEventListener)
-            isPhoneTilt = false
-            tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-            tiltImageIcon.setImageResource(R.drawable.tilt_off)
-            removeActivatedFeature(recyclerView, FEATURE.TILT)
-            incomingTiltSwitch.isChecked = false
+            resetFeature(Token.TILT)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
@@ -2256,72 +2279,25 @@ class MainActivity : AppCompatActivity() {
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet && flickeringDueToNetworkConnection) {
             Log.i("MainActivity", "RAA - TURN OFF isNetworkConnectivityCbIsSet")
-            isNetworkConnectivityCbIsSet = false
-            stopFlickering(Token.NETWORK)
-            connectivityManager.unregisterNetworkCallback(connectivityCallback)
-            networkImageIcon.setImageResource(R.drawable.network_off)
-            removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
-            removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
-            outInNetworkSwitch.isChecked = false
+            resetFeature(Token.NETWORK)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.ALTITUDE, Token.TIMER)
         if ((featureToken in tokenValuesToCheckAgainst) && isBatteryOn && flickeringDueToBattery) {
             Log.i("MainActivity", "RAA - TURN OFF isBatteryOn")
-            isBatteryOn = false
-            batteryThreshold = minBattery
-            initBatteryLevel = minBattery
-            stopFlickering(Token.BATTERY)
-            try {
-                unregisterReceiver(batteryReceiver)
-                loopHandlerFlickering.removeCallbacksAndMessages(null)
-            }
-            catch (e : Exception) {
-                // We are OK, receiver is already unregistered
-            }
-            removeActivatedFeature(recyclerView, FEATURE.BATTERY)
-            batteryImageIcon.setImageResource(R.drawable.battery_off)
-            batterySwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-            batterySwitch.isChecked = false
+            resetFeature(Token.BATTERY)
         }
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.BATTERY, Token.TIMER)
         if ((featureToken in tokenValuesToCheckAgainst) && isAltitudeOn && flickeringDueToAltitude) {
             Log.i("MainActivity", "RAA - TURN OFF isAltitudeOn")
-            isAltitudeOn = false
-            altitudeThreshold = minAltitude
-            stopFlickering(Token.ALTITUDE)
-            sensorManager.unregisterListener(sensorPressureEventListener)
-            try {
-                loopHandlerFlickering.removeCallbacksAndMessages(null)
-            }
-            catch (e: java.lang.Exception) {
-                // DO nothing here
-            }
-            removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
-            altitudeImageIcon.setImageResource(R.drawable.altitude_off)
-            altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-            altitudeSwitch.isChecked = false
+            resetFeature(Token.ALTITUDE)
         }
-
 
         tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.INCOMING_SMS, Token.INCOMING_CALL, Token.SOS, Token.NETWORK, Token.BATTERY, Token.ALTITUDE)
         if ((featureToken in tokenValuesToCheckAgainst) && isTimerOn && flickeringDueToTimer) {
             Log.i("MainActivity", "RAA - TURN OFF isTimerOn")
-            isTimerOn = false
-            timerSetAfter = minTimerMinutes
-            stopFlickering(Token.TIMER)
-            try {
-                loopHandlerTimer.removeCallbacksAndMessages(null)
-                loopHandlerFlickering.removeCallbacksAndMessages(null)
-            }
-            catch (e: java.lang.Exception) {
-                // DO nothing here
-            }
-            removeActivatedFeature(recyclerView, FEATURE.TIMER)
-            timerImageIcon.setImageResource(R.drawable.timer_off)
-            timerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-            timerSwitch.isChecked = false
+            resetFeature(Token.TIMER)
         }
     }
 
