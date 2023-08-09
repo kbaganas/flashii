@@ -433,7 +433,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
                 false
             }
         }
@@ -463,7 +463,7 @@ class MainActivity : AppCompatActivity() {
                 sosImageIcon.setImageResource(R.drawable.sos_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SOS)
                 sosSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
             }
         }
 
@@ -535,7 +535,7 @@ class MainActivity : AppCompatActivity() {
                 flickerImageIcon.setImageResource(R.drawable.flicker_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
                 flickerSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
             }
         }
 
@@ -561,7 +561,7 @@ class MainActivity : AppCompatActivity() {
                 callImageIcon.setImageResource(R.drawable.call_no_permission)
                 incomingCallSwitch.isChecked = false
                 removeActivatedFeature(recyclerView, FEATURE.CALL)
-                triggerSnackbar(rootView, "To use the feature, manually provide Call rights to $applicationName")
+                triggerSnackbar(rootView, "To use the feature, manually provide Call rights to $applicationName.")
             }
         }
 
@@ -652,7 +652,7 @@ class MainActivity : AppCompatActivity() {
                 // user should be asked for permissions again
                 resetFeature(Token.SOUND)
                 soundImageIcon.setImageResource(R.drawable.sound_no_permission)
-                triggerSnackbar(rootView, "To use the feature, manually provide Microphone rights to $applicationName")
+                triggerSnackbar(rootView, "To use the feature, manually provide Microphone rights to $applicationName.")
             }
         }
 
@@ -723,7 +723,7 @@ class MainActivity : AppCompatActivity() {
                     else {
                         // we have to disable the btn now since rotation sensor is not available on the device
                         Log.i("MainActivity","Accelerometer not available")
-                        triggerSnackbar(rootView, "To use the feature, manually provide Audio rights to $applicationName")
+                        triggerSnackbar(rootView, "To use the feature, manually provide Audio rights to $applicationName.")
                         resetFeature(Token.TILT)
                         tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
                     }
@@ -736,7 +736,7 @@ class MainActivity : AppCompatActivity() {
                 // user should be asked for permissions again
                 resetFeature(Token.TILT)
                 tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
             }
         }
 
@@ -763,7 +763,7 @@ class MainActivity : AppCompatActivity() {
                 smsImageIcon.setImageResource(R.drawable.sms_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SMS)
                 incomingSMSSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide SMS rights to $applicationName")
+                triggerSnackbar(rootView, "To use the feature, manually provide SMS rights to $applicationName.")
             }
         }
 
@@ -773,7 +773,7 @@ class MainActivity : AppCompatActivity() {
             if (permissionsKeys["FLASHLIGHT"] == true) {
                 if (!isChecked) {
                     // User wants to disable the feature
-                    Log.i("MainActivity","outInNetworkSwitch is OFF")
+                    Log.i("MainActivity","outInNetworkSwitch is OFF (unregister $connectivityCallback)")
                     resetFeature(Token.NETWORK)
                 }
                 else {
@@ -790,36 +790,32 @@ class MainActivity : AppCompatActivity() {
                         registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                         networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
                         addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
-                        triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found", ACTION.INFO)
+                        triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found.", ACTION.INFO)
                     }
                     else {
-                        Log.i("MainActivity", "NETWORK is right now AVAILABLE")
                         connectivityCallback = object : ConnectivityManager.NetworkCallback() {
                             override fun onUnavailable () {
                                 super.onUnavailable()
-                                Log.i("MainActivity", "NETWORK is currently UNAVAILABLE")
+                                Log.i("MainActivity", "NETWORK is currently UNAVAILABLE (unregister $connectivityCallback)")
                                 isPhoneOutOfNetwork = true
-                                Log.i("MainActivity", "Unregister status CB $connectivityCallback")
                                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                                 registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                                 networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
-                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found", ACTION.INFO)
+                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found.", ACTION.INFO)
                             }
                             override fun onLost(network: Network) {
                                 super.onLost(network)
-                                Log.i("MainActivity", "NETWORK is currently LOST")
+                                Log.i("MainActivity", "NETWORK is currently LOST (unregister $connectivityCallback)")
                                 isPhoneOutOfNetwork = true
-                                Log.i("MainActivity", "Unregister status CB $connectivityCallback")
                                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                                 registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                                 networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
-                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found", ACTION.INFO)
+                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found.", ACTION.INFO)
                             }
                             override fun onAvailable(network: Network) {
                                 super.onAvailable(network)
-                                Log.i("MainActivity", "NETWORK is currently AVAILABLE")
+                                Log.i("MainActivity", "NETWORK is currently AVAILABLE (unregister $connectivityCallback)")
                                 isPhoneInNetwork = true
-                                Log.i("MainActivity", "Unregister status CB $connectivityCallback")
                                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                                 registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE)
                                 networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
@@ -839,7 +835,7 @@ class MainActivity : AppCompatActivity() {
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                 outInNetworkSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
             }
         }
 
@@ -904,7 +900,7 @@ class MainActivity : AppCompatActivity() {
                 batteryImageIcon.setImageResource(R.drawable.battery_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                 batterySwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
+                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -954,7 +950,7 @@ class MainActivity : AppCompatActivity() {
                     timerTimePicker.isEnabled = true
                     if (hourOfDayTimer == 0 && minuteTimer == 0) {
                         Log.i("MainActivity","Time error: set to past time")
-                        triggerSnackbar(rootView, "Have to select a time first, before enabling the feature")
+                        triggerSnackbar(rootView, "Have to select a time first, before enabling the feature.")
                         timerSwitch.isChecked = false
                     }
                     else {
@@ -1056,7 +1052,7 @@ class MainActivity : AppCompatActivity() {
                                                     Log.d("MainActivity", "Flickering ON while ascending to altitude of ${flickerFlashlightHz}m")
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
-                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached", ACTION.SUCCESS, Token.ALTITUDE)
+                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached.", ACTION.SUCCESS, Token.ALTITUDE)
                                                 }
                                             }
                                         }
@@ -1068,7 +1064,7 @@ class MainActivity : AppCompatActivity() {
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
-                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached", ACTION.SUCCESS, Token.ALTITUDE)
+                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached.", ACTION.SUCCESS, Token.ALTITUDE)
                                                 }
                                             }
                                         }
@@ -1094,7 +1090,7 @@ class MainActivity : AppCompatActivity() {
                     else {
                         // we have to disable the btn now since sensor is not available on the device
                         Log.i("MainActivity","Barometer not available")
-                        triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible")
+                        triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible.")
                         resetFeature(Token.ALTITUDE)
                         altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                     }
@@ -1106,7 +1102,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 Log.i("MainActivity", "request permission for ALTITUDE")
-                triggerSnackbar(rootView, "To use the feature, manually provide Location rights to $applicationName")
+                triggerSnackbar(rootView, "To use the feature, manually provide Location rights to $applicationName.")
                 removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                 tempText = "${altitudeThreshold}m"
@@ -1304,7 +1300,7 @@ class MainActivity : AppCompatActivity() {
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
                                 unregisterReceiver(batteryReceiver)
-                                triggerSnackbar(rootView, "Battery Power charged up to ${batteryThreshold}%", ACTION.SUCCESS, Token.BATTERY)
+                                triggerSnackbar(rootView, "Battery Power charged up to ${batteryThreshold}%.", ACTION.SUCCESS, Token.BATTERY)
                             }
                         }
                         else {
@@ -1317,7 +1313,7 @@ class MainActivity : AppCompatActivity() {
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
                                 unregisterReceiver(batteryReceiver)
-                                triggerSnackbar(rootView, "Battery Power discharged to ${batteryThreshold}%", ACTION.SUCCESS, Token.BATTERY)
+                                triggerSnackbar(rootView, "Battery Power discharged to ${batteryThreshold}%.", ACTION.SUCCESS, Token.BATTERY)
                             }
                         }
                     }
@@ -1339,16 +1335,16 @@ class MainActivity : AppCompatActivity() {
             val hours = if (calcTimeToFlickerInHours > 1) {"hours"} else {"hour"}
             if (calcTimeToFlickerInMinutes > 0) {
                 val minutes = if (calcTimeToFlickerInMinutes > 1) {"minutes"} else {"minute"}
-                triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours: $calcTimeToFlickerInMinutes $minutes", ACTION.INFO)
+                triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours: $calcTimeToFlickerInMinutes $minutes.", ACTION.INFO)
             } else {
-                triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours", ACTION.INFO)
+                triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInHours $hours.", ACTION.INFO)
             }
         }
         else if (calcTimeToFlickerInMinutes > 0) {
-            triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInMinutes minutes", ACTION.INFO)
+            triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInMinutes minutes.", ACTION.INFO)
         }
         else {
-            triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInSeconds seconds", ACTION.INFO)
+            triggerSnackbar(rootView, "Flashlight will flicker after $calcTimeToFlickerInSeconds seconds.", ACTION.INFO)
         }
     }
 
@@ -1529,8 +1525,11 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun removeActivatedFeature (recyclerView: RecyclerView, feature: FEATURE) {
-        itemList.removeIf { item -> item == feature.value }
-        recyclerView.adapter?.notifyDataSetChanged()
+        try {
+            itemList.removeIf { item -> item == feature.value }
+            recyclerView.adapter?.notifyDataSetChanged()
+        }
+        catch (_:java.lang.Exception) {}
     }
 
     private fun setSettingsIntent () {
@@ -1795,27 +1794,25 @@ class MainActivity : AppCompatActivity() {
                 connectivityCallback = object : ConnectivityManager.NetworkCallback() {
                     override fun onLost(network: Network) {
                         super.onLost(network)
-                        Log.i("MainActivity", "NETWORK from found to LOST")
-                        Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
+                        Log.d("MainActivity", "Flickering ON due to NETWORK LOST")
                         resetActivitiesAndFlicker(Token.NETWORK)
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
-                        triggerSnackbar(rootView, "Internet Connection is lost", ACTION.SUCCESS, Token.NETWORK)
+                        triggerSnackbar(rootView, "Internet Connection is lost.", ACTION.SUCCESS, Token.NETWORK)
                         loopHandlerNetwork.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
                     }
                     override fun onUnavailable() {
                         super.onUnavailable()
-                        Log.i("MainActivity", "NETWORK from available to UNAVAILABLE")
-                        Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
+                        Log.d("MainActivity", "Flickering ON due to NETWORK UNAVAILABLE")
                         resetActivitiesAndFlicker(Token.NETWORK)
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = true
                         isPhoneInNetwork = false
-                        triggerSnackbar(rootView, "Internet Connection is lost", ACTION.SUCCESS, Token.NETWORK)
+                        triggerSnackbar(rootView, "Internet Connection is lost.", ACTION.SUCCESS, Token.NETWORK)
                         loopHandlerNetwork.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
                     }}
-                Log.i("MainActivity", "Register CB for OUT_OF_SERVICE $connectivityCallback")
+                Log.i("MainActivity", "Register CB for OUT_OF_SERVICE ($connectivityCallback)")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
             }
             TypeOfEvent.IN_SERVICE -> {
@@ -1823,16 +1820,15 @@ class MainActivity : AppCompatActivity() {
                 connectivityCallback = object : ConnectivityManager.NetworkCallback() {
                     override fun onAvailable(network: Network) {
                         super.onAvailable(network)
-                        Log.i("MainActivity", "NETWORK from unavailable to AVAILABLE")
-                        Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
+                        Log.d("MainActivity", "Flickering ON due to NETWORK AVAILABLE")
                         resetActivitiesAndFlicker(Token.NETWORK)
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = false
                         isPhoneInNetwork = true
-                        triggerSnackbar(rootView, "Internet Connection is found", ACTION.SUCCESS, Token.NETWORK)
+                        triggerSnackbar(rootView, "Internet Connection is found.", ACTION.SUCCESS, Token.NETWORK)
                         loopHandlerNetwork.postDelayed({ resetFeature(Token.NETWORK) }, (maxFlickerDuration30))
                     }}
-                Log.i("MainActivity", "Register CB for IN_SERVICE $connectivityCallback")
+                Log.i("MainActivity", "Register CB for IN_SERVICE ($connectivityCallback)")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
             }
             TypeOfEvent.PHONE_TILT -> {
@@ -1869,11 +1865,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun resetActivitiesAndFlicker (token: Token) {
         resetAllActivities(token)
-        Log.d("MainActivity", "Flickering ON for $token")
+        Log.i("MainActivity", "Flickering ON for $token")
         startFlickering(token)
         when (token) {
             Token.TIMER -> {
-                triggerSnackbar(rootView, "Time ${timerSwitchText.text} is reached", ACTION.INFO, Token.TIMER)
+                triggerSnackbar(rootView, "Time ${timerSwitchText.text} is reached.", ACTION.SUCCESS, Token.TIMER)
             }
             else -> {}
         }
@@ -2059,7 +2055,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun stopSOS () {
-        Log.i("MainActivity", "STOP SOS")
         loopHandlerFlickering.removeCallbacksAndMessages(null)
         atomicFlashLightOff()
     }
