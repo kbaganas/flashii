@@ -313,7 +313,7 @@
                                 android:fontFamily="@font/cabin_regular"
                                 android:gravity="center_horizontal"
                                 android:textColor="@color/greyNoteDarker2"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 tools:ignore="VisualLintLongText" />
                         </LinearLayout>
 

@@ -258,6 +258,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private var timerForFlickeringSet : Boolean = false
     private var batteryReceiverRegistered : Boolean = false
+    private var rotationSensorRegistered : Boolean = false
 
     // Buttons & Ids
     private var flashlightId : String = "0"
@@ -550,7 +551,7 @@ class MainActivity : AppCompatActivity() {
                     callImageIcon.setImageResource(R.drawable.call_on2)
                     addActivatedFeature(recyclerView, FEATURE.CALL)
                 } else {
-                    Log.i("MainActivity", "incomingCallSwitch is OFF")
+                    Log.i("MainActivity", "incomingCallSwitch is OFF (unregister $incomingCallReceiver)")
                     disableIncomingCallFlickering()
                     callImageIcon.setImageResource(R.drawable.call_off2)
                     removeActivatedFeature(recyclerView, FEATURE.CALL)
@@ -691,16 +692,19 @@ class MainActivity : AppCompatActivity() {
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 try {
-                    Log.i("MainActivity","unregisterListener sensorRotationEventListener $sensorRotationEventListener")
-                    sensorManager.unregisterListener(sensorRotationEventListener)
+                    if (rotationSensorRegistered) {
+                        sensorManager.unregisterListener(sensorRotationEventListener)
+                        rotationSensorRegistered = false
+                        Log.i("MainActivity","unregisterListener sensorRotationEventListener $sensorRotationEventListener")
+                    }
                 }
                 catch (_: Exception) {}
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                Log.i("MainActivity","Angle onStopTrackingTouch, $sensitivityAngle")
-                if (accelerometerSensor != null && incomingTiltSwitch.isChecked) {
+                if (accelerometerSensor != null && incomingTiltSwitch.isChecked and !rotationSensorRegistered) {
                     registerRotationSensor(accelerometerSensor)
+                    rotationSensorRegistered = true
                 }
             }
         })
@@ -713,6 +717,7 @@ class MainActivity : AppCompatActivity() {
                         Log.i("MainActivity","incomingTiltSwitch is ON")
                         resetAllActivities(Token.TILT)
                         registerRotationSensor(accelerometerSensor)
+                        rotationSensorRegistered = true
                         isPhoneTilt = true
                         tempText = "Angle ${sensitivityAngle}\u00B0"
                         setTextAndColor(tiltSwitchText, tempText, R.color.blueText)
@@ -723,27 +728,18 @@ class MainActivity : AppCompatActivity() {
                         // we have to disable the btn now since rotation sensor is not available on the device
                         Log.i("MainActivity","Accelerometer not available")
                         triggerSnackbar(rootView, "To use the feature, manually provide Audio rights to $applicationName")
-                        tempText = "Angle ${sensitivityAngle}\u00B0"
-                        setTextAndColor(tiltSwitchText, tempText, R.color.greyNoteDarker2)
-                        tiltImageIcon.setImageResource(R.drawable.tilt_off)
-                        removeActivatedFeature(recyclerView, FEATURE.TILT)
+                        resetFeature(Token.TILT)
+                        tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
                     }
                 } else {
                     Log.i("MainActivity","incomingTiltSwitch is OFF ($sensorRotationEventListener)")
-                    turnOffFlashlight()
-                    sensorManager.unregisterListener(sensorRotationEventListener)
-                    isPhoneTilt = false
-                    tempText = "Angle ${sensitivityAngle}\u00B0"
-                    setTextAndColor(tiltSwitchText, tempText, R.color.greyNoteDarker2)
-                    tiltImageIcon.setImageResource(R.drawable.tilt_off)
-                    removeActivatedFeature(recyclerView, FEATURE.TILT)
+                    resetFeature(Token.TILT)
                 }
             }
             else {
                 // user should be asked for permissions again
+                resetFeature(Token.TILT)
                 tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
-                removeActivatedFeature(recyclerView, FEATURE.TILT)
-                incomingTiltSwitch.isChecked = false
                 triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName")
             }
         }
@@ -1269,8 +1265,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-                // Handle accuracy changes if needed
-                Log.i("MainActivity","onAccuracyChanged (accuracy = $accuracy)")
+                // Do nothing
             }
         }
         Log.i("MainActivity","sensorRotationEventListener initialized ($sensorRotationEventListener)")
@@ -1495,14 +1490,14 @@ class MainActivity : AppCompatActivity() {
                 try {
                     sensorManager.unregisterListener(sensorRotationEventListener)
                 }
-                catch (e : Exception) {
-                    // We are OK, receiver is already unregistered
-                }
+                catch (_: Exception) { }
+                incomingTiltSwitch.isChecked = false
                 isPhoneTilt = false
-                tiltSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
+                rotationSensorRegistered = false
+                tempText = "Angle ${sensitivityAngle}\u00B0"
+                setTextAndColor(tiltSwitchText, tempText, R.color.greyNoteDarker2)
                 tiltImageIcon.setImageResource(R.drawable.tilt_off)
                 removeActivatedFeature(recyclerView, FEATURE.TILT)
-                incomingTiltSwitch.isChecked = false
             }
             Token.FLICKER -> {
                 stopFlickering(Token.FLICKER)
@@ -1514,6 +1509,18 @@ class MainActivity : AppCompatActivity() {
             Token.FLASHLIGHT -> {
                 turnOffFlashlight(true)
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
+            }
+            Token.INCOMING_SMS -> {
+                disableIncomingSMSFlickering()
+                smsImageIcon.setImageResource(R.drawable.sms_off)
+                removeActivatedFeature(recyclerView, FEATURE.SMS)
+                incomingSMSSwitch.isChecked = false
+            }
+            Token.INCOMING_CALL -> {
+                disableIncomingCallFlickering()
+                callImageIcon.setImageResource(R.drawable.call_off2)
+                removeActivatedFeature(recyclerView, FEATURE.CALL)
+                incomingCallSwitch.isChecked = false
             }
             else -> {}
         }
@@ -1761,22 +1768,24 @@ class MainActivity : AppCompatActivity() {
                 isIncomingCall = true
                 incomingCallReceiver = object : BroadcastReceiver() {
                     override fun onReceive(context: Context, intent: Intent) {
-                        Log.i("MainActivity", "EVENT INCOMING")
                         if (intent.action == TelephonyManager.ACTION_PHONE_STATE_CHANGED) {
-                            Log.i("MainActivity", "ACTION_PHONE_STATE_CHANGED EVENT")
+                            Log.i("MainActivity", "ACTION_PHONE_STATE_CHANGED EVENT ($incomingCallReceiver)")
                             when (intent.getStringExtra(TelephonyManager.EXTRA_STATE)) {
                                 TelephonyManager.EXTRA_STATE_RINGING -> {
                                     Log.d("MainActivity", "EXTRA_STATE_RINGING - Flickering ON with ${flickerFlashlightHz}Hz")
                                     resetActivitiesAndFlicker(Token.INCOMING_CALL)
+                                    stopFlickeringAfterTimeout(maxFlickerDurationIncomingCall.toLong(), Token.INCOMING_CALL)
+                                    // we do not intend at this point to reset the Feature (business decision)
                                 }
                                 TelephonyManager.EXTRA_STATE_IDLE -> {
-                                    Log.i("MainActivity", "IDLE - Phone stops flickering")
+                                    Log.i("MainActivity", "Phone IDLE - stop flickering")
                                     stopFlickering(Token.INCOMING_CALL)
+                                    // we do not intend at this point to reset the Feature (business decision)
                                 }
                                 TelephonyManager.EXTRA_STATE_OFFHOOK -> {
-                                    Log.i("MainActivity", "OFF-HOOK - Phone stops flickering; feature is disabled")
+                                    Log.i("MainActivity", "Phone OFF-HOOK - stop flickering")
                                     stopFlickering(Token.INCOMING_CALL)
-                                    setBtnImage(callImageIcon, R.drawable.call_off2)
+                                    // we do not intend at this point to reset the Feature (business decision)
                                 }
                             }
                         }
@@ -1784,7 +1793,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
                 registerReceiver(incomingCallReceiver, intentFilter)
-                //setMessageText("Flashlight will be flickering\non incoming phone Calls", hideMessageTextAfter35, Token.INCOMING_CALL)
+                Log.i("MainActivity", "ACTION_PHONE_STATE_CHANGED registered ($incomingCallReceiver)")
             }
             TypeOfEvent.OUT_OF_SERVICE -> {
                 val networkRequest = NetworkRequest.Builder().build()
@@ -1832,21 +1841,20 @@ class MainActivity : AppCompatActivity() {
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
             }
             TypeOfEvent.PHONE_TILT -> {
-
+                // Do nothing
             }
             TypeOfEvent.AUDIO -> {
-
+                // Do nothing
             }
             TypeOfEvent.SMS -> {
                 isIncomingSMS = true
                 incomingSMSReceiver = object : BroadcastReceiver() {
                     override fun onReceive(context: Context, intent: Intent) {
-                        Log.i("MainActivity", "EVENT INCOMING")
                         if (intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
-                            Log.i("MainActivity", "SMS_RECEIVED_ACTION EVENT")
-                            Log.d("MainActivity", "Flickering ON with ${flickerFlashlightHz}Hz")
+                            Log.i("MainActivity", "SMS_RECEIVED_ACTION EVENT ($incomingSMSReceiver)")
                             resetActivitiesAndFlicker(Token.INCOMING_SMS)
                             stopFlickeringAfterTimeout(maxFlickerDurationIncomingSMS.toLong(), Token.INCOMING_SMS)
+                            // we do not intend at this point to reset the Feature (business decision)
                         }
                     }
                 }
