@@ -218,6 +218,7 @@ class MainActivity : AppCompatActivity() {
     private var loopHandlerBattery : Handler = Handler(Looper.getMainLooper())
     private var loopHandlerNetwork : Handler = Handler(Looper.getMainLooper())
     private var loopHandlerFlickering : Handler = Handler(Looper.getMainLooper())
+    private var loopHandlerAltitude : Handler = Handler(Looper.getMainLooper())
     private var loopHandler : Handler = Handler(Looper.getMainLooper())
 
     // Handlers, Threads, Managers, Receivers, Detectors
@@ -259,6 +260,7 @@ class MainActivity : AppCompatActivity() {
     private var timerForFlickeringSet : Boolean = false
     private var batteryReceiverRegistered : Boolean = false
     private var rotationSensorRegistered : Boolean = false
+    private var altitudeListenerRegistered : Boolean = false
 
     // Buttons & Ids
     private var flashlightId : String = "0"
@@ -390,7 +392,6 @@ class MainActivity : AppCompatActivity() {
             retrieveStoredSettings()
             Log.i("MainActivity", "Retrieved stored settings are: $flickerFlashlightHz (current Hz), $maxFlickerHz (max Hz), $sensitivitySoundThreshold (sound), $sensitivityAngle (tilt degrees), $maxFlickerDurationIncomingCall (call),$maxFlickerDurationIncomingSMS (SMS),$maxFlickerDurationBattery (battery),$maxFlickerDurationAltitude (altitude)")
         }
-
 
         // Permissions handling
         checkPermissions(ACTION.CREATE)
@@ -705,7 +706,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        // TODO: 45 degrees don't work well
         incomingTiltSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (permissionsKeys["FLASHLIGHT"] == true) {
                 if (isChecked) {
@@ -841,8 +841,6 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // battery handler
-
-        // Get references to views
         val batteryExpandArrow: ImageButton = findViewById(R.id.batteryExpandArrow)
         val batteryHiddenView: LinearLayout = findViewById(R.id.batteryHiddenView)
         tempText = "${batteryThreshold}%"
@@ -905,15 +903,13 @@ class MainActivity : AppCompatActivity() {
         }
         ///////////////////////////////////////////////////////////////////////////////////////
         // timer handler
-
-        // Get references to views
         val timerExpandArrow: ImageButton = findViewById(R.id.timerExpandArrow)
         val timerHiddenView: LinearLayout = findViewById(R.id.timerHiddenView)
         val timerTimePicker = findViewById<TimePicker>(R.id.timePicker1)
         var selectedTime = ""
         var hourOfDayTimer = 0
         var minuteTimer = 0
-//        timerTimePicker.setIs24HourView(true)
+        // timerTimePicker.setIs24HourView(true)
 
         tempText = "--:--"
         setTextAndColor(timerSwitchText, tempText, R.color.greyNoteDarker2)
@@ -992,20 +988,20 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // altitude handler
-
         val altitudeExpandArrow: ImageButton = findViewById(R.id.altitudeExpandArrow)
         val altitudeHiddenView: LinearLayout = findViewById(R.id.altitudeHiddenView)
         tempText = "${altitudeThreshold}m"
         setTextAndColor(altitudeSwitchText, tempText, R.color.greyNoteDarker2)
 
+        // Expand or hide the main content
         altitudeExpandArrow.setOnClickListener {
-            // Toggle the visibility of the content view
             if (altitudeHiddenView.visibility == View.VISIBLE) {
                 altitudeHiddenView.visibility = View.GONE
                 altitudeExpandArrow.setImageResource(R.drawable.arrow_down)
             } else {
                 altitudeHiddenView.visibility = View.VISIBLE
                 altitudeExpandArrow.setImageResource(R.drawable.arrow_up)
+                initAndRegisterAltitudeEventListener()
             }
         }
 
@@ -1015,8 +1011,6 @@ class MainActivity : AppCompatActivity() {
                 altitudeThreshold = minAltitude + ((maxAltitude - minAltitude).toFloat()/1000 * progress).toInt()
                 tempText = "${altitudeThreshold}m"
                 altitudeSwitchText.text = tempText
-                tempText = "(current Altitude Height: ${initAltitudeLevel}m)"
-                // seekBarAltitudeText.text = tempText
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -1024,76 +1018,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                // Do nothing
+                initAndRegisterAltitudeEventListener()
             }
         })
 
         altitudeSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (permissionsKeys["ALTITUDE"] == true) {
                 if (isChecked) {
-                    initSensorManager()
-                    val altitudeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
-                    if (altitudeSensor != null) {
-                        sensorPressureEventListener = object : SensorEventListener {
-                            override fun onSensorChanged(event: SensorEvent) {
-                                if (event.sensor?.type == Sensor.TYPE_PRESSURE) {
-                                    val pressureValue = event.values[0] // Get the pressure value in hPa
-                                    val altitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressureValue) // altitude in meters
-                                    if (altitude > minAltitude) {
-                                        if (initAltitudeLevel == minAltitude) {
-                                            Log.d("MainActivity", "initAltitudeLevel set to ${initAltitudeLevel}m")
-                                            initAltitudeLevel = altitude.toInt()
-                                        }
-
-                                        if (altitudeThreshold > initAltitudeLevel) {
-                                            // In case User is ascending in height
-                                            if (altitude > altitudeThreshold) {
-                                                if (!isFlickering) {
-                                                    Log.i("MainActivity", "Flickering ON while ascending to altitude of ${flickerFlashlightHz}m")
-                                                    resetActivitiesAndFlicker(Token.ALTITUDE)
-                                                    sensorManager.unregisterListener(sensorPressureEventListener)
-                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached.", ACTION.SUCCESS, Token.ALTITUDE)
-                                                }
-                                            }
-                                        }
-                                        else {
-                                            // In case User is descending in height
-                                            if (altitude < altitudeThreshold) {
-                                                if (!isFlickering) {
-                                                    Log.i("MainActivity", "Flickering ON while descending to altitude of ${flickerFlashlightHz}m")
-                                                    resetActivitiesAndFlicker(Token.ALTITUDE)
-                                                    stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
-                                                    sensorManager.unregisterListener(sensorPressureEventListener)
-                                                    triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached.", ACTION.SUCCESS, Token.ALTITUDE)
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else {
-//                                        tempText = "(current Altitude Height: ${altitude.toInt()}m)"
-//                                        seekBarAltitudeText.text = tempText
-                                    }
-                                }
-                            }
-                            override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-                                // Handle accuracy changes if needed
-                            }
-                        }
-                        Log.i("MainActivity","altitudeSwitch is ON ($sensorPressureEventListener)")
-                        isAltitudeOn = true
-                        sensorManager.registerListener(sensorPressureEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
-                        addActivatedFeature(recyclerView, FEATURE.ALTITUDE)
-                        altitudeImageIcon.setImageResource(R.drawable.altitude_on)
-                        tempText = "${altitudeThreshold}m"
-                        setTextAndColor(altitudeSwitchText, tempText, R.color.blueText)
-                    }
-                    else {
-                        // we have to disable the btn now since sensor is not available on the device
-                        Log.i("MainActivity","Barometer not available")
-                        triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible.")
-                        resetFeature(Token.ALTITUDE)
-                        altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
-                    }
+                    initAndRegisterAltitudeEventListener()
+                    Log.i("MainActivity","altitudeSwitch is ON ($sensorPressureEventListener)")
                 } else {
                     Log.i("MainActivity","altitudeSwitch is OFF ($sensorPressureEventListener)")
                     resetFeature(Token.ALTITUDE)
@@ -1101,13 +1034,9 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 // user should be asked for permissions again
-                Log.i("MainActivity", "request permission for ALTITUDE")
                 triggerSnackbar(rootView, "To use the feature, manually provide Location rights to $applicationName.")
-                removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
+                resetFeature(Token.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
-                tempText = "${altitudeThreshold}m"
-                setTextAndColor(altitudeSwitchText, tempText, R.color.greyNoteDarker2)
-                altitudeSwitch.isChecked = false
             }
         }
 
@@ -1191,14 +1120,97 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SupportActivity::class.java)
             startActivity(intent)
         }
-
         ////////////////////////////////////////////////////////////////////////////////////////
 
     }
 
+
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
+
+    private fun initAndRegisterAltitudeEventListener() {
+        if (::sensorPressureEventListener.isInitialized && altitudeListenerRegistered) {
+            // already initialized; do nothing
+        }
+        else {
+            initSensorManager()
+            val altitudeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
+            if (altitudeSensor != null) {
+                sensorPressureEventListener = object : SensorEventListener {
+                    override fun onSensorChanged(event: SensorEvent) {
+                        if (event.sensor?.type == Sensor.TYPE_PRESSURE) {
+                            val pressureValue = event.values[0] // Get the pressure value in hPa
+                            val altitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressureValue) // altitude in meters
+
+                            if (altitude > minAltitude) {
+                                if (initAltitudeLevel == minAltitude) {
+                                    initAltitudeLevel = altitude.toInt()
+                                    tempText = "${initAltitudeLevel}m"
+                                    altitudeSwitchText.text = tempText
+                                    altitudeBar.progress = ((altitude - minAltitude) * 1000 / (maxAltitude - minAltitude)).toInt()
+                                    Log.d("MainActivity", "initAltitudeLevel set to ${initAltitudeLevel}m")
+                                }
+
+                                if (altitudeSwitch.isChecked && altitudeListenerRegistered) {
+                                    if (altitudeThreshold > initAltitudeLevel) {
+                                        // In case User is ascending in height
+                                        if (altitude > altitudeThreshold) {
+                                            if (!isFlickering) {
+                                                Log.i("MainActivity", "Flickering ON while ascending to altitude of ${flickerFlashlightHz}m")
+                                                resetActivitiesAndFlicker(Token.ALTITUDE)
+                                                stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
+                                                loopHandlerAltitude.postDelayed({ resetFeature(Token.ALTITUDE)}, maxFlickerDurationAltitude.toLong())
+                                                sensorManager.unregisterListener(sensorPressureEventListener)
+                                                triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached.", ACTION.SUCCESS, Token.ALTITUDE)
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        // In case User is descending in height
+                                        if (altitude < altitudeThreshold) {
+                                            if (!isFlickering) {
+                                                Log.i("MainActivity", "Flickering ON while descending to altitude of ${flickerFlashlightHz}m")
+                                                resetActivitiesAndFlicker(Token.ALTITUDE)
+                                                stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
+                                                loopHandlerAltitude.postDelayed({ resetFeature(Token.ALTITUDE)}, maxFlickerDurationAltitude.toLong())
+                                                sensorManager.unregisterListener(sensorPressureEventListener)
+                                                triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached.", ACTION.SUCCESS, Token.ALTITUDE)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+                        // Do nothing
+                    }
+                }
+                if (!altitudeListenerRegistered) {
+                    Log.i("MainActivity","registered sensorPressureEventListener $sensorPressureEventListener")
+                    altitudeListenerRegistered = true
+                    sensorManager.registerListener(sensorPressureEventListener, altitudeSensor, SensorManager.SENSOR_DELAY_NORMAL)
+                }
+
+                if (altitudeSwitch.isChecked) {
+                    Log.i("MainActivity","altitudeSwitch is ON ($sensorPressureEventListener)")
+                    isAltitudeOn = true
+                    addActivatedFeature(recyclerView, FEATURE.ALTITUDE)
+                    altitudeImageIcon.setImageResource(R.drawable.altitude_on)
+                    tempText = "${altitudeThreshold}m"
+                    setTextAndColor(altitudeSwitchText, tempText, R.color.blueText)
+                }
+            }
+            else {
+                // we have to disable the btn now since sensor is not available on the device
+                Log.i("MainActivity","Barometer not available for Altitude feature")
+                triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible.")
+                resetFeature(Token.ALTITUDE)
+                altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
+            }
+        }
+    }
 
     private fun calcSensitivityLevel (sensitivitySoundThreshold : Int) : String {
         val tempProgress = 9 * (defaultSoundSenseLevel - sensitivitySoundThreshold) / (defaultSoundSenseLevel - minSoundSenseLevel)
@@ -1432,9 +1444,10 @@ class MainActivity : AppCompatActivity() {
             }
             Token.ALTITUDE -> {
                 isAltitudeOn = false
-                //altitudeThreshold = minAltitude
                 try {
+                    altitudeListenerRegistered = false
                     sensorManager.unregisterListener(sensorPressureEventListener)
+                    loopHandlerAltitude.removeCallbacksAndMessages(null)
                 }
                 catch (e : java.lang.Exception) {
                     // Do nothing
