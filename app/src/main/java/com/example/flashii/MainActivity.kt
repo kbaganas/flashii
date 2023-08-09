@@ -506,7 +506,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 if (isFlickeringOnDemand) {
-                    Log.d("MainActivity", "Flickering ON on demand (${flickerFlashlightHz}Hz)")
+                    Log.i("MainActivity", "Flickering ON on demand (${flickerFlashlightHz}Hz)")
                     startFlickering(Token.FLICKER)
                 }
             }
@@ -891,7 +891,7 @@ class MainActivity : AppCompatActivity() {
                     setTextAndColor(batterySwitchText, tempText, R.color.blueText)
                 }
                 else {
-                    Log.i("MainActivity","batterySwitch is OFF")
+                    Log.i("MainActivity","batterySwitch is OFF (unregister $batteryReceiver")
                     resetFeature(Token.BATTERY)
                 }
             }
@@ -1049,7 +1049,7 @@ class MainActivity : AppCompatActivity() {
                                             // In case User is ascending in height
                                             if (altitude > altitudeThreshold) {
                                                 if (!isFlickering) {
-                                                    Log.d("MainActivity", "Flickering ON while ascending to altitude of ${flickerFlashlightHz}m")
+                                                    Log.i("MainActivity", "Flickering ON while ascending to altitude of ${flickerFlashlightHz}m")
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
                                                     triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached.", ACTION.SUCCESS, Token.ALTITUDE)
@@ -1060,7 +1060,7 @@ class MainActivity : AppCompatActivity() {
                                             // In case User is descending in height
                                             if (altitude < altitudeThreshold) {
                                                 if (!isFlickering) {
-                                                    Log.d("MainActivity", "Flickering ON while descending to altitude of ${flickerFlashlightHz}m")
+                                                    Log.i("MainActivity", "Flickering ON while descending to altitude of ${flickerFlashlightHz}m")
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
@@ -1264,7 +1264,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initAndRegisterBatteryReceiver() {
-        if (::batteryReceiver.isInitialized) {
+        if (::batteryReceiver.isInitialized && batteryReceiverRegistered) {
             // already initialized; do nothing
             Log.i("MainActivity","batteryReceiver do nothing")
         }
@@ -1319,8 +1319,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-        if (!batteryReceiverRegistered) {
             registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
             Log.i("MainActivity","batteryReceiver initialized ($batteryReceiver)")
         }
@@ -1766,7 +1764,7 @@ class MainActivity : AppCompatActivity() {
                             Log.i("MainActivity", "ACTION_PHONE_STATE_CHANGED EVENT ($incomingCallReceiver)")
                             when (intent.getStringExtra(TelephonyManager.EXTRA_STATE)) {
                                 TelephonyManager.EXTRA_STATE_RINGING -> {
-                                    Log.d("MainActivity", "EXTRA_STATE_RINGING - Flickering ON with ${flickerFlashlightHz}Hz")
+                                    Log.i("MainActivity", "EXTRA_STATE_RINGING - Flickering ON")
                                     resetActivitiesAndFlicker(Token.INCOMING_CALL)
                                     stopFlickeringAfterTimeout(maxFlickerDurationIncomingCall.toLong(), Token.INCOMING_CALL)
                                     // we do not intend at this point to reset the Feature (business decision)
@@ -1794,7 +1792,7 @@ class MainActivity : AppCompatActivity() {
                 connectivityCallback = object : ConnectivityManager.NetworkCallback() {
                     override fun onLost(network: Network) {
                         super.onLost(network)
-                        Log.d("MainActivity", "Flickering ON due to NETWORK LOST")
+                        Log.i("MainActivity", "Flickering ON due to NETWORK LOST")
                         resetActivitiesAndFlicker(Token.NETWORK)
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = true
@@ -1804,7 +1802,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     override fun onUnavailable() {
                         super.onUnavailable()
-                        Log.d("MainActivity", "Flickering ON due to NETWORK UNAVAILABLE")
+                        Log.i("MainActivity", "Flickering ON due to NETWORK UNAVAILABLE")
                         resetActivitiesAndFlicker(Token.NETWORK)
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = true
@@ -1820,7 +1818,7 @@ class MainActivity : AppCompatActivity() {
                 connectivityCallback = object : ConnectivityManager.NetworkCallback() {
                     override fun onAvailable(network: Network) {
                         super.onAvailable(network)
-                        Log.d("MainActivity", "Flickering ON due to NETWORK AVAILABLE")
+                        Log.i("MainActivity", "Flickering ON due to NETWORK AVAILABLE")
                         resetActivitiesAndFlicker(Token.NETWORK)
                         stopFlickeringAfterTimeout(maxFlickerDuration30, Token.NETWORK)
                         isPhoneOutOfNetwork = false
@@ -1920,7 +1918,7 @@ class MainActivity : AppCompatActivity() {
             else -> {}
         }
         if (isFlickering) {
-            Log.d("MainActivity", "Flickering OFF")
+            Log.i("MainActivity", "Flickering OFF for $token")
             isFlickering = false
             loopHandlerFlickering.removeCallbacksAndMessages(null)
             atomicFlashLightOff()
@@ -1955,7 +1953,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun stopFlickeringAfterTimeout (timeout : Long, token: Token) {
-        Log.d("MainActivity", "Flickering TIMEOUT set after ${timeout / 1000} seconds")
+        Log.i("MainActivity", "Flickering TIMEOUT set after ${timeout / 1000} seconds")
         loopHandlerFlickering.postDelayed({ stopFlickering(token) }, timeout)
     }
 
@@ -1975,7 +1973,7 @@ class MainActivity : AppCompatActivity() {
                 if (setFlashlightBtn) {
                     setBtnImage(flashlightImageIcon, R.drawable.flashlight_on6)
                 }
-                Log.d("MainActivity", "FlashLight ON")
+                Log.i("MainActivity", "FlashLight ON")
             } catch (e: CameraAccessException) {
                 Log.d("MainActivity", "FlashLight ON - ERROR: $e")
             }
@@ -1990,7 +1988,7 @@ class MainActivity : AppCompatActivity() {
                 if (resetFlashlightBtn) {
                    setBtnImage(flashlightImageIcon, R.drawable.flashlight_off4)
                 }
-                Log.d("MainActivity", "FlashLight OFF")
+                Log.i("MainActivity", "FlashLight OFF")
             } catch (e: CameraAccessException) {
                 Log.d("MainActivity", "FlashLight OFF - ERROR: $e")
             }
@@ -2016,7 +2014,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        Log.d("MainActivity", "setFlashLightAndCameraIds - flashlightId = $flashlightId")
+        //Log.d("MainActivity", "setFlashLightAndCameraIds - flashlightId = $flashlightId")
     }
 
 
