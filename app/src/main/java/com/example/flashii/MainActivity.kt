@@ -605,17 +605,15 @@ class MainActivity : AppCompatActivity() {
         })
 
         incomingSoundSwitch.setOnCheckedChangeListener {_, isChecked ->
-            Log.i("MainActivity","isAudioIncoming CLICKED")
             if (permissionsKeys["AUDIO"] == true) {
                 val sampleRate = 44100
                 val bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
 
                 if (!isChecked) {
-                    Log.i("MainActivity","incomingSoundSwitch is OFF")
+                    Log.i("MainActivity","incomingSoundSwitch is OFF ($audioRecordHandler, $recordingThread)")
                     resetFeature(Token.SOUND)
                 }
                 else {
-                    Log.i("MainActivity","incomingSoundSwitch is ON")
                     resetAllActivities(Token.SOUND)
                     isAudioIncoming = true
                     audioRecordHandler = AudioRecord(
@@ -648,14 +646,13 @@ class MainActivity : AppCompatActivity() {
                     addActivatedFeature(recyclerView, FEATURE.AUDIO)
                     soundImageIcon.setImageResource(R.drawable.sound_on)
                     soundSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
+                    Log.i("MainActivity","incomingSoundSwitch is ON ($audioRecordHandler, $recordingThread)")
                 }
             }
             else {
                 // user should be asked for permissions again
-                removeActivatedFeature(recyclerView, FEATURE.AUDIO)
+                resetFeature(Token.SOUND)
                 soundImageIcon.setImageResource(R.drawable.sound_no_permission)
-                soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
-                incomingSoundSwitch.isChecked = false
                 triggerSnackbar(rootView, "To use the feature, manually provide Microphone rights to $applicationName")
             }
         }
