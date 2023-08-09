@@ -506,6 +506,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 if (isFlickeringOnDemand) {
+                    Log.d("MainActivity", "Flickering ON on demand (${flickerFlashlightHz}Hz)")
                     startFlickering(Token.FLICKER)
                 }
             }
@@ -515,7 +516,6 @@ class MainActivity : AppCompatActivity() {
         flickerSwitch.setOnCheckedChangeListener {_, isChecked ->
             if (permissionsKeys["FLASHLIGHT"] == true) {
                 if (isChecked) {
-                    Log.i("MainActivity","flickerSwitch is ON with ${flickerFlashlightHz}Hz")
                     resetActivitiesAndFlicker(Token.FLICKER)
                     tempText = "$flickerFlashlightHz Hz"
                     setTextAndColor(flickerSwitchText, tempText, R.color.blueText)
@@ -523,7 +523,6 @@ class MainActivity : AppCompatActivity() {
                     addActivatedFeature(recyclerView, FEATURE.FLICKERING)
                 }
                 else {
-                    Log.i("MainActivity","flickerSwitch is OFF")
                     stopFlickering(Token.FLICKER)
                     tempText = "$flickerFlashlightHz Hz"
                     setTextAndColor(flickerSwitchText, tempText, R.color.greyNoteDarker2)
@@ -965,24 +964,23 @@ class MainActivity : AppCompatActivity() {
                             timerSwitch.isChecked = false
                         }
                         else {
-                            Log.i("MainActivity","timerSwitch is ON")
                             isTimerOn = true
                             timerImageIcon.setImageResource(R.drawable.timer_on)
                             timerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
                             addActivatedFeature(recyclerView, FEATURE.TIMER)
                             timerForFlickeringSet = true
-                            Log.i("MainActivity", "TIME flickering at $selectedTime")
                             loopHandlerTimer.removeCallbacksAndMessages(null)
                             loopHandlerTimer.postDelayed({resetActivitiesAndFlicker(Token.TIMER)}, calcTimeToFlickerInMillis)
                             loopHandlerTimer.postDelayed({resetFeature(Token.TIMER)}, calcTimeToFlickerInMillis + maxFlickerDuration30)
                             // user can no longer interact with the timepicker
                             timerTimePicker.isEnabled = false
                             snackBarTimeSelected(calcTimeToFlickerInMillis)
+                            Log.i("MainActivity", "TIME ON at $selectedTime ($loopHandlerTimer)")
                         }
                     }
                 }
                 else {
-                    Log.i("MainActivity","timerSwitch is OFF")
+                    Log.i("MainActivity", "TIME OFF ($loopHandlerTimer)")
                     resetFeature(Token.TIMER)
                     timerTimePicker.isEnabled = true
                 }
@@ -1055,7 +1053,7 @@ class MainActivity : AppCompatActivity() {
                                             // In case User is ascending in height
                                             if (altitude > altitudeThreshold) {
                                                 if (!isFlickering) {
-                                                    Log.d("MainActivity", "Flickering ON while ascending \nto altitude of ${flickerFlashlightHz}m")
+                                                    Log.d("MainActivity", "Flickering ON while ascending to altitude of ${flickerFlashlightHz}m")
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
                                                     triggerSnackbar(rootView, "Altitude Height ${altitudeThreshold}m has been reached", ACTION.SUCCESS, Token.ALTITUDE)
@@ -1066,7 +1064,7 @@ class MainActivity : AppCompatActivity() {
                                             // In case User is descending in height
                                             if (altitude < altitudeThreshold) {
                                                 if (!isFlickering) {
-                                                    Log.d("MainActivity", "Flickering ON while descending \nto altitude of ${flickerFlashlightHz}m")
+                                                    Log.d("MainActivity", "Flickering ON while descending to altitude of ${flickerFlashlightHz}m")
                                                     resetActivitiesAndFlicker(Token.ALTITUDE)
                                                     stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
                                                     sensorManager.unregisterListener(sensorPressureEventListener)
@@ -1871,6 +1869,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun resetActivitiesAndFlicker (token: Token) {
         resetAllActivities(token)
+        Log.d("MainActivity", "Flickering ON for $token")
         startFlickering(token)
         when (token) {
             Token.TIMER -> {
@@ -1933,6 +1932,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startFlickering(token: Token) {
+        var periodOfFlashLightInMilliseconds =  1000L // flicker with 1Hz as default
         when (token) {
             Token.TIMER -> {
                 flickeringDueToTimer = true
@@ -1948,11 +1948,11 @@ class MainActivity : AppCompatActivity() {
             }
             Token.FLICKER -> {
                 isFlickeringOnDemand = true
+                periodOfFlashLightInMilliseconds =  1000 / flickerFlashlightHz
             }
             else -> {}
         }
         isFlickering = true
-        val periodOfFlashLightInMilliseconds =  1000 / flickerFlashlightHz
         atomicFlashLightOn()
         loopHandlerFlickering.postDelayed({ atomicFlashLightOff() }, (periodOfFlashLightInMilliseconds / 2))
         loopHandlerFlickering.postDelayed({ startFlickering(Token.OTHER) }, periodOfFlashLightInMilliseconds)
