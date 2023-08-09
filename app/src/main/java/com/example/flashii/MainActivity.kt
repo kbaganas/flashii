@@ -261,6 +261,7 @@ class MainActivity : AppCompatActivity() {
     private var batteryReceiverRegistered : Boolean = false
     private var rotationSensorRegistered : Boolean = false
     private var altitudeListenerRegistered : Boolean = false
+    private var barometerAvailable : Boolean = true
 
     // Buttons & Ids
     private var flashlightId : String = "0"
@@ -1001,7 +1002,9 @@ class MainActivity : AppCompatActivity() {
             } else {
                 altitudeHiddenView.visibility = View.VISIBLE
                 altitudeExpandArrow.setImageResource(R.drawable.arrow_up)
-                initAndRegisterAltitudeEventListener()
+                if (barometerAvailable) {
+                    initAndRegisterAltitudeEventListener()
+                }
             }
         }
 
@@ -1018,12 +1021,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                initAndRegisterAltitudeEventListener()
+                if (barometerAvailable) {
+                    initAndRegisterAltitudeEventListener()
+                }
             }
         })
 
         altitudeSwitch.setOnCheckedChangeListener {_, isChecked ->
-            if (permissionsKeys["ALTITUDE"] == true) {
+            if (permissionsKeys["ALTITUDE"] == true && barometerAvailable) {
                 if (isChecked) {
                     initAndRegisterAltitudeEventListener()
                     Log.i("MainActivity","altitudeSwitch is ON ($sensorPressureEventListener)")
@@ -1032,9 +1037,13 @@ class MainActivity : AppCompatActivity() {
                     resetFeature(Token.ALTITUDE)
                 }
             }
-            else {
-                // user should be asked for permissions again
+            else if (permissionsKeys["ALTITUDE"] == false) {
                 triggerSnackbar(rootView, "To use the feature, manually provide Location rights to $applicationName.")
+                resetFeature(Token.ALTITUDE)
+                altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
+            }
+            else if (!barometerAvailable) {
+                triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible.")
                 resetFeature(Token.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
             }
@@ -1208,6 +1217,7 @@ class MainActivity : AppCompatActivity() {
                 triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible.")
                 resetFeature(Token.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
+                barometerAvailable = false
             }
         }
     }
@@ -2141,6 +2151,7 @@ class MainActivity : AppCompatActivity() {
                     altitudeSwitch.isChecked = false
                     tempText = "${altitudeThreshold}m"
                     setTextAndColor(altitudeSwitchText, tempText, R.color.greyNoteDarker2)
+                    permissionsKeys["ALTITUDE"] = false
                 }
             }
         }
