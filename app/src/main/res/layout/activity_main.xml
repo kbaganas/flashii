@@ -56,7 +56,7 @@
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/tilt_off" />
+                                app:srcCompat="@drawable/tilt_no_permission" />
 
                             <TextView
                                 android:id="@+id/tiltSwitchText"
@@ -206,7 +206,7 @@
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/IncomingSMSContentDescription"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/sms_off"
+                            app:srcCompat="@drawable/sms_no_permission"
                             tools:ignore="ImageContrastCheck" />
 
                         <LinearLayout
@@ -248,7 +248,7 @@
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/IncomingSMSContentDescription"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/incoming_call_off" />
+                            app:srcCompat="@drawable/call_no_permission" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -303,7 +303,7 @@
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/sound_off" />
+                                app:srcCompat="@drawable/sound_no_permission" />
 
                             <TextView
                                 android:id="@+id/soundSwitchText"
@@ -480,7 +480,7 @@
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/FlashlightImageContentDescription"
                             android:scaleType="centerInside"
-                            app:srcCompat="@drawable/flashlight_off4" />
+                            app:srcCompat="@drawable/flashlight_no_permission" />
 
                         <ImageButton
                             android:id="@+id/flashLightBtnId"
@@ -526,7 +526,7 @@
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/flicker_off"
+                                app:srcCompat="@drawable/flicker_no_permission"
                                 tools:ignore="ImageContrastCheck" />
 
                             <TextView
@@ -664,7 +664,7 @@
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/timer_off"
+                                app:srcCompat="@drawable/timer_no_permission"
                                 tools:ignore="ImageContrastCheck" />
 
                             <TextView
@@ -791,7 +791,7 @@
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/IncomingSMSContentDescription"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/network_off" />
+                            app:srcCompat="@drawable/network_no_permission" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -886,7 +886,7 @@
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/battery_off" />
+                                app:srcCompat="@drawable/battery_no_permission" />
 
                             <TextView
                                 android:id="@+id/batterySwitchText"
@@ -1038,7 +1038,7 @@
                                 android:background="#00FFFFFF"
                                 android:contentDescription="@string/IncomingSMSContentDescription"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@drawable/altitude_off" />
+                                app:srcCompat="@drawable/altitude_no_permission" />
 
                             <TextView
                                 android:id="@+id/altitudeSwitchText"

@@ -172,7 +172,8 @@ class MainActivity : AppCompatActivity() {
         SMS(2),
         AUDIO(3),
         ALTITUDE(4),
-        FLASHLIGHT (5)
+        FLASHLIGHT (5),
+        CREATE (6)
     }
 
     enum class FEATURE (val value: String) {
@@ -1031,7 +1032,9 @@ class MainActivity : AppCompatActivity() {
             if (permissionsKeys["ALTITUDE"] == true && barometerAvailable) {
                 if (isChecked) {
                     initAndRegisterAltitudeEventListener()
-                    Log.i("MainActivity","altitudeSwitch is ON ($sensorPressureEventListener)")
+                    if (barometerAvailable) {
+                        Log.i("MainActivity","altitudeSwitch is ON ($sensorPressureEventListener)")
+                    }
                 } else {
                     Log.i("MainActivity","altitudeSwitch is OFF ($sensorPressureEventListener)")
                     resetFeature(Token.ALTITUDE)
@@ -1043,7 +1046,7 @@ class MainActivity : AppCompatActivity() {
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
             }
             else if (!barometerAvailable) {
-                triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible.")
+                triggerSnackbar(rootView, "There is no barometer sensor available. Feature is not feasible in this phone device.")
                 resetFeature(Token.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
             }
@@ -1607,54 +1610,71 @@ class MainActivity : AppCompatActivity() {
         when (activity) {
             ACTION.CREATE -> {
 
+                Log.i("MainActivity", "Ask for permissions CREATE")
+                var permissions : Array<String> = arrayOf()
                 // CAMERA
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     Log.i("MainActivity", "requestPermissions for CAMERA")
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), RequestKey.FLASHLIGHT.value)
+                    permissions += Manifest.permission.CAMERA
                 }
                 else {
                     Log.i("MainActivity", "requestPermissions CAMERA = TRUE")
                     permissionsKeys["FLASHLIGHT"] = true
+                    setBtnImage(flashlightImageIcon, R.drawable.flashlight_off4)
+                    setBtnImage(sosImageIcon, R.drawable.sos_off)
+                    setBtnImage(flickerImageIcon, R.drawable.flicker_off)
+                    setBtnImage(tiltImageIcon, R.drawable.tilt_off)
+                    setBtnImage(networkImageIcon, R.drawable.network_off)
+                    setBtnImage(batteryImageIcon, R.drawable.battery_off)
+                    setBtnImage(timerImageIcon, R.drawable.timer_off)
                 }
 
                 // CALL
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                     Log.i("MainActivity", "requestPermissions for CALL")
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), RequestKey.CALL.value)
+                    permissions += Manifest.permission.READ_PHONE_STATE
                 }
                 else {
                     Log.i("MainActivity", "requestPermissions CALL = TRUE")
                     permissionsKeys["CALL"] = true
+                    setBtnImage(callImageIcon, R.drawable.call_off2)
                 }
 
                 // SMS
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
                     Log.i("MainActivity", "requestPermissions for SMS")
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), RequestKey.SMS.value)
+                    permissions += Manifest.permission.RECEIVE_SMS
                 }
                 else {
                     Log.i("MainActivity", "requestPermissions SMS = TRUE")
                     permissionsKeys["SMS"] = true
+                    setBtnImage(smsImageIcon, R.drawable.sms_off)
                 }
 
                 // AUDIO
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     Log.i("MainActivity", "requestPermissions for AUDIO")
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), RequestKey.AUDIO.value)
+                    permissions += Manifest.permission.RECORD_AUDIO
                 }
                 else {
                     Log.i("MainActivity", "requestPermissions AUDIO = TRUE")
                     permissionsKeys["AUDIO"] = true
+                    setBtnImage(soundImageIcon, R.drawable.sound_off)
                 }
 
                 // ALTITUDE
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     Log.i("MainActivity", "requestPermissions for ALTITUDE")
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), RequestKey.ALTITUDE.value)
+                    permissions += Manifest.permission.ACCESS_FINE_LOCATION
                 }
                 else {
                     Log.i("MainActivity", "requestPermissions ALTITUDE = TRUE")
                     permissionsKeys["ALTITUDE"] = true
+                    setBtnImage(altitudeImageIcon, R.drawable.altitude_off)
+                }
+
+                if (permissions.isNotEmpty()) {
+                    ActivityCompat.requestPermissions(this, permissions, RequestKey.CREATE.value)
                 }
             }
             ACTION.RESUME -> {
@@ -2117,6 +2137,95 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             when (requestCode) {
+                RequestKey.CREATE.value -> {
+                    for (i in permissions.indices) {
+                        val permission = permissions[i]
+                        val grantResult = grantResults[i]
+
+                        if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                            // Permission granted for the specific permission
+                            // Handle your logic here
+                            when (permission) {
+                                Manifest.permission.CAMERA -> {
+                                    Log.i("MainActivity", "Request granted for FLASHLIGHT")
+                                    setBtnImage(flashlightImageIcon, R.drawable.flashlight_off4)
+                                    setBtnImage(sosImageIcon, R.drawable.sos_off)
+                                    setBtnImage(flickerImageIcon, R.drawable.flicker_off)
+                                    setBtnImage(tiltImageIcon, R.drawable.tilt_off)
+                                    setBtnImage(networkImageIcon, R.drawable.network_off)
+                                    setBtnImage(batteryImageIcon, R.drawable.battery_off)
+                                    setBtnImage(timerImageIcon, R.drawable.timer_off)
+                                    permissionsKeys["FLASHLIGHT"] = true
+                                }
+                                Manifest.permission.RECORD_AUDIO -> {
+                                    Log.i("MainActivity", "Request granted for MICROPHONE")
+                                    setBtnImage(soundImageIcon, R.drawable.sound_off)
+                                    permissionsKeys["AUDIO"] = true
+                                }
+                                Manifest.permission.ACCESS_FINE_LOCATION -> {
+                                    Log.i("MainActivity", "Request granted for LOCATION")
+                                    setBtnImage(altitudeImageIcon, R.drawable.altitude_off)
+                                    permissionsKeys["ALTITUDE"] = true
+                                }
+                                Manifest.permission.READ_PHONE_STATE -> {
+                                    Log.i("MainActivity", "Request granted for CALL")
+                                    setBtnImage(callImageIcon, R.drawable.call_off2)
+                                    permissionsKeys["CALL"] = true
+                                }
+                                Manifest.permission.RECEIVE_SMS -> {
+                                    Log.i("MainActivity", "Request granted for SMS")
+                                    setBtnImage(smsImageIcon, R.drawable.sms_off)
+                                    permissionsKeys["SMS"] = true
+                                }
+                            }
+                        } else {
+                            // Permission denied for the specific permission
+                            // Handle your logic here
+                            when (permission) {
+                                Manifest.permission.CAMERA -> {
+                                    Log.i("MainActivity", "Request NOT granted for Flashlight")
+                                    setBtnImage(flashlightImageIcon, R.drawable.flashlight_no_permission)
+                                    setBtnImage(sosImageIcon, R.drawable.sos_no_permission)
+                                    setBtnImage(flickerImageIcon, R.drawable.flicker_no_permission)
+                                    setBtnImage(tiltImageIcon, R.drawable.tilt_no_permission)
+                                    setBtnImage(networkImageIcon, R.drawable.network_no_permission)
+                                    setBtnImage(batteryImageIcon, R.drawable.battery_no_permission)
+                                    setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
+                                    permissionsKeys["FLASHLIGHT"] = false
+                                }
+                                Manifest.permission.RECORD_AUDIO -> {
+                                    Log.i("MainActivity", "Request NOT granted for MICROPHONE")
+                                    setBtnImage(soundImageIcon, R.drawable.sound_no_permission)
+                                    incomingSoundSwitch.isChecked = false
+                                    tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+                                    setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
+                                    permissionsKeys["AUDIO"] = false
+                                }
+                                Manifest.permission.ACCESS_FINE_LOCATION -> {
+                                    Log.i("MainActivity", "Request NOT granted for LOCATION")
+                                    setBtnImage(altitudeImageIcon, R.drawable.altitude_no_permission)
+                                    altitudeSwitch.isChecked = false
+                                    tempText = "${altitudeThreshold}m"
+                                    setTextAndColor(altitudeSwitchText, tempText, R.color.greyNoteDarker2)
+                                    permissionsKeys["ALTITUDE"] = false
+                                }
+                                Manifest.permission.READ_PHONE_STATE -> {
+                                    Log.i("MainActivity", "Request NOT granted for CALL")
+                                    setBtnImage(callImageIcon, R.drawable.call_no_permission)
+                                    incomingCallSwitch.isChecked = false
+                                    permissionsKeys["CALL"] = false
+                                }
+                                Manifest.permission.RECEIVE_SMS -> {
+                                    Log.i("MainActivity", "Request NOT granted for SMS")
+                                    setBtnImage(smsImageIcon, R.drawable.sms_no_permission)
+                                    incomingSMSSwitch.isChecked = false
+                                    permissionsKeys["SMS"] = false
+                                }
+                                // Handle other permissions...
+                            }
+                        }
+                    }
+                }
                 RequestKey.FLASHLIGHT.value -> {
                     Log.i("MainActivity", "Request NOT granted for FLASHLIGHT")
                     setBtnImage(flashlightImageIcon, R.drawable.flashlight_no_permission)
