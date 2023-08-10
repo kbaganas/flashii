@@ -1,4 +1,4 @@
-package com.example.flashii
+package com.ichthis.flashii
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -241,6 +241,7 @@ class SettingsActivity : AppCompatActivity() {
         return wrongValueInsertedByUser
     }
 
+    @Suppress("SameParameterValue")
     private fun checkTextValue (eText : EditText, boundLow : Int, boundHigh : Int) : CheckResult {
         try {
             if (eText.text.toString().isNotEmpty()) {

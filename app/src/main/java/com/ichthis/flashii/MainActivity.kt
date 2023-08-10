@@ -1,4 +1,4 @@
-package com.example.flashii
+package com.ichthis.flashii
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -51,7 +51,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.flashii.databinding.ActivityMainBinding
+import com.ichthis.flashii.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager

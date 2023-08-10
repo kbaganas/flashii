@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.flashii'
+    namespace 'com.ichthis.flashii'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.flashii"
+        applicationId "com.ichthis.flashii"
         minSdk 30
         targetSdk 34
         versionCode 1
