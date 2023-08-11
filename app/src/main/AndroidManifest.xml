@@ -23,7 +23,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_flashii_round"
         android:supportsRtl="true"
-        android:theme="@style/splashScreenTheme">
+        android:theme="@style/Theme.Flashii">
 
         <activity
             android:name="com.ichthis.flashii.MainActivity"

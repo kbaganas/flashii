@@ -195,7 +195,8 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:background="@drawable/round_btn"
+                app:cornerRadius="10dp"
+                android:backgroundTint="@color/blueOff"
                 tools:ignore="VisualLintButtonSize,TextContrastCheck" />
 
 
