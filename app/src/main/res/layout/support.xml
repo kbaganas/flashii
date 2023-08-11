@@ -62,58 +62,63 @@
                 android:layout_marginTop="46dp"
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/supportText"
+                app:backgroundTint="@color/blueOffBack2"
+                app:strokeColor="@color/whiteCollar"
+                app:strokeWidth="1dp"
+                tools:ignore="VisualLintButtonSize"
                 android:textSize="22sp"
                 android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textColor="@color/white"/>
 
-            <Button
-                android:id="@+id/support1Btn"
+            <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:fontFamily="@font/cabin_regular"
-                android:textAlignment="center"
-                android:text="@string/dollar1"
-                android:textSize="18sp"
-                android:textColor="@color/greyNoteDarker6"
-                app:backgroundTint="@color/blueOffBack2"
-                app:strokeColor="@color/whiteCollar"
-                app:strokeWidth="1dp"
-                app:cornerRadius="8dp"
-                tools:ignore="VisualLintButtonSize" />
+                android:layout_marginTop="28dp">
+                <RadioButton
+                    android:id="@+id/support1Btn"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="48dp"
+                    android:background="@drawable/support_radio_btn_bg"
+                    android:button="@android:color/transparent"
+                    android:checked="true"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/dollar1"
+                    android:textSize="18sp"
+                    android:textColor="@color/greyNoteDarker6"
+                    tools:ignore="VisualLintButtonSize" />
 
-            <Button
-                android:id="@+id/support10Btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/cabin_regular"
-                android:textAlignment="center"
-                android:text="@string/dollar10"
-                android:textColor="@color/greyNoteDarker6"
-                android:textSize="18sp"
-                android:layout_marginTop="8dp"
-                app:backgroundTint="@color/blueOffBack2"
-                app:strokeColor="@color/whiteCollar"
-                app:strokeWidth="1dp"
-                tools:ignore="VisualLintButtonSize"
-                app:cornerRadius="8dp"/>
+                <RadioButton
+                    android:id="@+id/support10Btn"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/support_radio_btn_bg"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/dollar10"
+                    android:textSize="18sp"
+                    android:textColor="@color/greyNoteDarker6"
+                    tools:ignore="VisualLintButtonSize" />
 
-            <Button
-                android:id="@+id/support100Btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/cabin_regular"
-                android:textAlignment="center"
-                android:text="@string/dollar100"
-                android:textColor="@color/greyNoteDarker6"
-                android:textSize="18sp"
-                app:backgroundTint="@color/blueOffBack2"
-                app:strokeColor="@color/whiteCollar"
-                app:strokeWidth="1dp"
-                tools:ignore="VisualLintButtonSize"
-                app:cornerRadius="8dp"/>
+                <RadioButton
+                    android:id="@+id/support100Btn"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/support_radio_btn_bg"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/cabin_regular"
+                    android:text="@string/dollar100"
+                    android:textSize="18sp"
+                    android:textColor="@color/greyNoteDarker6"
+                    tools:ignore="VisualLintButtonSize" />
+            </RadioGroup>
+
+
 
             <LinearLayout
                 android:id="@+id/dividers"
@@ -178,6 +183,7 @@
                 app:backgroundTint="@color/blueOffBack4"
                 tools:ignore="VisualLintTextFieldSize" />
 
+
             <Button
                 android:id="@+id/supportContinueBtn"
                 android:layout_width="match_parent"
@@ -187,12 +193,12 @@
                 android:fontFamily="@font/cabin_regular"
                 android:text="@string/contribute"
                 android:textAlignment="center"
+                android:textColor="@color/white"
                 android:textSize="18sp"
-                app:backgroundTint="@color/blueOff"
-                app:cornerRadius="8dp"
-                app:strokeColor="@color/whiteCollar"
-                app:strokeWidth="1dp"
+                android:background="@drawable/round_btn"
                 tools:ignore="VisualLintButtonSize,TextContrastCheck" />
+
+
 
         </LinearLayout>
     </ScrollView>

@@ -340,6 +340,8 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Flashii)
+
         setContentView(R.layout.activity_main)
         rootView = findViewById(android.R.id.content)
 

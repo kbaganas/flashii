@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blueOff">#3f95a2</color>
+    <color name="blueOff2">#255961</color>
     <color name="blueOffBack1">#ebf4f5</color>
     <color name="blueOffBack2">#d8e9ec</color>
     <color name="blueOffBack3">#c5dfe3</color>
@@ -10,6 +11,7 @@
     <color name="blueOffBack5">#0c1d20</color>
     <color name="yellowOff">#f1f7db</color>
     <color name="whiteCollar">#ecf8f9</color>
+    <color name="whiteCollar2">#d9f1f3</color>
     <color name="greyNote">#a8a7a3</color>
     <color name="greyNoteDarker1">#9c9a96</color>
     <color name="greyNoteDarker2">#8f8e89</color>

@@ -61,8 +61,7 @@
                     android:text="@string/reset"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    app:backgroundTint="@color/blueOff"
-                    app:cornerRadius="8dp"
+                    android:background="@drawable/round_btn"
                     tools:ignore="VisualLintButtonSize" />
             </LinearLayout>
 
@@ -519,11 +518,9 @@
                     android:text="@string/resetDefault"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    app:backgroundTint="@color/blueOff"
-                    app:cornerRadius="8dp"
+                    android:background="@drawable/round_btn"
                     android:textColor="@color/white"
-                    tools:ignore="VisualLintButtonSize"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    tools:ignore="ButtonStyle,VisualLintButtonSize"/>
 
                 <Button
                     android:id="@+id/settingsApplyBtn"
@@ -535,11 +532,9 @@
                     android:text="@string/applyChanges"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    app:backgroundTint="@color/blueOff"
-                    app:cornerRadius="8dp"
+                    android:background="@drawable/round_btn"
                     android:textColor="@color/white"
-                    tools:ignore="VisualLintButtonSize"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    tools:ignore="ButtonStyle,VisualLintButtonSize" />
             </LinearLayout>
 
 

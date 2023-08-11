@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -63,9 +62,7 @@ class SettingsActivity : AppCompatActivity() {
 
         // Set data of the intent in local variables
         setHintValues()
-
         Log.i("SettingsActivity", "oCreate Input data are: $maxFlickerHz,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
-
 
         // Clear Hint on focus
         flickTimeIncSMSEditText.setOnFocusChangeListener { _, hasFocus ->
@@ -129,7 +126,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         // reset button
-        val resetButton = findViewById<MaterialButton>(R.id.resetBtnId)
+        val resetButton = findViewById<Button>(R.id.resetBtnId)
         resetButton.setOnClickListener {
             resetTextValues()
         }
