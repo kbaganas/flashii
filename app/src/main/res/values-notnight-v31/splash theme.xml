@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.SplashTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/blueOff</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_flashii_round</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.Flashii</item>
+        <item name="android:windowSplashScreenBrandingImage">@mipmap/ic_launcher_flashii_round</item>
+
+        <!-- Status bar and Nav bar configs -->
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/green</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

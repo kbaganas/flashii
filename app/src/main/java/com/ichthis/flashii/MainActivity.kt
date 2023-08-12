@@ -49,6 +49,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ichthis.flashii.databinding.ActivityMainBinding
@@ -340,7 +341,8 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.Theme_Flashii)
+        installSplashScreen()
+        //setTheme(R.style.Theme_Flashii)
 
         setContentView(R.layout.activity_main)
         rootView = findViewById(android.R.id.content)
@@ -1994,7 +1996,7 @@ class MainActivity : AppCompatActivity() {
         isFlickering = true
         atomicFlashLightOn()
         loopHandlerFlickering.postDelayed({ atomicFlashLightOff() }, (periodOfFlashLightInMilliseconds / 2))
-        loopHandlerFlickering.postDelayed({ startFlickering(Token.OTHER) }, periodOfFlashLightInMilliseconds)
+        loopHandlerFlickering.postDelayed({ startFlickering(token) }, periodOfFlashLightInMilliseconds)
     }
 
     fun stopFlickeringAfterTimeout (timeout : Long, token: Token) {
