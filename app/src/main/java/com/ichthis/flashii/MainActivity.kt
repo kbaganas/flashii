@@ -318,8 +318,8 @@ class MainActivity : AppCompatActivity() {
         snackbar.show()
 
         snackbarBtn.setOnClickListener {
-            snackbar.dismiss()
             resetFeature(token)
+            snackbar.dismiss()
         }
 
         when (action) {
@@ -875,11 +875,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                // Do nothing
+                resetFeature(Token.BATTERY)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                initAndRegisterBatteryReceiver()
+                if (batterySwitch.isChecked) {
+                    initAndRegisterBatteryReceiver()
+                }
             }
         })
 
@@ -1022,7 +1024,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                // Do nothing
+                resetFeature(Token.ALTITUDE)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -1173,7 +1175,7 @@ class MainActivity : AppCompatActivity() {
                                         // In case User is ascending in height
                                         if (altitude > altitudeThreshold) {
                                             if (!isFlickering) {
-                                                Log.i("MainActivity", "Flickering ON while ascending to altitude of ${flickerFlashlightHz}m")
+                                                Log.i("MainActivity", "Flickering ON while ascending to altitude of ${altitude}m")
                                                 resetActivitiesAndFlicker(Token.ALTITUDE)
                                                 stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
                                                 loopHandlerAltitude.postDelayed({ resetFeature(Token.ALTITUDE)}, maxFlickerDurationAltitude.toLong())
@@ -1186,7 +1188,7 @@ class MainActivity : AppCompatActivity() {
                                         // In case User is descending in height
                                         if (altitude < altitudeThreshold) {
                                             if (!isFlickering) {
-                                                Log.i("MainActivity", "Flickering ON while descending to altitude of ${flickerFlashlightHz}m")
+                                                Log.i("MainActivity", "Flickering ON while descending to altitude of ${altitude}m")
                                                 resetActivitiesAndFlicker(Token.ALTITUDE)
                                                 stopFlickeringAfterTimeout(maxFlickerDurationAltitude.toLong(), Token.ALTITUDE)
                                                 loopHandlerAltitude.postDelayed({ resetFeature(Token.ALTITUDE)}, maxFlickerDurationAltitude.toLong())
@@ -1311,6 +1313,7 @@ class MainActivity : AppCompatActivity() {
                             tempText = "${batteryThreshold}%"
                             batterySwitchText.text = tempText
                             batteryBar.progress = batteryThreshold
+                            resetFeature(Token.BATTERY)
                         }
                     }
 
@@ -1322,27 +1325,31 @@ class MainActivity : AppCompatActivity() {
                         if (batteryThreshold > initBatteryLevel) {
                             // So the user is charging his phone and wants an optical indication when threshold is reached
                             if (batteryPercentage.toInt() >= batteryThreshold) {
-                                Log.i("MainActivity", "Battery has been charged up to ${batteryPercentage}%")
+                                Log.i("MainActivity", "Battery has been charged up to ${batteryPercentage}% (initBatteryLevel $initBatteryLevel, batteryThreshold $batteryThreshold)")
                                 resetActivitiesAndFlicker(Token.BATTERY)
                                 // should stop flickering and reset after time
                                 stopFlickeringAfterTimeout(maxFlickerDurationBattery.toLong(), Token.BATTERY)
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
+                                Log.i("MainActivity", "unregisterReceiver batteryReceiver ${batteryReceiver}")
                                 unregisterReceiver(batteryReceiver)
-                                triggerSnackbar(rootView, "Battery Power charged up to ${batteryThreshold}%.", ACTION.SUCCESS, Token.BATTERY)
+                                initBatteryLevel = minBattery
+                                triggerSnackbar(rootView, "Battery Power charged up to ${batteryPercentage.toInt()}%.", ACTION.SUCCESS, Token.BATTERY)
                             }
                         }
                         else {
                             // So the phone is discharged and user wants an optical indication when threshold is reached
                             if (batteryPercentage.toInt() < batteryThreshold) {
-                                Log.i("MainActivity", "Battery is discharged to ${batteryPercentage}%")
+                                Log.i("MainActivity", "Battery is discharged to ${batteryPercentage}% (initBatteryLevel $initBatteryLevel, batteryThreshold $batteryThreshold)")
                                 resetActivitiesAndFlicker(Token.BATTERY)
                                 // should stop flickering and reset after time
                                 stopFlickeringAfterTimeout(maxFlickerDurationBattery.toLong(), Token.BATTERY)
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
+                                Log.i("MainActivity", "unregisterReceiver batteryReceiver ${batteryReceiver}")
                                 unregisterReceiver(batteryReceiver)
-                                triggerSnackbar(rootView, "Battery Power discharged to ${batteryThreshold}%.", ACTION.SUCCESS, Token.BATTERY)
+                                initBatteryLevel = minBattery
+                                triggerSnackbar(rootView, "Battery Power discharged to ${batteryPercentage.toInt()}%.", ACTION.SUCCESS, Token.BATTERY)
                             }
                         }
                     }
@@ -1408,8 +1415,15 @@ class MainActivity : AppCompatActivity() {
                 }
                 try {
                     batteryReceiverRegistered = false
-                    unregisterReceiver(batteryReceiver)
                     loopHandlerBattery.removeCallbacksAndMessages(null)
+                    Log.i("MainActivity", "removeCallbacksAndMessages $loopHandlerBattery")
+                }
+                catch (e : java.lang.Exception) {
+                    // Do nothing
+                }
+                try {
+                    unregisterReceiver(batteryReceiver)
+                    Log.i("MainActivity", "unregisterReceiver batteryReceiver $batteryReceiver")
                 }
                 catch (e : java.lang.Exception) {
                     // Do nothing
@@ -1425,10 +1439,16 @@ class MainActivity : AppCompatActivity() {
                 if (flickeringDueToNetworkConnection) {
                     stopFlickering(Token.NETWORK)
                 }
-
                 try {
                     connectivityManager.unregisterNetworkCallback(connectivityCallback)
+                    Log.i("MainActivity", "unregisterReceiver connectivityCallback $connectivityCallback")
+                }
+                catch (e : java.lang.Exception) {
+                    // Do nothing
+                }
+                try {
                     loopHandlerNetwork.removeCallbacksAndMessages(null)
+                    Log.i("MainActivity", "removeCallbacksAndMessages $loopHandlerNetwork")
                 }
                 catch (e : java.lang.Exception) {
                     // Do nothing
@@ -1449,6 +1469,7 @@ class MainActivity : AppCompatActivity() {
 
                 try {
                     loopHandlerTimer.removeCallbacksAndMessages(null)
+                    Log.i("MainActivity", "removeCallbacksAndMessages $loopHandlerTimer")
                 }
                 catch (e : java.lang.Exception) {
                     // Do nothing
@@ -1462,9 +1483,16 @@ class MainActivity : AppCompatActivity() {
             Token.ALTITUDE -> {
                 isAltitudeOn = false
                 try {
-                    altitudeListenerRegistered = false
                     sensorManager.unregisterListener(sensorPressureEventListener)
+                    Log.i("MainActivity", "unregisterReceiver sensorPressureEventListener $sensorPressureEventListener")
+                }
+                catch (e : java.lang.Exception) {
+                    // Do nothing
+                }
+                try {
+                    altitudeListenerRegistered = false
                     loopHandlerAltitude.removeCallbacksAndMessages(null)
+                    Log.i("MainActivity", "removeCallbacksAndMessages $loopHandlerAltitude")
                 }
                 catch (e : java.lang.Exception) {
                     // Do nothing
@@ -1491,7 +1519,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 recordingThread?.join()
                 recordingThread = null
-                loopHandlerFlickering.removeCallbacksAndMessages(null)
+                try {
+                    loopHandlerFlickering.removeCallbacksAndMessages(null)
+                }
+                catch (e : java.lang.Exception) {
+                    // Do nothing
+                }
+
                 soundImageIcon.setImageResource(R.drawable.sound_off)
                 soundSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 removeActivatedFeature(recyclerView, FEATURE.AUDIO)
@@ -1508,6 +1542,7 @@ class MainActivity : AppCompatActivity() {
                 turnOffFlashlight()
                 try {
                     sensorManager.unregisterListener(sensorRotationEventListener)
+                    Log.i("MainActivity", "unregisterReceiver sensorRotationEventListener $sensorRotationEventListener")
                 }
                 catch (_: Exception) { }
                 incomingTiltSwitch.isChecked = false
@@ -1772,7 +1807,7 @@ class MainActivity : AppCompatActivity() {
                         permissionsKeys["AUDIO"] = false
                         removeActivatedFeature(recyclerView, FEATURE.AUDIO)
                         soundImageIcon.setImageResource(R.drawable.sound_off)
-                        tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+                        tempText = "Sensitivity\n${calcSensitivityLevel(sensitivitySoundThreshold)}"
                         setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
                         incomingSoundSwitch.isChecked = false
                     }
@@ -2201,7 +2236,7 @@ class MainActivity : AppCompatActivity() {
                                     Log.i("MainActivity", "Request NOT granted for MICROPHONE")
                                     setBtnImage(soundImageIcon, R.drawable.sound_no_permission)
                                     incomingSoundSwitch.isChecked = false
-                                    tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+                                    tempText = "Sensitivity\n${calcSensitivityLevel(sensitivitySoundThreshold)}"
                                     setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
                                     permissionsKeys["AUDIO"] = false
                                 }
@@ -2255,7 +2290,7 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "Request NOT granted for MICROPHONE")
                     setBtnImage(soundImageIcon, R.drawable.sound_no_permission)
                     incomingSoundSwitch.isChecked = false
-                    tempText = "Sensitivity\n Level $sensitivitySoundThreshold"
+                    tempText = "Sensitivity\n${calcSensitivityLevel(sensitivitySoundThreshold)}"
                     setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
                 }
                 RequestKey.ALTITUDE.value -> {
