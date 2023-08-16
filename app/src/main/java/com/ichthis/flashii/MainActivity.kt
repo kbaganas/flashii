@@ -440,7 +440,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
+                triggerSnackbar(rootView, "To use the service, manually provide Flashlight rights to $applicationName.")
                 false
             }
         }
@@ -470,7 +470,7 @@ class MainActivity : AppCompatActivity() {
                 sosImageIcon.setImageResource(R.drawable.sos_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SOS)
                 sosSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
+                triggerSnackbar(rootView, "To use the service, manually provide Flashlight rights to $applicationName.")
             }
         }
 
@@ -542,7 +542,7 @@ class MainActivity : AppCompatActivity() {
                 flickerImageIcon.setImageResource(R.drawable.flicker_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
                 flickerSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
+                triggerSnackbar(rootView, "To use the service, manually provide Flashlight rights to $applicationName.")
             }
         }
 
@@ -568,7 +568,7 @@ class MainActivity : AppCompatActivity() {
                 callImageIcon.setImageResource(R.drawable.call_no_permission)
                 incomingCallSwitch.isChecked = false
                 removeActivatedFeature(recyclerView, FEATURE.CALL)
-                triggerSnackbar(rootView, "To use the feature, manually provide Call rights to $applicationName.")
+                triggerSnackbar(rootView, "To use the service, manually provide Call rights to $applicationName.")
             }
         }
 
@@ -659,7 +659,7 @@ class MainActivity : AppCompatActivity() {
                 // user should be asked for permissions again
                 resetFeature(Token.SOUND)
                 soundImageIcon.setImageResource(R.drawable.sound_no_permission)
-                triggerSnackbar(rootView, "To use the feature, manually provide Microphone rights to $applicationName.")
+                triggerSnackbar(rootView, "To use the service, manually provide Microphone rights to $applicationName.")
             }
         }
 
@@ -729,7 +729,7 @@ class MainActivity : AppCompatActivity() {
                     else {
                         // we have to disable the btn now since rotation sensor is not available on the device
                         Log.i("MainActivity","Accelerometer not available")
-                        triggerSnackbar(rootView, "To use the feature, manually provide Audio rights to $applicationName.")
+                        triggerSnackbar(rootView, "To use the service, manually provide Audio rights to $applicationName.")
                         resetFeature(Token.TILT)
                         tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
                     }
@@ -742,7 +742,7 @@ class MainActivity : AppCompatActivity() {
                 // user should be asked for permissions again
                 resetFeature(Token.TILT)
                 tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
+                triggerSnackbar(rootView, "To use the service, manually provide Flashlight rights to $applicationName.")
             }
         }
 
@@ -769,7 +769,7 @@ class MainActivity : AppCompatActivity() {
                 smsImageIcon.setImageResource(R.drawable.sms_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SMS)
                 incomingSMSSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide SMS rights to $applicationName.")
+                triggerSnackbar(rootView, "To use the service, manually provide SMS rights to $applicationName.")
             }
         }
 
@@ -841,7 +841,7 @@ class MainActivity : AppCompatActivity() {
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                 outInNetworkSwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
+                triggerSnackbar(rootView, "To use the service, manually provide Flashlight rights to $applicationName.")
             }
         }
 
@@ -906,7 +906,7 @@ class MainActivity : AppCompatActivity() {
                 batteryImageIcon.setImageResource(R.drawable.battery_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                 batterySwitch.isChecked = false
-                triggerSnackbar(rootView, "To use the feature, manually provide Flashlight rights to $applicationName.")
+                triggerSnackbar(rootView, "To use the service, manually provide Flashlight rights to $applicationName.")
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -941,7 +941,7 @@ class MainActivity : AppCompatActivity() {
                         timerSwitchText.text = selectedTime
                     }
                     else {
-                        triggerSnackbar(rootView, "You have to deactivate the feature first, to select another timestamp.")
+                        triggerSnackbar(rootView, "You have to deactivate the service first, to select another timestamp.")
                     }
                 }
 
@@ -954,7 +954,7 @@ class MainActivity : AppCompatActivity() {
                     timerTimePicker.isEnabled = true
                     if (hourOfDayTimer == 0 && minuteTimer == 0) {
                         Log.i("MainActivity","Time error: set to past time")
-                        triggerSnackbar(rootView, "Have to select a time first, before enabling the feature.")
+                        triggerSnackbar(rootView, "Have to select a time first, before enabling the service.")
                         timerSwitch.isChecked = false
                     }
                     else {
@@ -990,7 +990,7 @@ class MainActivity : AppCompatActivity() {
                 timerImageIcon.setImageResource(R.drawable.timer_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerSwitch.isChecked = false
-                triggerSnackbar(rootView, "You have to deactivate the feature first, to select another time.")
+                triggerSnackbar(rootView, "You have to deactivate the service first, to select another time.")
             }
         }
 
@@ -1040,6 +1040,11 @@ class MainActivity : AppCompatActivity() {
                     initAndRegisterAltitudeEventListener()
                     if (barometerAvailable) {
                         Log.i("MainActivity","altitudeSwitch is ON ($sensorPressureEventListener)")
+                        isAltitudeOn = true
+                        addActivatedFeature(recyclerView, FEATURE.ALTITUDE)
+                        altitudeImageIcon.setImageResource(R.drawable.altitude_on)
+                        tempText = "${altitudeThreshold}m"
+                        setTextAndColor(altitudeSwitchText, tempText, R.color.blueText)
                     }
                 } else {
                     Log.i("MainActivity","altitudeSwitch is OFF ($sensorPressureEventListener)")
@@ -1047,12 +1052,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             else if (permissionsKeys["ALTITUDE"] == false) {
-                triggerSnackbar(rootView, "To use the feature, manually provide Location rights to $applicationName.")
+                triggerSnackbar(rootView, "To use the service, manually provide Location rights to $applicationName.")
                 resetFeature(Token.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
             }
             else if (!barometerAvailable) {
-                triggerSnackbar(rootView, "There is no barometer sensor available. Feature is not feasible in this phone device.")
+                triggerSnackbar(rootView, "There is no barometer sensor available. Service is not feasible in this phone device.")
                 resetFeature(Token.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
             }
@@ -1222,8 +1227,8 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 // we have to disable the btn now since sensor is not available on the device
-                Log.i("MainActivity","Barometer not available for Altitude feature")
-                triggerSnackbar(rootView, "This phone device has no barometer sensor available; feature is not feasible.")
+                Log.i("MainActivity","Barometer not available for Altitude service")
+                triggerSnackbar(rootView, "This phone device has no barometer sensor available; service is not feasible.")
                 resetFeature(Token.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
                 barometerAvailable = false

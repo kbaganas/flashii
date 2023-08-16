@@ -15,6 +15,7 @@ class SupportActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Flashii)
         setContentView(R.layout.support)
 
         var supportAmount = 0

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 class InfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Flashii)
         setContentView(R.layout.dialog_info)
 
         val closeButton = findViewById<ImageButton>(R.id.infoGoBackArrow)

@@ -44,6 +44,7 @@ class SettingsActivity : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Flashii)
         setContentView(R.layout.settings)
 
         // Init editTexts
