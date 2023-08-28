@@ -50,8 +50,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.ichthis.flashii.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.review.ReviewInfo
@@ -346,6 +352,8 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         rootView = findViewById(android.R.id.content)
+
+        MobileAds.initialize(this)
 
         // setup cameraManager
         cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
@@ -1143,8 +1151,16 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SupportActivity::class.java)
             startActivity(intent)
         }
-        ////////////////////////////////////////////////////////////////////////////////////////
 
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // AD NATIVE
+        // Check if the fragment is already added to avoid adding it multiple times
+        if (supportFragmentManager.findFragmentByTag(NativeAdFragment::class.java.simpleName) == null) {
+            Log.d("MainActivity", "Ad Loading")
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.add(R.id.nativeAdContainer, NativeAdFragment(), NativeAdFragment::class.java.simpleName)
+            fragmentTransaction.commit()
+        }
     }
 
 
@@ -1336,7 +1352,7 @@ class MainActivity : AppCompatActivity() {
                                 stopFlickeringAfterTimeout(maxFlickerDurationBattery.toLong(), Token.BATTERY)
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
-                                Log.i("MainActivity", "unregisterReceiver batteryReceiver ${batteryReceiver}")
+                                Log.i("MainActivity", "unregisterReceiver batteryReceiver $batteryReceiver")
                                 unregisterReceiver(batteryReceiver)
                                 initBatteryLevel = minBattery
                                 triggerSnackbar(rootView, "Battery Power charged up to ${batteryPercentage.toInt()}%.", ACTION.SUCCESS, Token.BATTERY)
@@ -1351,7 +1367,7 @@ class MainActivity : AppCompatActivity() {
                                 stopFlickeringAfterTimeout(maxFlickerDurationBattery.toLong(), Token.BATTERY)
                                 loopHandlerBattery.postDelayed({ resetFeature(Token.BATTERY)}, maxFlickerDurationBattery.toLong())
                                 // Should unregister
-                                Log.i("MainActivity", "unregisterReceiver batteryReceiver ${batteryReceiver}")
+                                Log.i("MainActivity", "unregisterReceiver batteryReceiver $batteryReceiver")
                                 unregisterReceiver(batteryReceiver)
                                 initBatteryLevel = minBattery
                                 triggerSnackbar(rootView, "Battery Power discharged to ${batteryPercentage.toInt()}%.", ACTION.SUCCESS, Token.BATTERY)
@@ -2414,6 +2430,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     private fun resetAllActivities (featureToken : Token) {
         var tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.SOS, Token.SOUND, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.TILT, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isFlashLightOn) {
@@ -2487,6 +2504,41 @@ class MainActivity : AppCompatActivity() {
         checkPermissions(ACTION.RESUME)
     }
 
+}
+
+class NativeAdFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.ad_native, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val nativeAdContainer = view.findViewById<ViewGroup>(R.id.nativeAdContainer)
+
+        val adLoader = AdLoader.Builder(requireContext(), "ca-app-pub-3940256099942544/2247696110")
+            .forNativeAd { nativeAd ->
+                val adView = layoutInflater.inflate(R.layout.ad_native, null) as NativeAdView
+                adView.apply {
+                    setNativeAd(nativeAd)
+                    // Bind native ad assets to the ad view here
+                }
+                nativeAdContainer.addView(adView)
+            }
+            .withAdListener(object : com.google.android.gms.ads.AdListener() {
+                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                    Log.e("NativeAd", "Ad failed to load: ${loadAdError.message}")
+                }
+            })
+            .build()
+
+        adLoader.loadAd(AdRequest.Builder().build())
+
+    }
 }
 
 

@@ -95,7 +95,7 @@
                                 android:gravity="center_horizontal"
                                 android:text="@string/to_turn_flashlight_on_amp_off"
                                 android:textSize="18sp"
-                                tools:ignore="VisualLintLongText" />
+                                tools:ignore="VisualLintLongText,TextContrastCheck" />
                         </LinearLayout>
 
                         <!-- Switch -->
@@ -275,7 +275,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin15"
                     android:background="@drawable/feature_selector_sound"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
@@ -343,7 +342,7 @@
                                 android:gravity="center_horizontal"
                                 android:text="@string/to_turn_flashlight_on_amp_off"
                                 android:textSize="18sp"
-                                tools:ignore="VisualLintLongText" />
+                                tools:ignore="VisualLintLongText,TextContrastCheck" />
                         </LinearLayout>
 
                         <!-- Switch -->
@@ -430,7 +429,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="32dp"
+                    android:layout_marginVertical="18dp"
                     android:baselineAligned="true"
                     android:gravity="top"
                     android:orientation="horizontal">
@@ -480,7 +479,8 @@
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/FlashlightImageContentDescription"
                             android:scaleType="centerInside"
-                            app:srcCompat="@drawable/flashlight_no_permission" />
+                            app:srcCompat="@drawable/flashlight_no_permission"
+                            tools:ignore="ImageContrastCheck" />
 
                         <ImageButton
                             android:id="@+id/flashLightBtnId"
@@ -489,10 +489,19 @@
                             android:layout_marginTop="-154dp"
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/FlashlightImageBtnContentDescription"
-                            android:scaleType="centerInside" />
+                            android:scaleType="centerInside"
+                            tools:ignore="ImageContrastCheck" />
 
                     </LinearLayout>
                 </LinearLayout>
+
+                <!-- AD 1 -->
+                <FrameLayout
+                    android:id="@+id/nativeAdContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:layout_marginBottom="@dimen/margin15"/>
 
                 <!-- FLICKERING -->
                 <LinearLayout
