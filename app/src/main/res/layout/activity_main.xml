@@ -1160,14 +1160,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- AD 1 -->
-                <FrameLayout
-                    android:id="@+id/nativeAdContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:layout_marginBottom="@dimen/margin15"/>
-
                 <!-- EMPTY -->
                 <LinearLayout
                     android:layout_width="match_parent"

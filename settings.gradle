@@ -14,4 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "com.ichthis.flashii"
 include ':app'
-include ':nativetemplates'

@@ -50,14 +50,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
@@ -1149,16 +1144,6 @@ class MainActivity : AppCompatActivity() {
         supportBtn.setOnClickListener {
             val intent = Intent(this, SupportActivity::class.java)
             startActivity(intent)
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////
-        // AD NATIVE
-        // Check if the fragment is already added to avoid adding it multiple times
-        if (supportFragmentManager.findFragmentByTag(NativeAdFragment::class.java.simpleName) == null) {
-            Log.d("MainActivity", "Ad Loading")
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.add(R.id.nativeAdContainer, NativeAdFragment(), NativeAdFragment::class.java.simpleName)
-            fragmentTransaction.commit()
         }
     }
 
@@ -2505,40 +2490,6 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-class NativeAdFragment : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.ad_native, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val nativeAdContainer = view.findViewById<ViewGroup>(R.id.nativeAdContainer)
-
-        val adLoader = AdLoader.Builder(requireContext(), "ca-app-pub-3940256099942544/2247696110")
-            .forNativeAd { nativeAd ->
-                val adView = layoutInflater.inflate(R.layout.ad_native, null) as NativeAdView
-                adView.apply {
-                    setNativeAd(nativeAd)
-                    // Bind native ad assets to the ad view here
-                }
-                nativeAdContainer.addView(adView)
-            }
-            .withAdListener(object : com.google.android.gms.ads.AdListener() {
-                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                    Log.e("NativeAd", "Ad failed to load: ${loadAdError.message}")
-                }
-            })
-            .build()
-
-        adLoader.loadAd(AdRequest.Builder().build())
-
-    }
-}
 
 
 // Create a custom RecyclerView adapter to handle the list of items
