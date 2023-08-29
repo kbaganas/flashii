@@ -34,8 +34,6 @@ android {
         dataBinding = true
         viewBinding = true
     }
-
-    namespace 'com.ichthis.flashii'
 }
 
 dependencies {
@@ -70,6 +68,8 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     implementation 'com.google.android.gms:play-services-ads:22.3.0'
+
+    implementation project(':nativetemplates')
 
 
 }

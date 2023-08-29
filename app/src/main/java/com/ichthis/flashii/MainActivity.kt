@@ -58,14 +58,13 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.nativead.NativeAdView
-import com.ichthis.flashii.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.ichthis.flashii.databinding.ActivityMainBinding
 import java.util.Locale
 import kotlin.time.Duration.Companion.minutes
-
 
 class MainActivity : AppCompatActivity() {
 
