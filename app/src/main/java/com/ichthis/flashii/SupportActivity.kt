@@ -10,6 +10,12 @@ import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
 
 class SupportActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
@@ -103,5 +109,49 @@ class SupportActivity : AppCompatActivity() {
         if (txt.isFocused) {
             txt.clearFocus()
         }
+    }
+}
+
+class DonationActivity : AppCompatActivity(), PurchasesUpdatedListener {
+    private lateinit var billingClient: BillingClient
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.support)
+
+        billingClient = BillingClient.newBuilder(this)
+            .setListener(this)
+            .enablePendingPurchases()
+            .build()
+
+        billingClient.startConnection(object : BillingClientStateListener {
+            override fun onBillingSetupFinished(billingResult: BillingResult) {
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                    Log.i("SupportActivity", "Billing client is ready")
+                }
+            }
+
+            override fun onBillingServiceDisconnected() {
+                // Handle disconnected state
+                Log.i("SupportActivity", "Billing service disconnected")
+            }
+        })
+    }
+
+    // Handle donation button click
+    fun donateButtonClicked() {
+       // val billingFlowParams = BillingFlowParams.newBuilder()
+       //     .setSkuDetails(skuDetails) // Replace with your actual SkuDetails object
+       //     .build()
+
+        //val billingResult = billingClient.launchBillingFlow(this, billingFlowParams)
+        // Handle billingResult as needed
+    }
+
+    override fun onPurchasesUpdated(
+        billingResult: BillingResult,
+        purchases: List<Purchase>?
+    ) {
+        // Handle purchased items
     }
 }

@@ -1,5 +1,6 @@
 package com.ichthis.flashii
 
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -2521,3 +2522,6 @@ class ItemAdapter(private val itemList: List<String>) :
         }
     }
 }
+
+
+

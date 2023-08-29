@@ -13,3 +13,16 @@
 .externalNativeBuild
 .cxx
 local.properties
+/nativetemplates/build/intermediates/aar_metadata/debug/aar-metadata.properties
+/nativetemplates/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
+/nativetemplates/build/intermediates/merged_manifest/debug/AndroidManifest.xml
+/nativetemplates/build/intermediates/annotation_processor_list/debug/annotationProcessors.json
+/app/debug/app-debug.aab
+/app/release/app-release.aab
+/nativetemplates/src/main/res/values/attrs.xml
+/nativetemplates/build.gradle
+/nativetemplates/build/intermediates/aar_main_jar/debug/classes.jar
+/nativetemplates/build/intermediates/compile_library_classes_jar/debug/classes.jar
+/nativetemplates/build/intermediates/runtime_library_classes_jar/debug/classes.jar
+/nativetemplates/src/main/java/com/google/android/ads/nativetemplates/NativeTemplateStyle.java
+/nativetemplates/proguard-rules.pgcfg
