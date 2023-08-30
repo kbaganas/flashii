@@ -1152,7 +1152,7 @@ class MainActivity : AppCompatActivity() {
         /////////////////////////////////////////////////////////////////////////////////
         // Native Ad
         MobileAds.initialize(this)
-        val adLoader = AdLoader.Builder(this, "ca-app-pub-3940256099942544/2247696110")
+        val adLoader = AdLoader.Builder(this, "ca-app-pub-1341475020557565/3243868836")
             .forNativeAd { nativeAd ->
                 val template: TemplateView = findViewById(R.id.native_ad)
                 template.setNativeAd(nativeAd)
