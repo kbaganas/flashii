@@ -53,6 +53,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.ads.nativetemplates.TemplateView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.review.ReviewInfo
@@ -61,6 +62,8 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.ichthis.flashii.databinding.ActivityMainBinding
 import java.util.Locale
 import kotlin.time.Duration.Companion.minutes
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
 
 class MainActivity : AppCompatActivity() {
 
@@ -347,8 +350,6 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         rootView = findViewById(android.R.id.content)
-
-        MobileAds.initialize(this)
 
         // setup cameraManager
         cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
@@ -1146,6 +1147,19 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SupportActivity::class.java)
             startActivity(intent)
         }
+
+
+        /////////////////////////////////////////////////////////////////////////////////
+        // Native Ad
+        MobileAds.initialize(this)
+        val adLoader = AdLoader.Builder(this, "ca-app-pub-3940256099942544/2247696110")
+            .forNativeAd { nativeAd ->
+                val template: TemplateView = findViewById(R.id.native_ad)
+                template.setNativeAd(nativeAd)
+            }
+            .build()
+
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 
 
