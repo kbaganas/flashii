@@ -12,12 +12,16 @@ import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
-import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.*
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.collect.ImmutableList
 
 class SupportActivity : AppCompatActivity() {
+
+    private lateinit var billingClient: BillingClient
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,15 +96,120 @@ class SupportActivity : AppCompatActivity() {
                 }
             }
 
-            // TODO: here we have to sent supportAmount to our bank account
             Log.i("SupportActivity", "bank account $supportAmount dollars")
+
+            /////////////////////////////////////////////////////////////////////////
+            // Billing section here
+            val purchasesUpdatedListener = PurchasesUpdatedListener { billingResult, purchases ->
+                Log.i("SupportActivity", "purchasesUpdatedListener started")
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
+                    for (purchase in purchases) {
+                        // Access product details like product ID, title, price, etc.
+                        Log.i("SupportActivity", "purchase  = $purchase}")
+                    }
+                }
+                else if (billingResult.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+                    Log.i("SupportActivity", "ITEM_ALREADY_OWNED")
+                }
+
+            }
+
+            billingClient = BillingClient.newBuilder(this)
+                .setListener(purchasesUpdatedListener)
+                .enablePendingPurchases()
+                .build()
+
+            billingClient.startConnection(object : BillingClientStateListener {
+                override fun onBillingSetupFinished(billingResult: BillingResult) {
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        Log.i("SupportActivity", "BillingClient is ready for purchases")
+                        loadSkuDetails()
+                    }
+                }
+
+                override fun onBillingServiceDisconnected() {
+                    // Handle disconnected state
+                    Log.i("SupportActivity", "BillingClient disconnected")
+                }
+            })
         }
+        /////////////////////////////////////////////////////////////////////////
 
         val closeButton = findViewById<ImageButton>(R.id.supportGoBackArrow)
         closeButton.setOnClickListener {
             finish()
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    private fun loadSkuDetails() {
+
+        val queryProductDetailsParams =
+            QueryProductDetailsParams.newBuilder()
+                .setProductList(
+                    ImmutableList.of(
+                        QueryProductDetailsParams.Product.newBuilder()
+                            .setProductId("android.test.purchased")
+                            .setProductType(BillingClient.ProductType.INAPP)
+                            .build()))
+                .build()
+
+        billingClient.queryProductDetailsAsync(queryProductDetailsParams) {
+                billingResult,
+                productDetailsList ->
+
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                Log.i("SupportActivity", "Query product OK with productDetailsList = $productDetailsList")
+                for (productDetails in productDetailsList) {
+                    // Access product details like product ID, title, price, etc.
+                    Log.i("SupportActivity", "productDetails description = ${productDetails.description}")
+                    Log.i("SupportActivity", "productDetails productId = ${productDetails.productId}")
+                    Log.i("SupportActivity", "productDetails subscriptionOfferDetails = ${productDetails.subscriptionOfferDetails}")
+                    Log.i("SupportActivity", "productDetails oneTimePurchaseOfferDetails.priceCurrencyCode = ${productDetails.oneTimePurchaseOfferDetails?.priceCurrencyCode}")
+                    Log.i("SupportActivity", "productDetails oneTimePurchaseOfferDetails.formattedPrice = ${productDetails.oneTimePurchaseOfferDetails?.formattedPrice}")
+//                    val offerToken = productDetails.subscriptionOfferDetails?.get(productDetails.productId.toInt())
+//                        ?.let {
+//                            BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(productDetails).setOfferToken(
+//                                it.offerToken)
+//                        }
+                    val offerToken = "AEuhp4Ky0enab_5oZRM8VtABXiHdO92wMVte9HMc4gkLU-8iFDpGrXoQmDjX7FeWMs4="
+                    val productDetailsParams = listOf(
+                        offerToken?.let {
+                            BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(productDetails).setOfferToken(
+                                it
+                            ).build()
+                        }
+                    )
+                    Log.i("SupportActivity", "productDetailsParams = $productDetailsParams")
+                    val billingFlowParams = BillingFlowParams.newBuilder().setProductDetailsParamsList(productDetailsParams).build()
+                    Log.i("SupportActivity", "billingFlowParams = $billingFlowParams")
+                    val billingResult = billingClient.launchBillingFlow(this@SupportActivity, billingFlowParams)
+                    Log.i("SupportActivity", "billingResult = $billingResult")
+                }
+            } else {
+                // Handle billingResult error
+                Log.e("SupportActivity", "Query product details billingResult.responseCode = ${billingResult.responseCode}, productDetailsList = $productDetailsList")
+            }
+        }
+    }
+
+
+    //    private fun onPurchasesUpdated(billingResult: BillingResult, purchases: List<Purchase>?) {
+//        Log.i("SupportActivity", "onPurchasesUpdated  loc1")
+//        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
+//            for (purchase in purchases) {
+//                // Handle the purchased item
+//                if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
+//                    // Item was purchased, process it accordingly
+//                }
+//            }
+//        } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
+//            // Handle user cancellation
+//        } else {
+//            // Handle other errors
+//        }
+//    }
 
     private fun resetText(txt : EditText) {
         txt.hint = resources.getString(R.string.enterAmount)
@@ -110,48 +219,11 @@ class SupportActivity : AppCompatActivity() {
             txt.clearFocus()
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        billingClient.endConnection()
+    }
+
 }
 
-class DonationActivity : AppCompatActivity(), PurchasesUpdatedListener {
-    private lateinit var billingClient: BillingClient
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.support)
-
-        billingClient = BillingClient.newBuilder(this)
-            .setListener(this)
-            .enablePendingPurchases()
-            .build()
-
-        billingClient.startConnection(object : BillingClientStateListener {
-            override fun onBillingSetupFinished(billingResult: BillingResult) {
-                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    Log.i("SupportActivity", "Billing client is ready")
-                }
-            }
-
-            override fun onBillingServiceDisconnected() {
-                // Handle disconnected state
-                Log.i("SupportActivity", "Billing service disconnected")
-            }
-        })
-    }
-
-    // Handle donation button click
-    fun donateButtonClicked() {
-       // val billingFlowParams = BillingFlowParams.newBuilder()
-       //     .setSkuDetails(skuDetails) // Replace with your actual SkuDetails object
-       //     .build()
-
-        //val billingResult = billingClient.launchBillingFlow(this, billingFlowParams)
-        // Handle billingResult as needed
-    }
-
-    override fun onPurchasesUpdated(
-        billingResult: BillingResult,
-        purchases: List<Purchase>?
-    ) {
-        // Handle purchased items
-    }
-}

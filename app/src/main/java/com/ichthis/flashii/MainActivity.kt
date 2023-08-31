@@ -14,7 +14,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.icu.text.SimpleDateFormat
@@ -800,7 +799,7 @@ class MainActivity : AppCompatActivity() {
                         registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                         networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
                         addActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
-                        triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found.", ACTION.INFO)
+                        triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Mobile Data or Wi-Fi) is found.", ACTION.INFO)
                     }
                     else {
                         connectivityCallback = object : ConnectivityManager.NetworkCallback() {
@@ -811,7 +810,7 @@ class MainActivity : AppCompatActivity() {
                                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                                 registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                                 networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
-                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found.", ACTION.INFO)
+                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Mobile Data or Wi-Fi) is found.", ACTION.INFO)
                             }
                             override fun onLost(network: Network) {
                                 super.onLost(network)
@@ -820,7 +819,7 @@ class MainActivity : AppCompatActivity() {
                                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                                 registerIncomingEvents(TypeOfEvent.IN_SERVICE)
                                 networkImageIcon.setImageResource(R.drawable.network_lost_to_found)
-                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is found.", ACTION.INFO)
+                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Mobile Data or Wi-Fi) is found.", ACTION.INFO)
                             }
                             override fun onAvailable(network: Network) {
                                 super.onAvailable(network)
@@ -829,7 +828,7 @@ class MainActivity : AppCompatActivity() {
                                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
                                 registerIncomingEvents(TypeOfEvent.OUT_OF_SERVICE)
                                 networkImageIcon.setImageResource(R.drawable.network_found_to_lost)
-                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Wifi or Data) is lost", ACTION.INFO)
+                                triggerSnackbar(rootView, "Flashlight will be flickering when Internet Connection (Mobile Data or Wi-Fi) is lost", ACTION.INFO)
                             }
                         }
                         Log.i("MainActivity", "Register CB $connectivityCallback")
@@ -979,7 +978,7 @@ class MainActivity : AppCompatActivity() {
                             // user can no longer interact with the timepicker
                             timerTimePicker.isEnabled = false
                             snackBarTimeSelected(calcTimeToFlickerInMillis)
-                            Log.i("MainActivity", "TIME ON at $selectedTime ($loopHandlerTimer)")
+                            Log.i("MainActivity", "TIME ON at $selectedTime or $calcTimeToFlickerInMillis ms ($loopHandlerTimer)")
                         }
                     }
                 }
@@ -1135,7 +1134,7 @@ class MainActivity : AppCompatActivity() {
                     Log.e("RateActivity", "flow addOnCompleteListener: complete")
                 }
             }
-            catch (e : java.lang.Exception) {
+            catch (_: Exception) {
                 Log.e("RateActivity", "Probably no service bind with Google Play")
             }
         }
@@ -1427,6 +1426,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resetFeature (token : Token) {
+        Log.i("MainActivity", "resetFeature for $token")
         when (token) {
             Token.BATTERY -> {
                 isBatteryOn = false
@@ -1438,15 +1438,15 @@ class MainActivity : AppCompatActivity() {
                     loopHandlerBattery.removeCallbacksAndMessages(null)
                     Log.i("MainActivity", "removeCallbacksAndMessages $loopHandlerBattery")
                 }
-                catch (e : java.lang.Exception) {
-                    // Do nothing
+                catch (_: Exception) {
+                    Log.e("MainActivity", "exception $loopHandlerBattery")
                 }
                 try {
                     unregisterReceiver(batteryReceiver)
                     Log.i("MainActivity", "unregisterReceiver batteryReceiver $batteryReceiver")
                 }
-                catch (e : java.lang.Exception) {
-                    // Do nothing
+                catch (_: Exception) {
+                    Log.e("MainActivity", "exception $batteryReceiver")
                 }
 
                 removeActivatedFeature(recyclerView, FEATURE.BATTERY)
@@ -1463,15 +1463,15 @@ class MainActivity : AppCompatActivity() {
                     connectivityManager.unregisterNetworkCallback(connectivityCallback)
                     Log.i("MainActivity", "unregisterReceiver connectivityCallback $connectivityCallback")
                 }
-                catch (e : java.lang.Exception) {
-                    // Do nothing
+                catch (_: Exception) {
+                    Log.e("MainActivity", "exception $connectivityCallback")
                 }
                 try {
                     loopHandlerNetwork.removeCallbacksAndMessages(null)
                     Log.i("MainActivity", "removeCallbacksAndMessages $loopHandlerNetwork")
                 }
-                catch (e : java.lang.Exception) {
-                    // Do nothing
+                catch (_: Exception) {
+                    Log.e("MainActivity", "exception $loopHandlerNetwork")
                 }
 
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
@@ -1491,8 +1491,8 @@ class MainActivity : AppCompatActivity() {
                     loopHandlerTimer.removeCallbacksAndMessages(null)
                     Log.i("MainActivity", "removeCallbacksAndMessages $loopHandlerTimer")
                 }
-                catch (e : java.lang.Exception) {
-                    // Do nothing
+                catch (_: Exception) {
+                    Log.e("MainActivity", "exception $loopHandlerTimer")
                 }
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerImageIcon.setImageResource(R.drawable.timer_off)
@@ -1506,16 +1506,16 @@ class MainActivity : AppCompatActivity() {
                     sensorManager.unregisterListener(sensorPressureEventListener)
                     Log.i("MainActivity", "unregisterReceiver sensorPressureEventListener $sensorPressureEventListener")
                 }
-                catch (e : java.lang.Exception) {
-                    // Do nothing
+                catch (_: Exception) {
+                    Log.e("MainActivity", "exception $sensorPressureEventListener")
                 }
                 try {
                     altitudeListenerRegistered = false
                     loopHandlerAltitude.removeCallbacksAndMessages(null)
                     Log.i("MainActivity", "removeCallbacksAndMessages $loopHandlerAltitude")
                 }
-                catch (e : java.lang.Exception) {
-                    // Do nothing
+                catch (_: Exception) {
+                    Log.e("MainActivity", "exception $loopHandlerAltitude")
                 }
 
                 if (flickeringDueToAltitude) {
@@ -1534,16 +1534,16 @@ class MainActivity : AppCompatActivity() {
                     audioRecordHandler.release()
                     recordingThread?.interrupt()
                 }
-                catch (e : java.lang.Exception) {
-                    // Do nothing
+                catch (_: Exception) {
+                    Log.e("MainActivity", "exception Token.SOUND1")
                 }
                 recordingThread?.join()
                 recordingThread = null
                 try {
                     loopHandlerFlickering.removeCallbacksAndMessages(null)
                 }
-                catch (e : java.lang.Exception) {
-                    // Do nothing
+                catch (_: Exception) {
+                    Log.e("MainActivity", "exception Token.SOUND2")
                 }
 
                 soundImageIcon.setImageResource(R.drawable.sound_off)
@@ -1564,7 +1564,7 @@ class MainActivity : AppCompatActivity() {
                     sensorManager.unregisterListener(sensorRotationEventListener)
                     Log.i("MainActivity", "unregisterReceiver sensorRotationEventListener $sensorRotationEventListener")
                 }
-                catch (_: Exception) { }
+                catch (_: Exception) { Log.e("MainActivity", "exception Token.TILT") }
                 incomingTiltSwitch.isChecked = false
                 isPhoneTilt = false
                 rotationSensorRegistered = false
@@ -1612,7 +1612,7 @@ class MainActivity : AppCompatActivity() {
             itemList.removeIf { item -> item == feature.value }
             recyclerView.adapter?.notifyDataSetChanged()
         }
-        catch (_:java.lang.Exception) {}
+        catch (_: Exception) { Log.e("MainActivity", "exception removeActivatedFeature") }
     }
 
     private fun setSettingsIntent () {
@@ -2076,8 +2076,8 @@ class MainActivity : AppCompatActivity() {
                     setBtnImage(flashlightImageIcon, R.drawable.flashlight_on6)
                 }
                 Log.i("MainActivity", "FlashLight ON")
-            } catch (e: CameraAccessException) {
-                Log.d("MainActivity", "FlashLight ON - ERROR: $e")
+            } catch (e: Exception) {
+                Log.e("MainActivity", "FlashLight ON - ERROR: $e")
             }
         }
     }
@@ -2091,8 +2091,8 @@ class MainActivity : AppCompatActivity() {
                    setBtnImage(flashlightImageIcon, R.drawable.flashlight_off4)
                 }
                 Log.i("MainActivity", "FlashLight OFF")
-            } catch (e: CameraAccessException) {
-                Log.d("MainActivity", "FlashLight OFF - ERROR: $e")
+            } catch (e: Exception) {
+                Log.e("MainActivity", "FlashLight OFF - ERROR: $e")
             }
         }
     }
@@ -2327,8 +2327,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         Log.i("MainActivity", "onPause is running")
-        super.onPause()
         storeSettings()
+        super.onPause()
     }
 
     override fun onRestart() {
@@ -2338,61 +2338,76 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         Log.i("MainActivity", "onDestroy is running")
-        super.onDestroy()
 
         if (isFlashLightOn) {
             Log.i("MainActivity", "Flashlight OFF")
-            turnOffFlashlight()
+            try {
+                turnOffFlashlight()
+            }
+            catch (e : Exception) {
+                Log.e("MainActivity", "onDestroy turnOffFlashlight exception $e")
+            }
         }
         else if (isSendSOS) {
             Log.i("MainActivity", "SOS OFF")
-            stopSOS()
+            try {
+                stopSOS()
+            }
+            catch (e : Exception) {
+                Log.e("MainActivity", "onDestroy stopSOS exception $e")
+            }
         }
         else if (isFlickering) {
             Log.i("MainActivity", "Flickering OFF")
-            stopFlickering(Token.OTHER)
+            try {
+                stopFlickering(Token.OTHER)
+            }
+            catch (e : Exception) {
+                Log.e("MainActivity", "onDestroy stopFlickering exception $e")
+            }
         }
 
+        Log.i("MainActivity", "LOC1")
         if (isIncomingCall) {
             try {
                 Log.i("MainActivity", "incomingCallReceiver OFF $incomingCallReceiver ")
                 unregisterReceiver(incomingCallReceiver)
             }
-            catch (e : java.lang.Exception) {
-                // Do nothing
+            catch (e : Exception) {
+                Log.e("MainActivity", "onDestroy incomingCallReceiver exception $e")
             }
         }
-
+        Log.i("MainActivity", "LOC2")
         if (isIncomingSMS) {
             try {
                 Log.i("MainActivity", "incomingSMSReceiver OFF $incomingSMSReceiver ")
                 unregisterReceiver(incomingSMSReceiver)
             }
-            catch (e : java.lang.Exception) {
-                // Do nothing
+            catch (e : Exception) {
+                Log.e("MainActivity", "onDestroy incomingSMSReceiver exception $e")
             }
         }
-
+        Log.i("MainActivity", "LOC3")
         if (isPhoneTilt) {
             try {
                 Log.i("MainActivity", "sensorRotationEventListener OFF $sensorRotationEventListener ")
                 sensorManager.unregisterListener(sensorRotationEventListener)
             }
-            catch (e : java.lang.Exception) {
-                // Do nothing
+            catch (e : Exception) {
+                Log.e("MainActivity", "onDestroy sensorRotationEventListener exception $e")
             }
         }
-
+        Log.i("MainActivity", "LOC4")
         if (isNetworkConnectivityCbIsSet) {
             try {
                 Log.i("MainActivity", "connectivityCallback OFF $connectivityCallback ")
                 connectivityManager.unregisterNetworkCallback(connectivityCallback)
             }
-            catch (e : java.lang.Exception) {
-                // Do nothing
+            catch (e : Exception) {
+                Log.e("MainActivity", "onDestroy connectivityCallback exception $e")
             }
         }
-
+        Log.i("MainActivity", "LOC5")
         if (isAudioIncoming) {
             try {
                 Log.i("MainActivity", "audioRecordHandler OFF $audioRecordHandler ")
@@ -2400,32 +2415,44 @@ class MainActivity : AppCompatActivity() {
                 audioRecordHandler.release()
                 recordingThread?.interrupt()
             }
-            catch (e : SecurityException) {
-                Log.e("MainActivity", "onDestroy recordingThread exception $e")
+            catch (e : Exception) {
+                Log.e("MainActivity", "onDestroy audioRecordHandler exception $e")
             }
             recordingThread?.join()
             recordingThread = null
         }
-
+        Log.i("MainActivity", "LOC6")
         if (isAltitudeOn) {
             try {
                 Log.i("MainActivity", "sensorPressureEventListener OFF $sensorPressureEventListener ")
                 sensorManager.unregisterListener(sensorPressureEventListener)
             }
-            catch (e : SecurityException) {
-                Log.e("MainActivity", "onDestroy sensorManager exception $e")
+            catch (e : Exception) {
+                Log.e("MainActivity", "onDestroy sensorPressureEventListener exception $e")
             }
         }
-
+        Log.i("MainActivity", "LOC7")
         if (isBatteryOn) {
             try {
                 Log.i("MainActivity", "batteryReceiver OFF $batteryReceiver ")
                 unregisterReceiver(batteryReceiver)
             }
-            catch (e : SecurityException) {
+            catch (e : Exception) {
                 Log.e("MainActivity", "onDestroy batteryReceiver exception $e")
             }
         }
+        Log.i("MainActivity", "LOC8")
+        if (isTimerOn) {
+            try {
+                Log.i("MainActivity", "loopHandlerTimer OFF $loopHandlerTimer ")
+                loopHandlerTimer.removeCallbacksAndMessages(null)
+            }
+            catch (e : Exception) {
+                Log.e("MainActivity", "onDestroy loopHandlerTimer exception $e")
+            }
+        }
+
+        super.onDestroy()
     }
 
 

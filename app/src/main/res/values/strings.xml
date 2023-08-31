@@ -47,11 +47,11 @@
     <string name="infoTilt">You can turn On and Off the flashlight by tilting the phone at around 80 degrees angle (default) from its standpoint. You can manually configure this angle between 45° - 90° in the seekbar.\n\nService is only available if your phone device has a Rotation Sensor. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoFlickering">Flashlight will be flickering at the frequency in Hertz (Hz) you specify in the seekbar. By default frequency ranges from 1 to 10Hz.\n\nNote that you can configure the max frequency of 10Hz to the desired value in the Settings (up to 100Hz).</string>
     <string name="infoAltitude">Set a specific Altitude height in meters (m) at which you want to get notified by flashlight flickering.\n\nWhen Altitude is reached, the flashlight will be flickering for 15 seconds (default).\n\nService is only available if you permit Location rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
-    <string name="infoNetwork">Based on your phone\'s current internet connection status, you \'ll get notified by flashlight flickering when\n\na) internet Data or WiFi connections are lost, \nb) internet Data or WiFi connections are found.</string>
+    <string name="infoNetwork">Based on your phone\'s current internet connection status, you \'ll get notified by flashlight flickering when\n\na) Mobile Data or Wi-Fi connections are lost, \nb) Mobile Data or Wi-Fi connections are found.</string>
 
     <string name="maxHz">Max flickering frequency:\nRange from 10Hz (default) to 100Hz.</string>
-    <string name="ConnectionToLost">Get notified when Data or WiFi are lost</string>
-    <string name="ConnectionToFound">Get notified when Data or WiFi are found</string>
+    <string name="ConnectionToLost">Get notified when Mobile Data or Wi-Fi are lost</string>
+    <string name="ConnectionToFound">Get notified when Mobile Data or Wi-Fi are found</string>
     <string name="backArrow">Back arrow</string>
     <string name="backArrowTilt">Back arrow Tilt</string>
     <string name="backArrowFlashlight">Back arrow Flashlight</string>
