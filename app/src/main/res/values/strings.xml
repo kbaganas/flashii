@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Flashii</string>
-    <string name="IncomingSMSContentDescription">Flashlight flickers on incoming SMSes</string>
+    <string name="FeatureContentDescription">Flashlight flickers on feature</string>
     <string name="FlashlightImageContentDescription">Flashlight on/off</string>
     <string name="FlashlightImageBtnContentDescription">Flashlight on/off ImageBtn</string>
     <string name="GeneralContentDescription">Application general info</string>
@@ -23,10 +23,6 @@
     <string name="settingsComments">Personalize service specifications\naccording to ranges</string>
     <string name="settingsFlickeringTitle">Max flickering frequency</string>
     <string name="settingsHzNote">(Range: 10 to 100 Hz)</string>
-    <string name="settingsFlickeringCallTitle">Flashlight flickering time on Call incoming</string>
-    <string name="settingsFlickeringCallNote">(Range: 3 to 180 seconds)</string>
-    <string name="settingsFlickeringSMSTitle">Flashlight flickering time on SMS incoming</string>
-    <string name="settingsFlickeringSMSNote">(Range: 3 to 180 seconds)</string>
     <string name="settingsBatteryTitle">Flashlight flickering time on Battery Power reached</string>
     <string name="settingsBatteryNote">(Range: 3 to 180 seconds)</string>
     <string name="settingsAltitudeTitle">Flashlight flickering time on Altitude Height reached</string>
@@ -40,10 +36,8 @@
     <string name="infoTimer">Set the time at which you want to get notified by flashlight flickering.\n\nWhen time is reached, the flashlight will be flickering for 15 seconds (default).</string>
     <string name="infoSOS">Enable this service to continuously transmit SOS message in Morse code from your flashlight</string>
     <string name="infoSound">You can turn On and Off the flashlight by producing short sounds, e.g. finger&#8211;snapping and hand&#8211;clapping. \n\nNote that you can configure the sound sensitivity at the desired level (1 to 10).\n\nService is only available if you permit Audio rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
-    <string name="infoIncomingSMS">Enable this service to get notified by flashlight flickering when you receive an incoming SMS in your phone. \n\nFlickering will stop after 15 seconds (configurable in Settings).\n\nService is only available if you permit SMS rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoActivated">Service activated.</string>
     <string name="infoDeactivated">Service deactivated.</string>
-    <string name="infoIncomingCall">Enable this service to get notified by flashlight flickering when you receive an incoming Call on your phone.\n\nFlickering will stop if you answer or reject the incoming Call, or automatically after 15 seconds (configurable in Settings).\n\nService is only available if you permit Call rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoTilt">You can turn On and Off the flashlight by tilting the phone at around 80 degrees angle (default) from its standpoint. You can manually configure this angle between 45° - 90° in the seekbar.\n\nService is only available if your phone device has a Rotation Sensor. If otherwise, the deactivated button is displayed instead.</string>
     <string name="infoFlickering">Flashlight will be flickering at the frequency in Hertz (Hz) you specify in the seekbar. By default frequency ranges from 1 to 10Hz.\n\nNote that you can configure the max frequency of 10Hz to the desired value in the Settings (up to 100Hz).</string>
     <string name="infoAltitude">Set a specific Altitude height in meters (m) at which you want to get notified by flashlight flickering.\n\nWhen Altitude is reached, the flashlight will be flickering for 15 seconds (default).\n\nService is only available if you permit Location rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
@@ -58,8 +52,6 @@
     <string name="timerFeature">Time</string>
     <string name="batteryFeature">Battery Power</string>
     <string name="altitudeFeature">Altitude Height</string>
-    <string name="callFeature">Flashlight flicker on Incoming Call</string>
-    <string name="smsFeature">Flashlight flicker on Incoming SMS</string>
     <string name="networkFeature">Internet Connection</string>
     <string name="tiltFeature">Phone Tilt</string>
     <string name="soundFeature">Finger Snap</string>
@@ -86,7 +78,6 @@
     <string name="flashlight_flickers">Flashlight Flicker</string>
     <string name="altitude_height">Altitude Height</string>
     <string name="switch_for_tilt">Switch for tilt</string>
-    <string name="switch_for_sms">Switch for SMS</string>
     <string name="soft">Soft\nSnap</string>
     <string name="loud">Loud\nSnap</string>
     <string name="max_nangle">Max\nAngle</string>
@@ -99,4 +90,6 @@
     <string name="max_nheight">Max\nHeight</string>
     
     <string name="appId">ca-app-pub-1341475020557565~9549670150</string>
+    <string name="flicker_on_phone_tilts">Flicker on Phone Tilts</string>
+    <string name="flicker_on_finger_snap">Flicker on Finger Snap</string>
 </resources>

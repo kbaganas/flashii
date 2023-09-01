@@ -54,7 +54,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/MainImageSize"
                                 android:background="#00FFFFFF"
-                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:contentDescription="@string/flicker_on_phone_tilts"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/tilt_no_permission" />
 
@@ -180,96 +180,95 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- SMS & CALL -->
+            <!-- NETWORK & SOS-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <!-- Network -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/feature_selector_network"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <!-- Incoming SMS -->
+                    <ImageView
+                        android:id="@+id/networkImageIcon"
+                        android:layout_width="78dp"
+                        android:layout_height="@dimen/MainImageSize"
+                        android:layout_gravity="start"
+                        android:background="#00FFFFFF"
+                        android:contentDescription="@string/FeatureContentDescription"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/network_no_permission" />
+
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/feature_selector_sms"
-                        android:orientation="horizontal"
-                        android:padding="12dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="end">
 
-                        <ImageView
-                            android:id="@+id/smsImageIcon"
-                            android:layout_width="78dp"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:layout_gravity="start"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/IncomingSMSContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/sms_no_permission"
-                            tools:ignore="ImageContrastCheck" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <Switch
+                            android:id="@+id/switchNetwork"
+                            android:layout_width="48dp"
                             android:layout_height="match_parent"
-                            android:gravity="end">
-
-                            <Switch
-                                android:id="@+id/switchSMS"
-                                android:layout_width="48dp"
-                                android:layout_height="match_parent"
-                                android:checked="false"
-                                android:contentDescription="@string/switch_for_sms"
-                                android:gravity="bottom"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
-                        </LinearLayout>
+                            android:checked="false"
+                            android:gravity="bottom"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:progressTint="@color/seekbarProgressTint"
+                            android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
                     </LinearLayout>
 
-                    <!-- Incoming Call -->
+                </LinearLayout>
+
+                <!-- SOS -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/feature_selector_sos"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:id="@+id/sosImageIcon"
+                        android:layout_width="78dp"
+                        android:layout_height="@dimen/MainImageSize"
+                        android:background="#00FFFFFF"
+                        android:contentDescription="@string/FeatureContentDescription"
+                        android:scaleType="fitCenter"
+                        android:scaleY="1.1"
+                        app:srcCompat="@drawable/sos_off" />
+
                     <LinearLayout
-                        android:id="@+id/layoutCallBtn"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/feature_selector_call"
-                        android:orientation="horizontal"
-                        android:padding="12dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="end">
 
-                        <ImageView
-                            android:id="@+id/callImageIcon"
-                            android:layout_width="78dp"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:layout_gravity="start"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/IncomingSMSContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/call_no_permission" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <Switch
+                            android:id="@+id/switchSOS"
+                            android:layout_width="48dp"
                             android:layout_height="match_parent"
-                            android:gravity="end">
-
-                            <Switch
-                                android:id="@+id/switchCALL"
-                                android:layout_width="48dp"
-                                android:layout_height="match_parent"
-                                android:checked="false"
-                                android:gravity="bottom"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
-                        </LinearLayout>
+                            android:checked="false"
+                            android:gravity="bottom"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:progressTint="@color/seekbarProgressTint"
+                            android:thumb="@drawable/switch_thumb"
+                            android:track="@drawable/switch_track"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
                     </LinearLayout>
                 </LinearLayout>
+
+            </LinearLayout>
 
                 <!-- SOUND -->
                 <LinearLayout
@@ -300,7 +299,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
                                 android:background="#00FFFFFF"
-                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:contentDescription="@string/flicker_on_finger_snap"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/sound_no_permission" />
 
@@ -525,7 +524,7 @@
                                 android:layout_width="@dimen/MainImageSize"
                                 android:layout_height="@dimen/MainImageSize"
                                 android:background="#00FFFFFF"
-                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:contentDescription="@string/FeatureContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/flicker_no_permission"
                                 tools:ignore="ImageContrastCheck" />
@@ -663,7 +662,7 @@
                                 android:layout_width="76dp"
                                 android:layout_height="@dimen/MainImageSize"
                                 android:background="#00FFFFFF"
-                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:contentDescription="@string/FeatureContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/timer_no_permission"
                                 tools:ignore="ImageContrastCheck" />
@@ -766,96 +765,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- NETWORK & SOS-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-                    <!-- Network -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/feature_selector_network"
-                        android:orientation="horizontal"
-                        android:padding="12dp">
-
-                        <ImageView
-                            android:id="@+id/networkImageIcon"
-                            android:layout_width="78dp"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:layout_gravity="start"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/IncomingSMSContentDescription"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/network_no_permission" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="end">
-
-                            <Switch
-                                android:id="@+id/switchNetwork"
-                                android:layout_width="48dp"
-                                android:layout_height="match_parent"
-                                android:checked="false"
-                                android:gravity="bottom"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <!-- SOS -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/feature_selector_sos"
-                        android:orientation="horizontal"
-                        android:padding="12dp">
-
-                        <ImageView
-                            android:id="@+id/sosImageIcon"
-                            android:layout_width="78dp"
-                            android:layout_height="@dimen/MainImageSize"
-                            android:background="#00FFFFFF"
-                            android:contentDescription="@string/IncomingSMSContentDescription"
-                            android:scaleType="fitCenter"
-                            android:scaleY="1.1"
-                            app:srcCompat="@drawable/sos_off" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="end">
-
-                            <Switch
-                                android:id="@+id/switchSOS"
-                                android:layout_width="48dp"
-                                android:layout_height="match_parent"
-                                android:checked="false"
-                                android:gravity="bottom"
-                                android:minWidth="48dp"
-                                android:minHeight="48dp"
-                                android:progressTint="@color/seekbarProgressTint"
-                                android:thumb="@drawable/switch_thumb"
-                                android:track="@drawable/switch_track"
-                                tools:ignore="UseSwitchCompatOrMaterialXml" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-
                 <!-- BATTERY -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -885,7 +794,7 @@
                                 android:layout_width="76dp"
                                 android:layout_height="@dimen/MainImageSize"
                                 android:background="#00FFFFFF"
-                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:contentDescription="@string/FeatureContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/battery_no_permission" />
 
@@ -1037,7 +946,7 @@
                                 android:layout_width="76dp"
                                 android:layout_height="@dimen/MainImageSize"
                                 android:background="#00FFFFFF"
-                                android:contentDescription="@string/IncomingSMSContentDescription"
+                                android:contentDescription="@string/FeatureContentDescription"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/altitude_no_permission" />
 

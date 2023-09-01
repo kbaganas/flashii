@@ -11,8 +11,8 @@ android {
         applicationId "com.ichthis.flashii"
         minSdk 30
         targetSdk 34
-        versionCode 9
-        versionName "1.9"
+        versionCode 14
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

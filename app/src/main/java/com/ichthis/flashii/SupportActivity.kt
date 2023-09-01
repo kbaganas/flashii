@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
-import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.*
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.collect.ImmutableList
@@ -137,7 +136,9 @@ class SupportActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        billingClient.endConnection()
+        if (supportAmount != "") {
+            billingClient.endConnection()
+        }
     }
 
 }

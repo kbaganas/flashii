@@ -34,16 +34,14 @@
     <color name="dollarColor">#85BB65</color>
 
     <color name="mainTilt">#E3F5FE</color>
-    <color name="mainSMS">#E3F8FE</color>
-    <color name="mainCALL">#E3FBFD</color>
-    <color name="mainSound">#e3fbfe</color>
+    <color name="mainNetwork">#E6F8FE</color>
+    <color name="mainSOS">#E9FAFE</color>
+    <color name="mainSound">#ECFCFE</color>
     <color name="mainFlashlight">#EAFDF9</color>
     <color name="mainFlicker">#F1FEF4</color>
     <color name="mainTime">#FAFEEE</color>
-    <color name="mainNetwork">#FCF9EC</color>
-    <color name="mainSOS">#FEF5E9</color>
-    <color name="mainBattery">#FEECE8</color>
-    <color name="mainAltitude">#fee3e7</color>
+    <color name="mainBattery">#F8F1EC</color>
+    <color name="mainAltitude">#FCEFEC</color>
 
     <color name="switch_off">#A24C3F</color>
     <color name="switch_on">#40B344</color>
