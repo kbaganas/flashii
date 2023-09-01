@@ -74,7 +74,7 @@
                 android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp">
+                android:layout_marginTop="38dp">
                 <RadioButton
                     android:id="@+id/support1Btn"
                     android:layout_width="match_parent"
@@ -118,70 +118,13 @@
                     tools:ignore="VisualLintButtonSize" />
             </RadioGroup>
 
-
-
-            <LinearLayout
-                android:id="@+id/dividers"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_marginTop="18dp"
+                android:layout_height="1dp"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:textAlignment="center"
-                tools:ignore="TextSizeCheck">
-
-                <View
-                    android:id="@+id/firstDivider"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="3"
-                    android:background="@color/blueOff"
-                    android:fontFamily="@font/cabin_semibold"
-                    android:text="@string/or"
-                    tools:ignore="ExtraText" />
-
-                <TextView
-                    android:id="@+id/textInDividers"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/cabin_regular"
-                    android:gravity="center_vertical|center"
-                    android:text="@string/or"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-                <View
-                    android:id="@+id/secondDivider"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="3"
-                    android:background="@color/blueOff"
-                    android:fontFamily="@font/cabin_semibold"
-                    android:text="@string/or" />
-            </LinearLayout>
-
-
-            <EditText
-                android:id="@+id/supportManualText"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginHorizontal="56dp"
-                android:layout_marginTop="8dp"
-                android:autofillHints=""
-                android:fontFamily="@font/cabin_regular"
-                android:hint="@string/enterAmount"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:textAlignment="center"
-                android:textColorHint="@color/greyNote"
-                android:textSize="18sp"
-                android:inputType="number"
-                app:backgroundTint="@color/blueOffBack4"
-                tools:ignore="VisualLintTextFieldSize" />
+                android:layout_marginTop="34dp"
+                android:layout_marginHorizontal="50dp"
+                android:background="@color/blueOff"/>
 
 
             <Button

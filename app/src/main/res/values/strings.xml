@@ -12,9 +12,9 @@
     <string name="reset">RESET</string>
     <string name="enterAmount">Enter your amount</string>
     <string name="supportText">Thank you for supporting Flashii</string>
-    <string name="dollar1">$1</string>
-    <string name="dollar10">$10</string>
-    <string name="dollar100">$100</string>
+    <string name="dollar1">\u20ac0.99</string>
+    <string name="dollar10">\u20ac4.99</string>
+    <string name="dollar100">\u20ac9.99</string>
     <string name="or">or</string>
     <string name="enterValue">Enter value</string>
     <string name="applyChanges">APPLY</string>

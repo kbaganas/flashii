@@ -63,6 +63,9 @@ import java.util.Locale
 import kotlin.time.Duration.Companion.minutes
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -219,7 +222,6 @@ class MainActivity : AppCompatActivity() {
     )
 
     // Handlers
-    private var loopHandlerTimer : Handler = Handler(Looper.getMainLooper())
     private var loopHandlerBattery : Handler = Handler(Looper.getMainLooper())
     private var loopHandlerNetwork : Handler = Handler(Looper.getMainLooper())
     private var loopHandlerFlickering : Handler = Handler(Looper.getMainLooper())
@@ -239,6 +241,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var incomingCallReceiver : BroadcastReceiver
     private lateinit var incomingSMSReceiver : BroadcastReceiver
     private lateinit var batteryReceiver : BroadcastReceiver
+    private lateinit var timerExecutor : ScheduledExecutorService
 
     // Booleans
     private var isFlashLightOn = false
@@ -972,18 +975,19 @@ class MainActivity : AppCompatActivity() {
                             timerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
                             addActivatedFeature(recyclerView, FEATURE.TIMER)
                             timerForFlickeringSet = true
-                            loopHandlerTimer.removeCallbacksAndMessages(null)
-                            loopHandlerTimer.postDelayed({resetActivitiesAndFlicker(Token.TIMER)}, calcTimeToFlickerInMillis)
-                            loopHandlerTimer.postDelayed({resetFeature(Token.TIMER)}, calcTimeToFlickerInMillis + maxFlickerDuration30)
+                            timerExecutor = Executors.newSingleThreadScheduledExecutor()
+                            timerExecutor.schedule({ resetActivitiesAndFlicker(Token.TIMER) }, calcTimeToFlickerInMillis, TimeUnit.MILLISECONDS)
+                            timerExecutor.schedule({ resetFeature(Token.TIMER) }, calcTimeToFlickerInMillis + maxFlickerDuration30, TimeUnit.MILLISECONDS)
+
                             // user can no longer interact with the timepicker
                             timerTimePicker.isEnabled = false
                             snackBarTimeSelected(calcTimeToFlickerInMillis)
-                            Log.i("MainActivity", "TIME ON at $selectedTime or $calcTimeToFlickerInMillis ms ($loopHandlerTimer)")
+                            Log.i("MainActivity", "TIME ON at $selectedTime or $calcTimeToFlickerInMillis ms ($timerExecutor)")
                         }
                     }
                 }
                 else {
-                    Log.i("MainActivity", "TIME OFF ($loopHandlerTimer)")
+                    Log.i("MainActivity", "TIME OFF ($timerExecutor)")
                     resetFeature(Token.TIMER)
                     timerTimePicker.isEnabled = true
                 }
@@ -1488,11 +1492,10 @@ class MainActivity : AppCompatActivity() {
                 timerSetAfter = minTimerMinutes
 
                 try {
-                    loopHandlerTimer.removeCallbacksAndMessages(null)
-                    Log.i("MainActivity", "removeCallbacksAndMessages $loopHandlerTimer")
+                    timeExecutorShutdown(timerExecutor)
                 }
                 catch (_: Exception) {
-                    Log.e("MainActivity", "exception $loopHandlerTimer")
+                    Log.e("MainActivity", "exception timeExecutorShutdown $timerExecutor")
                 }
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerImageIcon.setImageResource(R.drawable.timer_off)
@@ -1599,6 +1602,25 @@ class MainActivity : AppCompatActivity() {
             else -> {}
         }
 
+    }
+
+    private fun timeExecutorShutdown (timerExecutor: ScheduledExecutorService) {
+        val backgroundThread = Thread {
+            Log.i("MainActivity", "timerExecutor shutdown $timerExecutor")
+            timerExecutor.shutdown()
+
+            try {
+                // Wait for previously submitted tasks to finish or a timeout occurs
+                if (!timerExecutor.awaitTermination(5, TimeUnit.SECONDS)) {
+                    // Timeout occurred; force shutdown if needed
+                    timerExecutor.shutdownNow()
+                    Log.i("MainActivity", "timerExecutor was shutdownNow")
+                }
+            } catch (e: InterruptedException) {
+                Log.e("MainActivity", "timerExecutor $e")
+            }
+        }
+        backgroundThread.start()
     }
 
     private fun addActivatedFeature (recyclerView : RecyclerView, feature: FEATURE) {
@@ -2444,11 +2466,11 @@ class MainActivity : AppCompatActivity() {
         Log.i("MainActivity", "LOC8")
         if (isTimerOn) {
             try {
-                Log.i("MainActivity", "loopHandlerTimer OFF $loopHandlerTimer ")
-                loopHandlerTimer.removeCallbacksAndMessages(null)
+                Log.i("MainActivity", "timerExecutor OFF $timerExecutor ")
+                timeExecutorShutdown(timerExecutor)
             }
             catch (e : Exception) {
-                Log.e("MainActivity", "onDestroy loopHandlerTimer exception $e")
+                Log.e("MainActivity", "onDestroy timerExecutor exception $e")
             }
         }
 
