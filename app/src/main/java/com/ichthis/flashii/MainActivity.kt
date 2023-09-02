@@ -45,7 +45,6 @@ import android.widget.TextView
 import android.widget.TimePicker
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.Camera
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -117,7 +116,7 @@ class MainActivity : AppCompatActivity() {
     private val spaceWordsDuration : Long = 4 * spaceDuration // results to 7*ditDuration, considering that we add spaceCharsDuration after each letter
 
     // Flickering
-    private val maxFlickerDuration30 : Long = 30000 // 30 seconds
+    val maxFlickerDuration30 : Long = 30000 // 30 seconds
     private var maxFlickerDurationBattery : Int = defaultMaxFlickerIncomingBattery
     private var maxFlickerDurationAltitude : Int = defaultMaxFlickerIncomingAltitude
 
@@ -319,7 +318,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility", "MissingInflatedId")
+    @SuppressLint("SetTextI18n", "MissingPermission", "ClickableViewAccessibility", "MissingInflatedId",
+        "RestrictedApi"
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
@@ -895,6 +896,7 @@ class MainActivity : AppCompatActivity() {
                             timerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
                             addActivatedFeature(recyclerView, FEATURE.TIMER)
                             timerForFlickeringSet = true
+
                             timerExecutor = Executors.newSingleThreadScheduledExecutor()
                             timerExecutor.schedule({ resetActivitiesAndFlicker(Token.TIMER) }, calcTimeToFlickerInMillis, TimeUnit.MILLISECONDS)
                             timerExecutor.schedule({ resetFeature(Token.TIMER) }, calcTimeToFlickerInMillis + maxFlickerDuration30, TimeUnit.MILLISECONDS)
@@ -902,12 +904,12 @@ class MainActivity : AppCompatActivity() {
                             // user can no longer interact with the timepicker
                             timerTimePicker.isEnabled = false
                             snackBarTimeSelected(calcTimeToFlickerInMillis)
-                            Log.i("MainActivity", "TIME ON at $selectedTime or $calcTimeToFlickerInMillis ms ($timerExecutor)")
+                            Log.i("MainActivity", "TIME ON at $selectedTime or $calcTimeToFlickerInMillis ms")
                         }
                     }
                 }
                 else {
-                    Log.i("MainActivity", "TIME OFF ($timerExecutor)")
+                    Log.i("MainActivity", "TIME OFF")
                     resetFeature(Token.TIMER)
                     timerTimePicker.isEnabled = true
                 }
@@ -1347,7 +1349,7 @@ class MainActivity : AppCompatActivity() {
         return simpleDateFormat.format(calendar.time)
     }
 
-    private fun resetFeature (token : Token) {
+    fun resetFeature (token : Token) {
         Log.i("MainActivity", "resetFeature for $token")
         when (token) {
             Token.BATTERY -> {
@@ -1780,7 +1782,7 @@ class MainActivity : AppCompatActivity() {
         textView.setTextColor(resources.getColor(color, theme))
     }
 
-    private fun resetActivitiesAndFlicker (token: Token) {
+    fun resetActivitiesAndFlicker (token: Token) {
         resetAllActivities(token)
         Log.i("MainActivity", "Flickering ON for $token")
         startFlickering(token)
@@ -1866,7 +1868,7 @@ class MainActivity : AppCompatActivity() {
             cameraManager.setTorchMode(flashlightId, true)
         }
         catch (e : java.lang.IllegalArgumentException) {
-
+            Log.e("MainActivity", "atomicFlashLightOn failed")
         }
     }
 
@@ -1875,7 +1877,7 @@ class MainActivity : AppCompatActivity() {
             cameraManager.setTorchMode(flashlightId, false)
         }
         catch (e : java.lang.IllegalArgumentException) {
-
+            Log.e("MainActivity", "atomicFlashLightOff failed")
         }
     }
 
@@ -2315,6 +2317,4 @@ class ItemAdapter(private val itemList: List<String>) :
         }
     }
 }
-
-
 
