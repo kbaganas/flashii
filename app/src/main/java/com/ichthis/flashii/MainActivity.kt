@@ -3,6 +3,8 @@ package com.ichthis.flashii
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -29,6 +31,7 @@ import android.os.BatteryManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -59,6 +62,8 @@ import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.ichthis.flashii.databinding.ActivityMainBinding
+import java.io.File
+import java.io.IOException
 import java.util.Locale
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -107,6 +112,7 @@ class MainActivity : AppCompatActivity() {
     // Timer
     private val minTimerMinutes = 1.minutes
     private var timerSetAfter = 0.minutes
+    private var calcTimeToFlickerInMillis = 0L
 
     // SOS
     private val ditDuration : Long = 250
@@ -222,6 +228,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var reviewManager : ReviewManager
     private lateinit var batteryReceiver : BroadcastReceiver
     private lateinit var timerExecutor : ScheduledExecutorService
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var alarmIntent: PendingIntent
+    private lateinit var alarmReceiver : BroadcastReceiver
 
     // Booleans
     private var isFlashLightOn = false
@@ -371,10 +380,41 @@ class MainActivity : AppCompatActivity() {
         altitudeBar = findViewById(R.id.seekBarAltitude)
         altitudeSwitch = findViewById(R.id.switchAltitude)
 
+        // Initiate local log storage
+        getExternalFilesDir(null)?.let { publicAppDirectory -> // getExternalFilesDir don't need storage permission
+            val logDirectory = File("${publicAppDirectory.absolutePath}/logs")
+            if (!logDirectory.exists()) {
+                logDirectory.mkdirs()
+            }
+            val logFile = File(logDirectory, "logcat_${System.currentTimeMillis()}.txt")
+            val processBuilder = ProcessBuilder("logcat", "-f", logFile.absolutePath)
+            try {
+                // Clear the previous logcat.
+                Runtime.getRuntime().exec("logcat -c")
+
+                // Start capturing new logcat entries to the specified log file.
+                val process = processBuilder.start()
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+
         // Initialization of basic Settings
         if (isStoredSettings()) {
             retrieveStoredSettings()
             Log.i("MainActivity", "Retrieved stored settings are: $flickerFlashlightHz (current Hz), $maxFlickerHz (max Hz), $sensitivitySoundThreshold (sound), $sensitivityAngle (tilt degrees), $maxFlickerDurationBattery (battery),$maxFlickerDurationAltitude (altitude)")
+        }
+
+
+        alarmReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (context != null) {
+                    Log.d("MainActivity", "Alarm received! Perform your task here.")
+                    resetActivitiesAndFlicker(Token.TIMER)
+                    loopHandler.postDelayed({resetFeature(Token.TIMER)}, maxFlickerDuration30)
+                }
+            }
         }
 
         // Permissions handling
@@ -885,7 +925,7 @@ class MainActivity : AppCompatActivity() {
                         timerSwitch.isChecked = false
                     }
                     else {
-                        val calcTimeToFlickerInMillis = calcTimeToFlicker(hourOfDayTimer, minuteTimer)
+                        calcTimeToFlickerInMillis = calcTimeToFlicker(hourOfDayTimer, minuteTimer)
                         if (calcTimeToFlickerInMillis < 0) {
                             Log.i("MainActivity","Time error: set to past time ($hourOfDayTimer, $minuteTimer)")
                             timerSwitch.isChecked = false
@@ -897,9 +937,33 @@ class MainActivity : AppCompatActivity() {
                             addActivatedFeature(recyclerView, FEATURE.TIMER)
                             timerForFlickeringSet = true
 
-                            timerExecutor = Executors.newSingleThreadScheduledExecutor()
-                            timerExecutor.schedule({ resetActivitiesAndFlicker(Token.TIMER) }, calcTimeToFlickerInMillis, TimeUnit.MILLISECONDS)
-                            timerExecutor.schedule({ resetFeature(Token.TIMER) }, calcTimeToFlickerInMillis + maxFlickerDuration30, TimeUnit.MILLISECONDS)
+//                            timerExecutor = Executors.newSingleThreadScheduledExecutor()
+//                            timerExecutor.schedule({ resetActivitiesAndFlicker(Token.TIMER) }, calcTimeToFlickerInMillis, TimeUnit.MILLISECONDS)
+//                            timerExecutor.schedule({ resetFeature(Token.TIMER) }, calcTimeToFlickerInMillis + maxFlickerDuration30, TimeUnit.MILLISECONDS)
+
+                            // Initialize AlarmManager
+                            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+                            // Create an intent to trigger the alarm
+                            val intent = Intent("com.ichthis.flashii.ALARM_ACTION")
+                            alarmIntent = PendingIntent.getBroadcast(
+                                this,
+                                0,
+                                intent,
+                                PendingIntent.FLAG_IMMUTABLE
+                            )
+
+                            // Schedule the alarm to run after one hour
+                            val triggerTimeMillis = SystemClock.elapsedRealtime() + calcTimeToFlickerInMillis
+                            alarmManager.setExact(
+                                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                                triggerTimeMillis,
+                                alarmIntent
+                            )
+
+                            // Register the BroadcastReceiver
+                            val filter = IntentFilter("com.ichthis.flashii.ALARM_ACTION")
+                            registerReceiver(alarmReceiver, filter)
 
                             // user can no longer interact with the timepicker
                             timerTimePicker.isEnabled = false
@@ -1411,12 +1475,12 @@ class MainActivity : AppCompatActivity() {
                 isTimerThresholdSet = false
                 timerSetAfter = minTimerMinutes
 
-                try {
-                    timeExecutorShutdown(timerExecutor)
-                }
-                catch (_: Exception) {
-                    Log.e("MainActivity", "exception timeExecutorShutdown timerExecutor")
-                }
+//                try {
+//                    timeExecutorShutdown(timerExecutor)
+//                }
+//                catch (_: Exception) {
+//                    Log.e("MainActivity", "exception timeExecutorShutdown timerExecutor")
+//                }
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerImageIcon.setImageResource(R.drawable.timer_off)
                 timerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
@@ -1512,24 +1576,24 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun timeExecutorShutdown (timerExecutor: ScheduledExecutorService) {
-        val backgroundThread = Thread {
-            Log.i("MainActivity", "timerExecutor shutdown $timerExecutor")
-            timerExecutor.shutdown()
-
-            try {
-                // Wait for previously submitted tasks to finish or a timeout occurs
-                if (!timerExecutor.awaitTermination(5, TimeUnit.SECONDS)) {
-                    // Timeout occurred; force shutdown if needed
-                    timerExecutor.shutdownNow()
-                    Log.i("MainActivity", "timerExecutor was shutdownNow")
-                }
-            } catch (e: InterruptedException) {
-                Log.e("MainActivity", "timerExecutor $e")
-            }
-        }
-        backgroundThread.start()
-    }
+//    private fun timeExecutorShutdown (timerExecutor: ScheduledExecutorService) {
+//        val backgroundThread = Thread {
+//            Log.i("MainActivity", "timerExecutor shutdown $timerExecutor")
+//            timerExecutor.shutdown()
+//
+//            try {
+//                // Wait for previously submitted tasks to finish or a timeout occurs
+//                if (!timerExecutor.awaitTermination(5, TimeUnit.SECONDS)) {
+//                    // Timeout occurred; force shutdown if needed
+//                    timerExecutor.shutdownNow()
+//                    Log.i("MainActivity", "timerExecutor was shutdownNow")
+//                }
+//            } catch (e: InterruptedException) {
+//                Log.e("MainActivity", "timerExecutor $e")
+//            }
+//        }
+//        backgroundThread.start()
+//    }
 
     private fun addActivatedFeature (recyclerView : RecyclerView, feature: FEATURE) {
         itemList.add(feature.value)
@@ -2141,7 +2205,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        Log.i("MainActivity", "LOC1")
         if (isPhoneTilt) {
             try {
                 Log.i("MainActivity", "sensorRotationEventListener OFF $sensorRotationEventListener ")
@@ -2151,7 +2214,6 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity", "onDestroy sensorRotationEventListener exception $e")
             }
         }
-        Log.i("MainActivity", "LOC4")
         if (isNetworkConnectivityCbIsSet) {
             try {
                 Log.i("MainActivity", "connectivityCallback OFF $connectivityCallback ")
@@ -2161,7 +2223,6 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity", "onDestroy connectivityCallback exception $e")
             }
         }
-        Log.i("MainActivity", "LOC5")
         if (isAudioIncoming) {
             try {
                 Log.i("MainActivity", "audioRecordHandler OFF $audioRecordHandler ")
@@ -2175,7 +2236,6 @@ class MainActivity : AppCompatActivity() {
             recordingThread?.join()
             recordingThread = null
         }
-        Log.i("MainActivity", "LOC6")
         if (isAltitudeOn) {
             try {
                 Log.i("MainActivity", "sensorPressureEventListener OFF $sensorPressureEventListener ")
@@ -2185,7 +2245,6 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity", "onDestroy sensorPressureEventListener exception $e")
             }
         }
-        Log.i("MainActivity", "LOC7")
         if (isBatteryOn) {
             try {
                 Log.i("MainActivity", "batteryReceiver OFF $batteryReceiver ")
@@ -2195,11 +2254,11 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity", "onDestroy batteryReceiver exception $e")
             }
         }
-        Log.i("MainActivity", "LOC8")
         if (isTimerOn) {
             try {
-                Log.i("MainActivity", "timerExecutor OFF $timerExecutor ")
-                timeExecutorShutdown(timerExecutor)
+//                Log.i("MainActivity", "timerExecutor OFF $timerExecutor ")
+//                timeExecutorShutdown(timerExecutor)
+                unregisterReceiver(alarmReceiver)
             }
             catch (e : Exception) {
                 Log.e("MainActivity", "onDestroy timerExecutor exception $e")
@@ -2283,7 +2342,6 @@ class MainActivity : AppCompatActivity() {
         Log.i("MainActivity", "onResume is running")
         checkPermissions(ACTION.RESUME)
     }
-
 }
 
 
@@ -2317,4 +2375,5 @@ class ItemAdapter(private val itemList: List<String>) :
         }
     }
 }
+
 
