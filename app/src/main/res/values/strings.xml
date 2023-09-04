@@ -103,4 +103,8 @@
     <string name="appId">ca-app-pub-1341475020557565~9549670150</string>
     <string name="flicker_on_phone_tilts">Flicker on Phone Tilts</string>
     <string name="flicker_on_finger_snap">Flicker on Finger Snap</string>
+    <string name="accept">Accept</string>
+    <string name="deny">Deny</string>
+    <string name="disclosure_flashlight">To enable the features below, please grant Flashii access to your device\'s Camera. The Camera will only be used when the app is running.</string>
+    <string name="flashlight">Flashlight On/Off</string>
 </resources>

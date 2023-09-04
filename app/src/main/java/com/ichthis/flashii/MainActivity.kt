@@ -4,6 +4,7 @@ package com.ichthis.flashii
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlarmManager
+import android.app.Dialog
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -68,6 +69,7 @@ import java.util.Locale
 import kotlin.time.Duration.Companion.minutes
 import android.provider.Telephony
 import android.telephony.TelephonyManager
+import android.widget.Button
 
 
 class MainActivity : AppCompatActivity() {
@@ -449,7 +451,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Permissions handling
-        checkPermissions(ACTION.CREATE)
+        //checkPermissions(ACTION.CREATE)
+        showDisclosureDialog(ACTION.FLASHLIGHT)
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // flashLightBtn handler
@@ -489,7 +492,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 // user should be asked for permissions again
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
-                checkPermissions(ACTION.FLASHLIGHT)
+                showDisclosureDialog(ACTION.FLASHLIGHT)
                 false
             }
         }
@@ -519,7 +522,7 @@ class MainActivity : AppCompatActivity() {
                 sosImageIcon.setImageResource(R.drawable.sos_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SOS)
                 sosSwitch.isChecked = false
-                checkPermissions(ACTION.FLASHLIGHT)
+                showDisclosureDialog(ACTION.FLASHLIGHT)
             }
         }
 
@@ -591,7 +594,7 @@ class MainActivity : AppCompatActivity() {
                 flickerImageIcon.setImageResource(R.drawable.flicker_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
                 flickerSwitch.isChecked = false
-                checkPermissions(ACTION.FLASHLIGHT)
+                showDisclosureDialog(ACTION.FLASHLIGHT)
             }
         }
 
@@ -618,7 +621,7 @@ class MainActivity : AppCompatActivity() {
                 callImageIcon.setImageResource(R.drawable.call_no_permission)
                 incomingCallSwitch.isChecked = false
                 removeActivatedFeature(recyclerView, FEATURE.CALL)
-                checkPermissions(ACTION.CALL)
+                showDisclosureDialog(ACTION.CALL)
             }
         }
 
@@ -645,7 +648,7 @@ class MainActivity : AppCompatActivity() {
                 smsImageIcon.setImageResource(R.drawable.sms_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.SMS)
                 incomingSMSSwitch.isChecked = false
-                checkPermissions(ACTION.SMS)
+                showDisclosureDialog(ACTION.SMS)
             }
         }
 
@@ -736,7 +739,7 @@ class MainActivity : AppCompatActivity() {
                 // user should be asked for permissions again
                 resetFeature(Token.SOUND)
                 soundImageIcon.setImageResource(R.drawable.sound_no_permission)
-                checkPermissions(ACTION.AUDIO)
+                showDisclosureDialog(ACTION.AUDIO)
             }
         }
 
@@ -808,7 +811,7 @@ class MainActivity : AppCompatActivity() {
                         Log.i("MainActivity","Accelerometer not available")
                         resetFeature(Token.TILT)
                         tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
-                        checkPermissions(ACTION.FLASHLIGHT)
+                        showDisclosureDialog(ACTION.FLASHLIGHT)
                     }
                 } else {
                     Log.i("MainActivity","incomingTiltSwitch is OFF ($sensorRotationEventListener)")
@@ -819,7 +822,7 @@ class MainActivity : AppCompatActivity() {
                 // user should be asked for permissions again
                 resetFeature(Token.TILT)
                 tiltImageIcon.setImageResource(R.drawable.tilt_no_permission)
-                checkPermissions(ACTION.FLASHLIGHT)
+                showDisclosureDialog(ACTION.FLASHLIGHT)
             }
         }
 
@@ -892,7 +895,7 @@ class MainActivity : AppCompatActivity() {
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                 removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                 outInNetworkSwitch.isChecked = false
-                checkPermissions(ACTION.FLASHLIGHT)
+                showDisclosureDialog(ACTION.FLASHLIGHT)
             }
         }
 
@@ -957,7 +960,7 @@ class MainActivity : AppCompatActivity() {
                 batteryImageIcon.setImageResource(R.drawable.battery_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                 batterySwitch.isChecked = false
-                checkPermissions(ACTION.FLASHLIGHT)
+                showDisclosureDialog(ACTION.FLASHLIGHT)
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -1235,6 +1238,45 @@ class MainActivity : AppCompatActivity() {
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private fun showDisclosureDialog(action : ACTION) {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.disclosure)
+
+        val btnDeny = dialog.findViewById<Button>(R.id.btnDeny)
+        val btnAccept = dialog.findViewById<Button>(R.id.btnAccept)
+        val disclosureText = dialog.findViewById<TextView>(R.id.disclosureText)
+        val flashlightFeatureList = dialog.findViewById<LinearLayout>(R.id.flashlightFeatureList)
+
+        when (action) {
+            ACTION.FLASHLIGHT -> {
+                flashlightFeatureList.visibility = View.VISIBLE
+            }
+            ACTION.CALL -> {
+                disclosureText.text = "To enable Incoming Call feature, grant Flashii access to your Call data. Flashii collects and uses data related to received (incoming) Call states only when the app is running."
+            }
+            ACTION.SMS -> {
+                disclosureText.text = "To enable Incoming SMS feature, grant Flashii access to your SMS data. Flashii collects and uses data related to received SMS events only when the app is running."
+            }
+            ACTION.AUDIO -> {
+                disclosureText.text = "To enable Phone Tilt feature, grant Flashii access to your device's Microphone. The Microphone audio-in data will only be used when the app is running."
+            }
+            else -> {}
+        }
+
+        btnDeny.setOnClickListener {
+            // Handle deny action
+            dialog.dismiss()
+        }
+
+        btnAccept.setOnClickListener {
+            checkPermissions(action)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
 
     private fun initAndRegisterAltitudeEventListener() {
         if (::sensorPressureEventListener.isInitialized && altitudeListenerRegistered) {

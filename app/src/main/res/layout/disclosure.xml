@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Disclosure Text -->
+    <TextView
+        android:id="@+id/disclosureText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/disclosure_flashlight"
+        android:layout_marginVertical="16dp"
+        android:textSize="16sp"
+        android:textColor="#000" />
+
+    <LinearLayout
+        android:id="@+id/flashlightFeatureList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="26dp"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/GeneralContentDescription"
+                app:srcCompat="@drawable/flashlight_off4" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/cabin_regular"
+                android:textColor="@color/blueOffBack5"
+                android:gravity="center_vertical"
+                android:text="@string/flashlight"
+                android:textSize="@dimen/disclosureText"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/GeneralContentDescription"
+                app:srcCompat="@drawable/flicker_off" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/cabin_regular"
+                android:textColor="@color/blueOffBack5"
+                android:gravity="center_vertical"
+                android:text="@string/flickerFeature"
+                android:textSize="@dimen/disclosureText"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/GeneralContentDescription"
+                app:srcCompat="@drawable/tilt_off" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/cabin_regular"
+                android:textColor="@color/blueOffBack5"
+                android:gravity="center_vertical"
+                android:text="@string/tiltFeature"
+                android:textSize="@dimen/disclosureText"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/GeneralContentDescription"
+                app:srcCompat="@drawable/network_off" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/cabin_regular"
+                android:textColor="@color/blueOffBack5"
+                android:gravity="center_vertical"
+                android:text="@string/networkFeature"
+                android:textSize="@dimen/disclosureText"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/GeneralContentDescription"
+                app:srcCompat="@drawable/battery_off" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/cabin_regular"
+                android:textColor="@color/blueOffBack5"
+                android:gravity="center_vertical"
+                android:text="@string/batteryFeature"
+                android:textSize="@dimen/disclosureText"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/GeneralContentDescription"
+                app:srcCompat="@drawable/timer_off" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/cabin_regular"
+                android:textColor="@color/blueOffBack5"
+                android:gravity="center_vertical"
+                android:text="@string/timerFeature"
+                android:textSize="@dimen/disclosureText"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/GeneralContentDescription"
+                app:srcCompat="@drawable/sos_off" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/cabin_regular"
+                android:textColor="@color/blueOffBack5"
+                android:gravity="center_vertical"
+                android:text="@string/sosFeature"
+                android:textSize="@dimen/disclosureText"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="24dp">
+        <!-- ALLOW  -->
+        <Button
+            android:id="@+id/btnDeny"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cabin_semibold"
+            android:text="@string/deny"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/blueOff2"/>
+
+        <!-- ALLOW  -->
+        <Button
+            android:id="@+id/btnAccept"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cabin_semibold"
+            android:text="@string/accept"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:backgroundTint="@color/blueOff2"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -11,5 +11,6 @@
     <dimen name="toolsHeight">66sp</dimen>
     <dimen name="thumbPadding">26dp</dimen>
     <dimen name="barMarginTop">20dp</dimen>
+    <dimen name="disclosureText">16sp</dimen>
 </resources>
 
