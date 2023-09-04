@@ -132,28 +132,28 @@
                     android:text="@string/or" />
             </LinearLayout>
 
-            <!-- Flicker -->
+            <!-- Call -->
             <LinearLayout
-                android:id="@+id/maxHz"
+                android:id="@+id/callSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="12dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
-                android:background="@drawable/feature_selector_flicker"
-                android:paddingHorizontal="8dp"
                 android:minHeight="34dp"
+                android:background="@drawable/feature_selector_call"
+                android:paddingHorizontal="8dp"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/maxHz1"
+                    android:id="@+id/callSetting1"
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
                     android:layout_marginEnd="18dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/flicker_off" />
+                    app:srcCompat="@drawable/incoming_call_off" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -167,10 +167,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
-                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:text="@string/settingsFlickeringTitle"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/settingsFlickeringCallTitle"
                         android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
 
@@ -179,29 +179,29 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
-                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:text="@string/settingsHzNote"
+                        android:textColor="@color/blueOffBack5"
+                        android:text="@string/settingsFlickeringCallNote"
                         android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/maxFlickerHzId"
+                    android:id="@+id/flickTimeIncCallId"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:autofillHints=""
                     android:background="@drawable/shape"
                     android:fontFamily="@font/cabin_regular"
-                    android:gravity="center"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:maxLength="3"
                     android:padding="3dp"
+                    android:textAlignment="center"
                     android:textColorHint="@color/greyNoteDarker4"
                     android:textSize="14sp"
-                    tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+                    tools:ignore="VisualLintTextFieldSize" />
             </LinearLayout>
 
             <!-- SMS -->
@@ -277,28 +277,28 @@
                     tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
             </LinearLayout>
 
-            <!-- Call -->
+            <!-- Flicker -->
             <LinearLayout
-                android:id="@+id/callSetting"
+                android:id="@+id/maxHz"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="12dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
-                android:minHeight="34dp"
-                android:background="@drawable/feature_selector_call"
+                android:background="@drawable/feature_selector_flicker"
                 android:paddingHorizontal="8dp"
+                android:minHeight="34dp"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/callSetting1"
+                    android:id="@+id/maxHz1"
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
                     android:background="#00FFFFFF"
                     android:layout_marginEnd="18dp"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/incoming_call_off" />
+                    app:srcCompat="@drawable/flicker_off" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -312,10 +312,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/settingsFlickeringCallTitle"
+                        android:text="@string/settingsFlickeringTitle"
                         android:textSize="18sp"
                         tools:ignore="VisualLintLongText" />
 
@@ -324,29 +324,29 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginEnd="12dp"
+                        android:textColor="@color/blueOffBack5"
                         android:fontFamily="@font/cabin_regular"
                         android:gravity="center_vertical"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/settingsFlickeringCallNote"
+                        android:text="@string/settingsHzNote"
                         android:textSize="14sp"
                         tools:ignore="VisualLintLongText" />
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/flickTimeIncCallId"
+                    android:id="@+id/maxFlickerHzId"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:autofillHints=""
                     android:background="@drawable/shape"
                     android:fontFamily="@font/cabin_regular"
+                    android:gravity="center"
                     android:hint="@string/enterValue"
                     android:inputType="phone"
                     android:maxLength="3"
                     android:padding="3dp"
-                    android:textAlignment="center"
                     android:textColorHint="@color/greyNoteDarker4"
                     android:textSize="14sp"
-                    tools:ignore="VisualLintTextFieldSize" />
+                    tools:ignore="VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
             </LinearLayout>
 
             <!-- Battery -->
