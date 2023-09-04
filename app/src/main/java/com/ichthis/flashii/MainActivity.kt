@@ -65,9 +65,6 @@ import com.ichthis.flashii.databinding.ActivityMainBinding
 import java.io.File
 import java.io.IOException
 import java.util.Locale
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.minutes
 
 class MainActivity : AppCompatActivity() {
@@ -160,7 +157,8 @@ class MainActivity : AppCompatActivity() {
         RESUME,
         SUCCESS,
         INFO,
-        ATTENTION
+        ATTENTION,
+        AUDIO
     }
 
     enum class TypeOfEvent {
@@ -172,7 +170,6 @@ class MainActivity : AppCompatActivity() {
 
     enum class RequestKey (val value: Int) {
         AUDIO(2),
-        ALTITUDE(3),
         FLASHLIGHT (4),
         CREATE (5)
     }
@@ -227,8 +224,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var connectivityCallback: ConnectivityManager.NetworkCallback
     private lateinit var reviewManager : ReviewManager
     private lateinit var batteryReceiver : BroadcastReceiver
-    private lateinit var timerExecutor : ScheduledExecutorService
-    private lateinit var alarmManager: AlarmManager
     private lateinit var alarmIntent: PendingIntent
     private lateinit var alarmReceiver : BroadcastReceiver
 
@@ -393,7 +388,7 @@ class MainActivity : AppCompatActivity() {
                 Runtime.getRuntime().exec("logcat -c")
 
                 // Start capturing new logcat entries to the specified log file.
-                val process = processBuilder.start()
+                processBuilder.start()
 
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -652,7 +647,7 @@ class MainActivity : AppCompatActivity() {
                 // user should be asked for permissions again
                 resetFeature(Token.SOUND)
                 soundImageIcon.setImageResource(R.drawable.sound_no_permission)
-                triggerSnackbar(rootView, "To use the service, manually provide Microphone rights to $applicationName.")
+                checkPermissions(ACTION.AUDIO)
             }
         }
 
@@ -1028,7 +1023,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         altitudeSwitch.setOnCheckedChangeListener {_, isChecked ->
-            if (permissionsKeys["ALTITUDE"] == true && barometerAvailable) {
+            if (barometerAvailable) {
                 if (isChecked) {
                     initAndRegisterAltitudeEventListener()
                     if (barometerAvailable) {
@@ -1044,12 +1039,7 @@ class MainActivity : AppCompatActivity() {
                     resetFeature(Token.ALTITUDE)
                 }
             }
-            else if (permissionsKeys["ALTITUDE"] == false) {
-                triggerSnackbar(rootView, "To use the service, manually provide Location rights to $applicationName.")
-                resetFeature(Token.ALTITUDE)
-                altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
-            }
-            else if (!barometerAvailable) {
+            else {
                 triggerSnackbar(rootView, "There is no barometer sensor available. Service is not feasible in this phone device.")
                 resetFeature(Token.ALTITUDE)
                 altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
@@ -1654,15 +1644,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermissions (activity: ACTION) {
+        var permissions : Array<String> = arrayOf()
         when (activity) {
             ACTION.CREATE -> {
-
                 Log.i("MainActivity", "Ask for permissions CREATE")
-                var permissions : Array<String> = arrayOf()
                 // CAMERA
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     Log.i("MainActivity", "requestPermissions for CAMERA")
                     permissions += Manifest.permission.CAMERA
+                    ActivityCompat.requestPermissions(this, permissions, RequestKey.CREATE.value)
                 }
                 else {
                     Log.i("MainActivity", "requestPermissions CAMERA = TRUE")
@@ -1675,31 +1665,18 @@ class MainActivity : AppCompatActivity() {
                     setBtnImage(batteryImageIcon, R.drawable.battery_off)
                     setBtnImage(timerImageIcon, R.drawable.timer_off)
                 }
-
+            }
+            ACTION.AUDIO -> {
                 // AUDIO
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     Log.i("MainActivity", "requestPermissions for AUDIO")
                     permissions += Manifest.permission.RECORD_AUDIO
+                    ActivityCompat.requestPermissions(this, permissions, RequestKey.CREATE.value)
                 }
                 else {
                     Log.i("MainActivity", "requestPermissions AUDIO = TRUE")
                     permissionsKeys["AUDIO"] = true
                     setBtnImage(soundImageIcon, R.drawable.sound_off)
-                }
-
-                // ALTITUDE
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    Log.i("MainActivity", "requestPermissions for ALTITUDE")
-                    permissions += Manifest.permission.ACCESS_FINE_LOCATION
-                }
-                else {
-                    Log.i("MainActivity", "requestPermissions ALTITUDE = TRUE")
-                    permissionsKeys["ALTITUDE"] = true
-                    setBtnImage(altitudeImageIcon, R.drawable.altitude_off)
-                }
-
-                if (permissions.isNotEmpty()) {
-                    ActivityCompat.requestPermissions(this, permissions, RequestKey.CREATE.value)
                 }
             }
             ACTION.RESUME -> {
@@ -1760,25 +1737,6 @@ class MainActivity : AppCompatActivity() {
                         tempText = "Sensitivity\n${calcSensitivityLevel(sensitivitySoundThreshold)}"
                         setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
                         incomingSoundSwitch.isChecked = false
-                    }
-                }
-
-                // ALTITUDE
-                if (permissionsKeys["ALTITUDE"] == false) {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                        Log.i("MainActivity", "Ask for ALTITUDE permissions again RESUME ")
-                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), RequestKey.ALTITUDE.value)
-                    }
-                }
-                else {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        Log.i("MainActivity", "CALL permissions RESUME: ALTITUDE = FALSE ")
-                        permissionsKeys["ALTITUDE"] = false
-                        removeActivatedFeature(recyclerView, FEATURE.ALTITUDE)
-                        altitudeImageIcon.setImageResource(R.drawable.altitude_no_permission)
-                        tempText = "${altitudeThreshold}m"
-                        setTextAndColor(altitudeSwitchText, tempText, R.color.greyNoteDarker2)
-                        altitudeSwitch.isChecked = false
                     }
                 }
             }
@@ -2058,10 +2016,10 @@ class MainActivity : AppCompatActivity() {
                     permissionsKeys["AUDIO"] = true
                     setBtnImage(soundImageIcon, R.drawable.sound_off)
                 }
-                RequestKey.ALTITUDE.value -> {
-                    permissionsKeys["ALTITUDE"] = true
-                    setBtnImage(altitudeImageIcon, R.drawable.altitude_off)
-                }
+//                RequestKey.ALTITUDE.value -> {
+//                    permissionsKeys["ALTITUDE"] = true
+//                    setBtnImage(altitudeImageIcon, R.drawable.altitude_off)
+//                }
             }
         }
         else {
@@ -2091,11 +2049,6 @@ class MainActivity : AppCompatActivity() {
                                     setBtnImage(soundImageIcon, R.drawable.sound_off)
                                     permissionsKeys["AUDIO"] = true
                                 }
-                                Manifest.permission.ACCESS_FINE_LOCATION -> {
-                                    Log.i("MainActivity", "Request granted for LOCATION")
-                                    setBtnImage(altitudeImageIcon, R.drawable.altitude_off)
-                                    permissionsKeys["ALTITUDE"] = true
-                                }
                             }
                         } else {
                             // Permission denied for the specific permission
@@ -2120,15 +2073,6 @@ class MainActivity : AppCompatActivity() {
                                     setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
                                     permissionsKeys["AUDIO"] = false
                                 }
-                                Manifest.permission.ACCESS_FINE_LOCATION -> {
-                                    Log.i("MainActivity", "Request NOT granted for LOCATION")
-                                    setBtnImage(altitudeImageIcon, R.drawable.altitude_no_permission)
-                                    altitudeSwitch.isChecked = false
-                                    tempText = "${altitudeThreshold}m"
-                                    setTextAndColor(altitudeSwitchText, tempText, R.color.greyNoteDarker2)
-                                    permissionsKeys["ALTITUDE"] = false
-                                }
-                                // Handle other permissions...
                             }
                         }
                     }
@@ -2150,14 +2094,6 @@ class MainActivity : AppCompatActivity() {
                     incomingSoundSwitch.isChecked = false
                     tempText = "Sensitivity\n${calcSensitivityLevel(sensitivitySoundThreshold)}"
                     setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
-                }
-                RequestKey.ALTITUDE.value -> {
-                    Log.i("MainActivity", "Request NOT granted for LOCATION")
-                    setBtnImage(altitudeImageIcon, R.drawable.altitude_no_permission)
-                    altitudeSwitch.isChecked = false
-                    tempText = "${altitudeThreshold}m"
-                    setTextAndColor(altitudeSwitchText, tempText, R.color.greyNoteDarker2)
-                    permissionsKeys["ALTITUDE"] = false
                 }
             }
         }
