@@ -88,7 +88,18 @@
     <string name="max_nbattery">Max\nBattery</string>
     <string name="min_nheight">Min\nHeight</string>
     <string name="max_nheight">Max\nHeight</string>
-    
+
+    <string name="IncomingSMSContentDescription">Flashlight flickers on incoming SMSes</string>
+    <string name="settingsFlickeringCallTitle">Flashlight flickering time on Call incoming</string>
+    <string name="settingsFlickeringCallNote">(Range: 3 to 180 seconds)</string>
+    <string name="settingsFlickeringSMSTitle">Flashlight flickering time on SMS incoming</string>
+    <string name="settingsFlickeringSMSNote">(Range: 3 to 180 seconds)</string>
+    <string name="infoIncomingSMS">Enable this service to get notified by flashlight flickering when you receive an incoming SMS in your phone. \n\nFlickering will stop after 15 seconds (configurable in Settings).\n\nService is only available if you permit SMS rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
+    <string name="infoIncomingCall">Enable this service to get notified by flashlight flickering when you receive an incoming Call on your phone.\n\nFlickering will stop if you answer or reject the incoming Call, or automatically after 15 seconds (configurable in Settings).\n\nService is only available if you permit Call rights to @Flashii. If otherwise, the deactivated button is displayed instead.</string>
+    <string name="callFeature">Flashlight flicker on Incoming Call</string>
+    <string name="smsFeature">Flashlight flicker on Incoming SMS</string>
+    <string name="switch_for_sms">Switch for SMS</string>
+
     <string name="appId">ca-app-pub-1341475020557565~9549670150</string>
     <string name="flicker_on_phone_tilts">Flicker on Phone Tilts</string>
     <string name="flicker_on_finger_snap">Flicker on Finger Snap</string>

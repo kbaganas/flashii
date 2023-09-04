@@ -42,6 +42,8 @@
     <color name="mainTime">#FAFEEE</color>
     <color name="mainBattery">#F8F1EC</color>
     <color name="mainAltitude">#FCEFEC</color>
+    <color name="mainSMS">#E3F8FE</color>
+    <color name="mainCALL">#E3FBFD</color>
 
     <color name="switch_off">#A24C3F</color>
     <color name="switch_on">#40B344</color>

@@ -27,6 +27,9 @@ class InfoActivity : AppCompatActivity() {
         val infoBatteryExpandArrow = findViewById<ImageButton>(R.id.infoBatteryExpandArrow)
         val infoSoundExpandArrow = findViewById<ImageButton>(R.id.infoSoundExpandArrow)
         val infoTimeExpandArrow = findViewById<ImageButton>(R.id.infoTimeExpandArrow)
+        val infoSMSExpandArrow = findViewById<ImageButton>(R.id.infoSMSExpandArrow)
+        val infoCallExpandArrow = findViewById<ImageButton>(R.id.infoCallExpandArrow)
+
 
         // instantiate expandable views
         val infoHiddenFlashlight = findViewById<LinearLayout>(R.id.infoHiddenFlashlight)
@@ -38,6 +41,9 @@ class InfoActivity : AppCompatActivity() {
         val infoHiddenBattery = findViewById<LinearLayout>(R.id.infoHiddenBattery)
         val infoHiddenSound = findViewById<LinearLayout>(R.id.infoHiddenSound)
         val infoHiddenTimer = findViewById<LinearLayout>(R.id.infoHiddenTimer)
+        val infoHiddenSMS = findViewById<LinearLayout>(R.id.infoHiddenSMS)
+        val infoHiddenCall = findViewById<LinearLayout>(R.id.infoHiddenCall)
+
 
         // toggle visibility on clicks
         infoFlashlightExpandArrow.setOnClickListener {
@@ -74,6 +80,14 @@ class InfoActivity : AppCompatActivity() {
 
         infoTimeExpandArrow.setOnClickListener {
             toggleView(infoHiddenTimer, infoTimeExpandArrow)
+        }
+
+        infoSMSExpandArrow.setOnClickListener {
+            toggleView(infoHiddenSMS, infoSMSExpandArrow)
+        }
+
+        infoCallExpandArrow.setOnClickListener {
+            toggleView(infoHiddenCall, infoCallExpandArrow)
         }
     }
 
