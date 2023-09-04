@@ -105,6 +105,9 @@
     <string name="flicker_on_finger_snap">Flicker on Finger Snap</string>
     <string name="accept">Accept</string>
     <string name="deny">Deny</string>
-    <string name="disclosure_flashlight">To enable the features below, please grant Flashii access to your device\'s Camera. The Camera will only be used when the app is running.</string>
+    <string name="disclosure_flashlight">To enable the services below, please grant Flashii access to your device\'s Camera. The Camera will only be used when the app is running.</string>
+    <string name="disclosure_call">To enable Incoming Call feature, grant Flashii access to your Call data. Flashii collects and uses data related to received (incoming) Call states only when the app is running.</string>
+    <string name="disclosure_sms">To enable Incoming SMS feature, grant Flashii access to your SMS data. Flashii collects and uses data related to received SMS events only when the app is running.</string>
+    <string name="disclosure_audio">To enable Phone Tilt feature, grant Flashii access to your device\'s Microphone. The Microphone audio-in data will only be used when the app is running.</string>
     <string name="flashlight">Flashlight On/Off</string>
 </resources>

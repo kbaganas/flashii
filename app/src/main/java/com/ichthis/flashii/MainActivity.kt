@@ -450,18 +450,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Permissions handling
-        //checkPermissions(ACTION.CREATE)
-        showDisclosureDialog(ACTION.FLASHLIGHT)
+        // Disclosure and Permissions handling
+        preCheckPermissions(ACTION.FLASHLIGHT)
 
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // flashLightBtn handler
-        setFlashlightId()
-        if (permissionsKeys["FLASHLIGHT"] == true) {
+        if (permissionsKeys["FLASHLIGHT"] == false) {
+            Log.i("MainActivity", "Disclosure dialog opens")
+            showDisclosureDialog(ACTION.FLASHLIGHT)
+        }
+        else {
+            Log.i("MainActivity", "Flashlight rights granted already")
+            setFlashlightId()
             turnOnFlashlight(true)
             addActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////
+        // flashLightBtn handler
         flashlightBtn.setOnTouchListener { _, event ->
             if (permissionsKeys["FLASHLIGHT"] == true) {
                 when (event.action) {
@@ -1254,13 +1258,13 @@ class MainActivity : AppCompatActivity() {
                 flashlightFeatureList.visibility = View.VISIBLE
             }
             ACTION.CALL -> {
-                disclosureText.text = "To enable Incoming Call feature, grant Flashii access to your Call data. Flashii collects and uses data related to received (incoming) Call states only when the app is running."
+                disclosureText.text = getString(R.string.disclosure_call)
             }
             ACTION.SMS -> {
-                disclosureText.text = "To enable Incoming SMS feature, grant Flashii access to your SMS data. Flashii collects and uses data related to received SMS events only when the app is running."
+                disclosureText.text = getString(R.string.disclosure_sms)
             }
             ACTION.AUDIO -> {
-                disclosureText.text = "To enable Phone Tilt feature, grant Flashii access to your device's Microphone. The Microphone audio-in data will only be used when the app is running."
+                disclosureText.text = getString(R.string.disclosure_audio)
             }
             else -> {}
         }
@@ -1795,6 +1799,60 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    private fun preCheckPermissions (activity: ACTION) {
+        when (activity) {
+            ACTION.FLASHLIGHT -> {
+                Log.i("MainActivity", "Ask for preCheckPermissions FLASHLIGHT (CAMERA)")
+                // CAMERA
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "Ask for preCheckPermissions - NOT Granted for FLASHLIGHT (CAMERA)")
+                }
+                else {
+                    Log.i("MainActivity", "Ask for preCheckPermissions - Granted for FLASHLIGHT (CAMERA)")
+                    permissionsKeys["FLASHLIGHT"] = true
+                    setBtnImage(flashlightImageIcon, R.drawable.flashlight_off4)
+                    setBtnImage(sosImageIcon, R.drawable.sos_off)
+                    setBtnImage(flickerImageIcon, R.drawable.flicker_off)
+                    setBtnImage(tiltImageIcon, R.drawable.tilt_off)
+                    setBtnImage(networkImageIcon, R.drawable.network_off)
+                    setBtnImage(batteryImageIcon, R.drawable.battery_off)
+                    setBtnImage(timerImageIcon, R.drawable.timer_off)
+                }
+            }
+            ACTION.AUDIO -> {
+                // AUDIO
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "Ask for preCheckPermissions - NOT Granted for  AUDIO")
+                }
+                else {
+                    Log.i("MainActivity", "Ask for preCheckPermissions - Granted for AUDIO")
+                    permissionsKeys["AUDIO"] = true
+                    setBtnImage(soundImageIcon, R.drawable.sound_off)
+                }
+            }
+            ACTION.CALL -> {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "Ask for preCheckPermissions - NOT Granted for CALL")
+                }
+                else {
+                    Log.i("MainActivity", "Ask for preCheckPermissions - Granted for CALL")
+                    permissionsKeys["CALL"] = true
+                    setBtnImage(callImageIcon, R.drawable.call_off2)
+                }
+            }
+            ACTION.SMS -> {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "Ask for preCheckPermissions - NOT Granted for SMS")
+                }
+                else {
+                    Log.i("MainActivity", "Ask for preCheckPermissions - Granted for SMS")
+                    permissionsKeys["SMS"] = true
+                    setBtnImage(smsImageIcon, R.drawable.sms_off)
+                }
+            }
+            else -> {}
+        }
+    }
     private fun checkPermissions (activity: ACTION) {
         var permissions : Array<String> = arrayOf()
         when (activity) {
