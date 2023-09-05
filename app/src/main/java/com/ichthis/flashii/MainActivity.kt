@@ -3,6 +3,7 @@ package com.ichthis.flashii
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlarmManager
 import android.app.Dialog
 import android.app.PendingIntent
@@ -33,6 +34,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -70,6 +72,7 @@ import kotlin.time.Duration.Companion.minutes
 import android.provider.Telephony
 import android.telephony.TelephonyManager
 import android.widget.Button
+import androidx.activity.result.ActivityResult
 
 
 class MainActivity : AppCompatActivity() {
@@ -173,7 +176,8 @@ class MainActivity : AppCompatActivity() {
         AUDIO,
         CALL,
         SMS,
-        FLASHLIGHT
+        FLASHLIGHT,
+        TIMER
     }
 
     enum class TypeOfEvent {
@@ -190,7 +194,8 @@ class MainActivity : AppCompatActivity() {
         SMS(2),
         AUDIO(3),
         FLASHLIGHT (4),
-        CREATE (5)
+        CREATE (5),
+        TIMER (6)
     }
 
     enum class FEATURE (val value: String) {
@@ -228,7 +233,8 @@ class MainActivity : AppCompatActivity() {
         "SMS" to false,
         "AUDIO" to false,
         "ALTITUDE" to false,
-        "FLASHLIGHT" to false
+        "FLASHLIGHT" to false,
+        "TIMER" to false
     )
 
     // Handlers
@@ -1002,12 +1008,39 @@ class MainActivity : AppCompatActivity() {
                         triggerSnackbar(rootView, "You have to deactivate the service first, to select another timestamp.")
                     }
                 }
-
             }
         }
 
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.S) {
+            // Apps targeting lower sdk versions than Android 12, API 31, can always schedule exact alarms.
+            permissionsKeys["TIMER"] = true
+        }
+
         timerSwitch.setOnCheckedChangeListener {_, isChecked ->
-            if (permissionsKeys["FLASHLIGHT"] == true) {
+            // Initialize AlarmManager
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (alarmManager.canScheduleExactAlarms()) {
+                permissionsKeys["TIMER"] = true
+                Log.i("MainActivity","canScheduleExactAlarms TRUE")
+            }
+            else {
+                val requestPermissionLauncher = registerForActivityResult(
+                    ActivityResultContracts.StartActivityForResult()
+                ) { result: ActivityResult ->
+                    permissionsKeys["TIMER"] = result.resultCode == Activity.RESULT_OK
+                }
+
+                if (ContextCompat.checkSelfPermission(this,Manifest.permission.SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED) {
+                    // Permission is not granted, request it
+                    requestPermissionLauncher.launch(
+                        Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    )
+                } else {
+                    // Permission is already granted, proceed with using it
+                }
+            }
+
+            if (permissionsKeys["TIMER"] == true) {
                 if (isChecked) {
                     timerTimePicker.isEnabled = true
                     if (hourOfDayTimer == 0 && minuteTimer == 0) {
@@ -1027,13 +1060,6 @@ class MainActivity : AppCompatActivity() {
                             timerSwitchText.setTextColor(resources.getColor(R.color.blueText, theme))
                             addActivatedFeature(recyclerView, FEATURE.TIMER)
                             timerForFlickeringSet = true
-
-//                            timerExecutor = Executors.newSingleThreadScheduledExecutor()
-//                            timerExecutor.schedule({ resetActivitiesAndFlicker(Token.TIMER) }, calcTimeToFlickerInMillis, TimeUnit.MILLISECONDS)
-//                            timerExecutor.schedule({ resetFeature(Token.TIMER) }, calcTimeToFlickerInMillis + maxFlickerDuration30, TimeUnit.MILLISECONDS)
-
-                            // Initialize AlarmManager
-                            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
                             // Create an intent to trigger the alarm
                             val intent = Intent("com.ichthis.flashii.ALARM_ACTION")
@@ -1074,7 +1100,13 @@ class MainActivity : AppCompatActivity() {
                 timerImageIcon.setImageResource(R.drawable.timer_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerSwitch.isChecked = false
-                triggerSnackbar(rootView, "You have to deactivate the service first, to select another time.")
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                    // Perform actions specific to Android 12 (API level 31) or later
+                    if (!alarmManager.canScheduleExactAlarms()) {
+                        triggerSnackbar(rootView, "You have to provide Alarm rights to Flashii to run the service. See phone's Settings.")
+                    }
+                }
             }
         }
 
@@ -1259,6 +1291,9 @@ class MainActivity : AppCompatActivity() {
             }
             ACTION.CALL -> {
                 disclosureText.text = getString(R.string.disclosure_call)
+            }
+            ACTION.TIMER -> {
+                disclosureText.text = getString(R.string.disclosure_timer)
             }
             ACTION.SMS -> {
                 disclosureText.text = getString(R.string.disclosure_sms)
@@ -1816,6 +1851,15 @@ class MainActivity : AppCompatActivity() {
                     setBtnImage(tiltImageIcon, R.drawable.tilt_off)
                     setBtnImage(networkImageIcon, R.drawable.network_off)
                     setBtnImage(batteryImageIcon, R.drawable.battery_off)
+                }
+            }
+            ACTION.TIMER -> {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "Ask for preCheckPermissions - NOT Granted for TIMER")
+                }
+                else {
+                    Log.i("MainActivity", "Ask for preCheckPermissions - Granted for TIMER")
+                    permissionsKeys["TIMER"] = true
                     setBtnImage(timerImageIcon, R.drawable.timer_off)
                 }
             }
@@ -1873,7 +1917,6 @@ class MainActivity : AppCompatActivity() {
                     setBtnImage(tiltImageIcon, R.drawable.tilt_off)
                     setBtnImage(networkImageIcon, R.drawable.network_off)
                     setBtnImage(batteryImageIcon, R.drawable.battery_off)
-                    setBtnImage(timerImageIcon, R.drawable.timer_off)
                 }
             }
             ACTION.AUDIO -> {
@@ -1887,6 +1930,18 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "requestPermissions AUDIO = TRUE")
                     permissionsKeys["AUDIO"] = true
                     setBtnImage(soundImageIcon, R.drawable.sound_off)
+                }
+            }
+            ACTION.TIMER -> {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("MainActivity", "requestPermissions for TIMER")
+                    permissions += Manifest.permission.SCHEDULE_EXACT_ALARM
+                    ActivityCompat.requestPermissions(this, permissions, RequestKey.CREATE.value)
+                }
+                else {
+                    Log.i("MainActivity", "requestPermissions TIMER = TRUE")
+                    permissionsKeys["TIMER"] = true
+                    setBtnImage(timerImageIcon, R.drawable.timer_off)
                 }
             }
             ACTION.CALL -> {
@@ -1934,14 +1989,12 @@ class MainActivity : AppCompatActivity() {
                         setBtnImage(tiltImageIcon, R.drawable.tilt_no_permission)
                         setBtnImage(networkImageIcon, R.drawable.network_no_permission)
                         setBtnImage(batteryImageIcon, R.drawable.battery_no_permission)
-                        setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
 
                         sosSwitch.isChecked = false
                         flickerSwitch.isChecked = false
                         incomingTiltSwitch.isChecked = false
                         outInNetworkSwitch.isChecked = false
                         batterySwitch.isChecked = false
-                        timerSwitch.isChecked = false
 
                         removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                         removeActivatedFeature(recyclerView, FEATURE.SOS)
@@ -1950,7 +2003,6 @@ class MainActivity : AppCompatActivity() {
                         removeActivatedFeature(recyclerView, FEATURE.NETWORK_LOST)
                         removeActivatedFeature(recyclerView, FEATURE.NETWORK_FOUND)
                         removeActivatedFeature(recyclerView, FEATURE.BATTERY)
-                        removeActivatedFeature(recyclerView, FEATURE.TIMER)
                     }
                 }
 
@@ -1966,9 +2018,25 @@ class MainActivity : AppCompatActivity() {
                         setBtnImage(callImageIcon, R.drawable.call_no_permission)
                         Log.i("MainActivity", "CALL permissions RESUME: CALL = FALSE ")
                         permissionsKeys["CALL"] = false
-                        callImageIcon.setImageResource(R.drawable.call_no_permission)
                         incomingCallSwitch.isChecked = false
                         removeActivatedFeature(recyclerView, FEATURE.CALL)
+                    }
+                }
+
+                // TIMER
+                if (permissionsKeys["TIMER"] == false) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM) == PackageManager.PERMISSION_GRANTED) {
+                        Log.i("MainActivity", "Ask for TIMER permissions again RESUME ")
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SCHEDULE_EXACT_ALARM), RequestKey.TIMER.value)
+                    }
+                }
+                else {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED) {
+                        setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
+                        Log.i("MainActivity", "CALL permissions RESUME: TIMER = FALSE ")
+                        permissionsKeys["TIMER"] = false
+                        timerSwitch.isChecked = false
+                        removeActivatedFeature(recyclerView, FEATURE.TIMER)
                     }
                 }
 
@@ -1984,7 +2052,6 @@ class MainActivity : AppCompatActivity() {
                         setBtnImage(smsImageIcon, R.drawable.sms_no_permission)
                         Log.i("MainActivity", "CALL permissions RESUME: SMS = FALSE ")
                         permissionsKeys["SMS"] = false
-                        smsImageIcon.setImageResource(R.drawable.sms_no_permission)
                         removeActivatedFeature(recyclerView, FEATURE.SMS)
                         incomingSMSSwitch.isChecked = false
                     }
@@ -2003,7 +2070,6 @@ class MainActivity : AppCompatActivity() {
                         Log.i("MainActivity", "CALL permissions RESUME: AUDIO = FALSE ")
                         permissionsKeys["AUDIO"] = false
                         removeActivatedFeature(recyclerView, FEATURE.AUDIO)
-                        soundImageIcon.setImageResource(R.drawable.sound_off)
                         tempText = "Sensitivity\n${calcSensitivityLevel(sensitivitySoundThreshold)}"
                         setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
                         incomingSoundSwitch.isChecked = false
@@ -2270,7 +2336,6 @@ class MainActivity : AppCompatActivity() {
         img.setImageResource(icon)
     }
 
-
     private fun setFlashlightId () {
         // Iterate over the available camera devices
         for (id in cameraManager.cameraIdList) {
@@ -2287,7 +2352,6 @@ class MainActivity : AppCompatActivity() {
         }
         //Log.d("MainActivity", "setFlashLightAndCameraIds - flashlightId = $flashlightId")
     }
-
 
     // dit flashing per Morse code
     private fun dit () {
@@ -2343,11 +2407,14 @@ class MainActivity : AppCompatActivity() {
                     setBtnImage(tiltImageIcon, R.drawable.tilt_off)
                     setBtnImage(networkImageIcon, R.drawable.network_off)
                     setBtnImage(batteryImageIcon, R.drawable.battery_off)
-                    setBtnImage(timerImageIcon, R.drawable.timer_off)
                 }
                 RequestKey.AUDIO.value -> {
                     permissionsKeys["AUDIO"] = true
                     setBtnImage(soundImageIcon, R.drawable.sound_off)
+                }
+                RequestKey.TIMER.value -> {
+                    permissionsKeys["TIMER"] = true
+                    setBtnImage(timerImageIcon, R.drawable.timer_off)
                 }
                 RequestKey.CALL.value -> {
                     permissionsKeys["CALL"] = true
@@ -2357,10 +2424,6 @@ class MainActivity : AppCompatActivity() {
                     permissionsKeys["SMS"] = true
                     setBtnImage(smsImageIcon, R.drawable.sms_off)
                 }
-//                RequestKey.ALTITUDE.value -> {
-//                    permissionsKeys["ALTITUDE"] = true
-//                    setBtnImage(altitudeImageIcon, R.drawable.altitude_off)
-//                }
             }
         }
         else {
@@ -2382,13 +2445,17 @@ class MainActivity : AppCompatActivity() {
                                     setBtnImage(tiltImageIcon, R.drawable.tilt_off)
                                     setBtnImage(networkImageIcon, R.drawable.network_off)
                                     setBtnImage(batteryImageIcon, R.drawable.battery_off)
-                                    setBtnImage(timerImageIcon, R.drawable.timer_off)
                                     permissionsKeys["FLASHLIGHT"] = true
                                 }
                                 Manifest.permission.RECORD_AUDIO -> {
                                     Log.i("MainActivity", "Request granted for MICROPHONE")
                                     setBtnImage(soundImageIcon, R.drawable.sound_off)
                                     permissionsKeys["AUDIO"] = true
+                                }
+                                Manifest.permission.SCHEDULE_EXACT_ALARM -> {
+                                    Log.i("MainActivity", "Request granted for ALARM")
+                                    setBtnImage(timerImageIcon, R.drawable.timer_off)
+                                    permissionsKeys["TIMER"] = true
                                 }
                                 Manifest.permission.READ_PHONE_STATE -> {
                                     Log.i("MainActivity", "Request granted for CALL")
@@ -2413,7 +2480,6 @@ class MainActivity : AppCompatActivity() {
                                     setBtnImage(tiltImageIcon, R.drawable.tilt_no_permission)
                                     setBtnImage(networkImageIcon, R.drawable.network_no_permission)
                                     setBtnImage(batteryImageIcon, R.drawable.battery_no_permission)
-                                    setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
                                     permissionsKeys["FLASHLIGHT"] = false
                                     triggerSnackbar(rootView, "To use the service, manually provide Camera rights to $applicationName.")
                                 }
@@ -2432,6 +2498,13 @@ class MainActivity : AppCompatActivity() {
                                     incomingCallSwitch.isChecked = false
                                     permissionsKeys["CALL"] = false
                                     triggerSnackbar(rootView, "To use the service, manually provide Call rights to $applicationName.")
+                                }
+                                Manifest.permission.SCHEDULE_EXACT_ALARM -> {
+                                    Log.i("MainActivity", "Request NOT granted for ALARM")
+                                    setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
+                                    timerSwitch.isChecked = false
+                                    permissionsKeys["TIMER"] = false
+                                    triggerSnackbar(rootView, "To use the service, manually provide EXACT ALARM rights to $applicationName.")
                                 }
                                 Manifest.permission.RECEIVE_SMS -> {
                                     Log.i("MainActivity", "Request NOT granted for SMS")
@@ -2452,7 +2525,6 @@ class MainActivity : AppCompatActivity() {
                     setBtnImage(tiltImageIcon, R.drawable.tilt_no_permission)
                     setBtnImage(networkImageIcon, R.drawable.network_no_permission)
                     setBtnImage(batteryImageIcon, R.drawable.battery_no_permission)
-                    setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
                     permissionsKeys["FLASHLIGHT"] = false
                 }
                 RequestKey.AUDIO.value -> {
@@ -2466,6 +2538,11 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "Request NOT granted for CALL")
                     setBtnImage(callImageIcon, R.drawable.call_no_permission)
                     incomingCallSwitch.isChecked = false
+                }
+                RequestKey.TIMER.value -> {
+                    Log.i("MainActivity", "Request NOT granted for TIMER")
+                    setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
+                    timerSwitch.isChecked = false
                 }
                 RequestKey.SMS.value -> {
                     Log.i("MainActivity", "Request NOT granted for SMS")

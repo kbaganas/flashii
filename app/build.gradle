@@ -12,7 +12,7 @@ android {
         applicationId "com.ichthis.flashii"
         minSdk 30
         targetSdk 34
-        versionCode 14
+        versionCode 15
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -60,7 +60,7 @@ dependencies {
     implementation "androidx.camera:camera-view:${camerax_version}"
     implementation "androidx.camera:camera-video:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
-    implementation 'androidx.lifecycle:lifecycle-runtime:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
 
     // Google Play
     implementation("com.google.android.play:review-ktx:2.0.1")
