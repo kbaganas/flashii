@@ -30,6 +30,7 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.BatteryManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -1011,7 +1012,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
             // Apps targeting lower sdk versions than Android 12, API 31, can always schedule exact alarms.
             permissionsKeys["TIMER"] = true
         }
@@ -1019,25 +1020,32 @@ class MainActivity : AppCompatActivity() {
         timerSwitch.setOnCheckedChangeListener {_, isChecked ->
             // Initialize AlarmManager
             val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            if (alarmManager.canScheduleExactAlarms()) {
-                permissionsKeys["TIMER"] = true
-                Log.i("MainActivity","canScheduleExactAlarms TRUE")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                // Perform actions specific to Android 12 (API level 31) or later
+                if (!alarmManager.canScheduleExactAlarms()) {
+                    triggerSnackbar(rootView, "You have to provide Alarm rights to Flashii to run the service. See phone's Settings.")
+                }
+                else {
+                    val requestPermissionLauncher = registerForActivityResult(
+                        ActivityResultContracts.StartActivityForResult()
+                    ) { result: ActivityResult ->
+                        permissionsKeys["TIMER"] = result.resultCode == Activity.RESULT_OK
+                    }
+
+                    if (ContextCompat.checkSelfPermission(this,Manifest.permission.SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED) {
+                        // Permission is not granted, request it
+                        requestPermissionLauncher.launch(
+                            Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                        )
+                    } else {
+                        // Permission is already granted, proceed with using it
+                        permissionsKeys["TIMER"] = true
+                        Log.i("MainActivity","PERMISSION_GRANTED TIMER TRUE")
+                    }
+                }
             }
             else {
-                val requestPermissionLauncher = registerForActivityResult(
-                    ActivityResultContracts.StartActivityForResult()
-                ) { result: ActivityResult ->
-                    permissionsKeys["TIMER"] = result.resultCode == Activity.RESULT_OK
-                }
-
-                if (ContextCompat.checkSelfPermission(this,Manifest.permission.SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED) {
-                    // Permission is not granted, request it
-                    requestPermissionLauncher.launch(
-                        Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                    )
-                } else {
-                    // Permission is already granted, proceed with using it
-                }
+                permissionsKeys["TIMER"] = true
             }
 
             if (permissionsKeys["TIMER"] == true) {
@@ -1100,13 +1108,6 @@ class MainActivity : AppCompatActivity() {
                 timerImageIcon.setImageResource(R.drawable.timer_no_permission)
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerSwitch.isChecked = false
-
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                    // Perform actions specific to Android 12 (API level 31) or later
-                    if (!alarmManager.canScheduleExactAlarms()) {
-                        triggerSnackbar(rootView, "You have to provide Alarm rights to Flashii to run the service. See phone's Settings.")
-                    }
-                }
             }
         }
 
@@ -1935,8 +1936,12 @@ class MainActivity : AppCompatActivity() {
             ACTION.TIMER -> {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED) {
                     Log.i("MainActivity", "requestPermissions for TIMER")
-                    permissions += Manifest.permission.SCHEDULE_EXACT_ALARM
-                    ActivityCompat.requestPermissions(this, permissions, RequestKey.CREATE.value)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        permissions += Manifest.permission.SCHEDULE_EXACT_ALARM
+                        ActivityCompat.requestPermissions(this, permissions, RequestKey.CREATE.value)
+                    } else {
+                        permissionsKeys["TIMER"] = true
+                    }
                 }
                 else {
                     Log.i("MainActivity", "requestPermissions TIMER = TRUE")
@@ -2027,7 +2032,12 @@ class MainActivity : AppCompatActivity() {
                 if (permissionsKeys["TIMER"] == false) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM) == PackageManager.PERMISSION_GRANTED) {
                         Log.i("MainActivity", "Ask for TIMER permissions again RESUME ")
-                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SCHEDULE_EXACT_ALARM), RequestKey.TIMER.value)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SCHEDULE_EXACT_ALARM), RequestKey.TIMER.value)
+                        }
+                        else {
+                            permissionsKeys["TIMER"] = true
+                        }
                     }
                 }
                 else {
