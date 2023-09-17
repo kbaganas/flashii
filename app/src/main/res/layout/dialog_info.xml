@@ -252,11 +252,11 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Incoming Call -->
+            <!-- Network -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_call"
+                android:background="@drawable/feature_selector_network"
                 android:paddingHorizontal="12dp"
                 android:layout_marginTop="18dp"
                 android:orientation="vertical">
@@ -268,28 +268,28 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
-                        android:text="@string/callFeature"
+                        android:text="@string/networkFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
-                        android:id="@+id/infoCallExpandArrow"
+                        android:id="@+id/infoNetworkExpandArrow"
                         android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
                         android:contentDescription="@string/backArrowTilt"
                         android:paddingStart="48dp"
-                        android:layout_gravity="center"
                         android:scaleType="fitCenter"
+                        android:layout_gravity="center"
                         android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry,ImageContrastCheck" />
+                        tools:ignore="RtlSymmetry" />
                 </LinearLayout>
 
                 <!-- Expandable -->
                 <LinearLayout
-                    android:id="@+id/infoHiddenCall"
+                    android:id="@+id/infoHiddenNetwork"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="12dp"
@@ -300,9 +300,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
-                        android:text="@string/infoIncomingCall"
+                        android:text="@string/infoNetwork"
                         android:textSize="@dimen/infoFeatureText" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -324,12 +323,11 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/blueOffBack5"
                             android:fontFamily="@font/cabin_regular"
+                            android:textColor="@color/blueOffBack5"
                             android:text="@string/Description"
                             android:textSize="@dimen/infoFeatureText" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="6dp"
@@ -355,7 +353,6 @@
                             android:fontFamily="@font/cabin_regular"
                             android:text="@string/or" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -366,60 +363,78 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginEnd="32dp"
-                            android:scaleY="1.3"
                             android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/call_on2" />
+                            app:srcCompat="@drawable/network_lost_to_found" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/ConnectionToFound"
+                            android:textColor="@color/blueOffBack5"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="32dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/network_found_to_lost" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin_regular"
+                            android:gravity="center_vertical"
+                            android:text="@string/ConnectionToLost"
+                            android:textColor="@color/blueOffBack5"
+                            android:textSize="@dimen/infoFeatureText"
+                            tools:ignore="VisualLintLongText" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="32dp"
+                            android:contentDescription="@string/GeneralContentDescription"
+                            app:srcCompat="@drawable/network_off" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/cabin_regular"
                             android:gravity="center_vertical"
-                            android:text="@string/infoActivated"
-                            android:textColor="@color/blueOffBack5"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="32dp"
-                            android:scaleY="1.3"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/incoming_call_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
                             android:text="@string/infoDeactivated"
+                            android:textColor="@color/blueOffBack5"
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="14dp"
                         tools:ignore="UseCompoundDrawables">
-
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/call_no_permission" />
+                            app:srcCompat="@drawable/network_no_permission" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -431,15 +446,15 @@
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
-
                 </LinearLayout>
+
             </LinearLayout>
 
-            <!-- Incoming SMS -->
+            <!-- SOS -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_sms"
+                android:background="@drawable/feature_selector_sos"
                 android:paddingHorizontal="12dp"
                 android:layout_marginTop="18dp"
                 android:orientation="vertical">
@@ -451,14 +466,14 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
-                        android:text="@string/callFeature"
+                        android:text="@string/sosFeature"
                         android:textSize="@dimen/infoFeatureTitle" />
                     <ImageButton
-                        android:id="@+id/infoSMSExpandArrow"
+                        android:id="@+id/infoSOSExpandArrow"
                         android:layout_width="76dp"
                         android:layout_height="48dp"
                         android:background="@color/backgroundWhite"
@@ -467,12 +482,12 @@
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
                         android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry,ImageContrastCheck" />
+                        tools:ignore="RtlSymmetry" />
                 </LinearLayout>
 
                 <!-- Expandable -->
                 <LinearLayout
-                    android:id="@+id/infoHiddenSMS"
+                    android:id="@+id/infoHiddenSOS"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="12dp"
@@ -483,7 +498,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cabin_regular"
                         android:textColor="@color/blueOffBack5"
-                        android:text="@string/infoIncomingSMS"
+                        android:text="@string/infoSOS"
                         android:textSize="@dimen/infoFeatureText" />
 
                     <LinearLayout
@@ -551,7 +566,7 @@
                             android:layout_marginEnd="32dp"
                             android:scaleY="1.3"
                             android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sms_on" />
+                            app:srcCompat="@drawable/sos_on" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -577,7 +592,7 @@
                             android:layout_marginEnd="32dp"
                             android:scaleY="1.3"
                             android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sms_off" />
+                            app:srcCompat="@drawable/sos_off" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -602,7 +617,7 @@
                             android:layout_height="36dp"
                             android:layout_marginEnd="32dp"
                             android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sms_no_permission" />
+                            app:srcCompat="@drawable/sos_no_permission" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -1158,387 +1173,6 @@
                             android:textSize="@dimen/infoFeatureText"
                             tools:ignore="VisualLintLongText" />
                     </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Network -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_network"
-                android:paddingHorizontal="12dp"
-                android:layout_marginTop="18dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/networkFeature"
-                        android:textSize="@dimen/infoFeatureTitle" />
-                    <ImageButton
-                        android:id="@+id/infoNetworkExpandArrow"
-                        android:layout_width="76dp"
-                        android:layout_height="48dp"
-                        android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="48dp"
-                        android:scaleType="fitCenter"
-                        android:layout_gravity="center"
-                        android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
-                </LinearLayout>
-
-                <!-- Expandable -->
-                <LinearLayout
-                    android:id="@+id/infoHiddenNetwork"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="12dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/infoNetwork"
-                        android:textSize="@dimen/infoFeatureText" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:textSize="@dimen/infoFeatureText">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/Button"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText,TextSizeCheck" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:textAlignment="center">
-
-                        <View
-                            android:layout_width="52dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or"
-                            tools:ignore="ExtraText" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="14dp"
-                        tools:ignore="UseCompoundDrawables">
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="32dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/network_lost_to_found" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/ConnectionToFound"
-                            android:textColor="@color/blueOffBack5"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="32dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/network_found_to_lost" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/ConnectionToLost"
-                            android:textColor="@color/blueOffBack5"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="32dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/network_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoDeactivated"
-                            android:textColor="@color/blueOffBack5"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="14dp"
-                        tools:ignore="UseCompoundDrawables">
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="32dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/network_no_permission" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoNoPermissionByUser"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- SOS -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/feature_selector_sos"
-                android:paddingHorizontal="12dp"
-                android:layout_marginTop="18dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/sosFeature"
-                        android:textSize="@dimen/infoFeatureTitle" />
-                    <ImageButton
-                        android:id="@+id/infoSOSExpandArrow"
-                        android:layout_width="76dp"
-                        android:layout_height="48dp"
-                        android:background="@color/backgroundWhite"
-                        android:contentDescription="@string/backArrowTilt"
-                        android:paddingStart="48dp"
-                        android:layout_gravity="center"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/arrow_down"
-                        tools:ignore="RtlSymmetry" />
-                </LinearLayout>
-
-                <!-- Expandable -->
-                <LinearLayout
-                    android:id="@+id/infoHiddenSOS"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="12dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/cabin_regular"
-                        android:textColor="@color/blueOffBack5"
-                        android:text="@string/infoSOS"
-                        android:textSize="@dimen/infoFeatureText" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:textSize="@dimen/infoFeatureText">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:text="@string/Button"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText,TextSizeCheck" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/blueOffBack5"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/Description"
-                            android:textSize="@dimen/infoFeatureText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:textAlignment="center">
-
-                        <View
-                            android:layout_width="52dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or"
-                            tools:ignore="ExtraText" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/greyDivider2"
-                            android:fontFamily="@font/cabin_regular"
-                            android:text="@string/or" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="14dp"
-                        tools:ignore="UseCompoundDrawables">
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="32dp"
-                            android:scaleY="1.3"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sos_on" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/cabin_regular"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoActivated"
-                            android:textColor="@color/blueOffBack5"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="horizontal"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="32dp"
-                            android:scaleY="1.3"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sos_off" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoDeactivated"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="14dp"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginEnd="32dp"
-                            android:contentDescription="@string/GeneralContentDescription"
-                            app:srcCompat="@drawable/sos_no_permission" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/cabin_regular"
-                            android:textColor="@color/blueOffBack5"
-                            android:gravity="center_vertical"
-                            android:text="@string/infoNoPermissionByUser"
-                            android:textSize="@dimen/infoFeatureText"
-                            tools:ignore="VisualLintLongText" />
-                    </LinearLayout>
-
                 </LinearLayout>
             </LinearLayout>
 

@@ -116,24 +116,6 @@ class SupportActivity : AppCompatActivity() {
         }
     }
 
-
-    //    private fun onPurchasesUpdated(billingResult: BillingResult, purchases: List<Purchase>?) {
-//        Log.i("SupportActivity", "onPurchasesUpdated  loc1")
-//        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
-//            for (purchase in purchases) {
-//                // Handle the purchased item
-//                if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-//                    // Item was purchased, process it accordingly
-//                }
-//            }
-//        } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
-//            // Handle user cancellation
-//        } else {
-//            // Handle other errors
-//        }
-//    }
-
-
     override fun onDestroy() {
         super.onDestroy()
         if (supportAmount != "") {

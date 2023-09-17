@@ -15,21 +15,15 @@ class SettingsActivity : AppCompatActivity() {
 
     // constants, variables
     private val defaultMaxFlickerHz : Int = 10
-    private val defaultMaxFlickerIncomingCall : Int = 15000
-    private val defaultMaxFlickerIncomingSMS : Int = 15000
     private val defaultMaxFlickerIncomingBattery : Int = 15000
     private val defaultMaxFlickerIncomingAltitude : Int = 15000
 
     private var maxFlickerHz : Int = defaultMaxFlickerHz
-    private var maxFlickerDurationIncomingCall : Int = defaultMaxFlickerIncomingCall
-    private var maxFlickerDurationIncomingSMS : Int = defaultMaxFlickerIncomingSMS
     private var maxFlickerDurationBattery : Int = defaultMaxFlickerIncomingBattery
     private var maxFlickerDurationAltitude : Int = defaultMaxFlickerIncomingAltitude
     private lateinit var maxFlickerHzEditText : EditText
     private lateinit var flickTimeBatteryEditText : EditText
     private lateinit var flickTimeAltitudeEditText : EditText
-    private lateinit var flickTimeIncCallEditText : EditText
-    private lateinit var flickTimeIncSMSEditText : EditText
     private val _hzLow = 10
     private val _hzHigh = 100
     private val _flickTimeLow = 10
@@ -51,19 +45,15 @@ class SettingsActivity : AppCompatActivity() {
         maxFlickerHzEditText = findViewById(R.id.maxFlickerHzId)
         flickTimeBatteryEditText = findViewById(R.id.flickTimeBatteryId)
         flickTimeAltitudeEditText = findViewById(R.id.flickTimeAltitudeId)
-        flickTimeIncCallEditText = findViewById(R.id.flickTimeIncCallId)
-        flickTimeIncSMSEditText = findViewById(R.id.flickTimeIncSMSId)
 
         // Retrieve the data value from the intent of the MainActivity
         maxFlickerHz = intent.getIntExtra("maxFlickerHz", defaultMaxFlickerHz)
-        maxFlickerDurationIncomingCall = intent.getIntExtra("maxFlickerDurationIncomingCall", defaultMaxFlickerIncomingCall)
-        maxFlickerDurationIncomingSMS = intent.getIntExtra("maxFlickerDurationIncomingSMS", defaultMaxFlickerIncomingSMS)
         maxFlickerDurationBattery = intent.getIntExtra("maxFlickerDurationBattery", defaultMaxFlickerIncomingBattery)
         maxFlickerDurationAltitude = intent.getIntExtra("maxFlickerDurationAltitude", defaultMaxFlickerIncomingAltitude)
 
         // Set data of the intent in local variables
         setHintValues()
-        Log.i("SettingsActivity", "oCreate Input data are: $maxFlickerHz, $maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS, $maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+        Log.i("SettingsActivity", "oCreate Input data are: $maxFlickerHz, $maxFlickerDurationBattery,$maxFlickerDurationAltitude")
 
         // Clear Hint on focus
         maxFlickerHzEditText.setOnFocusChangeListener { _, hasFocus ->
@@ -130,11 +120,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun setHintValues() {
         maxFlickerHzEditText.hint = maxFlickerHz.toString()
-        var tempInt = defaultMaxFlickerIncomingCall / 1000
-        flickTimeIncCallEditText.hint = tempInt.toString()
-        tempInt = maxFlickerDurationIncomingSMS / 1000
-        flickTimeIncSMSEditText.hint = tempInt.toString()
-        tempInt = maxFlickerDurationBattery / 1000
+        var tempInt = maxFlickerDurationBattery / 1000
         flickTimeBatteryEditText.hint = tempInt.toString()
         tempInt = maxFlickerDurationAltitude / 1000
         flickTimeAltitudeEditText.hint = tempInt.toString()
@@ -142,11 +128,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun resetTextValues() {
         maxFlickerHzEditText.text = Editable.Factory.getInstance().newEditable(maxFlickerHz.toString())
-        var temp = maxFlickerDurationIncomingCall / 1000
-        flickTimeIncCallEditText.text = Editable.Factory.getInstance().newEditable(temp.toString())
-        temp = maxFlickerDurationIncomingSMS / 1000
-        flickTimeIncSMSEditText.text = Editable.Factory.getInstance().newEditable(temp.toString())
-        temp = maxFlickerDurationBattery / 1000
+        var temp = maxFlickerDurationBattery / 1000
         flickTimeBatteryEditText.text = Editable.Factory.getInstance().newEditable(temp.toString())
         temp = maxFlickerDurationAltitude / 1000
         flickTimeAltitudeEditText.text = Editable.Factory.getInstance().newEditable(temp.toString())
@@ -154,11 +136,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun resetToDefaultHint () {
         maxFlickerHzEditText.hint = defaultMaxFlickerHz.toString()
-        var tempInt = defaultMaxFlickerIncomingCall / 1000
-        flickTimeIncCallEditText.hint = tempInt.toString()
-        tempInt = defaultMaxFlickerIncomingSMS / 1000
-        flickTimeIncSMSEditText.hint = tempInt.toString()
-        tempInt = defaultMaxFlickerIncomingBattery / 1000
+        var tempInt = defaultMaxFlickerIncomingBattery / 1000
         flickTimeBatteryEditText.hint = tempInt.toString()
         tempInt = defaultMaxFlickerIncomingAltitude / 1000
         flickTimeAltitudeEditText.hint = tempInt.toString()
@@ -191,26 +169,6 @@ class SettingsActivity : AppCompatActivity() {
             CheckResult.SET -> {
                 maxFlickerDurationBattery = flickTimeBatteryEditText.text.toString().toInt()
                 resultIntent.putExtra("maxFlickerDurationBattery", maxFlickerDurationBattery * 1000)
-            }
-            CheckResult.FAULT -> {
-                wrongValueInsertedByUser = true
-            }
-            else -> {}
-        }
-        when (checkTextValue(flickTimeIncCallEditText, _flickTimeLow, _flickTimeHigh)) {
-            CheckResult.SET -> {
-                maxFlickerDurationIncomingCall = flickTimeIncCallEditText.text.toString().toInt()
-                resultIntent.putExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall * 1000)
-            }
-            CheckResult.FAULT -> {
-                wrongValueInsertedByUser = true
-            }
-            else -> {}
-        }
-        when (checkTextValue(flickTimeIncSMSEditText, _flickTimeLow, _flickTimeHigh)) {
-            CheckResult.SET -> {
-                maxFlickerDurationIncomingSMS = flickTimeIncSMSEditText.text.toString().toInt()
-                resultIntent.putExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS * 1000)
             }
             CheckResult.FAULT -> {
                 wrongValueInsertedByUser = true

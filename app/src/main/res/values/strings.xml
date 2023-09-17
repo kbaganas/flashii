@@ -49,7 +49,7 @@
     <string name="backArrow">Back arrow</string>
     <string name="backArrowTilt">Back arrow Tilt</string>
     <string name="backArrowFlashlight">Back arrow Flashlight</string>
-    <string name="timerFeature">Time</string>
+    <string name="timerFeature">Timer</string>
     <string name="batteryFeature">Battery Power</string>
     <string name="altitudeFeature">Altitude Height</string>
     <string name="networkFeature">Internet Connection</string>

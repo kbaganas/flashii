@@ -70,8 +70,6 @@ import java.io.File
 import java.io.IOException
 import java.util.Locale
 import kotlin.time.Duration.Companion.minutes
-import android.provider.Telephony
-import android.telephony.TelephonyManager
 import android.widget.Button
 import androidx.activity.result.ActivityResult
 
@@ -98,8 +96,6 @@ class MainActivity : AppCompatActivity() {
     private val defaultMaxFlickerIncomingBattery : Int = 15000
     private val defaultMaxFlickerIncomingAltitude : Int = 15000
     private val delaySnackbarMsg : Long = 5000
-    private val defaultMaxFlickerIncomingCall : Int = 15000
-    private val defaultMaxFlickerIncomingSMS : Int = 15000
 
     // HZ
     private var minFlickerHz : Int = 1
@@ -133,8 +129,6 @@ class MainActivity : AppCompatActivity() {
     val maxFlickerDuration30 : Long = 30000 // 30 seconds
     private var maxFlickerDurationBattery : Int = defaultMaxFlickerIncomingBattery
     private var maxFlickerDurationAltitude : Int = defaultMaxFlickerIncomingAltitude
-    private var maxFlickerDurationIncomingCall : Int = defaultMaxFlickerIncomingCall
-    private var maxFlickerDurationIncomingSMS : Int = defaultMaxFlickerIncomingSMS
 
     // Tilt
     private var touchStartTime : Long = 0
@@ -155,9 +149,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var flickerImageIcon : ImageView
     private lateinit var networkImageIcon : ImageView
     private lateinit var flashlightImageIcon : ImageView
-    private lateinit var smsImageIcon : ImageView
-    private lateinit var callImageIcon : ImageView
-
 
     // TextViews
     private lateinit var tiltSwitchText : TextView
@@ -167,7 +158,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var timerSwitchText : TextView
     private lateinit var flickerSwitchText : TextView
 
-
     enum class ACTION {
         CREATE,
         RESUME,
@@ -175,15 +165,11 @@ class MainActivity : AppCompatActivity() {
         INFO,
         ATTENTION,
         AUDIO,
-        CALL,
-        SMS,
         FLASHLIGHT,
         TIMER
     }
 
     enum class TypeOfEvent {
-        INCOMING_CALL,
-        SMS,
         PHONE_TILT,
         AUDIO,
         OUT_OF_SERVICE,
@@ -191,12 +177,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     enum class RequestKey (val value: Int) {
-        CALL(1),
-        SMS(2),
-        AUDIO(3),
-        FLASHLIGHT (4),
-        CREATE (5),
-        TIMER (6)
+        AUDIO(1),
+        FLASHLIGHT (2),
+        CREATE (3),
+        TIMER (4)
     }
 
     enum class FEATURE (val value: String) {
@@ -204,8 +188,6 @@ class MainActivity : AppCompatActivity() {
         AUDIO("Flicker on short sounds"),
         ALTITUDE("Flicker on Height reached"),
         BATTERY("Flicker on Battery Power reached"),
-        CALL("Flicker on incoming Call"),
-        SMS("Flicker on incoming SMS"),
         SOS("SOS"),
         FLICKERING("Flashlight flickering"),
         TIMER("Flicker on Time"),
@@ -220,8 +202,6 @@ class MainActivity : AppCompatActivity() {
         BATTERY,
         ALTITUDE,
         NETWORK,
-        INCOMING_CALL,
-        INCOMING_SMS,
         SOS,
         SOUND,
         TILT,
@@ -230,8 +210,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val permissionsKeys = mutableMapOf (
-        "CALL" to false,
-        "SMS" to false,
         "AUDIO" to false,
         "ALTITUDE" to false,
         "FLASHLIGHT" to false,
@@ -258,8 +236,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var batteryReceiver : BroadcastReceiver
     private lateinit var alarmIntent: PendingIntent
     private lateinit var alarmReceiver : BroadcastReceiver
-    private lateinit var incomingCallReceiver : BroadcastReceiver
-    private lateinit var incomingSMSReceiver : BroadcastReceiver
 
     // Booleans
     private var isFlashLightOn = false
@@ -286,8 +262,6 @@ class MainActivity : AppCompatActivity() {
     private var rotationSensorRegistered : Boolean = false
     private var altitudeListenerRegistered : Boolean = false
     private var barometerAvailable : Boolean = true
-    private var isIncomingCall : Boolean = false
-    private var isIncomingSMS : Boolean = false
 
     // Buttons & Ids
     private var flashlightId : String = "0"
@@ -312,11 +286,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var batterySwitch : Switch
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private lateinit var timerSwitch : Switch
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
-    private lateinit var incomingCallSwitch : Switch
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
-    private lateinit var incomingSMSSwitch : Switch
-
 
     // Common use
     private lateinit var tempText : String
@@ -415,10 +384,6 @@ class MainActivity : AppCompatActivity() {
         altitudeSwitchText = findViewById(R.id.altitudeSwitchText)
         altitudeBar = findViewById(R.id.seekBarAltitude)
         altitudeSwitch = findViewById(R.id.switchAltitude)
-        callImageIcon = findViewById(R.id.callImageIcon)
-        incomingCallSwitch = findViewById(R.id.switchCALL)
-        smsImageIcon = findViewById(R.id.smsImageIcon)
-        incomingSMSSwitch = findViewById(R.id.switchSMS)
 
         // Initiate local log storage
         getExternalFilesDir(null)?.let { publicAppDirectory -> // getExternalFilesDir don't need storage permission
@@ -443,9 +408,8 @@ class MainActivity : AppCompatActivity() {
         // Initialization of basic Settings
         if (isStoredSettings()) {
             retrieveStoredSettings()
-            Log.i("MainActivity", "Retrieved stored settings are: $flickerFlashlightHz (current Hz), $maxFlickerHz (max Hz), $sensitivitySoundThreshold (sound), $maxFlickerDurationIncomingCall (call),$maxFlickerDurationIncomingSMS (SMS), $sensitivityAngle (tilt degrees), $maxFlickerDurationBattery (battery),$maxFlickerDurationAltitude (altitude)")
+            Log.i("MainActivity", "Retrieved stored settings are: $flickerFlashlightHz (current Hz), $maxFlickerHz (max Hz), $sensitivitySoundThreshold (sound), $sensitivityAngle (tilt degrees), $maxFlickerDurationBattery (battery),$maxFlickerDurationAltitude (altitude)")
         }
-
 
         alarmReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -606,60 +570,6 @@ class MainActivity : AppCompatActivity() {
                 removeActivatedFeature(recyclerView, FEATURE.FLICKERING)
                 flickerSwitch.isChecked = false
                 showDisclosureDialog(ACTION.FLASHLIGHT)
-            }
-        }
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // incoming call handler
-        incomingCallSwitch.setOnCheckedChangeListener {_, isChecked ->
-            // Check first if permissions are granted
-            if (permissionsKeys["CALL"] == true) {
-                if (isChecked) {
-                    Log.i("MainActivity","incomingCallSwitch is ON")
-                    registerIncomingEvents(TypeOfEvent.INCOMING_CALL)
-                    callImageIcon.setImageResource(R.drawable.call_on2)
-                    addActivatedFeature(recyclerView, FEATURE.CALL)
-                } else {
-                    Log.i("MainActivity", "incomingCallSwitch is OFF (unregister $incomingCallReceiver)")
-                    disableIncomingCallFlickering()
-                    callImageIcon.setImageResource(R.drawable.call_off2)
-                    removeActivatedFeature(recyclerView, FEATURE.CALL)
-                }
-            }
-            else {
-                // user should be asked for permissions again
-                callImageIcon.setImageResource(R.drawable.call_no_permission)
-                incomingCallSwitch.isChecked = false
-                removeActivatedFeature(recyclerView, FEATURE.CALL)
-                showDisclosureDialog(ACTION.CALL)
-            }
-        }
-
-        //////////////////////////////////////////////////////////////////////////////////////
-        // incoming SMS handler
-        incomingSMSSwitch.setOnCheckedChangeListener {_, isChecked ->
-            // Check first if permissions are granted
-            if (permissionsKeys["SMS"] == true) {
-                if (isChecked) {
-                    Log.i("MainActivity","incomingSMSSwitch is ON")
-                    registerIncomingEvents(TypeOfEvent.SMS)
-                    smsImageIcon.setImageResource(R.drawable.sms_on)
-                    addActivatedFeature(recyclerView, FEATURE.SMS)
-                } else {
-                    Log.i("MainActivity", "incomingSMSSwitch is OFF (unregister $incomingSMSReceiver)")
-                    disableIncomingSMSFlickering()
-                    smsImageIcon.setImageResource(R.drawable.sms_off)
-                    removeActivatedFeature(recyclerView, FEATURE.SMS)
-                }
-            }
-            else {
-                // user should be asked for permissions again
-                Log.i("MainActivity", "request permission for SMS")
-                smsImageIcon.setImageResource(R.drawable.sms_no_permission)
-                removeActivatedFeature(recyclerView, FEATURE.SMS)
-                incomingSMSSwitch.isChecked = false
-                showDisclosureDialog(ACTION.SMS)
             }
         }
 
@@ -1017,6 +927,12 @@ class MainActivity : AppCompatActivity() {
             permissionsKeys["TIMER"] = true
         }
 
+        val requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            permissionsKeys["TIMER"] = result.resultCode == Activity.RESULT_OK
+        }
+
         timerSwitch.setOnCheckedChangeListener {_, isChecked ->
             // Initialize AlarmManager
             val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -1026,11 +942,7 @@ class MainActivity : AppCompatActivity() {
                     triggerSnackbar(rootView, "You have to provide Alarm rights to Flashii to run the service. See phone's Settings.")
                 }
                 else {
-                    val requestPermissionLauncher = registerForActivityResult(
-                        ActivityResultContracts.StartActivityForResult()
-                    ) { result: ActivityResult ->
-                        permissionsKeys["TIMER"] = result.resultCode == Activity.RESULT_OK
-                    }
+
 
                     if (ContextCompat.checkSelfPermission(this,Manifest.permission.SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED) {
                         // Permission is not granted, request it
@@ -1198,12 +1110,10 @@ class MainActivity : AppCompatActivity() {
                     flickerFlashlightHz = maxFlickerHz.toLong()
                 }
 
-                maxFlickerDurationIncomingSMS = data?.getIntExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS) ?: maxFlickerDurationIncomingSMS
-                maxFlickerDurationIncomingCall = data?.getIntExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall) ?: maxFlickerDurationIncomingCall
                 maxFlickerDurationBattery = data?.getIntExtra("maxFlickerDurationBattery", maxFlickerDurationBattery) ?: maxFlickerDurationBattery
                 maxFlickerDurationAltitude = data?.getIntExtra("maxFlickerDurationAltitude", maxFlickerDurationAltitude) ?: maxFlickerDurationAltitude
 
-                Log.i("MainActivity", "Data from Settings are: $maxFlickerHz,$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+                Log.i("MainActivity", "Data from Settings are: $maxFlickerHz, $maxFlickerDurationBattery,$maxFlickerDurationAltitude")
 
                 // Store User's personal settings
                 storeSettings()
@@ -1290,14 +1200,8 @@ class MainActivity : AppCompatActivity() {
             ACTION.FLASHLIGHT -> {
                 flashlightFeatureList.visibility = View.VISIBLE
             }
-            ACTION.CALL -> {
-                disclosureText.text = getString(R.string.disclosure_call)
-            }
             ACTION.TIMER -> {
                 disclosureText.text = getString(R.string.disclosure_timer)
-            }
-            ACTION.SMS -> {
-                disclosureText.text = getString(R.string.disclosure_sms)
             }
             ACTION.AUDIO -> {
                 disclosureText.text = getString(R.string.disclosure_audio)
@@ -1631,18 +1535,6 @@ class MainActivity : AppCompatActivity() {
                 networkImageIcon.setImageResource(R.drawable.network_off)
                 outInNetworkSwitch.isChecked = false
             }
-            Token.INCOMING_SMS -> {
-                disableIncomingSMSFlickering()
-                smsImageIcon.setImageResource(R.drawable.sms_off)
-                removeActivatedFeature(recyclerView, FEATURE.SMS)
-                incomingSMSSwitch.isChecked = false
-            }
-            Token.INCOMING_CALL -> {
-                disableIncomingCallFlickering()
-                callImageIcon.setImageResource(R.drawable.call_off2)
-                removeActivatedFeature(recyclerView, FEATURE.CALL)
-                incomingCallSwitch.isChecked = false
-            }
             Token.TIMER -> {
                 isTimerOn = false
                 if (flickeringDueToTimer) {
@@ -1651,12 +1543,6 @@ class MainActivity : AppCompatActivity() {
                 isTimerThresholdSet = false
                 timerSetAfter = minTimerMinutes
 
-//                try {
-//                    timeExecutorShutdown(timerExecutor)
-//                }
-//                catch (_: Exception) {
-//                    Log.e("MainActivity", "exception timeExecutorShutdown timerExecutor")
-//                }
                 removeActivatedFeature(recyclerView, FEATURE.TIMER)
                 timerImageIcon.setImageResource(R.drawable.timer_off)
                 timerSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
@@ -1791,8 +1677,6 @@ class MainActivity : AppCompatActivity() {
         intentSettings.putExtra("maxFlickerHz", maxFlickerHz)
         intentSettings.putExtra("maxFlickerDurationBattery", maxFlickerDurationBattery)
         intentSettings.putExtra("maxFlickerDurationAltitude", maxFlickerDurationAltitude)
-        intentSettings.putExtra("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall)
-        intentSettings.putExtra("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS)
     }
 
     private fun isStoredSettings () : Boolean {
@@ -1812,12 +1696,10 @@ class MainActivity : AppCompatActivity() {
         maxFlickerHz = sharedPref.getInt("maxFlickerHz", defaultMaxFlickerHz) // max 10 - 100
         maxFlickerDurationBattery = sharedPref.getInt("maxFlickerDurationBattery", defaultMaxFlickerIncomingBattery)
         maxFlickerDurationAltitude = sharedPref.getInt("maxFlickerDurationAltitude", defaultMaxFlickerIncomingAltitude)
-        maxFlickerDurationIncomingCall = sharedPref.getInt("maxFlickerDurationIncomingCall", defaultMaxFlickerIncomingCall)
-        maxFlickerDurationIncomingSMS = sharedPref.getInt("maxFlickerDurationIncomingSMS", defaultMaxFlickerIncomingSMS)
     }
 
     private fun storeSettings () {
-        Log.i("MainActivity", "STORED Settings are: $flickerFlashlightHz (Hz), $maxFlickerHz (max Hz), $sensitivityAngle (degrees), $sensitivitySoundThreshold (sound),$maxFlickerDurationIncomingCall,$maxFlickerDurationIncomingSMS,$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
+        Log.i("MainActivity", "STORED Settings are: $flickerFlashlightHz (Hz), $maxFlickerHz (max Hz), $sensitivityAngle (degrees), $sensitivitySoundThreshold (sound),$maxFlickerDurationBattery,$maxFlickerDurationAltitude")
         val sharedPref = getSharedPreferences("FlashiiSettings", MODE_PRIVATE)
         val editor = sharedPref.edit()
 
@@ -1830,8 +1712,6 @@ class MainActivity : AppCompatActivity() {
         editor.putInt("maxFlickerHz", maxFlickerHz) // max flickering Hz (3 - 100)
         editor.putInt("maxFlickerDurationBattery", maxFlickerDurationBattery)
         editor.putInt("maxFlickerDurationAltitude", maxFlickerDurationAltitude)
-        editor.putInt("maxFlickerDurationIncomingCall", maxFlickerDurationIncomingCall)
-        editor.putInt("maxFlickerDurationIncomingSMS", maxFlickerDurationIncomingSMS)
         editor.apply()
     }
 
@@ -1873,26 +1753,6 @@ class MainActivity : AppCompatActivity() {
                     Log.i("MainActivity", "Ask for preCheckPermissions - Granted for AUDIO")
                     permissionsKeys["AUDIO"] = true
                     setBtnImage(soundImageIcon, R.drawable.sound_off)
-                }
-            }
-            ACTION.CALL -> {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                    Log.i("MainActivity", "Ask for preCheckPermissions - NOT Granted for CALL")
-                }
-                else {
-                    Log.i("MainActivity", "Ask for preCheckPermissions - Granted for CALL")
-                    permissionsKeys["CALL"] = true
-                    setBtnImage(callImageIcon, R.drawable.call_off2)
-                }
-            }
-            ACTION.SMS -> {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                    Log.i("MainActivity", "Ask for preCheckPermissions - NOT Granted for SMS")
-                }
-                else {
-                    Log.i("MainActivity", "Ask for preCheckPermissions - Granted for SMS")
-                    permissionsKeys["SMS"] = true
-                    setBtnImage(smsImageIcon, R.drawable.sms_off)
                 }
             }
             else -> {}
@@ -1949,30 +1809,6 @@ class MainActivity : AppCompatActivity() {
                     setBtnImage(timerImageIcon, R.drawable.timer_off)
                 }
             }
-            ACTION.CALL -> {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                    Log.i("MainActivity", "requestPermissions for CALL")
-                    permissions += Manifest.permission.READ_PHONE_STATE
-                    ActivityCompat.requestPermissions(this, permissions, RequestKey.CREATE.value)
-                }
-                else {
-                    Log.i("MainActivity", "requestPermissions CALL = TRUE")
-                    permissionsKeys["CALL"] = true
-                    setBtnImage(callImageIcon, R.drawable.call_off2)
-                }
-            }
-            ACTION.SMS -> {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                    Log.i("MainActivity", "requestPermissions for SMS")
-                    permissions += Manifest.permission.RECEIVE_SMS
-                    ActivityCompat.requestPermissions(this, permissions, RequestKey.CREATE.value)
-                }
-                else {
-                    Log.i("MainActivity", "requestPermissions SMS = TRUE")
-                    permissionsKeys["SMS"] = true
-                    setBtnImage(smsImageIcon, R.drawable.sms_off)
-                }
-            }
             ACTION.RESUME -> {
                 // User may have changed the permissions in Settings/App/Flashii/Licenses, so we have to align with that
                 Log.i("MainActivity", "Ask for permissions again RESUME")
@@ -2011,23 +1847,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                // CALL
-                if (permissionsKeys["CALL"] == false) {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-                        Log.i("MainActivity", "Ask for CALL permissions again RESUME ")
-                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), RequestKey.CALL.value)
-                    }
-                }
-                else {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnImage(callImageIcon, R.drawable.call_no_permission)
-                        Log.i("MainActivity", "CALL permissions RESUME: CALL = FALSE ")
-                        permissionsKeys["CALL"] = false
-                        incomingCallSwitch.isChecked = false
-                        removeActivatedFeature(recyclerView, FEATURE.CALL)
-                    }
-                }
-
                 // TIMER
                 if (permissionsKeys["TIMER"] == false) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM) == PackageManager.PERMISSION_GRANTED) {
@@ -2047,23 +1866,6 @@ class MainActivity : AppCompatActivity() {
                         permissionsKeys["TIMER"] = false
                         timerSwitch.isChecked = false
                         removeActivatedFeature(recyclerView, FEATURE.TIMER)
-                    }
-                }
-
-                // SMS
-                if (permissionsKeys["SMS"] == false) {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
-                        Log.i("MainActivity", "Ask for SMS permissions again RESUME ")
-                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECEIVE_SMS), RequestKey.SMS.value)
-                    }
-                }
-                else {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                        setBtnImage(smsImageIcon, R.drawable.sms_no_permission)
-                        Log.i("MainActivity", "CALL permissions RESUME: SMS = FALSE ")
-                        permissionsKeys["SMS"] = false
-                        removeActivatedFeature(recyclerView, FEATURE.SMS)
-                        incomingSMSSwitch.isChecked = false
                     }
                 }
 
@@ -2134,53 +1936,6 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "Register CB for IN_SERVICE ($connectivityCallback)")
                 connectivityManager.registerNetworkCallback(networkRequest, connectivityCallback)
             }
-            TypeOfEvent.INCOMING_CALL -> {
-                isIncomingCall = true
-                incomingCallReceiver = object : BroadcastReceiver() {
-                    override fun onReceive(context: Context, intent: Intent) {
-                        if (intent.action == TelephonyManager.ACTION_PHONE_STATE_CHANGED) {
-                            Log.i("MainActivity", "ACTION_PHONE_STATE_CHANGED EVENT ($incomingCallReceiver)")
-                            when (intent.getStringExtra(TelephonyManager.EXTRA_STATE)) {
-                                TelephonyManager.EXTRA_STATE_RINGING -> {
-                                    Log.i("MainActivity", "EXTRA_STATE_RINGING - Flickering ON")
-                                    resetActivitiesAndFlicker(Token.INCOMING_CALL)
-                                    stopFlickeringAfterTimeout(maxFlickerDurationIncomingCall.toLong(), Token.INCOMING_CALL)
-                                    // we do not intend at this point to reset the Feature (business decision)
-                                }
-                                TelephonyManager.EXTRA_STATE_IDLE -> {
-                                    Log.i("MainActivity", "Phone IDLE - stop flickering")
-                                    stopFlickering(Token.INCOMING_CALL)
-                                    // we do not intend at this point to reset the Feature (business decision)
-                                }
-                                TelephonyManager.EXTRA_STATE_OFFHOOK -> {
-                                    Log.i("MainActivity", "Phone OFF-HOOK - stop flickering")
-                                    stopFlickering(Token.INCOMING_CALL)
-                                    // we do not intend at this point to reset the Feature (business decision)
-                                }
-                            }
-                        }
-                    }
-                }
-                val intentFilter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
-                registerReceiver(incomingCallReceiver, intentFilter)
-                Log.i("MainActivity", "ACTION_PHONE_STATE_CHANGED registered ($incomingCallReceiver)")
-            }
-            TypeOfEvent.SMS -> {
-                isIncomingSMS = true
-                incomingSMSReceiver = object : BroadcastReceiver() {
-                    override fun onReceive(context: Context, intent: Intent) {
-                        if (intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
-                            Log.i("MainActivity", "SMS_RECEIVED_ACTION EVENT ($incomingSMSReceiver)")
-                            resetActivitiesAndFlicker(Token.INCOMING_SMS)
-                            stopFlickeringAfterTimeout(maxFlickerDurationIncomingSMS.toLong(), Token.INCOMING_SMS)
-                            // we do not intend at this point to reset the Feature (business decision)
-                        }
-                    }
-                }
-                val intentFilter = IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
-                registerReceiver(incomingSMSReceiver, intentFilter)
-                Log.i("MainActivity", "SMS_RECEIVED_ACTION registered ($incomingSMSReceiver)")
-            }
             TypeOfEvent.PHONE_TILT -> {
                 // Do nothing
             }
@@ -2191,22 +1946,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-
-    private fun disableIncomingSMSFlickering () {
-        isIncomingSMS = false
-        if (!isFlickeringOnDemand) {
-            stopFlickering(Token.INCOMING_SMS)
-        }
-        unregisterReceiver(incomingSMSReceiver)
-    }
-
-    private fun disableIncomingCallFlickering () {
-        isIncomingCall = false
-        if (!isFlickeringOnDemand) {
-            stopFlickering(Token.INCOMING_CALL)
-        }
-        unregisterReceiver(incomingCallReceiver)
-    }
 
     private fun setTextAndColor (textView : TextView, text : String, color : Int) {
         textView.text = text
@@ -2426,14 +2165,6 @@ class MainActivity : AppCompatActivity() {
                     permissionsKeys["TIMER"] = true
                     setBtnImage(timerImageIcon, R.drawable.timer_off)
                 }
-                RequestKey.CALL.value -> {
-                    permissionsKeys["CALL"] = true
-                    setBtnImage(callImageIcon, R.drawable.call_off2)
-                }
-                RequestKey.SMS.value -> {
-                    permissionsKeys["SMS"] = true
-                    setBtnImage(smsImageIcon, R.drawable.sms_off)
-                }
             }
         }
         else {
@@ -2467,16 +2198,6 @@ class MainActivity : AppCompatActivity() {
                                     setBtnImage(timerImageIcon, R.drawable.timer_off)
                                     permissionsKeys["TIMER"] = true
                                 }
-                                Manifest.permission.READ_PHONE_STATE -> {
-                                    Log.i("MainActivity", "Request granted for CALL")
-                                    setBtnImage(callImageIcon, R.drawable.call_off2)
-                                    permissionsKeys["CALL"] = true
-                                }
-                                Manifest.permission.RECEIVE_SMS -> {
-                                    Log.i("MainActivity", "Request granted for SMS")
-                                    setBtnImage(smsImageIcon, R.drawable.sms_off)
-                                    permissionsKeys["SMS"] = true
-                                }
                             }
                         } else {
                             // Permission denied for the specific permission
@@ -2502,26 +2223,12 @@ class MainActivity : AppCompatActivity() {
                                     permissionsKeys["AUDIO"] = false
                                     triggerSnackbar(rootView, "To use the service, manually provide Microphone rights to $applicationName.")
                                 }
-                                Manifest.permission.READ_PHONE_STATE -> {
-                                    Log.i("MainActivity", "Request NOT granted for CALL")
-                                    setBtnImage(callImageIcon, R.drawable.call_no_permission)
-                                    incomingCallSwitch.isChecked = false
-                                    permissionsKeys["CALL"] = false
-                                    triggerSnackbar(rootView, "To use the service, manually provide Call rights to $applicationName.")
-                                }
                                 Manifest.permission.SCHEDULE_EXACT_ALARM -> {
                                     Log.i("MainActivity", "Request NOT granted for ALARM")
                                     setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
                                     timerSwitch.isChecked = false
                                     permissionsKeys["TIMER"] = false
                                     triggerSnackbar(rootView, "To use the service, manually provide EXACT ALARM rights to $applicationName.")
-                                }
-                                Manifest.permission.RECEIVE_SMS -> {
-                                    Log.i("MainActivity", "Request NOT granted for SMS")
-                                    setBtnImage(smsImageIcon, R.drawable.sms_no_permission)
-                                    incomingSMSSwitch.isChecked = false
-                                    permissionsKeys["SMS"] = false
-                                    triggerSnackbar(rootView, "To use the service, manually provide SMS rights to $applicationName.")
                                 }
                             }
                         }
@@ -2544,20 +2251,10 @@ class MainActivity : AppCompatActivity() {
                     tempText = "Sensitivity\n${calcSensitivityLevel(sensitivitySoundThreshold)}"
                     setTextAndColor(soundSwitchText, tempText, R.color.greyNoteDarker2)
                 }
-                RequestKey.CALL.value -> {
-                    Log.i("MainActivity", "Request NOT granted for CALL")
-                    setBtnImage(callImageIcon, R.drawable.call_no_permission)
-                    incomingCallSwitch.isChecked = false
-                }
                 RequestKey.TIMER.value -> {
                     Log.i("MainActivity", "Request NOT granted for TIMER")
                     setBtnImage(timerImageIcon, R.drawable.timer_no_permission)
                     timerSwitch.isChecked = false
-                }
-                RequestKey.SMS.value -> {
-                    Log.i("MainActivity", "Request NOT granted for SMS")
-                    setBtnImage(smsImageIcon, R.drawable.sms_no_permission)
-                    incomingSMSSwitch.isChecked = false
                 }
             }
         }
@@ -2670,32 +2367,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (isIncomingCall) {
-            try {
-                Log.i("MainActivity", "incomingCallReceiver OFF $incomingCallReceiver ")
-                unregisterReceiver(incomingCallReceiver)
-            }
-            catch (e : Exception) {
-                Log.e("MainActivity", "onDestroy incomingCallReceiver exception $e")
-            }
-        }
-
-        if (isIncomingSMS) {
-            try {
-                Log.i("MainActivity", "incomingSMSReceiver OFF $incomingSMSReceiver ")
-                unregisterReceiver(incomingSMSReceiver)
-            }
-            catch (e : Exception) {
-                Log.e("MainActivity", "onDestroy incomingSMSReceiver exception $e")
-            }
-        }
         super.onDestroy()
     }
 
 
 
     private fun resetAllActivities (featureToken : Token) {
-        var tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.SOS, Token.SOUND, Token.TILT, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
+        var tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.SOS, Token.SOUND, Token.TILT, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isFlashLightOn) {
             // Can be understood as: Until now I had Flashlight activated, but now I have activated
             // Flickering or TILT or Sound or SOS. So, Flashlight must be deactivated.
@@ -2703,19 +2381,19 @@ class MainActivity : AppCompatActivity() {
             resetFeature(Token.FLASHLIGHT)
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLASHLIGHT, Token.SOS, Token.SOUND, Token.TILT, Token.NETWORK, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
+        tokenValuesToCheckAgainst = listOf(Token.FLASHLIGHT, Token.SOS, Token.SOUND, Token.TILT, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isFlickering && isFlickeringOnDemand) {
             Log.i("MainActivity", "RAA - STOP FLICKERING on demand")
             resetFeature(Token.FLICKER)
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.TILT, Token.NETWORK, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.TILT, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isSendSOS) {
             Log.i("MainActivity", "RAA - DISABLE SOS")
             resetFeature(Token.SOS)
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.SOS, Token.NETWORK, Token.TIMER, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.ALTITUDE, Token.BATTERY)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.SOUND, Token.SOS, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isPhoneTilt) {
             // Can be understood as:
             // Until now I had Phone Tilt activated, but now I have activated
@@ -2725,31 +2403,31 @@ class MainActivity : AppCompatActivity() {
             resetFeature(Token.TILT)
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS, Token.NETWORK, Token.TIMER, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.ALTITUDE, Token.BATTERY)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isAudioIncoming) {
             Log.i("MainActivity", "RAA - TURN OFF isAudioIncoming")
             resetFeature(Token.SOUND)
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS, Token.NETWORK, Token.TIMER, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.ALTITUDE, Token.BATTERY)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS, Token.NETWORK, Token.TIMER, Token.ALTITUDE, Token.BATTERY)
         if ((featureToken in tokenValuesToCheckAgainst) && isNetworkConnectivityCbIsSet && flickeringDueToNetworkConnection) {
             Log.i("MainActivity", "RAA - TURN OFF isNetworkConnectivityCbIsSet")
             resetFeature(Token.NETWORK)
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS, Token.NETWORK, Token.ALTITUDE, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.TIMER)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS, Token.NETWORK, Token.ALTITUDE, Token.TIMER)
         if ((featureToken in tokenValuesToCheckAgainst) && isBatteryOn && flickeringDueToBattery) {
             Log.i("MainActivity", "RAA - TURN OFF isBatteryOn")
             resetFeature(Token.BATTERY)
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS, Token.NETWORK, Token.BATTERY, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.TIMER)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS, Token.NETWORK, Token.BATTERY, Token.TIMER)
         if ((featureToken in tokenValuesToCheckAgainst) && isAltitudeOn && flickeringDueToAltitude) {
             Log.i("MainActivity", "RAA - TURN OFF isAltitudeOn")
             resetFeature(Token.ALTITUDE)
         }
 
-        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS, Token.NETWORK, Token.BATTERY, Token.INCOMING_CALL, Token.INCOMING_SMS, Token.ALTITUDE)
+        tokenValuesToCheckAgainst = listOf(Token.FLICKER, Token.FLASHLIGHT, Token.TILT, Token.SOS, Token.NETWORK, Token.BATTERY, Token.ALTITUDE)
         if ((featureToken in tokenValuesToCheckAgainst) && isTimerOn && flickeringDueToTimer) {
             Log.i("MainActivity", "RAA - TURN OFF isTimerOn")
             resetFeature(Token.TIMER)
