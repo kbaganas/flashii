@@ -1,4 +1,4 @@
-package com.ichthis.flashii
+package com.ix8ys.flashii
 
 
 import android.Manifest
@@ -65,7 +65,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.ichthis.flashii.databinding.ActivityMainBinding
+import com.ix8ys.flashii.databinding.ActivityMainBinding
 import java.io.File
 import java.io.IOException
 import java.util.Locale
@@ -262,6 +262,8 @@ class MainActivity : AppCompatActivity() {
     private var rotationSensorRegistered : Boolean = false
     private var altitudeListenerRegistered : Boolean = false
     private var barometerAvailable : Boolean = true
+    private var readCurrentBatteryLevel : Boolean = false
+    private var readCurrentAltitude : Boolean = false
 
     // Buttons & Ids
     private var flashlightId : String = "0"
@@ -458,6 +460,7 @@ class MainActivity : AppCompatActivity() {
                         if (System.currentTimeMillis() - touchStartTime > 350) {
                             Log.i("MainActivity","flashlightBtn is OFF after press/hold")
                             turnOffFlashlight(true)
+                            removeActivatedFeature(recyclerView, FEATURE.FLASHLIGHT)
                         }
                         false
                     }
@@ -836,6 +839,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 batteryHiddenView.visibility = View.VISIBLE
                 batteryExpandArrow.setImageResource(R.drawable.arrow_up)
+                readCurrentBatteryLevel = !batterySwitch.isChecked
                 initAndRegisterBatteryReceiver()
             }
         }
@@ -982,7 +986,7 @@ class MainActivity : AppCompatActivity() {
                             timerForFlickeringSet = true
 
                             // Create an intent to trigger the alarm
-                            val intent = Intent("com.ichthis.flashii.ALARM_ACTION")
+                            val intent = Intent("com.ix8ys.flashii.ALARM_ACTION")
                             alarmIntent = PendingIntent.getBroadcast(
                                 this,
                                 0,
@@ -999,7 +1003,7 @@ class MainActivity : AppCompatActivity() {
                             )
 
                             // Register the BroadcastReceiver
-                            val filter = IntentFilter("com.ichthis.flashii.ALARM_ACTION")
+                            val filter = IntentFilter("com.ix8ys.flashii.ALARM_ACTION")
                             registerReceiver(alarmReceiver, filter)
 
                             // user can no longer interact with the timepicker
@@ -1039,6 +1043,7 @@ class MainActivity : AppCompatActivity() {
                 altitudeHiddenView.visibility = View.VISIBLE
                 altitudeExpandArrow.setImageResource(R.drawable.arrow_up)
                 if (barometerAvailable) {
+                    readCurrentAltitude = !altitudeSwitch.isChecked
                     initAndRegisterAltitudeEventListener()
                 }
             }
@@ -1057,7 +1062,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                if (barometerAvailable) {
+                if (barometerAvailable && altitudeSwitch.isChecked) {
                     initAndRegisterAltitudeEventListener()
                 }
             }
@@ -1171,6 +1176,8 @@ class MainActivity : AppCompatActivity() {
         /////////////////////////////////////////////////////////////////////////////////
         // Native Ad
         MobileAds.initialize(this)
+        // ca-app-pub-3940256099942544/1044960115
+        //
         val adLoader = AdLoader.Builder(this, "ca-app-pub-1341475020557565/3243868836")
             .forNativeAd { nativeAd ->
                 val template: TemplateView = findViewById(R.id.native_ad)
@@ -1236,8 +1243,8 @@ class MainActivity : AppCompatActivity() {
                             val pressureValue = event.values[0] // Get the pressure value in hPa
                             val altitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressureValue) // altitude in meters
 
-                            if (altitude > minAltitude) {
-                                if (initAltitudeLevel == minAltitude) {
+                            if (altitude >= minAltitude) {
+                                if (initAltitudeLevel == minAltitude || readCurrentAltitude) {
                                     initAltitudeLevel = altitude.toInt()
                                     tempText = "${initAltitudeLevel}m"
                                     altitudeSwitchText.text = tempText
@@ -1272,6 +1279,10 @@ class MainActivity : AppCompatActivity() {
                                             }
                                         }
                                     }
+                                }
+                                else if (readCurrentAltitude || altitudeListenerRegistered) {
+                                    Log.i("MainActivity","Should unregistered sensorPressureEventListener $sensorPressureEventListener")
+                                    resetFeature(Token.ALTITUDE)
                                 }
                             }
                         }
@@ -1378,12 +1389,13 @@ class MainActivity : AppCompatActivity() {
             batteryReceiverRegistered = true
             batteryReceiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
-                    if (initBatteryLevel == minBattery) {
+                    if (initBatteryLevel == minBattery || readCurrentBatteryLevel) {
                         val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
                         val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
                         initBatteryLevel = ((level.toFloat() / scale.toFloat()) * 100).toInt()
                         Log.i("MainActivity", "Battery initial level is ${initBatteryLevel}%")
                         if (!batterySwitch.isChecked) {
+                            Log.i("MainActivity", "Should now resetFeature(Battery)")
                             batteryThreshold = initBatteryLevel
                             tempText = "${batteryThreshold}%"
                             batterySwitchText.text = tempText
@@ -1509,6 +1521,7 @@ class MainActivity : AppCompatActivity() {
                 batteryImageIcon.setImageResource(R.drawable.battery_off)
                 batterySwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 batterySwitch.isChecked = false
+                readCurrentBatteryLevel = false
             }
             Token.NETWORK -> {
                 isNetworkConnectivityCbIsSet = false
@@ -1574,6 +1587,7 @@ class MainActivity : AppCompatActivity() {
                 altitudeImageIcon.setImageResource(R.drawable.altitude_off)
                 altitudeSwitchText.setTextColor(resources.getColor(R.color.greyNoteDarker2, theme))
                 altitudeSwitch.isChecked = false
+                readCurrentAltitude = false
             }
             Token.SOUND -> {
                 isAudioIncoming = false

@@ -75,19 +75,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="38dp">
+
                 <RadioButton
                     android:id="@+id/support1Btn"
                     android:layout_width="match_parent"
-                    android:gravity="center"
                     android:layout_height="48dp"
                     android:background="@drawable/support_radio_btn_bg"
                     android:button="@android:color/transparent"
                     android:checked="true"
                     android:fontFamily="@font/cabin_regular"
+                    android:gravity="center"
                     android:text="@string/dollar1"
-                    android:textSize="18sp"
                     android:textColor="@color/greyNoteDarker6"
-                    tools:ignore="VisualLintButtonSize" />
+                    android:textSize="18sp"
+                    tools:ignore="VisualLintButtonSize,TextContrastCheck" />
 
                 <RadioButton
                     android:id="@+id/support10Btn"

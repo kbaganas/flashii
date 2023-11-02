@@ -1,4 +1,4 @@
-package com.ichthis.flashii
+package com.ix8ys.flashii
 
 import android.annotation.SuppressLint
 import android.os.Bundle

@@ -224,7 +224,7 @@
                             android:progressTint="@color/seekbarProgressTint"
                             android:thumb="@drawable/switch_thumb"
                             android:track="@drawable/switch_track"
-                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+                            tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -796,7 +796,8 @@
                             android:background="#00FFFFFF"
                             android:contentDescription="@string/FeatureContentDescription"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/battery_no_permission" />
+                            app:srcCompat="@drawable/battery_no_permission"
+                            tools:ignore="TooManyViews" />
 
                         <TextView
                             android:id="@+id/batterySwitchText"

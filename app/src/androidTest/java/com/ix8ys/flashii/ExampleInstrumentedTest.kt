@@ -1,4 +1,4 @@
-package com.ichthis.flashii
+package com.ix8ys.flashii
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.ichthis.flashii", appContext.packageName)
+        assertEquals("com.ix8ys.flashii", appContext.packageName)
     }
 }

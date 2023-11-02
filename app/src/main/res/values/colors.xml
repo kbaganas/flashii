@@ -45,17 +45,28 @@
 <!--    <color name="mainBattery">#F8F1EC</color>-->
 <!--    <color name="mainAltitude">#FCEFEC</color>-->
 
-    <color name="mainTilt">#E3F5FE</color>
-    <color name="mainCALL">#e3feec</color>
-    <color name="mainSMS">#fee3f5</color>
-    <color name="mainSound">#feece3</color>
+<!--    <color name="mainTilt">#E3F5FE</color>-->
+<!--    <color name="mainCALL">#e3feec</color>-->
+<!--    <color name="mainSMS">#fee3f5</color>-->
+<!--    <color name="mainSound">#feece3</color>-->
+<!--    <color name="mainFlashlight">#E3F5FE</color>-->
+<!--    <color name="mainFlicker">#e3fefa</color>-->
+<!--    <color name="mainNetwork">#e3e8fe</color>-->
+<!--    <color name="mainSOS">#fefae3</color>-->
+<!--    <color name="mainTime">#fee3e7</color>-->
+<!--    <color name="mainBattery">#f5fee3</color>-->
+<!--    <color name="mainAltitude">#E3F5FE</color>-->
+
+    <color name="mainTilt">#e3f5fe</color>
+    <color name="mainNetwork">#e3feec</color>
+    <color name="mainSOS">#f5fee3</color>
+    <color name="mainSound">#e3fefa</color>
+    <color name="mainFlicker">#e3e8fe</color>
+    <color name="mainTime">#feece3</color>
+    <color name="mainBattery">#d9f0ef</color>
+    <color name="mainAltitude">#eee7eb</color>
     <color name="mainFlashlight">#E3F5FE</color>
-    <color name="mainFlicker">#e3fefa</color>
-    <color name="mainNetwork">#e3e8fe</color>
-    <color name="mainSOS">#fefae3</color>
-    <color name="mainTime">#fee3e8</color>
-    <color name="mainBattery">#f5fee3</color>
-    <color name="mainAltitude">#E3F5FE</color>
+
 
     <color name="switch_off">#A24C3F</color>
     <color name="switch_on">#40B344</color>

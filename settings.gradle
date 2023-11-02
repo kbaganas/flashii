@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "com.ichthis.flashii"
+rootProject.name = "com.ix8ys.flashii"
 include ':app'
 include ':nativetemplates'

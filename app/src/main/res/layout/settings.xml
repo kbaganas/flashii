@@ -85,7 +85,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="60dp"
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginEnd="12dp"
@@ -114,7 +114,7 @@
                 android:textAlignment="center">
 
                 <View
-                    android:layout_width="60dp"
+                    android:layout_width="65dp"
                     android:layout_height="1dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="12dp"
@@ -149,11 +149,12 @@
                     android:id="@+id/maxHz1"
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
-                    android:background="#00FFFFFF"
                     android:layout_marginEnd="18dp"
+                    android:background="#00FFFFFF"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/flicker_off" />
+                    app:srcCompat="@drawable/flicker_off"
+                    tools:ignore="ImageContrastCheck" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -221,11 +222,12 @@
                     android:id="@+id/batterySetting1"
                     android:layout_width="@dimen/MainImageSize"
                     android:layout_height="@dimen/MainImageSize"
-                    android:background="#00FFFFFF"
                     android:layout_marginEnd="18dp"
+                    android:background="#00FFFFFF"
                     android:contentDescription="@string/GeneralContentDescription"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/battery_off" />
+                    app:srcCompat="@drawable/battery_off"
+                    tools:ignore="ImageContrastCheck" />
 
                 <LinearLayout
                     android:layout_width="0dp"

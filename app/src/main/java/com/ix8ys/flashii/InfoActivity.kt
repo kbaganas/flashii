@@ -1,4 +1,4 @@
-package com.ichthis.flashii
+package com.ix8ys.flashii
 
 import android.os.Bundle
 import android.view.View
