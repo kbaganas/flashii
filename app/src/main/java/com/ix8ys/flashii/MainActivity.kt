@@ -292,6 +292,9 @@ class MainActivity : AppCompatActivity() {
     // Common use
     private lateinit var tempText : String
 
+    // AdLoader
+    private lateinit var adLoader : AdLoader
+
     @SuppressLint("InflateParams")
     private fun triggerSnackbar(view: View, text: CharSequence, action : ACTION = ACTION.ATTENTION, token: Token = Token.OTHER) {
         val customSnackView: View = layoutInflater.inflate(R.layout.custom_snackbar, null)
@@ -1178,7 +1181,7 @@ class MainActivity : AppCompatActivity() {
         MobileAds.initialize(this)
         // ca-app-pub-3940256099942544/1044960115
         //
-        val adLoader = AdLoader.Builder(this, "ca-app-pub-1341475020557565/3243868836")
+        adLoader = AdLoader.Builder(this, "ca-app-pub-1341475020557565/3243868836")
             .forNativeAd { nativeAd ->
                 val template: TemplateView = findViewById(R.id.native_ad)
                 template.setNativeAd(nativeAd)
@@ -2457,6 +2460,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         Log.i("MainActivity", "onResume is running")
         checkPermissions(ACTION.RESUME)
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 }
 
